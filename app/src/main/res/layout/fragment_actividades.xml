@@ -140,7 +140,7 @@
 
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_gravity="center_vertical"
@@ -213,7 +213,7 @@
 
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_gravity="center_vertical"
@@ -286,7 +286,7 @@
 
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_gravity="center_vertical"
@@ -359,7 +359,7 @@
 
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_gravity="center_vertical"
@@ -432,7 +432,7 @@
 
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_gravity="center_vertical"
@@ -455,80 +455,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="15dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center_vertical">
-
-                        <ImageView
-                            android:layout_width="76dp"
-                            android:layout_height="76dp"
-                            android:src="@drawable/fuchibol"
-                            android:layout_gravity="center_vertical|start"
-                            android:scaleType="centerCrop"/>
-
-                        <LinearLayout
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="5dp"
-                            android:layout_gravity="center_vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="2dp"
-                                android:fontFamily="sans-serif-light"
-                                android:text="FUTSAL VARONES"
-                                android:textAlignment="viewStart"
-                                android:textColor="#000000"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <Button
-                                style="?attr/materialIconButtonFilledTonalStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:icon="@drawable/person_add_alt_1_24"
-                                android:text=" Asignar delegado"
-                                android:backgroundTint="@color/verde"
-
-                                />
-
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center">
-
-                            <Button
-                                style="?attr/materialIconButtonFilledTonalStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:icon="@drawable/more_options_24"
-                                android:backgroundTint="@color/white"
-                                />
-
-                        </LinearLayout>
-
-
-
-                    </LinearLayout>
-                    <com.google.android.material.divider.MaterialDivider
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
 
 
             </LinearLayout>
