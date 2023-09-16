@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityIngresarBinding;
 
 public class IngresarActivity extends AppCompatActivity {
