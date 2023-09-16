@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="48dp"
-    android:paddingEnd="48dp"
     android:background="@drawable/gradiente_fondo"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
     tools:context=".delegadoGeneral.IngresarActivity">
 
     <TextView
@@ -41,11 +41,11 @@
         android:id="@+id/textView4"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:background="#2CDADADA"
         android:padding="16dp"
         android:text="@string/login_texto"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:background="#2CDADADA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -84,6 +84,7 @@
         android:layout_height="232dp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
