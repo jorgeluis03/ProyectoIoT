@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingStart="48dp"
     android:paddingEnd="48dp"
-    tools:context=".delegadoGeneral.LoginActivity">
+    tools:context=".delegadoGeneral.IngresarActivity">
 
     <TextView
         android:id="@+id/textView2"
@@ -49,7 +49,7 @@
         app:layout_constraintVertical_bias="0.25" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_iniciar_sesion"
         style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="0dp"
         android:layout_height="52dp"
@@ -61,7 +61,7 @@
         app:layout_constraintVertical_bias="0.19999999" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_registrarme"
         style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="0dp"
         android:layout_height="52dp"
@@ -70,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/button_iniciar_sesion"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView

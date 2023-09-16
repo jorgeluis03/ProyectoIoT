@@ -9,4 +9,10 @@
     <string name="login_texto">Hola Panda, regístrate para tener acceso a todos los eventos de tu facu. O inicia sesión en caso tengas una cuenta.</string>
     <string name="login_iniciar_sesion">Iniciar sesión</string>
     <string name="login_registrarse">Registrarme</string>
+
+    <!-- REGISTRARSE -->
+    <string-array name="tipo_usuario">
+        <item name="estudiante" type="string">Estudiante</item>
+        <item name="egresado" type="string">Egresado</item>
+    </string-array>
 </resources>
