@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:paddingStart="48dp"
     android:paddingEnd="48dp"
+    android:background="@drawable/gradiente_fondo"
     tools:context=".delegadoGeneral.IngresarActivity">
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nombre_grupo"
+        android:textColor="#FFFFFF"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,6 +28,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login_titulo"
         android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
@@ -41,6 +44,8 @@
         android:padding="16dp"
         android:text="@string/login_texto"
         android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:background="#2CDADADA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
