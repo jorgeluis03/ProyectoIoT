@@ -8,4 +8,5 @@
     <!-- LOGIN -->
     <color name="azul_login">#0F4BD9</color>
     <color name="morado_login">#2B1292</color>
+    <color name="azul_background">#0A0E19</color>
 </resources>

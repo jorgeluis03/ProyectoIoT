@@ -7,7 +7,7 @@
     android:background="@drawable/gradiente_fondo"
     android:paddingStart="20dp"
     android:paddingEnd="20dp"
-    tools:context=".delegadoGeneral.IngresarActivity">
+    tools:context=".inicioApp.IngresarActivity">
 
     <TextView
         android:id="@+id/textView2"
@@ -56,9 +56,14 @@
     <Button
         android:id="@+id/button_iniciar_sesion"
         style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="52dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:text="@string/login_iniciar_sesion"
+        android:textColor="#2B1292"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,15 +73,22 @@
     <Button
         android:id="@+id/button_registrarme"
         style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="52dp"
         android:layout_marginTop="12dp"
+        android:background="@drawable/gradiente_boton"
+
         android:text="@string/login_registrarse"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_iniciar_sesion"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"></Button>
 
     <ImageView
         android:id="@+id/imageView3"

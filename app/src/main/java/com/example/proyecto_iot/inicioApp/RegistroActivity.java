@@ -1,4 +1,4 @@
-package com.example.proyecto_iot.delegadoGeneral;
+package com.example.proyecto_iot.inicioApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 

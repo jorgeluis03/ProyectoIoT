@@ -7,7 +7,7 @@
     android:paddingStart="48dp"
     android:paddingEnd="48dp"
     android:background="@drawable/gradiente_fondo"
-    tools:context=".delegadoGeneral.RegistroActivity">
+    tools:context=".inicioApp.RegistroActivity">
 
     <Button
         android:id="@+id/button3"

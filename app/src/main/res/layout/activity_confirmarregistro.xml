@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradiente_fondo"
-    tools:context=".ConfirmarregistroActivity">
+    android:background="@color/azul_background"
+    tools:context=".inicioApp.ConfirmarregistroActivity">
 
     <TextView
         android:id="@+id/textView8"

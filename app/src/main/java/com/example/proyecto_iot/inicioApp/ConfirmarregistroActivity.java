@@ -1,8 +1,10 @@
-package com.example.proyecto_iot;
+package com.example.proyecto_iot.inicioApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.proyecto_iot.R;
 
 public class ConfirmarregistroActivity extends AppCompatActivity {
 
