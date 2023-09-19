@@ -56,7 +56,7 @@
     <Button
         android:id="@+id/button_iniciar_sesion"
         style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="52dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
@@ -73,7 +73,7 @@
     <Button
         android:id="@+id/button_registrarme"
         style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/gradiente_boton"
