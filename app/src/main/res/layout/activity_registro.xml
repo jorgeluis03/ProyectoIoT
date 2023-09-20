@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradiente_fondo"
+    android:background="@drawable/shape_background"
     android:paddingStart="30dp"
     android:paddingEnd="30dp"
     tools:context=".inicioApp.RegistroActivity">
@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/gradiente_boton"
+        android:background="@drawable/shape_gradient_button"
         android:text="Enviar"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
@@ -59,7 +59,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradiente_portatexto" />
+            android:background="@drawable/shape_gradient_portatexto" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +78,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradiente_portatexto" />
+            android:background="@drawable/shape_gradient_portatexto" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,7 +97,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradiente_portatexto"
+            android:background="@drawable/shape_gradient_portatexto"
             android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -117,7 +117,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradiente_portatexto"
+            android:background="@drawable/shape_gradient_portatexto"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -139,7 +139,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradiente_portatexto"
+            android:background="@drawable/shape_gradient_portatexto"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -160,7 +160,7 @@
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradiente_portatexto"
+            android:background="@drawable/shape_gradient_portatexto"
             android:inputType="none"
             app:simpleItems="@array/tipo_usuario" />
 
@@ -175,7 +175,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/bat" />
+        app:srcCompat="@drawable/img_bat" />
 
     <Button
         android:id="@+id/backButton"
@@ -188,7 +188,7 @@
         android:paddingTop="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
-        app:icon="@drawable/back_button"
+        app:icon="@drawable/icon_back"
         app:iconSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

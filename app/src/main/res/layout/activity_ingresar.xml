@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradiente_fondo"
+    android:background="@drawable/shape_background"
     android:paddingStart="20dp"
     android:paddingEnd="20dp"
     tools:context=".inicioApp.IngresarActivity">
@@ -41,7 +41,7 @@
         android:id="@+id/textView4"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradiente_portatexto"
+        android:background="@drawable/shape_gradient_portatexto"
         android:padding="16dp"
         android:text="@string/main_texto"
         android:textAlignment="center"
@@ -78,7 +78,7 @@
         android:layout_height="52dp"
         android:layout_marginTop="12dp"
 
-        android:background="@drawable/gradiente_boton"
+        android:background="@drawable/shape_gradient_button"
         android:text="@string/main_registrarse"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
@@ -101,6 +101,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/bat" />
+        app:srcCompat="@drawable/img_bat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
