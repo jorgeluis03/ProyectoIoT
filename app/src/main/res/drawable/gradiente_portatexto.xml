@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-        android:type="linear"
-        android:angle="0"
-        android:startColor="@color/azul_login"
-        android:endColor="@color/morado_login"/>
-    <corners
-        android:radius="30dp"/>
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Rectángulo de fondo -->
+    <item android:left="0dp" android:right="0dp" android:top="0dp" android:bottom="0dp">
+        <shape>
+            <gradient
+                android:type="linear"
+                android:angle="180"
+                android:startColor="#26DADADA"
+                android:centerColor="#0DBFB1AA"
+                android:endColor="#334ECF9C"/>
+            <corners android:radius="5dp"></corners>
+        </shape>
+    </item>
+</layer-list>

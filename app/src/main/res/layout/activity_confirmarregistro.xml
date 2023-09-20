@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/azul_background"
+    android:background="@drawable/gradiente_fondo"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
     tools:context=".inicioApp.ConfirmarregistroActivity">
 
     <TextView
@@ -39,7 +41,7 @@
         android:id="@+id/textView10"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="#2CDADADA"
+        android:background="@drawable/gradiente_portatexto"
         android:padding="16dp"
         android:text="Gracias por registrarte, un delegado se encargará de verificar tu información para brindarte acceso. Te notificaremos por correo cuando puedas ingresar a la app"
         android:textAlignment="center"
@@ -54,10 +56,17 @@
     <Button
         android:id="@+id/button_registrarme3"
         style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginBottom="84dp"
+        android:backgroundTint="#FFFFFF"
+        android:paddingStart="6dp"
         android:text="Regresar"
+        android:textColor="#2B1292"
+        android:textStyle="bold"
+        app:icon="@drawable/back_button"
+        app:iconPadding="4dp"
+        app:iconSize="30dp"
+        app:iconTint="#2B1292"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
