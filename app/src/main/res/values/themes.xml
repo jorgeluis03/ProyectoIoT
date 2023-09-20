@@ -3,8 +3,16 @@
     <style name="Base.Theme.Proyecto_IoT" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/verde_bat</item>
         <item name="android:toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
     </style>
     <style name="Theme.Proyecto_IoT" parent="Base.Theme.Proyecto_IoT" />
+
+    <style name="Login" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/verde_bat</item>
+        <item name="colorOnSurface">@color/letra_clara</item>
+        <item name="android:statusBarColor">@color/azul_background</item>
+        <item name="android:toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
+    </style>
 
 </resources>
