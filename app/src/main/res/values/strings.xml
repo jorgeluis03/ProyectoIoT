@@ -5,12 +5,12 @@
 
     <string name="back">Regresar</string>
 
-    <!-- LOGIN -->
+    <!-- MAIN(ingresar) -->
     <string name="nombre_grupo">Activi Connect</string>
-    <string name="login_titulo">Bienvenido a tu app de Semana</string>
-    <string name="login_texto">Hola Panda, regístrate para tener acceso a todos los eventos de tu facu. O inicia sesión en caso tengas una cuenta.</string>
-    <string name="login_iniciar_sesion">Iniciar sesión</string>
-    <string name="login_registrarse">Registrarme</string>
+    <string name="main_titulo">Bienvenido a tu app de Semana</string>
+    <string name="main_texto">Hola Panda, regístrate para tener acceso a todos los eventos de tu facu. O inicia sesión en caso tengas una cuenta.</string>
+    <string name="main_iniciar_sesion">Iniciar sesión</string>
+    <string name="main_registrarse">Registrarme</string>
 
     <!-- SIGNIN -->
     <string name="signin_instruction">Completa tus datos para continuar:</string>
@@ -18,7 +18,7 @@
         <item name="estudiante" type="string">Estudiante</item>
         <item name="egresado" type="string">Egresado</item>
     </string-array>
-            <!-- hints -->
+    <!-- hints -->
     <string name="hint_name">Nombres</string>
     <string name="hint_lastname">Apellidos</string>
     <string name="hint_code">Código PUCP</string>
@@ -30,4 +30,10 @@
     <!-- SIGNIN CONFIRMATION -->
     <string name="conf_sign_title">Registro recibido</string>
     <string name="conf_sign_text">Gracias por registrarte, un delegado se encargará de verificar tu información para brindarte acceso. Te notificaremos por correo cuando puedas ingresar a la app.</string>
+
+    <!-- LOGIN -->
+    <string name="login_instruction">Ingresa tus credenciales:</string>
+    <string name="forgot_passw">¿Olvidaste tu contraseña?</string>
+    <string name="context_signin">o si no tienes una cuenta</string>
+    <string name="login_signin_option">Regístrate aquí</string>
 </resources>
