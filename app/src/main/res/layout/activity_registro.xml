@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradiente_fondo"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
+    android:paddingStart="30dp"
+    android:paddingEnd="30dp"
     tools:context=".inicioApp.RegistroActivity">
 
     <Button
@@ -14,7 +14,13 @@
         style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/gradiente_boton"
         android:text="Enviar"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,9 +28,9 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Completa tus datos para continuar"
+        android:text="@string/signin_instruction"
         android:textAlignment="textStart"
         android:textColor="@color/letra_clara"
         android:textSize="20sp"
@@ -36,12 +42,12 @@
         app:layout_constraintVertical_bias="0.25" />
 
     <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputFilledStyle"
         android:id="@+id/editTextText"
+        style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="24dp"
-        android:hint="Nombre"
+        android:hint="@string/hint_name"
         android:textColorHint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,18 +56,17 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradiente_portatexto"
-            />
+            android:background="@drawable/gradiente_portatexto" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputFilledStyle"
         android:id="@+id/editTextText2"
+        style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:hint="Apellidos"
+        android:hint="@string/hint_lastname"
         android:textColorHint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,17 +75,17 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradiente_portatexto"/>
+            android:background="@drawable/gradiente_portatexto" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputFilledStyle"
         android:id="@+id/editTextText3"
+        style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:hint="Código PUCP"
+        android:hint="@string/hint_code"
         android:textColorHint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,38 +94,38 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:background="@drawable/gradiente_portatexto"/>
+            android:background="@drawable/gradiente_portatexto"
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputFilledStyle"
         android:id="@+id/editTextText4"
+        style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:hint="Correo"
+        android:hint="@string/hint_email"
         android:textColorHint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradiente_portatexto"/>
+            android:background="@drawable/gradiente_portatexto"
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputFilledStyle"
         android:id="@+id/editTextTextPassword"
+        style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:hint="Contraseña"
+        android:hint="@string/hint_passw"
         android:textColorHint="@color/letra_clara"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/letra_clara"
@@ -131,8 +136,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:background="@drawable/gradiente_portatexto"/>
+            android:background="@drawable/gradiente_portatexto"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,7 +147,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:hint="Tipo de usuario"
+        android:hint="@string/hint_user_type"
         android:textColorHint="@color/letra_clara"
         app:endIconTint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
@@ -152,9 +157,9 @@
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/gradiente_portatexto"
             android:inputType="none"
-            app:simpleItems="@array/tipo_usuario"
-            android:background="@drawable/gradiente_portatexto"/>
+            app:simpleItems="@array/tipo_usuario" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -3,6 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="back">Regresar</string>
+
     <!-- LOGIN -->
     <string name="nombre_grupo">Activi Connect</string>
     <string name="login_titulo">Bienvenido a tu app de Semana</string>
@@ -10,9 +12,22 @@
     <string name="login_iniciar_sesion">Iniciar sesión</string>
     <string name="login_registrarse">Registrarme</string>
 
-    <!-- REGISTRARSE -->
+    <!-- SIGNIN -->
+    <string name="signin_instruction">Completa tus datos para continuar:</string>
     <string-array name="tipo_usuario">
         <item name="estudiante" type="string">Estudiante</item>
         <item name="egresado" type="string">Egresado</item>
     </string-array>
+            <!-- hints -->
+    <string name="hint_name">Nombres</string>
+    <string name="hint_lastname">Apellidos</string>
+    <string name="hint_code">Código PUCP</string>
+    <string name="hint_email">Correo</string>
+    <string name="hint_passw">Contraseña</string>
+    <string name="hint_user_type">Tipo de usuario</string>
+
+
+    <!-- SIGNIN CONFIRMATION -->
+    <string name="conf_sign_title">Registro recibido</string>
+    <string name="conf_sign_text">Gracias por registrarte, un delegado se encargará de verificar tu información para brindarte acceso. Te notificaremos por correo cuando puedas ingresar a la app.</string>
 </resources>
