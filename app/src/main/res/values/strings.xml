@@ -15,4 +15,11 @@
         <item name="estudiante" type="string">Estudiante</item>
         <item name="egresado" type="string">Egresado</item>
     </string-array>
+
+    <!-- PERFIL -->
+    <string name="perfil_cuenta_texto">Cuenta</string>
+    <string name="perfil_editar">Editar perfil</string>
+    <string name="perfil_contrasena">Contraseña</string>
+    <string name="perfil_sesion_texto">Sesión</string>
+    <string name="perfil_sesion">Cerrar sesión</string>
 </resources>
