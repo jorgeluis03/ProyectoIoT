@@ -4,6 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="back">Regresar</string>
+    <string name="next">Continuar</string>
+
 
     <!-- MAIN(ingresar) -->
     <string name="nombre_grupo">Activi Connect</string>
@@ -14,6 +16,7 @@
 
     <!-- SIGNIN -->
     <string name="signin_instruction">Completa tus datos para continuar:</string>
+    <string name="send">Enviar</string>
     <string-array name="tipo_usuario">
         <item name="estudiante" type="string">Estudiante</item>
         <item name="egresado" type="string">Egresado</item>
@@ -36,4 +39,11 @@
     <string name="forgot_passw">¿Olvidaste tu contraseña?</string>
     <string name="context_signin">o si no tienes una cuenta</string>
     <string name="login_signin_option">Regístrate aquí</string>
+
+    <!-- FORGOT PASSW -->
+    <string name="forgot_passw_intruction">Ingresa el correo vinculado a tu cuenta:</string>
+    <!-- CONFIRMATION -->
+    <string name="fg_verification_label">Correo enviado</string>
+    <string name="fg_verification_instruction">Ingresa el código aquí:</string>
+    <string name="fg_verification_context">Se ha enviado un código de verificación al correo que indicaste, en caso de que exista una cuenta vinculada.</string>
 </resources>

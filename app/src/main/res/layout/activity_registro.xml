@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:background="@drawable/shape_gradient_button"
-        android:text="Enviar"
+        android:text="@string/send"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -25,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintTop_toBottomOf="@+id/userTypeSpinner"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.204" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextText"
+        android:id="@+id/editNameSign"
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -64,7 +64,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextText2"
+        android:id="@+id/editLastnameSign"
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -73,7 +73,7 @@
         android:textColorHint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText">
+        app:layout_constraintTop_toBottomOf="@+id/editNameSign">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -83,7 +83,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextText3"
+        android:id="@+id/editCodeSign"
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -92,7 +92,7 @@
         android:textColorHint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2">
+        app:layout_constraintTop_toBottomOf="@+id/editLastnameSign">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -103,7 +103,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextText4"
+        android:id="@+id/editEmailSign"
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -112,7 +112,7 @@
         android:textColorHint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3">
+        app:layout_constraintTop_toBottomOf="@+id/editCodeSign">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -123,7 +123,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editPasswSign"
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -134,7 +134,7 @@
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4">
+        app:layout_constraintTop_toBottomOf="@+id/editEmailSign">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -145,7 +145,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/spinner"
+        android:id="@+id/userTypeSpinner"
         style="?attr/textInputFilledExposedDropdownMenuStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -155,7 +155,7 @@
         app:endIconTint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword">
+        app:layout_constraintTop_toBottomOf="@+id/editPasswSign">
 
         <AutoCompleteTextView
             android:layout_width="match_parent"

@@ -37,22 +37,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/img_bat" />
 
-
-    <TextView
-        android:id="@+id/loginLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/login_instruction"
-        android:textAlignment="textStart"
-        android:textColor="@color/letra_clara"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.352" />
-
     <TextView
         android:id="@+id/loginLabel2"
         android:layout_width="0dp"
@@ -69,8 +53,23 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/loginLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/login_instruction"
+        android:textAlignment="textStart"
+        android:textColor="@color/letra_clara"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.352" />
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextCodeLogin"
+        android:id="@+id/editCodeLogin"
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -90,7 +89,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextPasswordLogin"
+        android:id="@+id/editPasswLogin"
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -101,7 +100,7 @@
         app:endIconTint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextCodeLogin">
+        app:layout_constraintTop_toBottomOf="@+id/editCodeLogin">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -112,7 +111,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/forgotPassw"
+        android:id="@+id/forgotPasswButton"
         style="?attr/materialIconButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,10 +123,10 @@
         android:textColor="@color/morado_login"
         android:textStyle="bold"
         app:iconSize="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextPasswordLogin"
+        app:layout_constraintEnd_toEndOf="@+id/editPasswLogin"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextPasswordLogin"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordLogin" />
+        app:layout_constraintStart_toStartOf="@+id/editPasswLogin"
+        app:layout_constraintTop_toBottomOf="@+id/editPasswLogin" />
 
     <Button
         android:id="@+id/loginSigninButton"
@@ -167,7 +166,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgotPassw"
+        app:layout_constraintTop_toBottomOf="@+id/forgotPasswButton"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView

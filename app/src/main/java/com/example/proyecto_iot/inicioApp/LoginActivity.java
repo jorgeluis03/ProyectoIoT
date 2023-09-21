@@ -24,10 +24,9 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
             startActivity(intent);
         });
-        binding.forgotPassw.setOnClickListener(view -> {
-            // TODO: forgot password activity
-            //Intent intent = new Intent(LoginActivity.this, ForgotPasswActivity.class);
-            //startActivity(intent);
+        binding.forgotPasswButton.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, ForgotPasswActivity.class);
+            startActivity(intent);
         });
     }
 }
