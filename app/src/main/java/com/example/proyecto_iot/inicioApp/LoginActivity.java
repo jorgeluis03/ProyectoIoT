@@ -29,5 +29,8 @@ public class LoginActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
+        binding.loginButton.setOnClickListener(view -> {
+            //TODO: ingreso a alumno, delegado
+        });
     }
 }
