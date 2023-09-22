@@ -2,6 +2,7 @@ package com.example.proyecto_iot.inicioApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,15 @@ public class FPVerificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityFpverificationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.backButton4.setOnClickListener(view -> {
+            finish();
+        });
+
+        binding.forgPasswNext.setOnClickListener(view -> {
+            Intent intent = new Intent(FPVerificationActivity.this, ChangePasswActivity.class);
+            startActivity(intent);
+        });
 
         inputCode1 = binding.inputCode1;
         inputCode2 = binding.inputCode2;

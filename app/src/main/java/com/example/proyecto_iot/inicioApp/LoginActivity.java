@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         binding.forgotPasswButton.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, ForgotPasswActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
     }

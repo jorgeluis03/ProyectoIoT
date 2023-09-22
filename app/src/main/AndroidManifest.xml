@@ -13,10 +13,20 @@
         android:theme="@style/Theme.Proyecto_IoT"
         tools:targetApi="31">
         <activity
-            android:name=".inicioApp.FPVerificationActivity"
+            android:name=".inicioApp.ConfirmNewPasswActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Login"/>
+        <activity
+            android:name=".inicioApp.ChangePasswActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Login"/>
+        <activity
+            android:name=".inicioApp.FPVerificationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.ForgotPasswActivity"
             android:exported="false"

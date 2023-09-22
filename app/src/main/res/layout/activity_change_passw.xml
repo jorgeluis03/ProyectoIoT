@@ -7,10 +7,10 @@
     android:background="@drawable/shape_background2"
     android:paddingStart="30dp"
     android:paddingEnd="30dp"
-    tools:context=".inicioApp.ForgotPasswActivity">
+    tools:context=".inicioApp.ChangePasswActivity">
 
     <Button
-        android:id="@+id/backButton3"
+        android:id="@+id/backButton5"
         style="?attr/materialIconButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,6 +20,7 @@
         android:paddingTop="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
+
         app:icon="@drawable/icon_back"
         app:iconSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="120dp"
         android:layout_marginTop="24dp"
@@ -38,7 +39,7 @@
         app:srcCompat="@drawable/img_bat" />
 
     <TextView
-        android:id="@+id/forPasName"
+        android:id="@+id/changePasName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/nombre_grupo"
@@ -46,18 +47,18 @@
         android:textColor="@color/letra_clara"
         android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/forPasLabel"
+        app:layout_constraintBottom_toTopOf="@+id/changePasLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.733"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/forPasLabel"
+        android:id="@+id/changePasLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/forgot_passw"
+        android:text="@string/ch_passw_label"
         android:textAlignment="textStart"
         android:textColor="@color/letra_clara"
         android:textSize="25sp"
@@ -65,47 +66,72 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
         app:layout_constraintVertical_bias="0.41000003" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textView6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/forgot_passw_intruction"
+        android:text="@string/ch_passw_instruction"
         android:textAlignment="textStart"
         android:textColor="@color/letra_clara"
         android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forPasLabel"
+        app:layout_constraintTop_toBottomOf="@+id/changePasLabel"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editEmailForgPassw"
+        android:id="@+id/editNewPassw"
         style="?attr/textInputFilledStyle"
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginTop="20dp"
-        android:hint="@string/hint_email"
+        android:hint="@string/new_passw"
         android:textColorHint="@color/letra_clara"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/letra_clara"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
         app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_gradient_portatexto"
-            android:inputType="textEmailAddress" />
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editRepeatPassw"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/repeat_passw"
+        android:textColorHint="@color/letra_clara"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/letra_clara"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editNewPassw"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_gradient_portatexto"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/forgPasswNext"
+        android:id="@+id/changePasswNext"
         style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -119,11 +145,11 @@
         android:textSize="15sp"
         android:textStyle="bold"
         app:backgroundTint="@null"
-        android:paddingEnd="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editEmailForgPassw"
+        android:paddingEnd="6dp"
+        app:layout_constraintTop_toBottomOf="@+id/editRepeatPassw"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
