@@ -81,6 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/loginLabel">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_codigo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_gradient_portatexto"
@@ -103,6 +104,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editCodeLogin">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_contrasena"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_gradient_portatexto"

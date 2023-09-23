@@ -39,7 +39,7 @@
             android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.ConfirmarregistroActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Login" />
         <activity
