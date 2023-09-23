@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
+import com.example.proyecto_iot.delegadoGeneral.MainActivity;
 
 import java.util.HashMap;
 
@@ -21,9 +23,9 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        credencials.put("20203248", "messi");
-        credencials.put("20200643", "bicho");
-        credencials.put("20203554", "pipipi");
+        credencials.put("20203248", "messi"); // alumno
+        credencials.put("20200643", "bicho"); // delegado general
+        credencials.put("20203554", "pipipi"); // delegado actividad
 
         binding.backButton2.setOnClickListener(view -> {
             finish();
@@ -41,20 +43,21 @@ public class LoginActivity extends AppCompatActivity {
             String codigo = binding.inputCodigo.getText().toString();
             String contrasena = binding.inputContrasena.getText().toString();
             if (camposValidos(codigo, contrasena)){
-                Intent intent;
+                Intent intent = null;
                 if (codigo.equals("20203248") && contrasena.equals("messi")){
-                    //intent = new Intent(LoginActivity.this, )
+                    intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                 } else if (codigo.equals("20200643") && contrasena.equals("bicho")) {
-
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
                 } else if (codigo.equals("20203554") && contrasena.equals("pipipi")) {
-
+                    // TODO: agregar activity para delegado actividad
                 }
+                startActivity(intent);
             }
         });
     }
 
     boolean camposValidos(String codigo, String contrasena){
-        return codigo.equals("") && contrasena.equals("");
+        return !(codigo.equals("") && contrasena.equals(""));
     }
 
     void credencialesValidas(){
