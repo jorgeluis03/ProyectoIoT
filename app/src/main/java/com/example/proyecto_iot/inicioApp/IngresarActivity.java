@@ -10,6 +10,7 @@ import com.example.proyecto_iot.databinding.ActivityIngresarBinding;
 public class IngresarActivity extends AppCompatActivity {
 
     private ActivityIngresarBinding binding;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +18,13 @@ public class IngresarActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.buttonRegistrarme.setOnClickListener(view -> {
-            Intent intent = new Intent(IngresarActivity.this, RegistroActivity.class);
+            intent = new Intent(IngresarActivity.this, RegistroActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+
+        binding.buttonIniciarSesion.setOnClickListener(view -> {
+            intent = new Intent(IngresarActivity.this, LoginActivity.class);
             startActivity(intent);
         });
     }

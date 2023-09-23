@@ -10,4 +10,6 @@
     <color name="azul_login">#0F4BD9</color>
     <color name="morado_login">#2B1292</color>
     <color name="azul_background">#0A0E19</color>
+    <color name="transparent">#00000000</color>
+    <color name="letra_clara">#D2D8D5</color>
 </resources>

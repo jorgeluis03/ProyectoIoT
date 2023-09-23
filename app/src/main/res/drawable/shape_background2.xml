@@ -13,8 +13,9 @@
         android:type="linear"
         android:angle="-90"
         android:startColor="#00000000"
+        android:centerColor="#0054AB8F"
         android:endColor="#54AB8F"
-        android:centerColor="#0054AB8F"/>
+        android:centerX="0.3"/>
     </shape>
     </item>
 </layer-list>
