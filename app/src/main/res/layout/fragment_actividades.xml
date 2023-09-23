@@ -32,7 +32,7 @@
                         <ImageView
                             android:layout_width="76dp"
                             android:layout_height="76dp"
-                            android:src="@drawable/fuchibol"
+                            android:src="@drawable/img_fuchibol"
                             android:layout_gravity="center_vertical|start"
                             android:scaleType="centerCrop"/>
 
@@ -58,7 +58,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/person_add_alt_1_24"
+                                app:icon="@drawable/icon_add_person"
                                 android:text=" Asignar delegado"
                                 android:backgroundTint="@color/verde"
 
@@ -77,7 +77,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/more_options_24"
+                                app:icon="@drawable/icon_more_options"
                                 android:backgroundTint="@color/white"
                                 />
 
@@ -105,7 +105,7 @@
                         <ImageView
                             android:layout_width="76dp"
                             android:layout_height="76dp"
-                            android:src="@drawable/fuchibol"
+                            android:src="@drawable/img_fuchibol"
                             android:layout_gravity="center_vertical|start"
                             android:scaleType="centerCrop"/>
 
@@ -131,7 +131,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/person_add_alt_1_24"
+                                app:icon="@drawable/icon_add_person"
                                 android:text=" Asignar delegado"
                                 android:backgroundTint="@color/verde"
 
@@ -150,7 +150,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/more_options_24"
+                                app:icon="@drawable/icon_more_options"
                                 android:backgroundTint="@color/white"
                                 />
 
@@ -178,7 +178,7 @@
                         <ImageView
                             android:layout_width="76dp"
                             android:layout_height="76dp"
-                            android:src="@drawable/fuchibol"
+                            android:src="@drawable/img_fuchibol"
                             android:layout_gravity="center_vertical|start"
                             android:scaleType="centerCrop"/>
 
@@ -204,7 +204,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/person_add_alt_1_24"
+                                app:icon="@drawable/icon_add_person"
                                 android:text=" Asignar delegado"
                                 android:backgroundTint="@color/verde"
 
@@ -223,7 +223,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/more_options_24"
+                                app:icon="@drawable/icon_more_options"
                                 android:backgroundTint="@color/white"
                                 />
 
@@ -251,7 +251,7 @@
                         <ImageView
                             android:layout_width="76dp"
                             android:layout_height="76dp"
-                            android:src="@drawable/fuchibol"
+                            android:src="@drawable/img_fuchibol"
                             android:layout_gravity="center_vertical|start"
                             android:scaleType="centerCrop"/>
 
@@ -277,7 +277,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/person_add_alt_1_24"
+                                app:icon="@drawable/icon_add_person"
                                 android:text=" Asignar delegado"
                                 android:backgroundTint="@color/verde"
 
@@ -296,7 +296,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/more_options_24"
+                                app:icon="@drawable/icon_more_options"
                                 android:backgroundTint="@color/white"
                                 />
 
@@ -324,7 +324,7 @@
                         <ImageView
                             android:layout_width="76dp"
                             android:layout_height="76dp"
-                            android:src="@drawable/fuchibol"
+                            android:src="@drawable/img_fuchibol"
                             android:layout_gravity="center_vertical|start"
                             android:scaleType="centerCrop"/>
 
@@ -350,7 +350,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/person_add_alt_1_24"
+                                app:icon="@drawable/icon_add_person"
                                 android:text=" Asignar delegado"
                                 android:backgroundTint="@color/verde"
 
@@ -369,7 +369,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/more_options_24"
+                                app:icon="@drawable/icon_more_options"
                                 android:backgroundTint="@color/white"
                                 />
 
@@ -397,7 +397,7 @@
                         <ImageView
                             android:layout_width="76dp"
                             android:layout_height="76dp"
-                            android:src="@drawable/fuchibol"
+                            android:src="@drawable/img_fuchibol"
                             android:layout_gravity="center_vertical|start"
                             android:scaleType="centerCrop"/>
 
@@ -423,7 +423,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/person_add_alt_1_24"
+                                app:icon="@drawable/icon_add_person"
                                 android:text=" Asignar delegado"
                                 android:backgroundTint="@color/verde"
 
@@ -442,7 +442,7 @@
                                 style="?attr/materialIconButtonFilledTonalStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:icon="@drawable/more_options_24"
+                                app:icon="@drawable/icon_more_options"
                                 android:backgroundTint="@color/white"
                                 />
 
@@ -467,7 +467,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="5dp"
-        android:src="@drawable/circle_plus_solid"
+        android:src="@drawable/icon_circle_plus_solid"
         app:maxImageSize="40dp" />
 
 

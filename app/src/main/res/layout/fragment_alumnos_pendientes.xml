@@ -32,7 +32,7 @@
                     <ImageView
                         android:layout_width="56dp"
                         android:layout_height="56dp"
-                        android:src="@drawable/user_por_defecto"
+                        android:src="@drawable/img_default_user"
                         android:layout_gravity="start"
                         android:scaleType="centerCrop"/>
 
@@ -77,14 +77,14 @@
                             style="?attr/materialIconButtonFilledTonalStyle"
 
                             android:layout_width="wrap_content"
-                            app:icon="@drawable/delete_forever_24"
+                            app:icon="@drawable/icon_trash_solid"
                             android:layout_height="wrap_content"
                             />
                         <Button
                             style="?attr/materialIconButtonFilledTonalStyle"
 
                             android:layout_width="wrap_content"
-                            app:icon="@drawable/check_24"
+                            app:icon="@drawable/icon_check"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/verde"
                             />
@@ -104,7 +104,7 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/user_por_defecto"
+                    android:src="@drawable/img_default_user"
                     android:layout_gravity="start"
                     android:scaleType="centerCrop"/>
 
@@ -149,14 +149,14 @@
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/delete_forever_24"
+                        app:icon="@drawable/icon_trash_solid"
                         android:layout_height="wrap_content"
                         />
                     <Button
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/check_24"
+                        app:icon="@drawable/icon_check"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/verde"
                         />
@@ -176,7 +176,7 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/user_por_defecto"
+                    android:src="@drawable/img_default_user"
                     android:layout_gravity="start"
                     android:scaleType="centerCrop"/>
 
@@ -221,14 +221,14 @@
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/delete_forever_24"
+                        app:icon="@drawable/icon_trash_solid"
                         android:layout_height="wrap_content"
                         />
                     <Button
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/check_24"
+                        app:icon="@drawable/icon_check"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/verde"
                         />
@@ -248,7 +248,7 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/user_por_defecto"
+                    android:src="@drawable/img_default_user"
                     android:layout_gravity="start"
                     android:scaleType="centerCrop"/>
 
@@ -293,14 +293,14 @@
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/delete_forever_24"
+                        app:icon="@drawable/icon_trash_solid"
                         android:layout_height="wrap_content"
                         />
                     <Button
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/check_24"
+                        app:icon="@drawable/icon_check"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/verde"
                         />
@@ -320,7 +320,7 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/user_por_defecto"
+                    android:src="@drawable/img_default_user"
                     android:layout_gravity="start"
                     android:scaleType="centerCrop"/>
 
@@ -365,14 +365,14 @@
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/delete_forever_24"
+                        app:icon="@drawable/icon_trash_solid"
                         android:layout_height="wrap_content"
                         />
                     <Button
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/check_24"
+                        app:icon="@drawable/icon_check"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/verde"
                         />
@@ -392,7 +392,7 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/user_por_defecto"
+                    android:src="@drawable/img_default_user"
                     android:layout_gravity="start"
                     android:scaleType="centerCrop"/>
 
@@ -437,14 +437,14 @@
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/delete_forever_24"
+                        app:icon="@drawable/icon_trash_solid"
                         android:layout_height="wrap_content"
                         />
                     <Button
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/check_24"
+                        app:icon="@drawable/icon_check"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/verde"
                         />
@@ -464,7 +464,7 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/user_por_defecto"
+                    android:src="@drawable/img_default_user"
                     android:layout_gravity="start"
                     android:scaleType="centerCrop"/>
 
@@ -509,14 +509,14 @@
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/delete_forever_24"
+                        app:icon="@drawable/icon_trash_solid"
                         android:layout_height="wrap_content"
                         />
                     <Button
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/check_24"
+                        app:icon="@drawable/icon_check"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/verde"
                         />
@@ -536,7 +536,7 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/user_por_defecto"
+                    android:src="@drawable/img_default_user"
                     android:layout_gravity="start"
                     android:scaleType="centerCrop"/>
 
@@ -581,14 +581,14 @@
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/delete_forever_24"
+                        app:icon="@drawable/icon_trash_solid"
                         android:layout_height="wrap_content"
                         />
                     <Button
                         style="?attr/materialIconButtonFilledTonalStyle"
 
                         android:layout_width="wrap_content"
-                        app:icon="@drawable/check_24"
+                        app:icon="@drawable/icon_check"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/verde"
                         />

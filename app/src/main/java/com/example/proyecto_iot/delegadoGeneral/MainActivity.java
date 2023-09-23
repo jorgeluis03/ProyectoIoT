@@ -12,10 +12,6 @@ import android.view.MenuItem;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityMainBinding;
-import com.example.proyecto_iot.delegadoGeneral.ActividadesFragment;
-import com.example.proyecto_iot.delegadoGeneral.AlumnosFragment;
-import com.example.proyecto_iot.delegadoGeneral.EstadisticasFragment;
-import com.example.proyecto_iot.delegadoGeneral.NorificacionFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,34 +37,34 @@ public class MainActivity extends AppCompatActivity {
                  int itemID = item.getItemId();
                 if(itemID == R.id.page_1){
                     replaceFragment(actividadesFragment);
-                    item.setIcon(R.drawable.home_dark);
-                    binding.bottomNavigation.getMenu().findItem(R.id.page_2).setIcon(R.drawable.users_line);
-                    binding.bottomNavigation.getMenu().findItem(R.id.page_3).setIcon(R.drawable.notific_line);
-                    binding.bottomNavigation.getMenu().findItem(R.id.page_4).setIcon(R.drawable.statistic_line);
+                    item.setIcon(R.drawable.icon_home_solid);
+                    binding.bottomNavigation.getMenu().findItem(R.id.page_2).setIcon(R.drawable.icon_users_outline);
+                    binding.bottomNavigation.getMenu().findItem(R.id.page_3).setIcon(R.drawable.icon_bell_outline);
+                    binding.bottomNavigation.getMenu().findItem(R.id.page_4).setIcon(R.drawable.icon_statistic_outline);
                     return true;
                 }
                  if(itemID == R.id.page_2){
                      replaceFragment(new AlumnosFragment());
-                     item.setIcon(R.drawable.users_dark);
-                     binding.bottomNavigation.getMenu().findItem(R.id.page_1).setIcon(R.drawable.home_line);
-                     binding.bottomNavigation.getMenu().findItem(R.id.page_3).setIcon(R.drawable.notific_line);
-                     binding.bottomNavigation.getMenu().findItem(R.id.page_4).setIcon(R.drawable.statistic_line);
+                     item.setIcon(R.drawable.icon_users_solid);
+                     binding.bottomNavigation.getMenu().findItem(R.id.page_1).setIcon(R.drawable.icon_home_outline);
+                     binding.bottomNavigation.getMenu().findItem(R.id.page_3).setIcon(R.drawable.icon_bell_outline);
+                     binding.bottomNavigation.getMenu().findItem(R.id.page_4).setIcon(R.drawable.icon_statistic_outline);
                      return true;
                  }
                 if(itemID == R.id.page_3){
                     replaceFragment(norificacionFragment);
-                    item.setIcon(R.drawable.notific_dark);
-                    binding.bottomNavigation.getMenu().findItem(R.id.page_2).setIcon(R.drawable.users_line);
-                    binding.bottomNavigation.getMenu().findItem(R.id.page_1).setIcon(R.drawable.home_line);
-                    binding.bottomNavigation.getMenu().findItem(R.id.page_4).setIcon(R.drawable.statistic_line);
+                    item.setIcon(R.drawable.icon_bell_solid);
+                    binding.bottomNavigation.getMenu().findItem(R.id.page_2).setIcon(R.drawable.icon_users_outline);
+                    binding.bottomNavigation.getMenu().findItem(R.id.page_1).setIcon(R.drawable.icon_home_outline);
+                    binding.bottomNavigation.getMenu().findItem(R.id.page_4).setIcon(R.drawable.icon_statistic_outline);
                     return true;
                 }
                 if(itemID == R.id.page_4){
                     replaceFragment(new EstadisticasFragment());
-                    item.setIcon(R.drawable.statistic_dark);
-                    binding.bottomNavigation.getMenu().findItem(R.id.page_2).setIcon(R.drawable.users_line);
-                    binding.bottomNavigation.getMenu().findItem(R.id.page_3).setIcon(R.drawable.notific_line);
-                    binding.bottomNavigation.getMenu().findItem(R.id.page_1).setIcon(R.drawable.home_line);
+                    item.setIcon(R.drawable.icon_statistic_solid);
+                    binding.bottomNavigation.getMenu().findItem(R.id.page_2).setIcon(R.drawable.icon_users_outline);
+                    binding.bottomNavigation.getMenu().findItem(R.id.page_3).setIcon(R.drawable.icon_bell_outline);
+                    binding.bottomNavigation.getMenu().findItem(R.id.page_1).setIcon(R.drawable.icon_home_outline);
                     return true;
                 }
 

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_background2"
+    android:paddingStart="30dp"
+    android:paddingEnd="30dp"
+    tools:context=".inicioApp.LoginActivity">
+
+    <Button
+        android:id="@+id/backButton2"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:insetLeft="0dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        app:icon="@drawable/icon_back"
+        app:iconSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_bat" />
+
+    <TextView
+        android:id="@+id/loginLabel2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/nombre_grupo"
+        android:textAlignment="center"
+        android:textColor="@color/letra_clara"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/loginLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.733"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/loginLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/login_instruction"
+        android:textAlignment="textStart"
+        android:textColor="@color/letra_clara"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.352" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editCodeLogin"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/hint_code"
+        android:textColorHint="@color/letra_clara"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginLabel">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_codigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_gradient_portatexto"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editPasswLogin"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/hint_passw"
+        android:textColorHint="@color/letra_clara"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/letra_clara"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editCodeLogin">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_contrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_gradient_portatexto"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/forgotPasswButton"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:insetLeft="0dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/forgot_passw"
+        android:textAlignment="textEnd"
+        android:textColor="@color/morado_login"
+        android:textStyle="bold"
+        app:iconSize="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/editPasswLogin"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/editPasswLogin"
+        app:layout_constraintTop_toBottomOf="@+id/editPasswLogin" />
+
+    <Button
+        android:id="@+id/loginSigninButton"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:insetLeft="0dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:text="@string/login_signin_option"
+        android:textColor="@color/morado_login"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:iconSize="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginLabel3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/loginButton"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_gradient_button"
+        android:text="@string/main_iniciar_sesion"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgotPasswButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/loginLabel3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/context_signin"
+        android:textAlignment="center"
+        android:textColor="@color/letra_clara"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="1dp"
+        android:background="@color/letra_clara"
+        app:layout_constraintBottom_toBottomOf="@+id/loginLabel3"
+        app:layout_constraintEnd_toStartOf="@+id/loginLabel3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/loginLabel3"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="80dp"
+        android:layout_height="1dp"
+        android:background="@color/letra_clara"
+        app:layout_constraintBottom_toBottomOf="@+id/loginLabel3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/loginLabel3"
+        app:layout_constraintTop_toTopOf="@+id/loginLabel3"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
