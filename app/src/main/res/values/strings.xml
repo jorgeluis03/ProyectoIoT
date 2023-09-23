@@ -3,14 +3,20 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- LOGIN -->
-    <string name="nombre_grupo">Activi Connect</string>
-    <string name="login_titulo">Bienvenido a tu app de Semana</string>
-    <string name="login_texto">Hola Panda, regístrate para tener acceso a todos los eventos de tu facu. O inicia sesión en caso tengas una cuenta.</string>
-    <string name="login_iniciar_sesion">Iniciar sesión</string>
-    <string name="login_registrarse">Registrarme</string>
+    <string name="back">Regresar</string>
+    <string name="next">Continuar</string>
 
-    <!-- REGISTRARSE -->
+
+    <!-- MAIN(ingresar) -->
+    <string name="nombre_grupo">Activi Connect</string>
+    <string name="main_titulo">Bienvenido a tu app de Semana</string>
+    <string name="main_texto">Hola Panda, regístrate para tener acceso a todos los eventos de tu facu. O inicia sesión en caso tengas una cuenta.</string>
+    <string name="main_iniciar_sesion">Iniciar sesión</string>
+    <string name="main_registrarse">Registrarme</string>
+
+    <!-- SIGNIN -->
+    <string name="signin_instruction">Completa tus datos para continuar:</string>
+    <string name="send">Enviar</string>
     <string-array name="tipo_usuario">
         <item name="estudiante" type="string">Estudiante</item>
         <item name="egresado" type="string">Egresado</item>
@@ -22,4 +28,42 @@
     <string name="perfil_contrasena">Contraseña</string>
     <string name="perfil_sesion_texto">Sesión</string>
     <string name="perfil_sesion">Cerrar sesión</string>
+
+    <!-- hints -->
+    <string name="hint_name">Nombres</string>
+    <string name="hint_lastname">Apellidos</string>
+    <string name="hint_code">Código PUCP</string>
+    <string name="hint_email">Correo</string>
+    <string name="hint_passw">Contraseña</string>
+    <string name="hint_user_type">Tipo de usuario</string>
+
+
+    <!-- SIGNIN CONFIRMATION -->
+    <string name="conf_sign_title">Registro recibido</string>
+    <string name="conf_sign_text">Gracias por registrarte, un delegado se encargará de verificar tu información para brindarte acceso. Te notificaremos por correo cuando puedas ingresar a la app.</string>
+
+    <!-- LOGIN -->
+    <string name="login_instruction">Ingresa tus credenciales:</string>
+    <string name="forgot_passw">¿Olvidaste tu contraseña?</string>
+    <string name="context_signin">o si no tienes una cuenta</string>
+    <string name="login_signin_option">Regístrate aquí</string>
+
+    <!-- FORGOT PASSW -->
+    <string name="forgot_passw_intruction">Ingresa el correo vinculado a tu cuenta:</string>
+    <!-- VERIFICATION CODE -->
+    <string name="fg_verification_label">Correo enviado</string>
+    <string name="fg_verification_instruction">Ingresa el código aquí:</string>
+    <string name="fg_verification_context">Se ha enviado un código de verificación al correo que indicaste, en caso de que exista una cuenta vinculada.</string>
+
+    <!-- CHANGE PASSW -->
+    <string name="ch_passw_label">Cambio de contraseña</string>
+    <string name="ch_passw_instruction">Debes ingresar tu nueva contraseña para actualizar tus credenciales:</string>
+    <string name="new_passw">Nueva contraseña</string>
+    <string name="repeat_passw">Repetir nueva contraseña</string>
+    <!-- CONFIRMATION -->
+    <string name="conf_label">Credenciales actualizadas</string>
+    <string name="conf_context">Felicidades, hemos actualizado tu contraseña para que sigas disfrutando de la Semana con todas las actulizaciones y eventos.</string>
+    <string name="conf_option1">Ir al inicio de sesión</string>
+    <string name="conf_option2">Volver a la pantalla principal</string>
+
 </resources>
