@@ -28,6 +28,9 @@
     <string name="perfil_contrasena">Contraseña</string>
     <string name="perfil_sesion_texto">Sesión</string>
     <string name="perfil_sesion">Cerrar sesión</string>
+    <string name="perfil_contrasena2">Nueva contraseña</string>
+    <string name="perfil_contrasena3">Repetir contraseña</string>
+    <string name="perfil_contrasena_guardar">Guardar contraseña</string>
 
     <!-- hints -->
     <string name="hint_name">Nombres</string>

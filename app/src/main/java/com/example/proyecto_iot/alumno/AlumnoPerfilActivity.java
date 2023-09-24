@@ -2,6 +2,7 @@ package com.example.proyecto_iot.alumno;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilBinding;
@@ -16,6 +17,9 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         binding = ActivityAlumnoPerfilBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
+        binding.buttonEditarPerfil.setOnClickListener(view -> {
+            Intent intent = new Intent(AlumnoPerfilActivity.this, AlumnoPerfilEditarActivity.class);
+            startActivity(intent);
+        });
     }
 }

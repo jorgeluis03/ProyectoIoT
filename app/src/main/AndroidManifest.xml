@@ -13,28 +13,33 @@
         android:theme="@style/Theme.Proyecto_IoT"
         tools:targetApi="31">
         <activity
+            android:name=".alumno.AlumnoPerfilEditarActivity"
+            android:exported="false"
+            android:theme="@style/Alumno"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".alumno.AlumnoInicioTodos"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".alumno.AlumnoInicioActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".alumno.AlumnoPerfilActivity"
             android:exported="false"
-            android:theme="@style/Alumno"/>
-
+            android:theme="@style/Alumno"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".inicioApp.ConfirmNewPasswActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Login"/>
+            android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.ChangePasswActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Login"/>
+            android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.FPVerificationActivity"
             android:exported="false"
