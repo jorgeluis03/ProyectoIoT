@@ -16,4 +16,11 @@
         <item name="android:screenOrientation">portrait</item>
     </style>
 
+    <style name="Alumno" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:background">#0A0E19</item>
+        <item name="android:fontFamily">@font/nunito_sans</item>
+        <item name="colorPrimary">#0A0E19</item>
+        <item name="android:screenOrientation">portrait</item>
+    </style>
+
 </resources>
