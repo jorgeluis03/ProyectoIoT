@@ -18,6 +18,11 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.buttonEditarPerfil.setOnClickListener(view -> {
+            Intent intent = new Intent(AlumnoPerfilActivity.this, AlumnoPerfilEditarActivity.class);
+            startActivity(intent);
+        });
+
+        binding.buttonContrasena.setOnClickListener(view -> {
             Intent intent = new Intent(AlumnoPerfilActivity.this, AlumnoPerfilContrasenaActivity.class);
             startActivity(intent);
         });

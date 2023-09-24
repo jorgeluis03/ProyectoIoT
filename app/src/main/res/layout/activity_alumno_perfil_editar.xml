@@ -4,81 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".alumno.AlumnoPerfilContrasenaActivity">
+    tools:context=".alumno.AlumnoPerfilEditarActivity">
 
     <EditText
-        android:id="@+id/inputContrasena1"
+        android:id="@+id/inputNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/input_alumno_perfil"
         android:ems="10"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:textColor="@color/letra_clara"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintVertical_bias="0.44" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/perfil_contrasena"
-        app:layout_constraintBottom_toTopOf="@+id/inputContrasena1"
+        android:text="@string/perfil_editar_nombre"
+        app:layout_constraintBottom_toTopOf="@+id/inputNombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/inputContrasena1" />
+        app:layout_constraintStart_toStartOf="@+id/inputNombre" />
 
     <EditText
-        android:id="@+id/inputContrasena2"
+        android:id="@+id/inputApellido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/input_alumno_perfil"
         android:ems="10"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:textColor="@color/letra_clara"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputContrasena1" />
+        app:layout_constraintTop_toBottomOf="@+id/inputNombre" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/perfil_contrasena2"
-        app:layout_constraintBottom_toTopOf="@+id/inputContrasena2"
+        android:text="@string/perfil_editar_apellidos"
+        app:layout_constraintBottom_toTopOf="@+id/inputApellido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/inputContrasena2" />
-
-    <EditText
-        android:id="@+id/inputContrasena3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/input_alumno_perfil"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="@color/letra_clara"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputContrasena2" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/perfil_contrasena3"
-        app:layout_constraintBottom_toTopOf="@+id/inputContrasena3"
-        app:layout_constraintStart_toStartOf="@+id/inputContrasena3" />
+        app:layout_constraintStart_toStartOf="@+id/inputApellido" />
 
     <Button
         android:id="@+id/button2"
@@ -86,13 +63,49 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:background="@drawable/button_alumno_perfil_guardar"
-        android:text="@string/perfil_contrasena_guardar"
+        android:text="@string/perfil_editar_guardar"
         android:textSize="16sp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputContrasena3"
+        app:layout_constraintTop_toBottomOf="@+id/inputApellido"
         app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/inputNombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/button3"
+        style="?attr/materialIconButtonFilledStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="104dp"
+        android:backgroundTint="#222A3F"
+        app:icon="@drawable/icon_trash"
+        app:layout_constraintEnd_toEndOf="@+id/imageView8"
+        app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+    <Button
+        android:id="@+id/button4"
+        style="?attr/materialIconButtonFilledStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="#222A3F"
+        app:icon="@drawable/icon_pencil"
+        app:layout_constraintStart_toStartOf="@+id/imageView8"
+        app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
