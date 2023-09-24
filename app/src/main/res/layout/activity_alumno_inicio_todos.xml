@@ -4,100 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".alumno.Alumno_Inicio_Todos">
+    android:background="#FFFFFF"
+    tools:context=".alumno.AlumnoInicioTodos">
 
-    <!-- Primera capa: Botón de perfil, Logo, Lupa -->
 
-    <!-- Segunda capa: Selector "Todos" y "Personal" -->
-
-    <!-- Tercera capa: RecyclerView -->
-
-    <!-- Cuarta capa: Menú de navegación inferior -->
-    <!-- Aquí puedes añadir un BottomNavigationView o diseñarlo con botones, lo que prefieras -->
-    <LinearLayout
-        android:id="@+id/topLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <FrameLayout
+        android:id="@+id/topFragmentContainer"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/profileButton"
-            android:layout_width="19dp"
-            android:layout_height="15dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/icon_bell_outline" />
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="275dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_bat_foreground" />
-
-        <ImageButton
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_search" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/SecondLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topLayout">
-
-        <TextView
-            android:id="@+id/txtTodos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="64dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="8dp"
-            android:text="Todos"
-            android:textDecorationLine="underline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileButton" />
-
-        <TextView
-            android:id="@+id/txtPersonal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="8dp"
-            android:text="Personal"
-            app:layout_constraintStart_toEndOf="@+id/txtTodos"
-            app:layout_constraintTop_toBottomOf="@+id/profileButton" />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"></FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_recycler_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
-        app:layout_constraintTop_toBottomOf="@+id/SecondLayout"
-        tools:layout_editor_absoluteX="-40dp"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayoutContainer"></androidx.recyclerview.widget.RecyclerView>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/bottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <!-- Contenido del menú -->
-    </androidx.appcompat.widget.Toolbar>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="95dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/bottomFragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></FrameLayout>
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tabLayoutContainer"
+        android:name="com.example.proyecto_iot.alumno.PackageAlumnoFragment"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topFragmentContainer">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabGravity="center"
+            app:tabIconTint="@color/azul_background"
+            app:tabIndicatorAnimationDuration="600"
+            app:tabIndicatorColor="#000000"
+            app:tabIndicatorGravity="bottom"
+            app:tabIndicatorHeight="4dp"
+            app:tabMode="fixed"
+            app:tabPaddingEnd="40dp"
+            app:tabPaddingStart="40dp"
+            app:tabTextColor="#BA000000">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/alumnos_todos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Todos"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/alumnos_apoyando"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Apoyando"
+                tools:layout_editor_absoluteX="145dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+        </com.google.android.material.tabs.TabLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
