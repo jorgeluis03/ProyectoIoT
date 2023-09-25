@@ -15,7 +15,7 @@ import java.util.List;
 
 public class AlumnoNotificacionesActivity extends AppCompatActivity {
 
-    private List<Notificacion> notificacionList = new ArrayList<>();
+    private ArrayList<Notificacion> notificacionList = new ArrayList<>();
     private ActivityAlumnoNotificacionesBinding binding;
 
     @Override
@@ -24,6 +24,7 @@ public class AlumnoNotificacionesActivity extends AppCompatActivity {
         binding = ActivityAlumnoNotificacionesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // notificaciones hardcodeadas
         notificacionList.add(new Notificacion("Evento de Semana de Ingeniería - Cristiano Donaldo ha enviado un nuevo mensaje al chat", "hace 2h"));
         notificacionList.add(new Notificacion("Otro evento de Semana de Ingeiería - Kike Ramos ha añadido una nueva foto al evento", "hace 8h"));
         notificacionList.add(new Notificacion("Donaciones - Su registro de donación ha sido aceptado", "hace 2d"));

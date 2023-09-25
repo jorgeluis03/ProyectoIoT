@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".alumno.AlumnoInicio">
-
+    tools:context=".alumno.AlumnoInicioActivity">
 
     <FrameLayout
         android:id="@+id/topFragmentContainer"
@@ -21,7 +19,7 @@
         app:layout_constraintVertical_bias="0.0"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/rvEventos"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:scrollbars="vertical"
