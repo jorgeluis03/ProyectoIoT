@@ -24,7 +24,10 @@ public class NorificacionFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
             Toolbar toolbar = activity.findViewById(R.id.toolbar);
-            toolbar.setVisibility(View.GONE);
+            // Comprobar si el toolbar no es nulo
+            if (toolbar != null) {
+                toolbar.setVisibility(View.GONE);
+            }
         }
 
         return rootView;
