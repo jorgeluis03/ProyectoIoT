@@ -13,9 +13,19 @@
         android:theme="@style/Theme.Proyecto_IoT"
         tools:targetApi="31">
         <activity
+            android:name=".alumno.AlumnoNotificacionesActivity"
+            android:exported="true"
+            android:theme="@style/Alumno">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".alumno.AlumnoPerfilEditarActivity"
             android:exported="false"
-            android:theme="@style/Alumno"/>
+            android:theme="@style/Alumno" />
         <activity
             android:name=".alumno.AlumnoPerfilContrasenaActivity"
             android:exported="false"
@@ -24,7 +34,8 @@
         <activity
             android:name=".alumno.AlumnoInicioTodos"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Alumno" />
         <activity
             android:name=".alumno.AlumnoInicioActivity"
             android:exported="false"
@@ -71,14 +82,9 @@
             android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.IngresarActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".delegadoGeneral.MainActivity"

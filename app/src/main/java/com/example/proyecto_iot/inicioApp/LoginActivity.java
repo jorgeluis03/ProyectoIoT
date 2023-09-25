@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
+import com.example.proyecto_iot.alumno.AlumnoInicioTodos;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
 import com.example.proyecto_iot.delegadoGeneral.MainActivity;
 
@@ -45,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
             if (camposValidos(codigo, contrasena)){
                 Intent intent = null;
                 if (codigo.equals("20203248") && contrasena.equals("messi")){
-                    intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                    intent = new Intent(LoginActivity.this, AlumnoInicioTodos.class);
                 } else if (codigo.equals("20200643") && contrasena.equals("bicho")) {
                     intent = new Intent(LoginActivity.this, MainActivity.class);
                 } else if (codigo.equals("20203554") && contrasena.equals("pipipi")) {

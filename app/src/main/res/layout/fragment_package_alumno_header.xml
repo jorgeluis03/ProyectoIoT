@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,16 +15,17 @@
         android:orientation="horizontal">
 
 
-        <ImageButton
+        <Button
             android:id="@+id/profileButton"
-            android:layout_width="57dp"
-            android:layout_height="61dp"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:adjustViewBounds="true"
-            android:background="?android:selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
-            android:src="@drawable/icon_user" />
+            app:icon="@drawable/icon_user"
+            app:iconSize="36dp" />
 
         <ImageView
             android:id="@+id/logo"
@@ -32,12 +34,14 @@
             android:layout_weight="1"
             android:src="@drawable/icon_bat" />
 
-        <ImageButton
+        <Button
             android:id="@+id/searchButton"
+            style="?attr/materialIconButtonStyle"
             android:layout_width="75dp"
             android:layout_height="59dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/icon_search" />
+            app:icon="@drawable/icon_search"
+            app:iconSize="36dp" />
     </LinearLayout>
 </FrameLayout>
