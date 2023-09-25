@@ -37,7 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fragmentHeader"
         app:layout_constraintVertical_bias="0.25"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -93,5 +93,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonContrasena"
         app:layout_constraintVertical_bias="0.17000002" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentHeader"
+        android:name="com.example.proyecto_iot.alumno.AlumnoHeader1Fragment"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_alumno_header1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilBinding;
 
 public class AlumnoPerfilActivity extends AppCompatActivity {
@@ -16,6 +17,13 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAlumnoPerfilBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Bundle bundle = new Bundle();
+        bundle.putString("header", "Perfil");
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.fragmentHeader, AlumnoHeader1Fragment.class, bundle)
+                .commit();
 
         binding.buttonEditarPerfil.setOnClickListener(view -> {
             Intent intent = new Intent(AlumnoPerfilActivity.this, AlumnoPerfilEditarActivity.class);
