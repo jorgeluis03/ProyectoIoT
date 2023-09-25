@@ -1,5 +1,7 @@
 package com.example.proyecto_iot.alumno;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.graphics.Typeface;
 import android.widget.TextView;
@@ -17,6 +19,11 @@ public class AlumnoInicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Cambiar el color de la barra de estado aquí
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.parseColor("#0A0E19"));
+        }
         setContentView(R.layout.activity_alumno_inicio);
 
         // Obtén una referencia al TabLayout

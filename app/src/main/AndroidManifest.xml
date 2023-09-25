@@ -29,12 +29,8 @@
         <activity
             android:name=".alumno.AlumnoInicio"
             android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Alumno" />
-        <activity
-            android:name=".alumno.AlumnoInicioActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+            <!--cambio aqui arriba -->
         <activity
             android:name=".alumno.AlumnoPerfilActivity"
             android:exported="false"
