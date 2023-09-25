@@ -22,6 +22,10 @@ public class AlumnoHeader1Fragment extends Fragment {
         //Bundle bundle = requireArguments();
         //String header = bundle.getString("header", "nothing");
         //binding.textHeader.setText(header);
+
+        binding.buttonBack.setOnClickListener(view -> {
+            getActivity().finish();
+        });
         return binding.getRoot();
     }
 }

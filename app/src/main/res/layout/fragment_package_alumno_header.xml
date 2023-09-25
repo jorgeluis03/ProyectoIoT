@@ -19,29 +19,36 @@
             android:id="@+id/profileButton"
             style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             app:icon="@drawable/icon_user"
-            app:iconSize="36dp" />
+            app:iconSize="36dp"
+            app:iconTint="@color/white" />
 
-        <ImageView
+        <Button
             android:id="@+id/logo"
-            android:layout_width="267dp"
-            android:layout_height="match_parent"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
             android:layout_weight="1"
-            android:src="@drawable/icon_bat" />
+            app:icon="@drawable/icon_bat"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="64dp"
+            app:iconTint="@color/white" />
 
         <Button
             android:id="@+id/searchButton"
             style="?attr/materialIconButtonStyle"
-            android:layout_width="75dp"
-            android:layout_height="59dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             app:icon="@drawable/icon_search"
-            app:iconSize="36dp" />
+            app:iconSize="36dp"
+            app:iconTint="@color/white" />
     </LinearLayout>
 </FrameLayout>

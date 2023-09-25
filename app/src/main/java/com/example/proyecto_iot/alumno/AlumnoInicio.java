@@ -12,12 +12,12 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.tabs.TabLayout;
 import com.example.proyecto_iot.R;
 
-public class AlumnoInicioTodos extends AppCompatActivity {
+public class AlumnoInicio extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alumno_inicio_todos);
+        setContentView(R.layout.activity_alumno_inicio);
 
         // Obtén una referencia al TabLayout
         TabLayout tabLayout = findViewById(R.id.tabLayout);

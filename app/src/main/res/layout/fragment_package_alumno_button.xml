@@ -21,7 +21,8 @@
             android:layout_weight="1"
             app:icon="@drawable/icon_house_outline"
             app:iconGravity="textStart"
-            app:iconSize="32dp" />
+            app:iconSize="32dp"
+            app:iconTint="@color/white" />
 
         <Button
             style="?attr/materialIconButtonStyle"
@@ -30,7 +31,8 @@
             android:layout_weight="1"
             app:icon="@drawable/icon_bell_outline"
             app:iconGravity="textStart"
-            app:iconSize="32dp" />
+            app:iconSize="32dp"
+            app:iconTint="@color/white" />
 
         <Button
             style="?attr/materialIconButtonStyle"
@@ -39,6 +41,7 @@
             android:layout_weight="1"
             app:icon="@drawable/icon_heart_outline"
             app:iconGravity="textStart"
-            app:iconSize="32dp" />
+            app:iconSize="32dp"
+            app:iconTint="@color/white" />
     </LinearLayout>
 </FrameLayout>
