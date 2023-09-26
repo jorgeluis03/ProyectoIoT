@@ -18,15 +18,6 @@
         app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.proyecto_iot.delegadoGeneral.NorificacionFragment"
-        android:layout_width="407dp"
-        android:layout_height="123dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView2"
         android:name="com.example.proyecto_iot.alumno.Fragments.PackageAlumnoButtonFragment"
         android:layout_width="0dp"

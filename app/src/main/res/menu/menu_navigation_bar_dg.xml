@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dg_actividadesFragment"
+        android:enabled="true"
+        android:icon="@drawable/icon_home_solid"
+        android:title="Actividades"/>
+    <item
+        android:id="@+id/dg_alumnosFragment"
+        android:enabled="true"
+        android:icon="@drawable/icon_users_outline"
+        android:title="Alumnos"/>
+    <item
+        android:id="@+id/dg_notificacionesFragment"
+        android:enabled="true"
+        android:icon="@drawable/bell_line"
+        android:title="Notificaciones"/>
+    <item
+        android:id="@+id/dg_estadisticasFragment"
+        android:enabled="true"
+        android:icon="@drawable/icon_statistic_outline"
+        android:title="Estadísticas"/>
+</menu>

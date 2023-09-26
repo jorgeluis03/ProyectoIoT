@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
-import com.example.proyecto_iot.delegadoGeneral.MainActivity;
+import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 
 import java.util.HashMap;
 
@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (codigo.equals("20203248") && contrasena.equals("messi")){
                     intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                 } else if (codigo.equals("20200643") && contrasena.equals("bicho")) {
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent = new Intent(LoginActivity.this, Dg_Activity.class);
                 } else if (codigo.equals("20203554") && contrasena.equals("pipipi")) {
                     // TODO: agregar activity para delegado actividad
                 }
