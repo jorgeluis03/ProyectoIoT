@@ -17,12 +17,13 @@ public class Evento {
 
     private List<Foto> fotosSubidas;
 
-    public Evento(String titulo, String descripcion, String actividad, String fecha, String hora) {
+    public Evento(String titulo, String descripcion, String actividad, String fecha, String hora, Lugar lugar) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.actividad = actividad;
         this.fecha = fecha;
         this.hora = hora;
+        this.lugar = lugar;
     }
 
     public String getTitulo() {

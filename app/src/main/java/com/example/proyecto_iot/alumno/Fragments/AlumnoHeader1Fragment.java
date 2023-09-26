@@ -1,4 +1,4 @@
-package com.example.proyecto_iot.alumno;
+package com.example.proyecto_iot.alumno.Fragments;
 
 import android.os.Bundle;
 

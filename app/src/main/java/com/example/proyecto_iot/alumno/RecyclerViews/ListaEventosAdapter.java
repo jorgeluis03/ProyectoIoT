@@ -39,13 +39,13 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         textTitulo.setText(evento.getTitulo());
         textActividad.setText(evento.getActividad());
         textDescripcion.setText(evento.getDescripcion());
-        textFecha.setText(evento.getFecha().toString());
+        textFecha.setText(evento.getFecha());
         textLugar.setText(evento.getLugar().getNombre());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return eventoList.size();
     }
 
     public class EventoViewHolder extends RecyclerView.ViewHolder{

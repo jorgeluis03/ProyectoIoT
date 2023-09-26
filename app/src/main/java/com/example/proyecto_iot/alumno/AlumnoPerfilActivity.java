@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
 import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilBinding;
 
 public class AlumnoPerfilActivity extends AppCompatActivity {

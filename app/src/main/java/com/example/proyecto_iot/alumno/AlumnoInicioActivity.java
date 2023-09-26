@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.proyecto_iot.alumno.Objetos.Evento;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
@@ -22,8 +23,6 @@ import java.util.ArrayList;
 
 public class AlumnoInicioActivity extends AppCompatActivity {
 
-    private ArrayList<Evento> eventoList = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,25 +33,18 @@ public class AlumnoInicioActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.parseColor("#0A0E19"));
         }
 
-        //eventos hardcodeados
-        /*eventoList.add(new Evento("Evento de Semana de Ingeniería", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.", "Nombre de actividad del evento", "10/09/23", "Cancha de minas"));
-
-        ListaEventosAdapter adapter = new ListaEventosAdapter();
-        adapter.setContext(AlumnoInicioActivity.this);
-        adapter.setEventoList(eventoList);
-
-        binding.rvEventos.setAdapter(adapter);
-        binding.rvEventos.setLayoutManager(new LinearLayoutManager(AlumnoInicioActivity.this));
-
-         */
-
         // Obtén una referencia al TabLayout
         TabLayout tabLayout = findViewById(R.id.tabLayout);
+
+        ViewPager2 viewPager = findViewById(R.id.viewPager);
+        AlumnoInicioViewPagerAdapter viewPagerAdapter = new AlumnoInicioViewPagerAdapter(AlumnoInicioActivity.this);
+        viewPager.setAdapter(viewPagerAdapter);
 
         // Configura el oyente para el TabLayout
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
                 TextView tabTextView = (TextView) tab.getCustomView();
                 if (tabTextView != null) {
                     tabTextView.setTypeface(null, Typeface.BOLD);
@@ -70,6 +62,14 @@ public class AlumnoInicioActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 // Hacer algo cuando un tab ya seleccionado es reseleccionado si es necesario
+            }
+        });
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tabLayout.getTabAt(position).select();
             }
         });
 

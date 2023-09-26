@@ -97,7 +97,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentHeader"
-        android:name="com.example.proyecto_iot.alumno.AlumnoHeader1Fragment"
+        android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment"
         android:layout_width="0dp"
         android:layout_height="80dp"
         app:layout_constraintEnd_toEndOf="parent"
