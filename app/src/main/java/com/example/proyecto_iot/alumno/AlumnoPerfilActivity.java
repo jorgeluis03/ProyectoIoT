@@ -1,0 +1,21 @@
+package com.example.proyecto_iot.alumno;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilBinding;
+
+public class AlumnoPerfilActivity extends AppCompatActivity {
+
+    private ActivityAlumnoPerfilBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityAlumnoPerfilBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
+    }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="@color/azul_background" />
+        </shape>
+    </item>
+
+    <!-- Gradiente que estará sobre el fondo -->
+    <item>
+    <shape android:shape="rectangle">
+        <gradient
+        android:type="linear"
+        android:angle="-90"
+        android:startColor="#00000000"
+            android:endColor="#54AB8F"
+        android:centerColor="#0054AB8F"/>
+    </shape>
+    </item>
+</layer-list>

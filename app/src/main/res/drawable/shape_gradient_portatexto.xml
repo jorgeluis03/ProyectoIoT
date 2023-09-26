@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Rectángulo de fondo -->
+    <item android:left="0dp" android:right="0dp" android:top="0dp" android:bottom="0dp">
+        <shape>
+            <gradient
+                android:type="linear"
+                android:angle="180"
+                android:startColor="#26DADADA"
+                android:centerColor="#0DBFB1AA"
+                android:endColor="#334ECF9C"/>
+            <corners android:radius="5dp"></corners>
+        </shape>
+    </item>
+</layer-list>
