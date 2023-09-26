@@ -8,20 +8,20 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="65dp"
+        android:layout_height="59dp"
         android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/img_fuchibol" />
 
     <TextView
         android:id="@+id/textViewNombreActividad_dg"
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="Nombre actividad"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -29,11 +29,11 @@
 
     <TextView
         android:id="@+id/textViewCorreo_dg"
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="0dp"
         android:text="Correo"
-        android:textSize="20dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/textViewNombreActividad_dg"
         app:layout_constraintTop_toBottomOf="@+id/textViewNombreActividad_dg" />
@@ -41,20 +41,21 @@
     <Button
         android:id="@+id/buttomAddDelegado_dg"
         style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="35dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:insetLeft="0dp"
         android:paddingLeft="0dp"
         android:paddingTop="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
-        app:icon="@drawable/icon_add_person"
-        app:iconSize="50dp"
+        app:icon="@drawable/add_user"
+        app:iconSize="30dp"
+        app:iconTint="#0A0E19"
         app:layout_constraintBottom_toBottomOf="@+id/textViewCorreo_dg"
-        app:layout_constraintStart_toEndOf="@+id/textViewNombreActividad_dg"
-        app:layout_constraintTop_toTopOf="@+id/textViewNombreActividad_dg" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewNombreActividad_dg"
+         />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
