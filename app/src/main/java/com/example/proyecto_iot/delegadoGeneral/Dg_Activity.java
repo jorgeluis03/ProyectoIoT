@@ -38,27 +38,4 @@ public class Dg_Activity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar_dg,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id==R.id.buscar_dg){
-            Toast.makeText(this,"Buscar actividad",Toast.LENGTH_SHORT).show();
-        }
-        if (id==R.id.perfil_dg){
-            Toast.makeText(this,"Perfil",Toast.LENGTH_SHORT).show();
-        }
-        if (id==R.id.configuracion_dg){
-            Toast.makeText(this,"Configuracion",Toast.LENGTH_SHORT).show();
-        }
-        if (id==R.id.cerrarSesion_dg){
-            Toast.makeText(this,"Salir",Toast.LENGTH_SHORT).show();
-        }
-        return true;
-    }
 }
