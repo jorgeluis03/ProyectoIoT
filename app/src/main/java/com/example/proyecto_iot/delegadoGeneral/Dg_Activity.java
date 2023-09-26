@@ -1,5 +1,6 @@
 package com.example.proyecto_iot.delegadoGeneral;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -36,9 +37,4 @@ public class Dg_Activity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.manu_toolbar_dg,menu);
-        return true;
-    }
 }
