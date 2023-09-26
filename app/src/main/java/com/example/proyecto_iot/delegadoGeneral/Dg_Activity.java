@@ -1,11 +1,13 @@
 package com.example.proyecto_iot.delegadoGeneral;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityDgBinding;
@@ -20,6 +22,11 @@ public class Dg_Activity extends AppCompatActivity {
         binding = ActivityDgBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Mapear el toolbar como ActionBar
+        Toolbar toolbar = binding.toolbarActividadesDg;
+        setSupportActionBar(toolbar);
+        //================================
+
         buttomnavigationDg = binding.buttomnavigationDg;
         //Cargar el navigationComponent (navHost) en el bottomnavigation
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment_dg);
@@ -27,5 +34,11 @@ public class Dg_Activity extends AppCompatActivity {
         NavigationUI.setupWithNavController(buttomnavigationDg,navController);
         //===============================================================
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.manu_toolbar_dg,menu);
+        return true;
     }
 }

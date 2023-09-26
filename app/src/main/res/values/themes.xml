@@ -1,17 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Proyecto_IoT" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/verde_bat</item>
         <item name="android:toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
-
-        <!-- Delegado General color -->
-        <item name="colorSecondary">@color/verde_bat</item>
-
     </style>
     <style name="Theme.Proyecto_IoT" parent="Base.Theme.Proyecto_IoT" />
-
     <!-- Login color -->
     <style name="Login" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/verde_bat</item>
@@ -19,11 +12,6 @@
         <item name="android:statusBarColor">@color/azul_background</item>
         <item name="android:toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
         <item name="android:screenOrientation">portrait</item>
-    </style>
-
-    <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textColor">@color/white</item>
-        <!-- Puedes ajustar otros atributos de estilo de texto aquí si es necesario -->
     </style>
 
 </resources>
