@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".alumno.AlumnoInicioActivity">
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/topFragmentContainer"
+        android:name="com.example.proyecto_iot.alumno.PackageAlumnoHeaderFragment"
         style="@style/Alumno"
         android:layout_width="0dp"
         android:layout_height="100dp"
@@ -64,11 +65,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bottomFragmentContainer"
+        android:name="com.example.proyecto_iot.alumno.PackageAlumnoButtonFragment"
         style="@style/Alumno"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
