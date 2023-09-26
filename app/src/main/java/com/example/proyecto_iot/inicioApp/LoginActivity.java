@@ -5,25 +5,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
 
-    HashMap<String, String> credencials = new HashMap<>();
+    HashMap<String, String> credenciales = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        credencials.put("20203248", "messi"); // alumno
-        credencials.put("20200643", "bicho"); // delegado general
-        credencials.put("20203554", "pipipi"); // delegado actividad
+        credenciales.put("20203248", "messi"); // alumno
+        credenciales.put("20200643", "bicho"); // delegado general
+        credenciales.put("20203554", "pipipi"); // delegado actividad
 
         binding.backButton2.setOnClickListener(view -> {
             finish();
@@ -40,16 +42,19 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginButton.setOnClickListener(view -> {
             String codigo = binding.inputCodigo.getText().toString();
             String contrasena = binding.inputContrasena.getText().toString();
-            if (camposValidos(codigo, contrasena)){
-                Intent intent = null;
-                if (codigo.equals("20203248") && contrasena.equals("messi")){
-                    intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
-                } else if (codigo.equals("20200643") && contrasena.equals("bicho")) {
-                    intent = new Intent(LoginActivity.this, Dg_Activity.class);
-                } else if (codigo.equals("20203554") && contrasena.equals("pipipi")) {
-                    // TODO: agregar activity para delegado actividad
+            for(Map.Entry<String, String> credencial: credenciales.entrySet()){
+                if (credencial.getKey().equals(codigo) && credencial.getValue().equals(contrasena)){
+                    Intent intent = null;
+                    if (codigo.equals("20203248")){
+                        intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                    } else if (codigo.equals("20200643")) {
+                        intent = new Intent(LoginActivity.this, Dg_Activity.class);
+                    }
+                    //else if (codigo.equals("20203554")) {
+
+                    //}
+                    startActivity(intent);
                 }
-                startActivity(intent);
             }
         });
     }
