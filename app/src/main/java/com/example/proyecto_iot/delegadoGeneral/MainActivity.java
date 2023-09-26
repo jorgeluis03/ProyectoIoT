@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                  }
                 if(itemID == R.id.page_3){
                     replaceFragment(norificacionFragment);
-                    item.setIcon(R.drawable.icon_bell_solid);
+                    item.setIcon(R.drawable.icon_bell_dark);
                     binding.bottomNavigation.getMenu().findItem(R.id.page_2).setIcon(R.drawable.icon_users_outline);
                     binding.bottomNavigation.getMenu().findItem(R.id.page_1).setIcon(R.drawable.icon_home_outline);
                     binding.bottomNavigation.getMenu().findItem(R.id.page_4).setIcon(R.drawable.icon_statistic_outline);

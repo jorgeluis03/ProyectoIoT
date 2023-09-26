@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="verde_bat">#4ECF9C</color>
+    <color name="verde_toolbar_dg">#54AB8F</color>
     <color name="white">#FFFFFFFF</color>
     <color name="verde">#87D819</color> <!-- Cambia el código de color a tu preferencia -->
     <color name="rojo">#C70039</color>
