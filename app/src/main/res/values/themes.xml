@@ -17,9 +17,5 @@
         <item name="android:screenOrientation">portrait</item>
     </style>
 
-    <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textColor">@color/white</item>
-        <!-- Puedes ajustar otros atributos de estilo de texto aquí si es necesario -->
-    </style>
 
 </resources>
