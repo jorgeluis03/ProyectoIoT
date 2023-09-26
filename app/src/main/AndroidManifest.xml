@@ -34,7 +34,7 @@
             android:theme="@style/Alumno" />
         <activity
             android:name=".delegadoGeneral.Dg_Activity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".alumno.AlumnoInicioActivity"
             android:exported="false"
@@ -90,9 +90,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".delegadoGeneral.MainActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"
