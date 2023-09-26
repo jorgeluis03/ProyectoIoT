@@ -35,6 +35,9 @@
     <string name="perfil_editar_apellidos">Apellidos</string>
     <string name="perfil_editar_guardar">Guardar cambios</string>
 
+    <!-- EVENTO -->
+    <string name="evento_apoyar">Apoyar</string>
+    
     <!-- hints -->
     <string name="hint_name">Nombres</string>
     <string name="hint_lastname">Apellidos</string>

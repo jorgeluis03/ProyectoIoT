@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="15dp"
     tools:context=".alumno.AlumnoEventoActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -36,4 +37,5 @@
         app:icon="@drawable/icon_back1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
