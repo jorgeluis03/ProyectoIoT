@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_alumno"
+    app:startDestination="@id/alumnoInicioFragment">
+
+    <fragment
+        android:id="@+id/alumnoInicioFragment"
+        android:name="com.example.proyecto_iot.AlumnoInicioFragment"
+        android:label="fragment_alumno_inicio"
+        tools:layout="@layout/fragment_alumno_inicio" />
+    <fragment
+        android:id="@+id/alumnoNotificacionesFragment"
+        android:name="com.example.proyecto_iot.AlumnoNotificacionesFragment"
+        android:label="fragment_alumno_notificaciones"
+        tools:layout="@layout/fragment_alumno_notificaciones" />
+    <fragment
+        android:id="@+id/alumnoDonacionesFragment"
+        android:name="com.example.proyecto_iot.AlumnoDonacionesFragment"
+        android:label="fragment_alumno_donaciones"
+        tools:layout="@layout/fragment_alumno_donaciones" />
+</navigation>
