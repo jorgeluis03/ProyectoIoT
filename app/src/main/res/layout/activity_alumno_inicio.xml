@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/topFragmentContainer"
-        android:name="com.example.proyecto_iot.alumno.PackageAlumnoHeaderFragment"
+        android:name="com.example.proyecto_iot.alumno.Fragments.PackageAlumnoHeaderFragment"
         style="@style/Alumno"
         android:layout_width="0dp"
         android:layout_height="100dp"
@@ -67,7 +67,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bottomFragmentContainer"
-        android:name="com.example.proyecto_iot.alumno.PackageAlumnoButtonFragment"
+        android:name="com.example.proyecto_iot.alumno.Fragments.PackageAlumnoButtonFragment"
         style="@style/Alumno"
         android:layout_width="match_parent"
         android:layout_height="65dp"

@@ -10,16 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.proyecto_iot.alumno.Objetos.Evento;
-import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
-import com.example.proyecto_iot.databinding.ActivityAlumnoInicioBinding;
+import com.example.proyecto_iot.alumno.Fragments.PackageAlumnoButtonFragment;
+import com.example.proyecto_iot.alumno.Fragments.PackageAlumnoHeaderFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.example.proyecto_iot.R;
-
-import java.util.ArrayList;
 
 public class AlumnoInicioActivity extends AppCompatActivity {
 

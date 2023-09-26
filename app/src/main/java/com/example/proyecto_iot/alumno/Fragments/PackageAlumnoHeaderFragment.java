@@ -1,4 +1,4 @@
-package com.example.proyecto_iot.alumno;
+package com.example.proyecto_iot.alumno.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
 import com.example.proyecto_iot.databinding.FragmentPackageAlumnoHeaderBinding;
 
 public class PackageAlumnoHeaderFragment extends Fragment {

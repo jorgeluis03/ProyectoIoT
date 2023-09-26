@@ -1,15 +1,19 @@
 package com.example.proyecto_iot.alumno.RecyclerViews;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Objetos.Evento;
 
 import java.util.List;
@@ -53,6 +57,11 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         Evento evento;
         public EventoViewHolder(@NonNull View itemView) {
             super(itemView);
+            ConstraintLayout constraintLayout = itemView.findViewById(R.id.evento);
+            constraintLayout.setOnClickListener(view -> {
+                Intent intent = new Intent(itemView.getContext(), AlumnoEventoActivity.class);
+                itemView.getContext().startActivity(intent);
+            });
         }
     }
 

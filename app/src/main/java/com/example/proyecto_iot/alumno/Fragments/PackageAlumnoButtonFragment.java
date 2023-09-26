@@ -1,4 +1,4 @@
-package com.example.proyecto_iot.alumno;
+package com.example.proyecto_iot.alumno.Fragments;
 
 import android.os.Bundle;
 
@@ -14,6 +14,7 @@ import android.content.Intent;
 
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoNotificacionesActivity;
 import com.example.proyecto_iot.databinding.FragmentPackageAlumnoButtonBinding;
 
 public class PackageAlumnoButtonFragment extends Fragment {

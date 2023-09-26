@@ -13,9 +13,13 @@
         android:theme="@style/Theme.Proyecto_IoT"
         tools:targetApi="31">
         <activity
+            android:name=".alumno.AlumnoEventoActivity"
+            android:exported="false"
+            android:theme="@style/Alumno" />
+        <activity
             android:name=".alumno.AlumnoNotificacionesActivity"
             android:exported="false"
-            android:theme="@style/Alumno"/>
+            android:theme="@style/Alumno" />
         <activity
             android:name=".alumno.AlumnoPerfilEditarActivity"
             android:exported="false"
@@ -28,7 +32,7 @@
         <activity
             android:name=".alumno.AlumnoInicioActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".alumno.AlumnoPerfilActivity"
             android:exported="false"

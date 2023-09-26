@@ -28,7 +28,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView2"
-        android:name="com.example.proyecto_iot.alumno.PackageAlumnoButtonFragment"
+        android:name="com.example.proyecto_iot.alumno.Fragments.PackageAlumnoButtonFragment"
         android:layout_width="0dp"
         android:layout_height="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
