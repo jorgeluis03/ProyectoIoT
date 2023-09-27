@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/alumnoInicioFragment"
+        android:enabled="true"
+        android:icon="@drawable/icon_house_outline"
+        android:title="Inicio"/>
+    <item
+        android:id="@+id/alumnoNotificacionesFragment"
+        android:enabled="true"
+        android:icon="@drawable/icon_bell_outline"
+        android:title="Notificaciones"/>
+    <item
+        android:id="@+id/alumnoDonacionesFragment"
+        android:enabled="true"
+        android:icon="@drawable/icon_heart_outline"
+        android:title="Donaciones"/>
+</menu>

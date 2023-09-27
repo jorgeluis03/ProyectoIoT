@@ -16,6 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".alumno.AlumnoInicio2Activity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".alumno.AlumnoEventoActivity"
             android:exported="false"
             android:theme="@style/Alumno" />
@@ -34,7 +43,7 @@
             android:theme="@style/Alumno" />
         <activity
             android:name=".delegadoGeneral.Dg_Activity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".alumno.AlumnoInicioActivity"
             android:exported="false"
@@ -81,14 +90,9 @@
             android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.IngresarActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data

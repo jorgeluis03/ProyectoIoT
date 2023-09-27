@@ -3,62 +3,39 @@ package com.example.proyecto_iot;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AlumnoNotificacionesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.proyecto_iot.alumno.Objetos.Notificacion;
+import com.example.proyecto_iot.alumno.RecyclerViews.ListaNotificacionesAdapter;
+import com.example.proyecto_iot.databinding.FragmentAlumnoNotificacionesBinding;
+
+import java.util.ArrayList;
+
 public class AlumnoNotificacionesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AlumnoNotificacionesFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AlumnoNotificacionesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AlumnoNotificacionesFragment newInstance(String param1, String param2) {
-        AlumnoNotificacionesFragment fragment = new AlumnoNotificacionesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    FragmentAlumnoNotificacionesBinding binding;
+    ArrayList<Notificacion> notificacionList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alumno_notificaciones, container, false);
+        binding = FragmentAlumnoNotificacionesBinding.inflate(inflater, container, false);
+
+        notificacionList.add(new Notificacion("Evento de Semana de Ingeniería - Cristiano Donaldo ha enviado un nuevo mensaje al chat", "hace 2h"));
+        notificacionList.add(new Notificacion("Otro evento de Semana de Ingeiería - Kike Ramos ha añadido una nueva foto al evento", "hace 8h"));
+        notificacionList.add(new Notificacion("Donaciones - Su registro de donación ha sido aceptado", "hace 2d"));
+        notificacionList.add(new Notificacion("Donaciones - Su registro de donación ha sido aceptado", "hace 1d"));
+
+        ListaNotificacionesAdapter adapter = new ListaNotificacionesAdapter();
+        adapter.setContext(getContext());
+        adapter.setNotificacionList(notificacionList);
+
+        binding.rvNotificaciones.setAdapter(adapter);
+        binding.rvNotificaciones.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        return binding.getRoot();
     }
 }
