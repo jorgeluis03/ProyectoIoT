@@ -18,35 +18,44 @@ public class ListaEmpleadosAdapter extends RecyclerView.Adapter<ListaEmpleadosAd
     private List<Empleado> listaEmpleados;
     private Context context;
 
+    public ListaEmpleadosAdapter() {
+        // Constructor vacío
+    }
+
     @NonNull
     @Override
     public EmpleadoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.irv_dg_actividades,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.irv_dg_actividades, parent, false);
         return new EmpleadoViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EmpleadoViewHolder holder, int position) {
+        if (listaEmpleados == null || listaEmpleados.isEmpty()) {
+            return;
+        }
+
         Empleado e = listaEmpleados.get(position);
         holder.empleado = e;
 
-        TextView textViewNombreActivity = holder.itemView.findViewById(R.id.textViewNombreActividad_dg);
-        TextView textViewCorreo = holder.itemView.findViewById(R.id.textViewCorreo_dg);
-
-        textViewNombreActivity.setText(e.getFirstName()+' '+e.getLastName());
-        textViewCorreo.setText(e.getPhoneNumber());
-
+        holder.textViewNombreActivity.setText(e.getJobId() + ". " + e.getFirstName() + ' ' + e.getLastName());
+        holder.textViewNumeroTelefono.setText(e.getPhoneNumber());
     }
 
     @Override
     public int getItemCount() {
-        return listaEmpleados.size();
+        return listaEmpleados != null ? listaEmpleados.size() : 0;
     }
 
-    public class EmpleadoViewHolder extends RecyclerView.ViewHolder{
+    public class EmpleadoViewHolder extends RecyclerView.ViewHolder {
         Empleado empleado;
+        TextView textViewNombreActivity;
+        TextView textViewNumeroTelefono;
+
         public EmpleadoViewHolder(@NonNull View itemView) {
             super(itemView);
+            textViewNombreActivity = itemView.findViewById(R.id.textViewNombreActividad_dg);
+            textViewNumeroTelefono = itemView.findViewById(R.id.textViewNumeroTelefono_dg);
         }
     }
 

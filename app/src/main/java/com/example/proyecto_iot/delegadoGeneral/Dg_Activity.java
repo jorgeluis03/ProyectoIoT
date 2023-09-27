@@ -29,6 +29,7 @@ public class Dg_Activity extends AppCompatActivity {
         //================================
 
         buttomnavigationDg = binding.buttomnavigationDg;
+
         //Cargar el navigationComponent (navHost) en el bottomnavigation
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment_dg);
         NavController navController = NavHostFragment.findNavController(navHostFragment);
