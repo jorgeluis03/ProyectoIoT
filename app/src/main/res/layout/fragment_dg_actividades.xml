@@ -13,7 +13,7 @@
         android:id="@+id/recycleViewActividades_dg"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#CCCC"
+        android:background="#E8F1E8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

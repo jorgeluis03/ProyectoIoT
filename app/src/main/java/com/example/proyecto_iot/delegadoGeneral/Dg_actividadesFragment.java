@@ -76,10 +76,12 @@ public class Dg_actividadesFragment extends Fragment {
                         Log.d("response",empleadoDto.getEstado());
                         List<Empleado> lista = empleadoDto.getLista();
 
+                        // Limitar la lista a 7 elementos si es mayor que 7
+                        List<Empleado> cacheData7Elementos = lista.subList(0, Math.min(lista.size(), 7));
 
                         ListaEmpleadosAdapter adapter = new ListaEmpleadosAdapter();
                         adapter.setContext(getContext());
-                        adapter.setListaEmpleados(lista);
+                        adapter.setListaEmpleados(cacheData7Elementos);
 
                         binding.recycleViewActividadesDg.setAdapter(adapter);
                         binding.recycleViewActividadesDg.setLayoutManager(new LinearLayoutManager(getContext()));

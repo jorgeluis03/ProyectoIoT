@@ -7,6 +7,10 @@
         <item name="android:toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
 
     </style>
+    <style name="ShapeAppearanceOverlay.FloatingActionButton" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item> <!-- 50% para que sea completamente circular -->
+    </style>
     <style name="Theme.Proyecto_IoT" parent="Base.Theme.Proyecto_IoT" />
     <!-- Login color -->
     <style name="Login" parent="Theme.Material3.DayNight.NoActionBar">
