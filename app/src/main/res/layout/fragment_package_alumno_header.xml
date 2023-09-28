@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
         <Button
@@ -21,7 +21,8 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             app:icon="@drawable/icon_user"
-            app:iconSize="32dp" />
+            app:iconSize="32dp"
+            app:iconTint="@color/white" />
 
         <Button
             android:id="@+id/logo"
@@ -32,7 +33,8 @@
             app:icon="@drawable/icon_bat"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
-            app:iconSize="56dp" />
+            app:iconSize="56dp"
+            app:iconTint="@color/white" />
 
         <Button
             android:id="@+id/searchButton"
@@ -42,6 +44,7 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             app:icon="@drawable/icon_search"
-            app:iconSize="32dp" />
+            app:iconSize="32dp"
+            app:iconTint="@color/white" />
     </LinearLayout>
 </FrameLayout>

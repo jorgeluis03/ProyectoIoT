@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AlumnoNotificacionesFragment">
+    android:background="#0A0E19"
+    tools:context=".alumno.Fragments.AlumnoNotificacionesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNotificaciones"

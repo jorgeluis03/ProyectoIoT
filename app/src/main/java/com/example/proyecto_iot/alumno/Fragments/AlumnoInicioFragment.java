@@ -1,8 +1,7 @@
-package com.example.proyecto_iot;
+package com.example.proyecto_iot.alumno.Fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -10,22 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoInicioViewPagerAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoInicioBinding;
 import com.google.android.material.tabs.TabLayout;
 
 public class AlumnoInicioFragment extends Fragment {
 
+    FragmentAlumnoInicioBinding binding;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentAlumnoInicioBinding.inflate(inflater, container, false);
 
         // tabs para todos-apoyando
-        /*
-        TabLayout tabInicio = getView().findViewById(R.id.tabLayout);
-        ViewPager2 viewPagerInicio = getView().findViewById(R.id.viewPager);
-        AlumnoInicioViewPagerAdapter adapter = new AlumnoInicioViewPagerAdapter(getActivity());
-        viewPagerInicio.setAdapter(adapter);
+        TabLayout tabInicio = binding.tabLayout;
+        ViewPager2 viewPagerInicio = binding.viewPager;
+        viewPagerInicio.setAdapter(new AlumnoInicioViewPagerAdapter(getParentFragment().getActivity()));
 
         tabInicio.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -52,8 +52,6 @@ public class AlumnoInicioFragment extends Fragment {
             }
         });
 
-         */
-
-        return inflater.inflate(R.layout.fragment_alumno_inicio, container, false);
+        return binding.getRoot();
     }
 }
