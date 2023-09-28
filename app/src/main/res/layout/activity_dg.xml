@@ -19,17 +19,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         ></androidx.appcompat.widget.Toolbar>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/navHostFragment_dg"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_actividades_dg"
-        app:layout_constraintBottom_toTopOf="@+id/buttomnavigation_dg"
-        app:navGraph="@navigation/nav_graph_dg" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/buttomnavigation_dg"
@@ -41,10 +31,20 @@
         app:menu="@menu/menu_navigation_bar_dg"
         android:layout_gravity="bottom"
         app:labelVisibilityMode="unlabeled"
-
+        app:itemActiveIndicatorStyle="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         />
 
-
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/navHostFragment_dg"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_actividades_dg"
+        app:layout_constraintBottom_toTopOf="@+id/buttomnavigation_dg"
+        app:navGraph="@navigation/nav_graph_dg_inicio" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

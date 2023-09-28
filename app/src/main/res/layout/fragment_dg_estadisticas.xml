@@ -92,7 +92,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardViewDonaciones_dg"
-        android:clickable="true"
+        android:focusable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -146,7 +146,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/backButton2"
+                android:id="@+id/buttonEditarActivi"
                 style="?attr/materialIconButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,8 +155,9 @@
                 android:paddingTop="0dp"
                 android:paddingRight="0dp"
                 android:paddingBottom="0dp"
-                app:icon="@drawable/navigate_next"
-                app:iconSize="50dp"
+                app:icon="@drawable/sharp_edit"
+                app:iconSize="30dp"
+                android:layout_marginStart="5dp"
                 app:iconTint="@color/azul_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -169,6 +170,11 @@
 
 
     </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewEstadisticas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 
 

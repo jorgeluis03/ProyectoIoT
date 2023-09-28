@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -11,9 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.proyecto_iot.databinding.FragmentDgActividadesBinding;
+import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaEmpleadosAdapter;
+import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.entity.Empleado;
 import com.example.proyecto_iot.delegadoGeneral.entity.EmpleadoDto;
+import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.example.proyecto_iot.delegadoGeneral.retrofitServices.EmpleadoService;
 
 import java.util.ArrayList;
@@ -29,36 +34,66 @@ public class Dg_actividadesFragment extends Fragment {
 
     FragmentDgActividadesBinding binding;
     EmpleadoService empleadoService;
-    private List<Empleado> cacheData; // Almacena los datos en caché
-
+    private List<Actividades> cacheDataAct =  new ArrayList<>();; // Almacena los datos en caché
+    private List<Actividades> listaAct = llenarListaUsuarios();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding=FragmentDgActividadesBinding.inflate(inflater,container,false);
-        cacheData = new ArrayList<>();
 
-
-        obtenerData();
 
         return binding.getRoot();
     }
 
 
+
+
+    //Metodos para el recycleView
     @Override
     public void onStart() {
         super.onStart();
-        cargarlista();
+        cargarLista();
     }
 
-    public void obtenerData(){
+    public void cargarLista(){
+        ListaActividadesAdapter adapter = new ListaActividadesAdapter();
+        adapter.setContext(getContext());
+        adapter.setListaActividades(listaAct);
+
+        binding.recycleViewActividadesDg.setAdapter(adapter);
+        binding.recycleViewActividadesDg.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    public List<Actividades> llenarListaUsuarios(){
+        List<Actividades> listaActiv = new ArrayList<>();
+        listaActiv.add(new Actividades("FUTSAL VARONES","abierto",null ));
+        listaActiv.add(new Actividades("BASQUET VARONES","en curso",new Usuario("Jorge","Dominguez","a202006436@pucp.edu.pe") ));
+        listaActiv.add(new Actividades("GYMKANA TELECOM","abierto",null ));
+        listaActiv.add(new Actividades("SABADO REFRESCANTE","abierto",null ));
+        listaActiv.add(new Actividades("VOLEY VARONES & MUJERES","en curso",new Usuario("Gustavo","Peña","a20105236@pucp.edu.pe") ));
+        listaActiv.add(new Actividades("BASQUET MUJERES","en curso",new Usuario("Niurka","Sanchez","a201925636@pucp.edu.pe") ));
+        listaActiv.add(new Actividades("BAILETON TELITO","abierto",null ));
+        listaActiv.add(new Actividades("FUTSAL MUJERES","en curso",new Usuario("Milagros","Ramirez","a20189856@pucp.edu.pe") ));
+
+        return listaActiv;
+    }
+
+
+    /*@Override
+    public void onStart() {
+        super.onStart();
+        cargarlista();
+    }*/
+
+    /*public void obtenerData(){
         empleadoService = new Retrofit.Builder()
                 .baseUrl("http://192.168.18.44:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(EmpleadoService.class);
 
-    }
-    public void cargarlista(){
+    }*/
+    /*public void cargarlista(){
 
         if(!cacheData.isEmpty()){
             ListaEmpleadosAdapter adapter = new ListaEmpleadosAdapter();
@@ -102,7 +137,7 @@ public class Dg_actividadesFragment extends Fragment {
         }
 
 
-    }
+    }*/
 
 
 }

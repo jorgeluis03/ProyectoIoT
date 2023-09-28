@@ -18,10 +18,6 @@ public class ListaEmpleadosAdapter extends RecyclerView.Adapter<ListaEmpleadosAd
     private List<Empleado> listaEmpleados;
     private Context context;
 
-    public ListaEmpleadosAdapter() {
-        // Constructor vacío
-    }
-
     @NonNull
     @Override
     public EmpleadoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,6 +33,7 @@ public class ListaEmpleadosAdapter extends RecyclerView.Adapter<ListaEmpleadosAd
 
         Empleado e = listaEmpleados.get(position);
         holder.empleado = e;
+
 
         holder.textViewNombreActivity.setText(e.getJobId() + ". " + e.getFirstName() + ' ' + e.getLastName());
         holder.textViewNumeroTelefono.setText(e.getPhoneNumber());
@@ -55,7 +52,6 @@ public class ListaEmpleadosAdapter extends RecyclerView.Adapter<ListaEmpleadosAd
         public EmpleadoViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewNombreActivity = itemView.findViewById(R.id.textViewNombreActividad_dg);
-            textViewNumeroTelefono = itemView.findViewById(R.id.textViewNumeroTelefono_dg);
         }
     }
 

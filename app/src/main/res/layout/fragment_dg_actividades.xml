@@ -10,12 +10,27 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewActividades_dg"
+        android:id="@+id/recycleViewActividadesDg"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#E8F1E8"
+        android:background="#E5E5E5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingButtonCrearActividad_dg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/verde_bat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="30dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Tooltip"
+        app:srcCompat="@drawable/round_add" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
