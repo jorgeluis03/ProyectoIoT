@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
 import com.example.proyecto_iot.databinding.FragmentAlumnoHeader0Binding;
-import com.example.proyecto_iot.databinding.FragmentPackageAlumnoHeaderBinding;
 
 public class AlumnoHeader0Fragment extends Fragment {
 
