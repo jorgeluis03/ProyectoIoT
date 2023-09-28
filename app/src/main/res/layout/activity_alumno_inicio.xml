@@ -5,6 +5,7 @@
     android:id="@+id/navigationView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".alumno.AlumnoInicioActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -17,15 +18,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/nav_graph_alumno"/>
+        app:navGraph="@navigation/nav_graph_alumno" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#0A0E19"
+        app:itemActiveIndicatorStyle="@null"
+        app:itemIconSize="28dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_navigation_bar_alumno"
-        app:labelVisibilityMode="unlabeled"/>
+        app:menu="@menu/menu_navigation_bar_alumno" />
 </androidx.constraintlayout.widget.ConstraintLayout>

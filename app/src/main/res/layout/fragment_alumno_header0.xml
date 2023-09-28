@@ -20,8 +20,8 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            app:icon="@drawable/icon_user"
-            app:iconSize="32dp"
+            app:icon="@drawable/icon_perfil_user"
+            app:iconSize="36dp"
             app:iconTint="@color/white" />
 
         <Button
