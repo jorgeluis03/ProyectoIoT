@@ -25,7 +25,7 @@ public class AlumnoInicioFragment extends Fragment {
         // tabs para todos-apoyando
         TabLayout tabInicio = binding.tabLayout;
         ViewPager2 viewPagerInicio = binding.viewPager;
-        viewPagerInicio.setAdapter(new AlumnoInicioViewPagerAdapter(getParentFragment().getActivity()));
+        viewPagerInicio.setAdapter(new AlumnoInicioViewPagerAdapter(getActivity()));
 
         tabInicio.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
