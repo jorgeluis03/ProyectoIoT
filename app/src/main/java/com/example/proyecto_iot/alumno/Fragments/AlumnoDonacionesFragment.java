@@ -1,6 +1,5 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.FragmentAlumnoDonacionesBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class AlumnoDonacionesFragment extends Fragment {
 
@@ -22,15 +22,9 @@ public class AlumnoDonacionesFragment extends Fragment {
         binding = FragmentAlumnoDonacionesBinding.inflate(inflater, container, false);
 
         binding.buttonDonar.setOnClickListener(view -> {
-            mostrarDialogDonacion();
+
         });
 
         return binding.getRoot();
-    }
-
-    void mostrarDialogDonacion(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("hola");
-        alertDialog.show();
     }
 }
