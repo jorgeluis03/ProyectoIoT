@@ -63,6 +63,8 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
         Actividades actividades;
         public ActividesViewHolder(@NonNull View itemView) {
             super(itemView);
+
+
         }
     }
 

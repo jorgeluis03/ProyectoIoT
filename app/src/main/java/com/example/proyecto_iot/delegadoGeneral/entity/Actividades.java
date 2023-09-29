@@ -1,6 +1,9 @@
 package com.example.proyecto_iot.delegadoGeneral.entity;
 
+import android.content.Intent;
+
 public class Actividades {
+    private Intent id;
     private String nombre;
     private String estado;
     private Usuario usuario;
@@ -10,7 +13,13 @@ public class Actividades {
         this.estado = estado;
         this.usuario = usuario;
     }
+    public Intent getId() {
+        return id;
+    }
 
+    public void setId(Intent id) {
+        this.id = id;
+    }
     public String getNombre() {
         return nombre;
     }

@@ -1,6 +1,7 @@
 package com.example.proyecto_iot.delegadoGeneral.entity;
 
 public class Usuario {
+    private Integer id;
     private String nombre;
     private String apellido;
     private String correo;
@@ -9,6 +10,14 @@ public class Usuario {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
