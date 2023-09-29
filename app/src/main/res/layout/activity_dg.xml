@@ -9,15 +9,14 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_actividades_dg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="ActiviConnect"
+        android:layout_height="56dp"
         android:background="@color/azul_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        ></androidx.appcompat.widget.Toolbar>
+        app:title="ActiviConnect"></androidx.appcompat.widget.Toolbar>
 
 
 

@@ -43,7 +43,9 @@ public class Dg_Activity extends AppCompatActivity {
         NavigationUI.setupWithNavController(buttomnavigationDg,navController);
         //===============================================================
 
-
+    }
+    public void setToolbarContent(String title) {
+        getSupportActionBar().setTitle(title);
     }
 
     /*

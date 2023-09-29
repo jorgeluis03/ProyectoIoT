@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/dg_actividadesFragment"
-        android:name="com.example.proyecto_iot.delegadoGeneral.Dg_actividadesFragment"
+        android:name="com.example.proyecto_iot.delegadoGeneral.fragmentos.Dg_actividadesFragment"
         android:label="fragment_dg_actividades"
         tools:layout="@layout/fragment_dg_actividades" />
     <fragment
         android:id="@+id/dg_alumnosFragment"
-        android:name="com.example.proyecto_iot.delegadoGeneral.Dg_alumnosFragment"
+        android:name="com.example.proyecto_iot.delegadoGeneral.fragmentos.Dg_alumnosFragment"
         android:label="fragment_dg_alumnos"
         tools:layout="@layout/fragment_dg_alumnos" />
     <fragment
         android:id="@+id/dg_notificacionesFragment"
-        android:name="com.example.proyecto_iot.delegadoGeneral.Dg_notificacionesFragment"
+        android:name="com.example.proyecto_iot.delegadoGeneral.fragmentos.Dg_notificacionesFragment"
         android:label="fragment_dg_notificaciones"
         tools:layout="@layout/fragment_dg_notificaciones" />
     <fragment
         android:id="@+id/dg_estadisticasFragment"
-        android:name="com.example.proyecto_iot.delegadoGeneral.Dg_estadisticasFragment"
+        android:name="com.example.proyecto_iot.delegadoGeneral.fragmentos.Dg_estadisticasFragment"
         android:label="fragment_dg_estadisticas"
         tools:layout="@layout/fragment_dg_estadisticas" />
 </navigation>

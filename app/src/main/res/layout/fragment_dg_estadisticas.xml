@@ -5,182 +5,43 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".delegadoGeneral.Dg_estadisticasFragment"
-    android:background="#F9F9F9"
+    tools:context=".delegadoGeneral.fragmentos.Dg_estadisticasFragment"
+    android:background="@color/azul_background"
+    android:padding="10dp"
     android:orientation="vertical"
     >
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:cardBackgroundColor="#579DEF"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        style="?attr/materialCardViewFilledStyle"
-        android:backgroundTint="@color/white"
-        app:cardElevation="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="340dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                app:srcCompat="@drawable/grafico_circular" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Estudiantes"
-                    android:textAllCaps="true"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="254"
-                    android:textColor="#A3A0A0"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Egresados"
-                    android:textAllCaps="true"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="124"
-                    android:textColor="#A3A0A0"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
+    style="?attr/materialCardViewFilledStyle">
 
 
+    </com.google.android.material.card.MaterialCardView>
 
-
-        </LinearLayout>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:cardBackgroundColor="#9DEF57"
+        android:layout_marginBottom="10dp"
+        style="?attr/materialCardViewFilledStyle">
 
 
 
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardViewDonaciones_dg"
-        android:focusable="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        style="?attr/materialCardViewFilledStyle"
-        android:backgroundTint="@color/white"
-        app:cardElevation="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="250dp"
-                android:layout_height="90dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/baseline_monetization_on_24" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Donaciones recibidas por AITEL"
-                    android:textAllCaps="true"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Monto recaudado"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="S/ 1,546.46"
-                    android:textColor="#A3A0A0"
-                    android:textSize="20sp" />
-
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/buttonEditarActivi"
-                style="?attr/materialIconButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:insetLeft="0dp"
-                android:paddingLeft="0dp"
-                android:paddingTop="0dp"
-                android:paddingRight="0dp"
-                android:paddingBottom="0dp"
-                app:icon="@drawable/sharp_edit"
-                app:iconSize="30dp"
-                android:layout_marginStart="5dp"
-                app:iconTint="@color/azul_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:clickable="false"/>
-
-        </LinearLayout>
-
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:cardBackgroundColor="#EF5762"
+        style="?attr/materialCardViewFilledStyle">
 
 
 
     </com.google.android.material.card.MaterialCardView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewEstadisticas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-
-
-
-
-
 
 </LinearLayout>

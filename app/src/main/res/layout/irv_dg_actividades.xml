@@ -22,51 +22,54 @@
                 android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 tools:layout_editor_absoluteY="16dp">
-
-                <TextView
-                    android:id="@+id/textViewNombreActividad_dg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre actividad"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    />
-
-                <TextView
-                    android:id="@+id/textViewEstadoActiv_dg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="estado"
-                    android:textColor="#797D7F"
-                    android:textSize="14dp"
-                     />
-                <TextView
-                    android:id="@+id/textViewDeleActiv_dg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="sin delegado"
-                    android:textColor="#797D7F"
-                    android:textSize="14dp"
-                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:layout_weight="1">
 
+                    <TextView
+                        android:id="@+id/textViewNombreActividad_dg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre actividad"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/textViewEstadoActiv_dg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="estado"
+                        android:textColor="#797D7F"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/textViewDeleActiv_dg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="sin delegado"
+                        android:textColor="#797D7F"
+                        android:textSize="14dp"
+                        />
                     <Button
                         android:id="@+id/buttomAddDelegado_dg"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#0A0E19"
                         android:text="Asigar delegado"
                         android:textColor="#4ECF9C" />
-
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="bottom">
                     <Button
                         android:id="@+id/buttonEditarActivi"
                         style="?attr/materialIconButtonStyle"
