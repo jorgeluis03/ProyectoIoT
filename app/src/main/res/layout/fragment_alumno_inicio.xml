@@ -16,7 +16,8 @@
         app:layout="@layout/fragment_alumno_header0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_alumno_header0"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

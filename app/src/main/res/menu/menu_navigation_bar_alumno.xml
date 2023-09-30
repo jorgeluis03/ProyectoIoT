@@ -2,16 +2,16 @@
     <item
         android:id="@+id/alumnoInicioFragment"
         android:enabled="true"
-        android:icon="@drawable/icon_house_outline"
+        android:icon="@drawable/icon_house_selector"
         android:title="Inicio"/>
     <item
         android:id="@+id/alumnoNotificacionesFragment"
         android:enabled="true"
-        android:icon="@drawable/icon_bell_outline"
+        android:icon="@drawable/icon_bell_selector"
         android:title="Notificaciones"/>
     <item
         android:id="@+id/alumnoDonacionesFragment"
         android:enabled="true"
-        android:icon="@drawable/icon_heart_outline"
+        android:icon="@drawable/icon_heart_selector"
         android:title="Donaciones"/>
 </menu>
