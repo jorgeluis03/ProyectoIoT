@@ -4,28 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="15dp"
+    android:background="@color/azul_background"
     tools:context=".alumno.AlumnoEventoActivity">
 
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
+        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        app:srcCompat="@drawable/cancha_de_minas"
+        tools:srcCompat="@drawable/cancha_de_minas" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/buttonEventoBack"
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:backgroundTint="#C80A0E19"
+        android:backgroundTint="#990A0E19"
         app:icon="@drawable/icon_back1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutEventoInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="-16dp"
+        android:background="@drawable/button_alumno_perfil"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView10">
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="TextView"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/button_alumno_evento_info"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingHorizontal="10dp"
+                android:text="Button"
+                android:textColor="#353535"
+                android:textSize="12sp"
+                app:backgroundTint="@null"
+                app:icon="@drawable/icon_calendar_filled"
+                app:iconPadding="2dp"
+                app:iconTint="#353535" />
+
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/button_alumno_evento_info"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingHorizontal="10dp"
+                android:text="Button"
+                android:textColor="#353535"
+                android:textSize="12sp"
+                app:backgroundTint="@null"
+                app:icon="@drawable/icon_clock_filled"
+                app:iconPadding="2dp"
+                app:iconTint="#353535" />
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/button_alumno_evento_info"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingHorizontal="10dp"
+                android:text="Button"
+                android:textColor="#353535"
+                android:textSize="12sp"
+                app:backgroundTint="@null"
+                app:icon="@drawable/icon_marker_map_filled"
+                app:iconPadding="2dp"
+                app:iconTint="#353535" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

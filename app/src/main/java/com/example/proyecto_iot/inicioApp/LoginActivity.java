@@ -8,12 +8,14 @@ import android.os.Bundle;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
+    boolean check = false;
 
     HashMap<String, String> credenciales = new HashMap<>();
     @Override
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             String contrasena = binding.inputContrasena.getText().toString();
             for(Map.Entry<String, String> credencial: credenciales.entrySet()){
                 if (credencial.getKey().equals(codigo) && credencial.getValue().equals(contrasena)){
+                    check = true;
                     Intent intent = null;
                     if (codigo.equals("20203248")){
                         intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
@@ -54,6 +57,10 @@ public class LoginActivity extends AppCompatActivity {
                     //}
                     startActivity(intent);
                 }
+            }
+            if (!check){
+                Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
+                        .show();
             }
         });
     }
