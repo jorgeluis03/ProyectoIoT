@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
+import com.example.proyecto_iot.delegadoActividad.DaInicioActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -50,12 +50,14 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = null;
                     if (codigo.equals("20203248")){
                         intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                        intent.putExtra("code", "20203248");
                     } else if (codigo.equals("20200643")) {
                         intent = new Intent(LoginActivity.this, Dg_Activity.class);
                     }
-                    //else if (codigo.equals("20203554")) {
-
-                    //}
+                    else if (codigo.equals("20203554")) {
+                        intent = new Intent(LoginActivity.this, DaInicioActivity.class);
+                        intent.putExtra("code", "20203554");
+                    }
                     startActivity(intent);
                 }
             }

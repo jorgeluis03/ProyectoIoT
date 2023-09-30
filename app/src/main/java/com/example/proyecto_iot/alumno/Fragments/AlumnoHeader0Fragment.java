@@ -9,17 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
-import com.example.proyecto_iot.databinding.FragmentPackageAlumnoHeaderBinding;
+import com.example.proyecto_iot.databinding.FragmentAlumnoHeader0Binding;
 
-public class PackageAlumnoHeaderFragment extends Fragment {
+public class AlumnoHeader0Fragment extends Fragment {
 
-    FragmentPackageAlumnoHeaderBinding binding;
+    FragmentAlumnoHeader0Binding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentPackageAlumnoHeaderBinding.inflate(inflater, container, false);
+        binding = FragmentAlumnoHeader0Binding.inflate(inflater, container, false);
         binding.profileButton.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), AlumnoPerfilActivity.class);
             startActivity(intent);

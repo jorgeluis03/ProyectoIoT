@@ -35,14 +35,14 @@ public class AlumnoEventosTodosFragment extends Fragment {
                 "Nombre de actividad del evento",
                 "10/09/23",
                 "10:00",
-                new Lugar("Cancha minas", 0)));
+                new Lugar("Cancha minas", 0),false));
 
         eventoList.add(new Evento("Otro evento de Semana de Ingeniería",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
                 "Nombre de actividad del evento",
                 "13/09/23",
                 "Polideportivo",
-                new Lugar("Polideportivo",0)));
+                new Lugar("Polideportivo",0), false));
 
         ListaEventosAdapter adapter = new ListaEventosAdapter();
         adapter.setContext(getContext());

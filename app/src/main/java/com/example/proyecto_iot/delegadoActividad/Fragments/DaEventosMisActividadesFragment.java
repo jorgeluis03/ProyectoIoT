@@ -1,4 +1,4 @@
-package com.example.proyecto_iot;
+package com.example.proyecto_iot.delegadoActividad.Fragments;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.proyecto_iot.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AlumnoNotificacionesFragment#newInstance} factory method to
+ * Use the {@link DaEventosMisActividadesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AlumnoNotificacionesFragment extends Fragment {
+public class DaEventosMisActividadesFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class AlumnoNotificacionesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AlumnoNotificacionesFragment() {
+    public DaEventosMisActividadesFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class AlumnoNotificacionesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AlumnoNotificacionesFragment.
+     * @return A new instance of fragment DaEventosMisActividadesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AlumnoNotificacionesFragment newInstance(String param1, String param2) {
-        AlumnoNotificacionesFragment fragment = new AlumnoNotificacionesFragment();
+    public static DaEventosMisActividadesFragment newInstance(String param1, String param2) {
+        DaEventosMisActividadesFragment fragment = new DaEventosMisActividadesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class AlumnoNotificacionesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alumno_notificaciones, container, false);
+        return inflater.inflate(R.layout.fragment_da_eventos_mis_actividades, container, false);
     }
 }
