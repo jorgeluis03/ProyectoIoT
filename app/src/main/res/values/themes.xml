@@ -43,4 +43,11 @@
         <!-- Puedes ajustar otros atributos de estilo de texto aquí si es necesario -->
     </style>
 
+=======
+    
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+>>>>>>> delegadogeneral
 </resources>

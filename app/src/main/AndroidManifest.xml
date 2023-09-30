@@ -32,9 +32,14 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Alumno" />
+            <activity
+            android:name=".delegadoGeneral.CrearActividadActivity"
+            android:exported="false"
+            android:theme="@style/Login"/>
+
         <activity
             android:name=".delegadoGeneral.Dg_Activity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".alumno.AlumnoInicioActivity"
             android:exported="false"

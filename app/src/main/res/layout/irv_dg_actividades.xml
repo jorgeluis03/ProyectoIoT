@@ -14,70 +14,62 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         style="?attr/materialCardViewFilledStyle"
-        android:backgroundTint="@color/white">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <LinearLayout
-                android:id="@+id/linearLayout4"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView9"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:srcCompat="@drawable/img_default_user" />
-            </LinearLayout>
+        android:backgroundTint="@color/white"
+        app:contentPadding="8dp"
+        app:cardElevation="2dp">
 
             <LinearLayout
                 android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/linearLayout4"
+                android:orientation="horizontal"
                 tools:layout_editor_absoluteY="16dp">
-
-                <TextView
-                    android:id="@+id/textViewNombreActividad_dg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre actividad"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="@+id/imageView" />
-
-                <TextView
-                    android:id="@+id/textViewNumeroTelefono_dg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre actividad"
-                    android:textColor="#797D7F"
-                    android:textSize="14dp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="@+id/imageView" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:layout_weight="1">
 
+                    <TextView
+                        android:id="@+id/textViewNombreActividad_dg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre actividad"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/textViewEstadoActiv_dg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="estado"
+                        android:textColor="#797D7F"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/textViewDeleActiv_dg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="sin delegado"
+                        android:textColor="#797D7F"
+                        android:textSize="14dp"
+                        />
                     <Button
                         android:id="@+id/buttomAddDelegado_dg"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#0A0E19"
                         android:text="Asigar delegado"
                         android:textColor="#4ECF9C" />
-
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="bottom">
                     <Button
                         android:id="@+id/buttonEditarActivi"
                         style="?attr/materialIconButtonStyle"
@@ -95,7 +87,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:clickable="false"/>
+                        android:clickable="true"/>
 
 
                     <Button
@@ -114,7 +106,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:clickable="false"/>
+                        android:clickable="true"/>
 
                 </LinearLayout>
 
@@ -122,7 +114,7 @@
             </LinearLayout>
 
 
-        </LinearLayout>
+
 
 
     </com.google.android.material.card.MaterialCardView>
