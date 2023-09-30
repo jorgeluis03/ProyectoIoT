@@ -17,8 +17,6 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     boolean check = false;
 
-    boolean check = false;
-
     HashMap<String, String> credenciales = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
