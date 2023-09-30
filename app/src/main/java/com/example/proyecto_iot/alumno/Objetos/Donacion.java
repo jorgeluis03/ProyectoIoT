@@ -4,10 +4,12 @@ public class Donacion {
     private String texto;
     private String hora;
     private String donacion;
-    public Donacion(String texto, String hora, String donacion){
+    private String fecha;
+    public Donacion(String texto, String hora, String donacion, String fecha){
         this.texto = texto;
         this.hora = hora;
         this.donacion = donacion;
+        this.fecha = fecha;
     }
 
     public String getTexto() {
@@ -32,5 +34,13 @@ public class Donacion {
 
     public void setDonacion(String donacion) {
         this.donacion = donacion;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 }

@@ -66,9 +66,10 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         }
 
         public void bind(final Donacion donacion, final OnButtonClickListener listener) {
-            textNombreDonacion.setText(donacion.getTexto());
-            textHora.setText(donacion.getHora());
             textDonacion.setText(donacion.getDonacion());
+            String donacionHoraConcatenada = donacion.getFecha() + " " + donacion.getHora();
+            textNombreDonacion.setText(donacion.getTexto());
+            textHora.setText(donacionHoraConcatenada);
 
             button6.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,6 +83,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                     intent.putExtra("nombreDonacion", donacion.getTexto());
                     intent.putExtra("horaDonacion", donacion.getHora());
                     intent.putExtra("montoDonacion", donacion.getDonacion());
+                    intent.putExtra("fechaDonacion",donacion.getFecha());
                     context.startActivity(intent);
                 }
             });

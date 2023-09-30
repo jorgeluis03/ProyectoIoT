@@ -78,10 +78,10 @@ public class AlumnoDonacionesFragment extends Fragment {
             });
         });
 
-        donationList.add(new Donacion("Lionel Andrés Messi Cuccittini", "28 sep. 2023", "S/2000.00"));
-        donationList.add(new Donacion("Luquita Moura", "22 sep. 2023 - 14:30 hrs", "S/100.00"));
-        donationList.add(new Donacion("kunni", "18 ago. 2023 - 18:00 hrs", "S/100.00"));
-        donationList.add(new Donacion("James R.", "10 ago. 2023 - 15:40 hrs", "S/150.00"));
+        donationList.add(new Donacion("Lionel Andrés Messi Cuccittini", "11:30 hrs", "S/2000.00","28 sep. 2023"));
+        donationList.add(new Donacion("Luquita Moura", "14:30 hrs", "S/100.00","22 sep. 2023"));
+        donationList.add(new Donacion("kunni", "18:00 hrs", "S/100.00","18 ago. 2023"));
+        donationList.add(new Donacion("James R.", "15:40 hrs", "S/150.00","10 ago. 2023"));
 
         ListaDonacionesAdapter adapter = new ListaDonacionesAdapter(getContext(), donationList, donacion -> {
             // Aquí puedes manejar lo que sucede cuando se hace clic en una donación
