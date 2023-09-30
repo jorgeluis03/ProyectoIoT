@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
             if (!check){
-                Snackbar.make(binding.getRoot(), "Las credenciales no son válidas.", Snackbar.LENGTH_SHORT)
+                Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
                         .show();
             }
         });
