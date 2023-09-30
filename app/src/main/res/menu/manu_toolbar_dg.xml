@@ -5,9 +5,11 @@
     tools:ignore="MissingDefaultResource">
 
 
-
     <item
-        android:id="@+id/cerrarSesion_dg"
-        android:title="Cerrar Sesión"
+        android:id="@+id/buscar"
+        android:title="buscar"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         />
 </menu>

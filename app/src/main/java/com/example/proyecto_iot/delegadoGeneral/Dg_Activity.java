@@ -48,4 +48,9 @@ public class Dg_Activity extends AppCompatActivity {
         getSupportActionBar().setTitle(title);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.manu_toolbar_dg,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }
