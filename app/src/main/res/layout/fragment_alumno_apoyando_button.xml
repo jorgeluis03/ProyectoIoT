@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".alumno.Fragments.AlumnoApoyandoButtonFragment">
+
+    <Button
+        android:id="@+id/button11"
+        style="?attr/materialIconButtonFilledStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/evento_notificaciones"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:icon="@drawable/icon_bell_ringing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button12"
+        style="?attr/materialIconButtonFilledStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@color/black"
+        android:paddingHorizontal="12dp"
+        android:text="@string/evento_chat"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:icon="@drawable/icon_chat"
+        app:iconPadding="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button11"
+        app:layout_constraintStart_toEndOf="@+id/button11" />
+
+    <Button
+        android:id="@+id/buttonEventoApoyando"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:backgroundTint="#222A3F"
+        android:text="@string/evento_apoyando"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/white"
+        app:strokeWidth="1dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

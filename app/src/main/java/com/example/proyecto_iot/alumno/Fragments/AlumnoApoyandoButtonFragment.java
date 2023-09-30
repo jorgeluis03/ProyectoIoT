@@ -10,22 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.databinding.FragmentAlumnoApoyarButtonBinding;
+import com.example.proyecto_iot.databinding.FragmentAlumnoApoyandoButtonBinding;
 
-public class AlumnoApoyarButtonFragment extends Fragment {
+public class AlumnoApoyandoButtonFragment extends Fragment {
 
-    FragmentAlumnoApoyarButtonBinding binding;
+    FragmentAlumnoApoyandoButtonBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentAlumnoApoyandoButtonBinding.inflate(inflater, container, false);
 
-        binding = FragmentAlumnoApoyarButtonBinding.inflate(inflater, container, false);
-
-        binding.buttonEventoApoyar.setOnClickListener(view -> {
-            AlumnoApoyandoButtonFragment apoyandoFragment = new AlumnoApoyandoButtonFragment();
+        binding.buttonEventoApoyando.setOnClickListener(view -> {
+            AlumnoApoyarButtonFragment apoyarFragment = new AlumnoApoyarButtonFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerViewEventoButtons, apoyandoFragment)
+                    .replace(R.id.fragmentContainerViewEventoButtons, apoyarFragment)
                     .addToBackStack(null)
                     .commit();
         });
