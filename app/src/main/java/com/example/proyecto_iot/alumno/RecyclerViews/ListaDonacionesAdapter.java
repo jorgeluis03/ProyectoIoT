@@ -1,23 +1,37 @@
 package com.example.proyecto_iot.alumno.RecyclerViews;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoDonacionConsultaActivity;
 import com.example.proyecto_iot.alumno.Objetos.Donacion;
-import com.example.proyecto_iot.alumno.Objetos.Notificacion;
 
 import java.util.List;
 
-public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonacionesAdapter.DonacionViewHolder>{
+public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonacionesAdapter.DonacionViewHolder> {
+
+    public interface OnButtonClickListener {
+        void onButtonClick(Donacion donacion);
+    }
+
     private List<Donacion> donacionList;
     private Context context;
+    private OnButtonClickListener listener;
+
+    public ListaDonacionesAdapter(Context context, List<Donacion> donacionList, OnButtonClickListener listener) {
+        this.context = context;
+        this.donacionList = donacionList;
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -29,14 +43,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
     @Override
     public void onBindViewHolder(@NonNull DonacionViewHolder holder, int position) {
         Donacion donacion = donacionList.get(position);
-        holder.donacion = donacion;
-
-        TextView textNombreDonacion = holder.itemView.findViewById(R.id.textNombreDonacion);
-        TextView textHora = holder.itemView.findViewById(R.id.textHora);
-        TextView textDonacion = holder.itemView.findViewById(R.id.textDonacion);
-        textNombreDonacion.setText(donacion.getTexto());
-        textHora.setText(donacion.getHora());
-        textDonacion.setText(donacion.getDonacion());
+        holder.bind(donacion, listener);
     }
 
     @Override
@@ -44,27 +51,36 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         return donacionList.size();
     }
 
-    public class DonacionViewHolder extends RecyclerView.ViewHolder{
-        Donacion donacion;
+    public class DonacionViewHolder extends RecyclerView.ViewHolder {
+        TextView textNombreDonacion;
+        TextView textHora;
+        TextView textDonacion;
+        Button button6;
 
         public DonacionViewHolder(@NonNull View itemView) {
             super(itemView);
+            textNombreDonacion = itemView.findViewById(R.id.textNombreDonacion);
+            textHora = itemView.findViewById(R.id.textHora);
+            textDonacion = itemView.findViewById(R.id.textDonacion);
+            button6 = itemView.findViewById(R.id.button6);
         }
-    }
 
-    public List<Donacion> getDonacionList() {
-        return donacionList;
-    }
+        public void bind(final Donacion donacion, final OnButtonClickListener listener) {
+            textNombreDonacion.setText(donacion.getTexto());
+            textHora.setText(donacion.getHora());
+            textDonacion.setText(donacion.getDonacion());
 
-    public void setDonacionList(List<Donacion> donacionList) {
-        this.donacionList = donacionList;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
+            button6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onButtonClick(donacion);
+                    }
+                    // Añadir esta parte para abrir la nueva actividad
+                    Intent intent = new Intent(context, AlumnoDonacionConsultaActivity.class);
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 }
