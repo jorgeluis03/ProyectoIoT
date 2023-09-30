@@ -37,11 +37,15 @@
 
     <!-- EVENTO -->
     <string name="evento_apoyar">Apoyar</string>
-    
+
     <!-- DONACIONES -->
     <string name="donaciones_cuentas">Cuentas disponibles</string>
     <string name="donaciones_ultimas">Últimas donaciones</string>
     <string name="donaciones_donar">Donar</string>
+    <string name="donaciones_dialog_guardar_captura">Captura de pantalla del pago</string>
+    <string name="donaciones_dialog_guardar_monto">Monto donado</string>
+    <string name="donaciones_dialog_button">Registrar donación</string>
+    <string name="donaciones_dialog_subir">Subir imagen</string>
 
     <!-- hints -->
     <string name="hint_name">Nombres</string>
