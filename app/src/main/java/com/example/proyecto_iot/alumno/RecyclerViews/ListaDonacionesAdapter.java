@@ -78,6 +78,10 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                     }
                     // Añadir esta parte para abrir la nueva actividad
                     Intent intent = new Intent(context, AlumnoDonacionConsultaActivity.class);
+                    // Pasar datos al Intent. Puedes pasar cualquier dato primitivo: int, String, etc.
+                    intent.putExtra("nombreDonacion", donacion.getTexto());
+                    intent.putExtra("horaDonacion", donacion.getHora());
+                    intent.putExtra("montoDonacion", donacion.getDonacion());
                     context.startActivity(intent);
                 }
             });
