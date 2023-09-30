@@ -16,6 +16,7 @@
         android:textColor="@color/white"
         android:textSize="12sp"
         app:icon="@drawable/icon_bell_ringing"
+        app:iconPadding="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,14 +25,14 @@
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:backgroundTint="@color/black"
         android:paddingHorizontal="12dp"
         android:text="@string/evento_chat"
         android:textColor="@color/white"
         android:textSize="12sp"
         app:icon="@drawable/icon_chat"
-        app:iconPadding="8dp"
+        app:iconPadding="4dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/button11"
         app:layout_constraintStart_toEndOf="@+id/button11" />
 
