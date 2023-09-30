@@ -1,6 +1,9 @@
 package com.example.proyecto_iot.delegadoGeneral.fragmentos;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -14,9 +17,15 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.FragmentDgActividadesBinding;
 import com.example.proyecto_iot.delegadoGeneral.CrearActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
@@ -55,8 +64,11 @@ public class Dg_actividadesFragment extends Fragment {
             Intent intent = new Intent(getActivity(), CrearActividadActivity.class);
             launcher.launch(intent);
         });
+
+
         return binding.getRoot();
     }
+
 
     //
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -64,9 +76,11 @@ public class Dg_actividadesFragment extends Fragment {
         public void onActivityResult(ActivityResult result) {
             Intent resulrData = result.getData();
             if(resulrData!=null){
+                int i =9;
                 String nombreActividad = resulrData.getStringExtra("nombreActividad");
                 Log.d("msg-test",nombreActividad);
-                listaAct.add(new Actividades(nombreActividad,"abierto",null));
+                listaAct.add(new Actividades(i,nombreActividad,"abierto",null));
+                i++;
             }
 
         }
@@ -81,9 +95,9 @@ public class Dg_actividadesFragment extends Fragment {
     }
 
     public void cargarLista(){
-        ListaActividadesAdapter adapter = new ListaActividadesAdapter();
-        adapter.setContext(getContext());
-        adapter.setListaActividades(listaAct);
+        ListaActividadesAdapter adapter = new ListaActividadesAdapter(listaAct,requireContext());
+        /*adapter.setContext(getContext());
+        adapter.setListaActividades(listaAct);*/
 
         binding.recycleViewActividadesDg.setAdapter(adapter);
         binding.recycleViewActividadesDg.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -91,17 +105,21 @@ public class Dg_actividadesFragment extends Fragment {
 
     public List<Actividades> llenarListaUsuarios(){
         List<Actividades> listaActiv = new ArrayList<>();
-        listaActiv.add(new Actividades("FUTSAL VARONES","abierto",null ));
-        listaActiv.add(new Actividades("BASQUET VARONES","en curso",new Usuario("Jorge","Dominguez","a202006436@pucp.edu.pe") ));
-        listaActiv.add(new Actividades("GYMKANA TELECOM","abierto",null ));
-        listaActiv.add(new Actividades("SABADO REFRESCANTE","abierto",null ));
-        listaActiv.add(new Actividades("VOLEY VARONES & MUJERES","en curso",new Usuario("Gustavo","Peña","a20105236@pucp.edu.pe") ));
-        listaActiv.add(new Actividades("BASQUET MUJERES","en curso",new Usuario("Niurka","Sanchez","a201925636@pucp.edu.pe") ));
-        listaActiv.add(new Actividades("BAILETON TELITO","abierto",null ));
-        listaActiv.add(new Actividades("FUTSAL MUJERES","en curso",new Usuario("Milagros","Ramirez","a20189856@pucp.edu.pe") ));
+        listaActiv.add(new Actividades(1,"FUTSAL VARONES","abierto",null ));
+        listaActiv.add(new Actividades(2,"BASQUET VARONES","en curso",new Usuario("Jorge","Dominguez","a202006436@pucp.edu.pe") ));
+        listaActiv.add(new Actividades(3,"GYMKANA TELECOM","abierto",null ));
+        listaActiv.add(new Actividades(4,"SABADO REFRESCANTE","abierto",null ));
+        listaActiv.add(new Actividades(5,"VOLEY VARONES & MUJERES","en curso",new Usuario("Gustavo","Peña","a20105236@pucp.edu.pe") ));
+        listaActiv.add(new Actividades(6,"BASQUET MUJERES","en curso",new Usuario("Niurka","Sanchez","a201925636@pucp.edu.pe") ));
+        listaActiv.add(new Actividades(7,"BAILETON TELITO","abierto",null ));
+        listaActiv.add(new Actividades(8,"FUTSAL MUJERES","en curso",new Usuario("Milagros","Ramirez","a20189856@pucp.edu.pe") ));
 
         return listaActiv;
     }
+
+
+
+
 
 
     /*@Override

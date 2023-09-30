@@ -6,7 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,14 +26,45 @@ public class CrearActividadActivity extends AppCompatActivity {
         Toolbar toolbar = binding.toolbarNuevaactividadesDg;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        EditText editText = binding.editTextNombreActividadDg;
+        Button button = binding.buttonCrearActDg;
+        //editar
+        Intent intentRecib = getIntent();
+        if(intentRecib!=null){
+            toolbar.setTitle("Editar actividad");
+            String position = intentRecib.getStringExtra("position");
+            String nombreAntiguoAct = intentRecib.getStringExtra("nameActAntiguo");
 
-        binding.buttonCrearActDg.setOnClickListener(view -> {
-            Intent intent = new Intent();
-            EditText editText = binding.editTextNombreActividadDg;
+            editText.setText(nombreAntiguoAct);
+            button.setText("Actualizar");
+
+            button.setOnClickListener(view -> {
+                Intent intentActualizar = new Intent();
+                String nombreActNuevo= editText.getText().toString();
+                if(!nombreActNuevo.equals("")){
+                    intentActualizar.putExtra("nombreActNuevo",nombreActNuevo);
+                    intentActualizar.putExtra("position",position);
+                    setResult(RESULT_OK,intentActualizar);
+                    Log.d("msg-nuevo",position+' '+nombreActNuevo);
+                    finish();
+                }else {
+                    Toast.makeText(CrearActividadActivity.this,"Debe llenar el campo",Toast.LENGTH_SHORT).show();
+                }
+
+            });
+
+            Log.d("msg-antiguo",position+' '+nombreAntiguoAct);
+
+        }
+
+
+        //Para crear
+        button.setOnClickListener(view -> {
+            Intent intentCrear = new Intent();
             String nombreActicidad = editText.getText().toString();
             if(!nombreActicidad.equals("")){
-                intent.putExtra("nombreActividad",nombreActicidad);
-                setResult(RESULT_OK,intent);
+                intentCrear.putExtra("nombreActividad",nombreActicidad);
+                setResult(RESULT_OK,intentCrear);
                 finish();
             }else {
                 Toast.makeText(CrearActividadActivity.this,"Debe llenar el campo",Toast.LENGTH_SHORT).show();

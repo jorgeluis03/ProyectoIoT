@@ -174,12 +174,13 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingEnd="16dp"
+                android:paddingStart="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -199,7 +200,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
                             android:textAlignment="textEnd"
-                            android:text="TOTAL DE APOYOS"
+                            android:text="APOYOS"
                             android:textColor="@color/black"
                             android:textSize="16dp"
                             android:textStyle="bold" />

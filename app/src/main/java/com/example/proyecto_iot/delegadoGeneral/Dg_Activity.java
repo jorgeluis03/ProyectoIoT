@@ -48,24 +48,4 @@ public class Dg_Activity extends AppCompatActivity {
         getSupportActionBar().setTitle(title);
     }
 
-    /*
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this,navController,appBarConfiguration);
-
-        //Ocultar el buttomNavigation segun el destino
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                if (navDestination.getId() == R.id.dg_CrearActividadFragment) {
-                    buttomnavigationDg.setVisibility(View.GONE);
-                } else {
-                    buttomnavigationDg.setVisibility(View.VISIBLE);
-                }
-            }
-        });*/
-    /*@Override
-    public boolean onSupportNavigateUp() {
-        return NavigationUI.navigateUp(navController, (AppBarConfiguration) null)
-                || super.onSupportNavigateUp();
-    }*/
 }
