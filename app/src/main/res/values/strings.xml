@@ -37,6 +37,11 @@
 
     <!-- EVENTO -->
     <string name="evento_apoyar">Apoyar</string>
+    
+    <!-- DONACIONES -->
+    <string name="donaciones_cuentas">Cuentas disponibles</string>
+    <string name="donaciones_ultimas">Últimas donaciones</string>
+    <string name="donaciones_donar">Donar</string>
 
     <!-- hints -->
     <string name="hint_name">Nombres</string>

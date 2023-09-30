@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azul_background"
     tools:context=".alumno.AlumnoPerfilActivity">
 
     <TextView
@@ -99,9 +100,10 @@
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment"
         android:layout_width="0dp"
         android:layout_height="80dp"
+        android:paddingHorizontal="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_alumno_header1"/>
+        tools:layout="@layout/fragment_alumno_header1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

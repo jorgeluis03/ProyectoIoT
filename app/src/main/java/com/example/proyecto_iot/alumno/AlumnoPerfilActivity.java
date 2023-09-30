@@ -19,12 +19,15 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         binding = ActivityAlumnoPerfilBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        /*
         Bundle bundle = new Bundle();
         bundle.putString("header", "Perfil");
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.fragmentHeader, AlumnoHeader1Fragment.class, bundle)
                 .commit();
+
+         */
 
         binding.buttonEditarPerfil.setOnClickListener(view -> {
             Intent intent = new Intent(AlumnoPerfilActivity.this, AlumnoPerfilEditarActivity.class);

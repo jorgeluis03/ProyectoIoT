@@ -7,16 +7,6 @@
     android:layout_marginHorizontal="15dp"
     tools:context=".alumno.AlumnoEventoActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView3"
-        android:name="com.example.proyecto_iot.alumno.Fragments.PackageAlumnoButtonFragment"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_package_alumno_button" />
-
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="match_parent"

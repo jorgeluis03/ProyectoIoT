@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rvNotificacion"
+    android:id="@+id/rvDonacion"
     android:layout_width="380dp"
     android:layout_height="115dp"
     android:layout_gravity="center_horizontal"
@@ -12,31 +12,33 @@
     app:layout_anchorGravity="center_horizontal">
 
     <TextView
-        android:id="@+id/textNotificacion"
-        android:layout_width="280dp"
-        android:layout_height="45dp"
+        android:id="@+id/textNombreDonacion"
+        android:layout_width="216dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="16dp"
         android:background="#222A3F"
         android:text="TextView"
         android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintEnd_toStartOf="@+id/textDonacion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.183" />
 
     <TextView
         android:id="@+id/textHora"
-        android:layout_width="80dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#222A3F"
         android:text="TextView"
+        android:textSize="14sp"
         android:textColor="#B9B9B9"
-        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textNotificacion"
-        app:layout_constraintTop_toBottomOf="@+id/textNotificacion"
+        app:layout_constraintStart_toStartOf="@+id/textNombreDonacion"
+        app:layout_constraintTop_toBottomOf="@+id/textNombreDonacion"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
@@ -48,7 +50,19 @@
         app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textNotificacion"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textDonacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/button6"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

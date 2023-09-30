@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azul_background"
     tools:context=".alumno.AlumnoPerfilEditarActivity">
 
     <EditText
         android:id="@+id/inputNombre"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:background="@drawable/input_alumno_perfil"
         android:ems="10"
         android:inputType="text"
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/perfil_editar_nombre"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/inputNombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -34,8 +37,9 @@
 
     <EditText
         android:id="@+id/inputApellido"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="48dp"
         android:background="@drawable/input_alumno_perfil"
         android:ems="10"
@@ -52,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/perfil_editar_apellidos"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/inputApellido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,8 +64,9 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/button_alumno_perfil_guardar"
         android:text="@string/perfil_editar_guardar"
@@ -113,9 +119,10 @@
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment"
         android:layout_width="0dp"
         android:layout_height="80dp"
+        android:paddingHorizontal="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_alumno_header1"/>
+        tools:layout="@layout/fragment_alumno_header1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
