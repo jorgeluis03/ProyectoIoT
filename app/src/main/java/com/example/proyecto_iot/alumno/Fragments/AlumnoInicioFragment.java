@@ -1,5 +1,6 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoInicioViewPagerAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoInicioBinding;
+import com.example.proyecto_iot.delegadoActividad.DaInicioViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class AlumnoInicioFragment extends Fragment {
@@ -22,10 +24,19 @@ public class AlumnoInicioFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoInicioBinding.inflate(inflater, container, false);
 
+        Intent intent = getActivity().getIntent();
+
         // tabs para todos-apoyando
         TabLayout tabInicio = binding.tabLayout;
+
         ViewPager2 viewPagerInicio = binding.viewPager;
-        viewPagerInicio.setAdapter(new AlumnoInicioViewPagerAdapter(getActivity()));
+        // tab de delegado actividad
+        if (intent.getStringExtra("code").equals("20203554")){
+            tabInicio.addTab(tabInicio.newTab().setText("Mis actividades"),1);
+            viewPagerInicio.setAdapter(new DaInicioViewPagerAdapter(getActivity()));
+        }else {
+            viewPagerInicio.setAdapter(new AlumnoInicioViewPagerAdapter(getActivity()));
+        }
 
         tabInicio.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
