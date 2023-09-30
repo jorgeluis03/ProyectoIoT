@@ -11,13 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="ActiviConnect"
-        android:background="@color/verde_bat"
+        android:background="@color/azul_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-
         ></androidx.appcompat.widget.Toolbar>
 
     <androidx.fragment.app.FragmentContainerView
@@ -40,7 +39,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_navigation_bar_dg"
+        android:layout_gravity="bottom"
+        app:labelVisibilityMode="unlabeled"
+
         />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

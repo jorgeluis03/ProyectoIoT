@@ -12,6 +12,7 @@ import android.view.Menu;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityDgBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Dg_Activity extends AppCompatActivity {
@@ -27,8 +28,8 @@ public class Dg_Activity extends AppCompatActivity {
         Toolbar toolbar = binding.toolbarActividadesDg;
         setSupportActionBar(toolbar);
         //================================
-
         buttomnavigationDg = binding.buttomnavigationDg;
+
         //Cargar el navigationComponent (navHost) en el bottomnavigation
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment_dg);
         NavController navController = NavHostFragment.findNavController(navHostFragment);

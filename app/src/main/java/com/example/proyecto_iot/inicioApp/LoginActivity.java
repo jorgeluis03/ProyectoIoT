@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
+    boolean check = false;
 
     boolean check = false;
 

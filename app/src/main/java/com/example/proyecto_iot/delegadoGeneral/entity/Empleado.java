@@ -2,7 +2,7 @@ package com.example.proyecto_iot.delegadoGeneral.entity;
 
 import java.io.Serializable;
 
-public class Empleado implements Serializable {
+public class Empleado  {
 
     private Integer id;
     private String firstName;
