@@ -16,8 +16,9 @@ public class Evento {
     private LocalDateTime fechaHoraCreacion;
 
     private List<Foto> fotosSubidas;
+    private boolean apoyo;
 
-    public Evento(String titulo, String descripcion, String actividad, String fecha, String hora, Lugar lugar) {
+    public Evento(String titulo, String descripcion, String actividad, String fecha, String hora, Lugar lugar, boolean apoyo) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.actividad = actividad;
@@ -96,5 +97,13 @@ public class Evento {
 
     public void setFotosSubidas(List<Foto> fotosSubidas) {
         this.fotosSubidas = fotosSubidas;
+    }
+
+    public boolean isApoyo() {
+        return apoyo;
+    }
+
+    public void setApoyo(boolean apoyo) {
+        this.apoyo = apoyo;
     }
 }

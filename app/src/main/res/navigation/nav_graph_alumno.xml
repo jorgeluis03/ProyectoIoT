@@ -20,9 +20,9 @@
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoInicioFragment"
         android:label="fragment_alumno_inicio"
         tools:layout="@layout/fragment_alumno_inicio" />
-    <fragment
+    <activity
         android:id="@+id/daGestionFragment"
-        android:name="com.example.proyecto_iot.delegadoActividad.Fragments.DaGestionFragment"
-        android:label="fragment_da_gestion"
-        tools:layout="@layout/fragment_da_gestion" />
+        android:name="com.example.proyecto_iot.delegadoActividad.DaGestionActivity"
+        android:label="activity_da_gestion"
+        tools:layout="@layout/activity_da_gestion" />
 </navigation>
