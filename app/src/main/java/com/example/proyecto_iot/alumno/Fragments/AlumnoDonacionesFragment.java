@@ -1,7 +1,9 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,11 +19,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -44,10 +48,9 @@ import java.util.ArrayList;
 public class AlumnoDonacionesFragment extends Fragment {
 
     FragmentAlumnoDonacionesBinding binding;
-
-    ImageView imageDonacion;
-
     ArrayList<Donacion> donationList = new ArrayList<>();
+    ActivityResultLauncher<Intent> resultLauncher;
+    Button buttonSubirImagen;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +64,7 @@ public class AlumnoDonacionesFragment extends Fragment {
             bottomSheetDialog.show();
         });
 
+        registerResult();
         binding.buttonDonar.setOnClickListener(view -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_donar, (ConstraintLayout) view.findViewById(R.id.bottomSheetContainer));
@@ -73,8 +77,9 @@ public class AlumnoDonacionesFragment extends Fragment {
             bottomSheetDialog.setContentView(bottomSheetView);
             bottomSheetDialog.show();
 
-            bottomSheetView.findViewById(R.id.buttonSubirImagen).setOnClickListener(viewDialog -> {
-                // abrir galeria
+            buttonSubirImagen = bottomSheetView.findViewById(R.id.buttonSubirImagen);
+            buttonSubirImagen.setOnClickListener(viewDialog -> {
+                pickImage();
             });
         });
 
@@ -91,5 +96,47 @@ public class AlumnoDonacionesFragment extends Fragment {
         binding.rvDonaciones.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return binding.getRoot();
+    }
+
+    public void pickImage(){
+        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        resultLauncher.launch(intent);
+    }
+    private void registerResult(){
+        resultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), result -> {
+                    try {
+                        Uri uri = result.getData().getData(); // data de imagen
+                        buttonSubirImagen.setText(getImageName(uri, getContext()));
+                    }
+                    catch (Exception e){
+                        Toast.makeText(getContext(), "Ocurrió un error", Toast.LENGTH_SHORT).show();
+                        Log.d("msg-test", e.getMessage());
+                    }
+                }
+        );
+    }
+
+    String getImageName(Uri uri, Context context){
+        String res = null;
+        if (uri.getScheme().equals("content")){
+            Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()){
+                    res = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+            finally {
+                cursor.close();
+            }
+            if (res == null){
+                res = uri.getPath();
+                int cutt = res.lastIndexOf("/");
+                if (cutt != -1){
+                    res = res.substring(cutt+1);
+                }
+            }
+        }
+        return res;
     }
 }
