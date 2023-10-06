@@ -8,6 +8,8 @@ import android.os.Bundle;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
 import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilBinding;
+import com.example.proyecto_iot.inicioApp.IngresarActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AlumnoPerfilActivity extends AppCompatActivity {
 
@@ -36,6 +38,14 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         binding.buttonContrasena.setOnClickListener(view -> {
             Intent intent = new Intent(AlumnoPerfilActivity.this, AlumnoPerfilContrasenaActivity.class);
             startActivity(intent);
+        });
+
+        binding.buttonCerrarSesion.setOnClickListener(view -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(AlumnoPerfilActivity.this, IngresarActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         });
     }
 }

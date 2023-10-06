@@ -20,14 +20,9 @@
             android:exported="false" />
         <activity
             android:name=".alumno.AlumnoInicioActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Alumno">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".alumno.AlumnoEventoActivity"
@@ -89,9 +84,14 @@
             android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.IngresarActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data

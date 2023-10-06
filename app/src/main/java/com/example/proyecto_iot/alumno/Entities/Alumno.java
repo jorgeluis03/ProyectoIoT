@@ -5,12 +5,13 @@ import java.io.Serializable;
 public class Alumno implements Serializable {
     private String nombre;
     private String apellidos;
-    private String rol;
+    private String rol; // delegadoGeneral, delegadoActividad o alumno
     private String codigo;
     private String correo;
     private String contrasena;
-
     private String foto;
+    private String tipo; // alumno o egresado
+    private String estado; // activo, inactivo (considerando que se puede eliminar cuenta), pendiente, baneado
     public Alumno(){
 
     }
@@ -78,5 +79,21 @@ public class Alumno implements Serializable {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }
