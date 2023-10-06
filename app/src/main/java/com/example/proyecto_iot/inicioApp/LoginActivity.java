@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
-import com.example.proyecto_iot.alumno.Objetos.Alumno;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;

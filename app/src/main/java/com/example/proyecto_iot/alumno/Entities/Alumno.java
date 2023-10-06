@@ -1,4 +1,4 @@
-package com.example.proyecto_iot.alumno.Objetos;
+package com.example.proyecto_iot.alumno.Entities;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ public class Alumno implements Serializable {
     private String correo;
     private String contrasena;
 
-
+    private String foto;
     public Alumno(){
 
     }
@@ -70,5 +70,13 @@ public class Alumno implements Serializable {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

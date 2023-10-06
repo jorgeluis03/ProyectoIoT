@@ -1,18 +1,13 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -26,23 +21,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavOptions;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Objetos.Donacion;
+import com.example.proyecto_iot.alumno.Entities.Donacion;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaDonacionesAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoDonacionesBinding;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class AlumnoDonacionesFragment extends Fragment {

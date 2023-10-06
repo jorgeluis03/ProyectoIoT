@@ -1,6 +1,5 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Objetos.Evento;
-import com.example.proyecto_iot.alumno.Objetos.Lugar;
+import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Entities.Lugar;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoEventosTodosBinding;
 
