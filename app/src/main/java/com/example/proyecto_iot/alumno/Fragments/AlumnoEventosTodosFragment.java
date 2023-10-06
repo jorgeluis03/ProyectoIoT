@@ -1,5 +1,6 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,7 +42,7 @@ public class AlumnoEventosTodosFragment extends Fragment {
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
                 "Nombre de actividad del evento",
                 "13/09/23",
-                "Polideportivo",
+                "12:00",
                 new Lugar("Polideportivo",0)));
 
         ListaEventosAdapter adapter = new ListaEventosAdapter();

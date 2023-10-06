@@ -91,7 +91,8 @@
             android:name=".inicioApp.IngresarActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Login"></activity>
+            android:theme="@style/Login">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

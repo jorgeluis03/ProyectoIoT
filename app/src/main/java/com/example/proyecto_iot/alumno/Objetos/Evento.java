@@ -1,11 +1,12 @@
 package com.example.proyecto_iot.alumno.Objetos;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-public class Evento {
+public class Evento implements Serializable {
     private String titulo;
     private String descripcion;
     private String actividad;

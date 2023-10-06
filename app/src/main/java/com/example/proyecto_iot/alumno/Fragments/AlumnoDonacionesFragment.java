@@ -57,6 +57,13 @@ public class AlumnoDonacionesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoDonacionesBinding.inflate(inflater, container, false);
 
+        Bundle bundle = new Bundle();
+        bundle.putString("header", "Donaciones");
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragmentDonacionesHeader, AlumnoHeader2Fragment.class, bundle)
+                .commit();
+
         binding.buttonDonacionesYape.setOnClickListener(view -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_donacion_cuenta, (LinearLayout) view.findViewById(R.id.dialogCuentaContainer));

@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
+import com.example.proyecto_iot.alumno.Objetos.Alumno;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,16 +19,22 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     boolean check = false;
 
-    HashMap<String, String> credenciales = new HashMap<>();
+    ArrayList<Alumno> usuarios = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        credenciales.put("20203248", "messi"); // alumno
-        credenciales.put("20200643", "bicho"); // delegado general
-        credenciales.put("20203554", "pipipi"); // delegado actividad
+        // alumno
+        Alumno alumno = new Alumno("Noe", "Martinez", "alumno", "20203248", "a20203248@pucp.edu.pe", "messi");
+        // delegado actividad
+        Alumno delegadoActividad = new Alumno("", "", "", "20203554", "", "pipipi");
+
+        //credenciales.put("20200643", "bicho"); // delegado general
+
+        usuarios.add(alumno);
+        usuarios.add(delegadoActividad);
 
         binding.backButton2.setOnClickListener(view -> {
             finish();
@@ -43,18 +51,23 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginButton.setOnClickListener(view -> {
             String codigo = binding.inputCodigo.getText().toString();
             String contrasena = binding.inputContrasena.getText().toString();
-            for(Map.Entry<String, String> credencial: credenciales.entrySet()){
-                if (credencial.getKey().equals(codigo) && credencial.getValue().equals(contrasena)){
+            for(Alumno usuario: usuarios){
+                if (usuario.getCodigo().equals(codigo) && usuario.getContrasena().equals(contrasena)){
                     check = true;
                     Intent intent = null;
-                    if (codigo.equals("20203248")){
-                        intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
-                    } else if (codigo.equals("20200643")) {
-                        intent = new Intent(LoginActivity.this, Dg_Activity.class);
+                    switch (usuario.getRol()){
+                        case "alumno":
+                            intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                            intent.putExtra("alumno", usuario);
+                            break;
+                        case "delegadoActividad":
+                            intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                            break;
+                        case "delegadoGeneral":
+                            intent = new Intent(LoginActivity.this, Dg_Activity.class);
+                            break;
                     }
-                    //else if (codigo.equals("20203554")) {
 
-                    //}
                     startActivity(intent);
                 }
             }
