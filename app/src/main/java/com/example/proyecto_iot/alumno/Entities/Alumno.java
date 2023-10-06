@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class Alumno implements Serializable {
     private String nombre;
     private String apellidos;
-    private String rol; // delegadoGeneral, delegadoActividad o alumno
+    private String rol; // DelegadoGeneral, DelegadoActividad o Alumno
     private String codigo;
     private String correo;
     private String contrasena;
     private String foto;
-    private String tipo; // alumno o egresado
+    private String tipo; // Alumno o Egresado
     private String estado; // activo, inactivo (considerando que se puede eliminar cuenta), pendiente, baneado
     public Alumno(){
 

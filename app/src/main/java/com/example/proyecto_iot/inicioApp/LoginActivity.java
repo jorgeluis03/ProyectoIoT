@@ -109,13 +109,13 @@ public class LoginActivity extends AppCompatActivity {
                         String rol = String.valueOf(dataSnapshot.child("rol").getValue());
                         Intent intent = null;
                         switch (rol) {
-                            case "alumno":
+                            case "Alumno":
                                 intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                                 break;
-                            case "delegadoActividad":
+                            case "DelegadoActividad":
                                 intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                                 break;
-                            case "delegadoGeneral":
+                            case "DelegadoGeneral":
                                 intent = new Intent(LoginActivity.this, Dg_Activity.class);
                                 break;
                         }
