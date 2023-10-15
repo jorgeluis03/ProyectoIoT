@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
 import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilBinding;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;
@@ -15,12 +16,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class AlumnoPerfilActivity extends AppCompatActivity {
 
     private ActivityAlumnoPerfilBinding binding;
-    private DatabaseReference reference;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private Alumno alumno = new Alumno();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,7 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
 
         binding.buttonEditarPerfil.setOnClickListener(view -> {
             Intent intent = new Intent(AlumnoPerfilActivity.this, AlumnoPerfilEditarActivity.class);
+            intent.putExtra("alumno", alumno);
             startActivity(intent);
         });
 
@@ -59,35 +67,27 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            String codigo = currentUser.getEmail().substring(0, 8);
-            completarPerfilInfo(codigo);
+            completarPerfilInfo();
         }
     }
 
     // reemplazar por obtener info desde internal storage
-    void completarPerfilInfo(String codigo){
-        reference = FirebaseDatabase.getInstance().getReference("alumnos");
-        reference.child(codigo).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                if (task.getResult().exists()){
-                    DataSnapshot dataSnapshot = task.getResult();
-                    String nombre = String.valueOf(dataSnapshot.child("nombre").getValue());
-                    String apellidos = String.valueOf(dataSnapshot.child("apellidos").getValue());
-                    String rol = String.valueOf(dataSnapshot.child("rol").getValue());
-                    String foto = String.valueOf(dataSnapshot.child("foto").getValue());
+    void completarPerfilInfo(){
+        try (FileInputStream fileInputStream = openFileInput("userData");
+             FileReader fileReader = new FileReader(fileInputStream.getFD());
+             BufferedReader bufferedReader = new BufferedReader(fileReader)){
 
-                    binding.textNombre.setText(nombre+" "+apellidos);
-                    binding.textRol.setText(rol);
-                    cargarFoto();
-                }
-                else{
-                    Log.d("msg-test", "error: usuario no encontrado");
-                }
-            }
-            else{
-                Log.d("msg-test", "error: error al realizar busqueda");
-            }
-        });
+            String jsonData = bufferedReader.readLine();
+            Gson gson = new Gson();
+            alumno = gson.fromJson(jsonData, Alumno.class);
+
+            binding.textNombre.setText(alumno.getNombre()+" "+alumno.getApellidos());
+            binding.textRol.setText(alumno.getRol());
+
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     void cargarFoto(){

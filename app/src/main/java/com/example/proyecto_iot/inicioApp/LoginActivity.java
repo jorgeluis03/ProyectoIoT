@@ -30,10 +30,8 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
-    boolean check = false;
     FirebaseAuth mAuth;
     DatabaseReference reference;
-    String rol;
     Alumno alumno = new Alumno();
     ArrayList<Alumno> usuarios = new ArrayList<>();
 
@@ -77,22 +75,16 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                check = true;
                                 obtenerData(codigo);
-                                //guardarData(); // guardando data de usuario en internal storage para un manejo más rapido
-                                redirigirSegunRol(rol);
 
                             } else {
                                 // If sign in fails, display a message to the user.
+                                Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
+                                        .show();
                                 Log.d("msg-test", "credenciales incorrectas");
                             }
                         }
                     });
-
-            if (!check) {
-                Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
-                        .show();
-            }
         });
     }
 
@@ -116,19 +108,15 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     if (task.getResult().exists()) {
                         DataSnapshot dataSnapshot = task.getResult();
-                        Log.d("msg-test", "busqueda para info correcta");
 
                         // obteniendo toda la info del usuario
-                        String nombre = String.valueOf(dataSnapshot.child("nombre").getValue());
-                        String apellido = String.valueOf(dataSnapshot.child("apellidos").getValue());
-                        String correo = String.valueOf(dataSnapshot.child("correo").getValue());
-                        String rol = String.valueOf(dataSnapshot.child("rol").getValue());
-                        //alumno.setNombre(String.valueOf(dataSnapshot.child("nombre").getValue()));
-                        //alumno.setApellidos(String.valueOf(dataSnapshot.child("apellidos").getValue()));
-                        //alumno.setCorreo(String.valueOf(dataSnapshot.child("correo").getValue()));
-                        //alumno.setRol(String.valueOf(dataSnapshot.child("rol").getValue()));
+                        alumno.setNombre(String.valueOf(dataSnapshot.child("nombre").getValue()));
+                        alumno.setApellidos(String.valueOf(dataSnapshot.child("apellidos").getValue()));
+                        alumno.setCorreo(String.valueOf(dataSnapshot.child("correo").getValue()));
+                        alumno.setRol(String.valueOf(dataSnapshot.child("rol").getValue()));
 
-                        Log.d("msg-test", "nombre: "+nombre+" apellido: "+apellido+" correo: "+correo+" rol: "+rol);
+                        guardarData(); // guardando data de usuario en internal storage para un manejo más rapido
+                        redirigirSegunRol(alumno.getRol());
 
                     } else {
                         Log.d("msg-test", "error: usuario no encontrado");
@@ -140,17 +128,18 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    void guardarData(){
+    void guardarData() {
         Gson gson = new Gson();
         String alumnoJson = gson.toJson(alumno);
         try (FileOutputStream fileOutputStream = openFileOutput("userData", Context.MODE_PRIVATE);
-             FileWriter fileWriter = new FileWriter(fileOutputStream.getFD())){
+             FileWriter fileWriter = new FileWriter(fileOutputStream.getFD())) {
             fileWriter.write(alumnoJson);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    void redirigirSegunRol(String rol){
+
+    void redirigirSegunRol(String rol) {
         Intent intent = null;
         switch (rol) {
             case "Alumno":
