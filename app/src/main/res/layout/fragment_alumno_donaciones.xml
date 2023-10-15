@@ -12,7 +12,7 @@
         android:id="@+id/fragmentContainerView3"
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader2Fragment"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:paddingHorizontal="15dp"
         app:layout="@layout/fragment_alumno_header2"
         app:layout_constraintEnd_toEndOf="parent"

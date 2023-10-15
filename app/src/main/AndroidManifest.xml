@@ -16,9 +16,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".delegadoActividad.DaGestionActivity"
-            android:exported="false" />
-        <activity
             android:name=".delegadoActividad.DaInicioActivity"
             android:exported="false"
             android:screenOrientation="portrait"

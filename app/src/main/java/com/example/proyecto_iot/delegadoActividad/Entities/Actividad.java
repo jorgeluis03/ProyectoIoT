@@ -15,7 +15,8 @@ public class Actividad {
 
     public Actividad(String nombre, String fecha, String hora){
         this.nombre = nombre;
-        this.delegado = delegado;
+        this.fecha = fecha;
+        this.hora = hora;
     }
 
     public String getNombre() {

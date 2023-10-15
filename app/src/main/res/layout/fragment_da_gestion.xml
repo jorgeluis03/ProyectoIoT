@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0A0E19"
-    tools:context=".delegadoActividad.DaGestionActivity">
+    tools:context=".delegadoActividad.Fragments.DaGestionFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvActividades"
@@ -22,10 +22,11 @@
         android:id="@+id/fragmentHeader2"
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader2Fragment"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:paddingHorizontal="15dp"
         app:layout="@layout/fragment_alumno_header2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
