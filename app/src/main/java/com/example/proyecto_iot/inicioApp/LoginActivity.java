@@ -3,6 +3,7 @@ package com.example.proyecto_iot.inicioApp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +21,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     boolean check = false;
     FirebaseAuth mAuth;
     DatabaseReference reference;
+    String rol;
+    Alumno alumno = new Alumno();
     ArrayList<Alumno> usuarios = new ArrayList<>();
 
     @Override
@@ -71,10 +78,13 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 check = true;
-                                redirigirSegunRol(codigo);
+                                obtenerData(codigo);
+                                //guardarData(); // guardando data de usuario en internal storage para un manejo más rapido
+                                redirigirSegunRol(rol);
+
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Log.d("msg-test", "xd");
+                                Log.d("msg-test", "credenciales incorrectas");
                             }
                         }
                     });
@@ -98,29 +108,28 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    void redirigirSegunRol(String codigo) {
-        reference = FirebaseDatabase.getInstance().getReference("alumnos");
-        reference.child(codigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+    void obtenerData(String codigo) {
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("alumnos").child(codigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     if (task.getResult().exists()) {
                         DataSnapshot dataSnapshot = task.getResult();
+                        Log.d("msg-test", "busqueda para info correcta");
+
+                        // obteniendo toda la info del usuario
+                        String nombre = String.valueOf(dataSnapshot.child("nombre").getValue());
+                        String apellido = String.valueOf(dataSnapshot.child("apellidos").getValue());
+                        String correo = String.valueOf(dataSnapshot.child("correo").getValue());
                         String rol = String.valueOf(dataSnapshot.child("rol").getValue());
-                        Intent intent = null;
-                        switch (rol) {
-                            case "Alumno":
-                                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
-                                break;
-                            case "DelegadoActividad":
-                                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
-                                break;
-                            case "DelegadoGeneral":
-                                intent = new Intent(LoginActivity.this, Dg_Activity.class);
-                                break;
-                        }
-                        startActivity(intent);
-                        finish();
+                        //alumno.setNombre(String.valueOf(dataSnapshot.child("nombre").getValue()));
+                        //alumno.setApellidos(String.valueOf(dataSnapshot.child("apellidos").getValue()));
+                        //alumno.setCorreo(String.valueOf(dataSnapshot.child("correo").getValue()));
+                        //alumno.setRol(String.valueOf(dataSnapshot.child("rol").getValue()));
+
+                        Log.d("msg-test", "nombre: "+nombre+" apellido: "+apellido+" correo: "+correo+" rol: "+rol);
+
                     } else {
                         Log.d("msg-test", "error: usuario no encontrado");
                     }
@@ -129,5 +138,32 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    void guardarData(){
+        Gson gson = new Gson();
+        String alumnoJson = gson.toJson(alumno);
+        try (FileOutputStream fileOutputStream = openFileOutput("userData", Context.MODE_PRIVATE);
+             FileWriter fileWriter = new FileWriter(fileOutputStream.getFD())){
+            fileWriter.write(alumnoJson);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    void redirigirSegunRol(String rol){
+        Intent intent = null;
+        switch (rol) {
+            case "Alumno":
+                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                break;
+            case "DelegadoActividad":
+                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                break;
+            case "DelegadoGeneral":
+                intent = new Intent(LoginActivity.this, Dg_Activity.class);
+                break;
+        }
+        startActivity(intent);
+        finish();
     }
 }

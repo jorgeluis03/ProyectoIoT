@@ -64,6 +64,7 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         }
     }
 
+    // reemplazar por obtener info desde internal storage
     void completarPerfilInfo(String codigo){
         reference = FirebaseDatabase.getInstance().getReference("alumnos");
         reference.child(codigo).get().addOnCompleteListener(task -> {
