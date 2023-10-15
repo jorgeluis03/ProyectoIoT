@@ -30,6 +30,11 @@ import com.example.proyecto_iot.alumno.RecyclerViews.ListaDonacionesAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoDonacionesBinding;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -39,11 +44,52 @@ public class AlumnoDonacionesFragment extends Fragment {
     ArrayList<Donacion> donationList = new ArrayList<>();
     ActivityResultLauncher<Intent> resultLauncher;
     Button buttonSubirImagen;
+    ListaDonacionesAdapter adapter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoDonacionesBinding.inflate(inflater, container, false);
+
+        // Configura la referencia a la base de datos Firebase
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference donacionesRef = databaseRef.child("donaciones");
+        donacionesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Limpia la lista actual de donaciones
+                donationList.clear();
+
+                for (DataSnapshot donacionSnapshot : dataSnapshot.getChildren()) {
+                    // Accede a los datos de cada donación
+                    String fecha = donacionSnapshot.child("fecha").getValue(String.class);
+                    String hora = donacionSnapshot.child("hora").getValue(String.class);
+                    int monto = donacionSnapshot.child("monto").getValue(Integer.class);
+                    String nombre = donacionSnapshot.child("nombre").getValue(String.class);
+
+                    // Crea objetos Donacion y agrégalos a la lista
+                    Donacion donacion = new Donacion(nombre, hora, "S/" + monto, fecha);
+                    donationList.add(donacion);
+                }
+
+                // Notifica al adaptador que los datos han cambiado
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Maneja errores de lectura desde Firebase aquí
+            }
+        });
+        // Configura el adaptador
+        adapter = new ListaDonacionesAdapter(getContext(), donationList, donacion -> {
+            // Aquí puedes manejar lo que sucede cuando se hace clic en una donación
+        });
+
+        // Configura el RecyclerView
+        binding.rvDonaciones.setAdapter(adapter);
+        binding.rvDonaciones.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Bundle bundle = new Bundle();
         bundle.putString("header", "Donaciones");
@@ -77,19 +123,6 @@ public class AlumnoDonacionesFragment extends Fragment {
                 pickImage();
             });
         });
-
-        donationList.add(new Donacion("Lionel Andrés Messi Cuccittini", "11:30 hrs", "S/2000.00","28 sep. 2023"));
-        donationList.add(new Donacion("Luquita Moura", "14:30 hrs", "S/100.00","22 sep. 2023"));
-        donationList.add(new Donacion("kunni", "18:00 hrs", "S/100.00","18 ago. 2023"));
-        donationList.add(new Donacion("James R.", "15:40 hrs", "S/150.00","10 ago. 2023"));
-
-        ListaDonacionesAdapter adapter = new ListaDonacionesAdapter(getContext(), donationList, donacion -> {
-            // Aquí puedes manejar lo que sucede cuando se hace clic en una donación
-        });
-
-        binding.rvDonaciones.setAdapter(adapter);
-        binding.rvDonaciones.setLayoutManager(new LinearLayoutManager(getContext()));
-
         return binding.getRoot();
     }
 

@@ -53,16 +53,15 @@
         android:layout_width="109dp"
         android:layout_height="94dp"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonDonar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
     <TextView
         android:id="@+id/donacionInfoTextView"
-        android:layout_width="250dp"
+        android:layout_width="321dp"
         android:layout_height="100dp"
         android:background="@drawable/button_alumno_perfil"
         android:text="TextView"
@@ -71,20 +70,115 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_header_donacion"
-        app:layout_constraintVertical_bias="0.198" />
+        app:layout_constraintVertical_bias="0.05" />
 
-    <TextView
-        android:id="@+id/fechaInfoTextView"
-        android:layout_width="354dp"
-        android:layout_height="103dp"
+    <LinearLayout
+        android:id="@+id/fechaHoraLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="68dp"
         android:background="@drawable/button_alumno_perfil"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView18"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/donacionInfoTextView"
-        app:layout_constraintVertical_bias="0.125" />
+        app:layout_constraintVertical_bias="0.045"
+        tools:layout_editor_absoluteX="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="Fecha de la donación"
+                android:layout_marginStart="15dp"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/fechaTextView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="15dp"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="Hora de la donación"
+                android:layout_marginStart="15dp"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/horaTextView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text=""
+                android:layout_marginEnd="15dp"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="366dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fechaHoraLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:text="Recojo Kit Teleco"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="16dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:backgroundTint="#0A0E19"
+                android:clickable="false"
+                android:text="Recogido"
+                android:textColor="#56E846"
+                android:textSize="16sp"
+                app:strokeColor="#56E846"
+                app:strokeWidth="4dp" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
