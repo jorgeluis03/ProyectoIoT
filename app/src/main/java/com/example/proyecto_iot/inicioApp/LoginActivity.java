@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -13,6 +16,8 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
@@ -21,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import java.io.FileOutputStream;
@@ -31,7 +38,8 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     FirebaseAuth mAuth;
-    DatabaseReference reference;
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     Alumno alumno = new Alumno();
     ArrayList<Alumno> usuarios = new ArrayList<>();
 
@@ -101,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void obtenerData(String codigo) {
-        reference = FirebaseDatabase.getInstance().getReference();
         reference.child("alumnos").child(codigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -114,8 +121,10 @@ public class LoginActivity extends AppCompatActivity {
                         alumno.setApellidos(String.valueOf(dataSnapshot.child("apellidos").getValue()));
                         alumno.setCorreo(String.valueOf(dataSnapshot.child("correo").getValue()));
                         alumno.setRol(String.valueOf(dataSnapshot.child("rol").getValue()));
+                        alumno.setCodigo(codigo);
 
-                        guardarData(); // guardando data de usuario en internal storage para un manejo más rapido
+                        //descargarFotoPerfil();
+                        guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
                         redirigirSegunRol(alumno.getRol());
 
                     } else {
@@ -128,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    void guardarData() {
+    void guardarDataEnMemoria() {
         Gson gson = new Gson();
         String alumnoJson = gson.toJson(alumno);
         try (FileOutputStream fileOutputStream = openFileOutput("userData", Context.MODE_PRIVATE);
@@ -137,6 +146,45 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    void descargarFotoPerfil(){
+        StorageReference fotoRef = storageRef.child("images/"+alumno.getCodigo()+".jpg");
+        final long ONE_MEGABYTE = 1024 * 1024;
+
+        fotoRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                guardarFotoEnMemoria(bytes);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Log.d("msg-test", "error descargando imagen");
+            }
+        });
+    }
+
+    void guardarFotoEnMemoria(byte[] bytes){
+        Log.d("msg-test", "guardando foto");
+        // guardar en internal storage (se esta guardando un archvio binario)
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        SharedPreferences sharedPreferences = getSharedPreferences("userFiles", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userImage", bitmap.toString());
+        editor.apply();
+        Log.d("msg-test", "imagen guardad en shard preference");
+        /*
+        try (FileOutputStream fileOutputStream = openFileOutput("userImage", Context.MODE_PRIVATE);
+             FileOutputStream fileWriter = new FileOutputStream(fileOutputStream.getFD())) {
+            fileWriter.write(bytes);
+            Log.d("msg-test", "foto guardada");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+         */
     }
 
     void redirigirSegunRol(String rol) {
