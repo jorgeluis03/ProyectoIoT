@@ -1,10 +1,15 @@
 package com.example.proyecto_iot.alumno;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -31,6 +36,7 @@ import java.util.HashMap;
 public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     ActivityAlumnoPerfilEditarBinding binding;
     Alumno alumno = new Alumno();
+    int GALLERY_REQUEST_CODE = 200;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,9 +95,29 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
             }
         });
 
+        binding.buttonEditarFoto.setOnClickListener(view -> {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+        });
+
         binding.buttonGuardarPerfil.setOnClickListener(view -> {
             guardarPerfil();
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            if (data != null){
+                Uri imageUri = data.getData();
+                Log.d("msg-test", "uri: "+imageUri);
+                binding.imageEdit.setImageURI(imageUri);
+            }
+            else{
+                Log.d("msg-test", "imagen no seleccionada");
+            }
+        }
     }
 
     boolean inputsValidos(){

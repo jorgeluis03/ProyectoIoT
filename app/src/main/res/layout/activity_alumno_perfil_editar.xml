@@ -85,7 +85,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/imageEdit"
         android:layout_width="180dp"
         android:layout_height="180dp"
         app:layout_constraintBottom_toTopOf="@+id/inputNombre"
@@ -97,7 +97,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonQuitarFoto"
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -105,11 +105,11 @@
         android:layout_marginBottom="-20dp"
         android:backgroundTint="#222A3F"
         app:icon="@drawable/icon_trash"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintStart_toStartOf="@+id/imageView8" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
+        app:layout_constraintStart_toStartOf="@+id/imageEdit" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttonEditarFoto"
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -117,8 +117,8 @@
         android:layout_marginBottom="-20dp"
         android:backgroundTint="#222A3F"
         app:icon="@drawable/icon_pencil"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
+        app:layout_constraintEnd_toEndOf="@+id/imageEdit" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentHeader"
