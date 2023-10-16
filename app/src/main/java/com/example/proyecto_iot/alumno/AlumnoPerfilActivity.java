@@ -50,6 +50,7 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
 
         binding.buttonContrasena.setOnClickListener(view -> {
             Intent intent = new Intent(AlumnoPerfilActivity.this, AlumnoPerfilContrasenaActivity.class);
+            intent.putExtra("alumno", alumno);
             startActivity(intent);
         });
 

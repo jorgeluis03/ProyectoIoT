@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
-    FirebaseAuth mAuth;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     Alumno alumno = new Alumno();
@@ -48,8 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        mAuth = FirebaseAuth.getInstance();
 
         // alumno
         Alumno alumno = new Alumno("Noe", "Martinez", "alumno", "20203248", "a20203248@pucp.edu.pe", "messi");

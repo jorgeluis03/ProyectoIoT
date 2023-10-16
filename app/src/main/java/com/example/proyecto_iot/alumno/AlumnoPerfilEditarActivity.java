@@ -95,15 +95,15 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     }
 
     boolean inputsValidos(){
-        String nombre = binding.inputNombre.getText().toString();
-        String apellidos = binding.inputApellido.getText().toString();
+        String nombre = binding.inputNombre.getText().toString().trim();
+        String apellidos = binding.inputApellido.getText().toString().trim();
         //Log.d("msg-test", "nombre empty: "+TextUtils.isEmpty(nombre)+" | apellidos emplty: "+TextUtils.isEmpty(apellidos) + " | nombre equal: "+nombre.equals(alumno.getNombre()) + " | apellidos equal: "+apellidos.equals(alumno.getApellidos()));
         return !TextUtils.isEmpty(nombre) && !TextUtils.isEmpty(apellidos) && (!nombre.equals(alumno.getNombre()) || !apellidos.equals(alumno.getApellidos()));
     }
 
     void guardarPerfil(){
-        String nombre = binding.inputNombre.getText().toString();
-        String apellidos = binding.inputApellido.getText().toString();
+        String nombre = binding.inputNombre.getText().toString().trim();
+        String apellidos = binding.inputApellido.getText().toString().trim();
         // actaulizar info en firebase realtime database
 
         HashMap<String, Object> alumnoActualizado = new HashMap<>();
