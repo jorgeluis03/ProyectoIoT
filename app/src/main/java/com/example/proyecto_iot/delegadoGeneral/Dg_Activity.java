@@ -2,8 +2,11 @@ package com.example.proyecto_iot.delegadoGeneral;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -15,13 +18,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityDgBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
-public class Dg_Activity extends AppCompatActivity {
+public class Dg_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    private DrawerLayout drawerLayout;
     ActivityDgBinding binding;
     BottomNavigationView buttomnavigationDg;
     NavController navController;
@@ -30,11 +36,24 @@ public class Dg_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDgBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         //Mapear el toolbar como ActionBar
         Toolbar toolbar = binding.toolbarActividadesDg;
         setSupportActionBar(toolbar);
         //================================
+
+        drawerLayout = binding.drawerLayoutDg;
+        NavigationView navigationView = binding.navView;
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
+
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+
+
+
+
 
         buttomnavigationDg = binding.buttomnavigationDg;
         //Cargar el navigationComponent (navHost) en el bottomnavigation
@@ -63,5 +82,31 @@ public class Dg_Activity extends AppCompatActivity {
 
         }
         return  true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.config_dg){
+            Toast.makeText(this,"Configuracion",Toast.LENGTH_SHORT).show();
+        }
+        if(id==R.id.salir_dg){
+            Toast.makeText(this,"Salir",Toast.LENGTH_SHORT).show();
+        }
+        if(id==R.id.perfil_dg){
+            Toast.makeText(this,"Perfil",Toast.LENGTH_SHORT).show();
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
     }
 }
