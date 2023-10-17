@@ -1,21 +1,30 @@
 package com.example.proyecto_iot.alumno;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
 import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilBinding;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -26,7 +35,8 @@ import java.io.IOException;
 public class AlumnoPerfilActivity extends AppCompatActivity {
 
     private ActivityAlumnoPerfilBinding binding;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance(); // autenticacion
+    private FirebaseStorage storage; // storage
     private Alumno alumno = new Alumno();
 
     @Override
@@ -69,7 +79,6 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             completarPerfilInfo();
-            //cargarFoto();
         }
     }
 
@@ -86,41 +95,20 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
             binding.textNombre.setText(alumno.getNombre()+" "+alumno.getApellidos());
             binding.textRol.setText(alumno.getRol());
 
+            cargarFoto(alumno);
+
         }
         catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    void cargarFoto(){
-        // recuperar foto de usario desde internal storage (se esta recuperando un archivo binario)
-        Log.d("msg-test", "recuperando foto de shard preferences");
-        SharedPreferences sharedPreferences = getSharedPreferences("userFiles", MODE_PRIVATE);
-        String image = sharedPreferences.getString("userImage", null);
-        Bitmap bitmap = BitmapFactory.decodeFile(image);
-
-        // setear foto en imageview
-        binding.imagePerfil.setImageBitmap(bitmap);
-        /*
-        try (FileInputStream fileInputStream = openFileInput("userImage");
-             FileInputStream fileReader = new FileInputStream(fileInputStream.getFD())) {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            int nRead;
-            byte[] data = new byte[16384];
-
-            while ((nRead = fileReader.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
-            }
-
-            byte[] imageData = buffer.toByteArray();
-
-            // setear foto en imageview
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-            binding.imagePerfil.setImageBitmap(bitmap);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
+    void cargarFoto(Alumno alumno){
+        String url = alumno.getFotoUrl();
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
+        Glide.with(AlumnoPerfilActivity.this)
+                .load(url)
+                .apply(requestOptions)
+                .into(binding.imagePerfil);
     }
 }

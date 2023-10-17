@@ -15,6 +15,9 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
@@ -28,6 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -39,10 +45,12 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class AlumnoPerfilEditarActivity extends AppCompatActivity {
-    ActivityAlumnoPerfilEditarBinding binding;
-    Alumno alumno = new Alumno();
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseFirestore db;
+    private ActivityAlumnoPerfilEditarBinding binding;
+    private Alumno alumno = new Alumno();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance(); // autenticacion
+    private FirebaseFirestore db; // cloud firestore
+    private FirebaseStorage storage; // storage
+    private Uri imageUri;
     int GALLERY_REQUEST_CODE = 200;
 
     @Override
@@ -59,7 +67,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                 .commit();
 
         alumno = (Alumno) getIntent().getSerializableExtra("alumno");
-        completarInputs();
+        cargarInfo();
 
         binding.inputNombre.addTextChangedListener(new TextWatcher() {
             @Override
@@ -116,9 +124,9 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                Uri imageUri = data.getData();
-                Log.d("msg-test", "uri: " + imageUri);
+                imageUri = data.getData();
                 binding.imageEdit.setImageURI(imageUri);
+                binding.buttonGuardarPerfil.setEnabled(true);
             } else {
                 Log.d("msg-test", "imagen no seleccionada");
             }
@@ -143,9 +151,10 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         infoActualizada.put("nombre", nombre);
 
         db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("alumnos").document(userUid);
-
-        docRef
+        DocumentReference documentReference = db.collection("alumnos").document(userUid);
+        actualizarFotoPerfil();
+        /* DESCOMENTAR PARA GESTIONAR CUANDO SI Y CUANDO NO ACTUALIZAR
+        documentReference
                 .update(infoActualizada)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -156,6 +165,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                         alumno.setNombre(nombre);
                         alumno.setApellidos(apellidos);
                         actualizarInternalStorage();
+                        actualizarFotoPerfil();
 
                         // regresar a perfil activity
                         finish();
@@ -167,9 +177,32 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                         Log.d("msg-test", "Error updating document: " + e);
                     }
                 });
+
+         */
     }
 
-    void actualizarInternalStorage(){
+    void actualizarFotoPerfil(){
+        storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference().child("images/"+mAuth.getCurrentUser().getUid()+".jpg");
+        storageReference.putFile(imageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.d("msg-test", "imagen subida");
+                        Log.d("msg-test", "url: "+storageReference.getDownloadUrl());
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("msg-test", "error al subir imagen: "+e.getMessage());
+                        finish();
+                    }
+                });
+    }
+
+    void actualizarInternalStorage() {
         Gson gson = new Gson();
         String alumnoJson = gson.toJson(alumno);
         try (FileOutputStream fileOutputStream = openFileOutput("userData", Context.MODE_PRIVATE);
@@ -180,9 +213,20 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         }
     }
 
-    void completarInputs() {
+    void cargarInfo() {
         binding.inputNombre.setText(alumno.getNombre());
         binding.inputApellido.setText(alumno.getApellidos());
+
+        cargarFoto(alumno);
+    }
+
+    void cargarFoto(Alumno alumno){
+        String url = alumno.getFotoUrl();
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
+        Glide.with(AlumnoPerfilEditarActivity.this)
+                .load(url)
+                .apply(requestOptions)
+                .into(binding.imageEdit);
     }
 
 }

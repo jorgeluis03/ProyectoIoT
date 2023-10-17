@@ -109,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d("msg-test", "busqueda ok");
                         alumno = document.toObject(Alumno.class);
+                        Log.d("msg-test", "url login: "+alumno.getFotoUrl());
                         //descargarFotoPerfil();
                         guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
                         redirigirSegunRol(alumno.getRol());
@@ -132,45 +133,6 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    void descargarFotoPerfil(){
-        StorageReference fotoRef = storageRef.child("images/"+alumno.getCodigo()+".jpg");
-        final long ONE_MEGABYTE = 1024 * 1024;
-
-        fotoRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                guardarFotoEnMemoria(bytes);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-                Log.d("msg-test", "error descargando imagen");
-            }
-        });
-    }
-
-    void guardarFotoEnMemoria(byte[] bytes){
-        Log.d("msg-test", "guardando foto");
-        // guardar en internal storage (se esta guardando un archvio binario)
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        SharedPreferences sharedPreferences = getSharedPreferences("userFiles", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("userImage", bitmap.toString());
-        editor.apply();
-        Log.d("msg-test", "imagen guardad en shard preference");
-        /*
-        try (FileOutputStream fileOutputStream = openFileOutput("userImage", Context.MODE_PRIVATE);
-             FileOutputStream fileWriter = new FileOutputStream(fileOutputStream.getFD())) {
-            fileWriter.write(bytes);
-            Log.d("msg-test", "foto guardada");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-         */
     }
 
     void redirigirSegunRol(String rol) {
