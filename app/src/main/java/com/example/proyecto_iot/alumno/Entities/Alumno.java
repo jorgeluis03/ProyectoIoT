@@ -8,21 +8,18 @@ public class Alumno implements Serializable {
     private String rol; // DelegadoGeneral, DelegadoActividad o Alumno
     private String codigo;
     private String correo;
-    private String contrasena;
-    private String foto;
     private String tipo; // Alumno o Egresado
     private String estado; // activo, inactivo (considerando que se puede eliminar cuenta), pendiente, baneado
     public Alumno(){
 
     }
 
-    public Alumno(String nombre, String apellidos, String rol, String codigo, String correo, String contrasena) {
+    public Alumno(String nombre, String apellidos, String rol, String codigo, String correo) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.rol = rol;
         this.codigo = codigo;
         this.correo = correo;
-        this.contrasena = contrasena;
     }
 
     public String getNombre() {
@@ -65,21 +62,7 @@ public class Alumno implements Serializable {
         this.correo = correo;
     }
 
-    public String getContrasena() {
-        return contrasena;
-    }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
 
     public String getTipo() {
         return tipo;

@@ -26,6 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
@@ -37,27 +40,16 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance(); // autenticacion
+    FirebaseFirestore db = FirebaseFirestore.getInstance(); // cloud firestore
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference(); //storage
     Alumno alumno = new Alumno();
-    ArrayList<Alumno> usuarios = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        // alumno
-        Alumno alumno = new Alumno("Noe", "Martinez", "alumno", "20203248", "a20203248@pucp.edu.pe", "messi");
-        // delegado actividad
-        Alumno delegadoActividad = new Alumno("", "", "", "20203554", "", "pipipi");
-
-        //credenciales.put("20200643", "bicho"); // delegado general
-
-        usuarios.add(alumno);
-        usuarios.add(delegadoActividad);
 
         binding.backButton2.setOnClickListener(view -> {
             finish();
@@ -81,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                obtenerData(codigo);
+                                obtenerUserData();
 
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -106,30 +98,26 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    void obtenerData(String codigo) {
-        reference.child("alumnos").child(codigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+    void obtenerUserData() {
+        String userUid = mAuth.getCurrentUser().getUid();
+        DocumentReference docRef = db.collection("alumnos").document(userUid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult().exists()) {
-                        DataSnapshot dataSnapshot = task.getResult();
-
-                        // obteniendo toda la info del usuario
-                        alumno.setNombre(String.valueOf(dataSnapshot.child("nombre").getValue()));
-                        alumno.setApellidos(String.valueOf(dataSnapshot.child("apellidos").getValue()));
-                        alumno.setCorreo(String.valueOf(dataSnapshot.child("correo").getValue()));
-                        alumno.setRol(String.valueOf(dataSnapshot.child("rol").getValue()));
-                        alumno.setCodigo(codigo);
-
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("msg-test", "busqueda ok");
+                        alumno = document.toObject(Alumno.class);
                         //descargarFotoPerfil();
                         guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
                         redirigirSegunRol(alumno.getRol());
-
                     } else {
                         Log.d("msg-test", "error: usuario no encontrado");
                     }
-                } else {
-                    Log.d("msg-test", "error: error al realizar busqueda");
+                }
+                else{
+                    Log.d("msg-test", "error en busqueda: "+task.getException());
                 }
             }
         });
