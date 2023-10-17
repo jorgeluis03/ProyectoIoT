@@ -2,17 +2,26 @@ package com.example.proyecto_iot.delegadoGeneral.entity;
 
 import android.content.Intent;
 
-public class Actividades {
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
+
+@Entity(tableName = "actividades")
+public class Actividades implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+
     private Integer id;
     private String nombre;
     private String estado;
-    private Usuario usuario;
 
-    public Actividades(int id,String nombre, String estado, Usuario usuario) {
+
+    public Actividades(int id,String nombre, String estado) {
         this.id = id;
         this.nombre = nombre;
         this.estado = estado;
-        this.usuario = usuario;
+
     }
     public Integer getId() {
         return id;
@@ -37,11 +46,5 @@ public class Actividades {
         this.estado = estado;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 }

@@ -14,57 +14,45 @@ import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityDgCrearActividadBinding;
+import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
+import com.example.proyecto_iot.delegadoGeneral.entity.ActividadesDao;
+import com.example.proyecto_iot.delegadoGeneral.entity.ActividadesDataBase;
 
 public class CrearActividadActivity extends AppCompatActivity {
     ActivityDgCrearActividadBinding binding;
+    ActividadesDataBase actividadesDataBase;
+    ActividadesDao actividadesDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= ActivityDgCrearActividadBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        //Toolbar
         Toolbar toolbar = binding.toolbarNuevaactividadesDg;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //====================================
+
+        actividadesDataBase = ActividadesDataBase.getDataBase(this);
+        actividadesDao = actividadesDataBase.actividadesDao();
+
+
         EditText editText = binding.editTextNombreActividadDg;
         Button button = binding.buttonCrearActDg;
-        //editar
-        Intent intentRecib = getIntent();
-        if(intentRecib!=null){
-            toolbar.setTitle("Editar actividad");
-            String position = intentRecib.getStringExtra("position");
-            String nombreAntiguoAct = intentRecib.getStringExtra("nameActAntiguo");
-
-            editText.setText(nombreAntiguoAct);
-            button.setText("Actualizar");
-
-            button.setOnClickListener(view -> {
-                Intent intentActualizar = new Intent();
-                String nombreActNuevo= editText.getText().toString();
-                if(!nombreActNuevo.equals("")){
-                    intentActualizar.putExtra("nombreActNuevo",nombreActNuevo);
-                    intentActualizar.putExtra("position",position);
-                    setResult(RESULT_OK,intentActualizar);
-                    Log.d("msg-nuevo",position+' '+nombreActNuevo);
-                    finish();
-                }else {
-                    Toast.makeText(CrearActividadActivity.this,"Debe llenar el campo",Toast.LENGTH_SHORT).show();
-                }
-
-            });
-
-            Log.d("msg-antiguo",position+' '+nombreAntiguoAct);
-
-        }
-
 
         //Para crear
         button.setOnClickListener(view -> {
+
             Intent intentCrear = new Intent();
-            String nombreActicidad = editText.getText().toString();
-            if(!nombreActicidad.equals("")){
-                intentCrear.putExtra("nombreActividad",nombreActicidad);
+            String nombreActivi = editText.getText().toString();
+
+            if(!nombreActivi.equals("")){
+                intentCrear.putExtra("nombreActividad",nombreActivi);
+
+                Actividades actividad = new Actividades(0,nombreActivi,"abierto");
+                actividadesDao.insert(actividad);
                 setResult(RESULT_OK,intentCrear);
+                Toast.makeText(CrearActividadActivity.this,"Agregado",Toast.LENGTH_SHORT).show();
                 finish();
             }else {
                 Toast.makeText(CrearActividadActivity.this,"Debe llenar el campo",Toast.LENGTH_SHORT).show();
