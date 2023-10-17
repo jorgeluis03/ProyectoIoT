@@ -5,11 +5,13 @@ public class Donacion {
     private String hora;
     private String donacion;
     private String fecha;
-    public Donacion(String texto, String hora, String donacion, String fecha){
+    private String rol;
+    public Donacion(String texto, String hora, String donacion, String fecha, String rol){
         this.texto = texto;
         this.hora = hora;
         this.donacion = donacion;
         this.fecha = fecha;
+        this.rol = rol;
     }
 
     public String getTexto() {
@@ -42,5 +44,13 @@ public class Donacion {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }
