@@ -6,21 +6,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityDgCrearActividadBinding;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.entity.ActividadesDao;
-import com.example.proyecto_iot.delegadoGeneral.entity.ActividadesDataBase;
 
 public class CrearActividadActivity extends AppCompatActivity {
     ActivityDgCrearActividadBinding binding;
-    ActividadesDataBase actividadesDataBase;
     ActividadesDao actividadesDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +28,6 @@ public class CrearActividadActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //====================================
-
-        actividadesDataBase = ActividadesDataBase.getDataBase(this);
-        actividadesDao = actividadesDataBase.actividadesDao();
 
 
         EditText editText = binding.editTextNombreActividadDg;

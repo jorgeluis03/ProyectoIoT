@@ -33,7 +33,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,9 +95,19 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
-            startActivity(intent);
-            finish();
+            try (FileInputStream fileInputStream = openFileInput("userData");
+                 FileReader fileReader = new FileReader(fileInputStream.getFD());
+                 BufferedReader bufferedReader = new BufferedReader(fileReader)){
+
+                String jsonData = bufferedReader.readLine();
+                Gson gson = new Gson();
+                Alumno alumnoAutenticado = gson.fromJson(jsonData, Alumno.class);
+
+                redirigirSegunRol(alumnoAutenticado.getRol());
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -139,10 +152,10 @@ public class LoginActivity extends AppCompatActivity {
             case "Alumno":
                 intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                 break;
-            case "DelegadoActividad":
+            case "Delegado Actividad":
                 intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                 break;
-            case "DelegadoGeneral":
+            case "Delegado General":
                 intent = new Intent(LoginActivity.this, Dg_Activity.class);
                 break;
         }

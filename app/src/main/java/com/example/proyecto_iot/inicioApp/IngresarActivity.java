@@ -6,9 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityIngresarBinding;
+import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class IngresarActivity extends AppCompatActivity {
 
@@ -40,10 +48,37 @@ public class IngresarActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
-            startActivity(intent);
-            finish();
+        if (currentUser != null) {
+            try (FileInputStream fileInputStream = openFileInput("userData");
+                 FileReader fileReader = new FileReader(fileInputStream.getFD());
+                 BufferedReader bufferedReader = new BufferedReader(fileReader)){
+
+                String jsonData = bufferedReader.readLine();
+                Gson gson = new Gson();
+                Alumno alumnoAutenticado = gson.fromJson(jsonData, Alumno.class);
+
+                redirigirSegunRol(alumnoAutenticado.getRol());
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
         }
+    }
+
+    void redirigirSegunRol(String rol) {
+        Intent intent = null;
+        switch (rol) {
+            case "Alumno":
+                intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
+                break;
+            case "Delegado Actividad":
+                intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
+                break;
+            case "Delegado General":
+                intent = new Intent(IngresarActivity.this, Dg_Activity.class);
+                break;
+        }
+        startActivity(intent);
+        finish();
     }
 }
