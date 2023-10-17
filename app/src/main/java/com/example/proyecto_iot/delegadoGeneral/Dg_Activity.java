@@ -53,4 +53,15 @@ public class Dg_Activity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.manu_toolbar_dg,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.salir){
+            //Logica para salir
+
+
+        }
+        return  true;
+    }
 }
