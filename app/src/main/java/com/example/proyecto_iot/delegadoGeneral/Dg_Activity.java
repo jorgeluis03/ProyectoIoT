@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,16 +22,23 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
 import com.example.proyecto_iot.databinding.ActivityDgBinding;
+import com.example.proyecto_iot.inicioApp.IngresarActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.google.android.material.navigation.NavigationView;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class Dg_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
     ActivityDgBinding binding;
     BottomNavigationView buttomnavigationDg;
     NavController navController;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance(); // autenticacion
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +86,11 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         int id = item.getItemId();
         if(id == R.id.salir){
             //Logica para salir
-
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(Dg_Activity.this, IngresarActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
 
         }
         return  true;

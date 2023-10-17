@@ -4,16 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azul_background"
     tools:context=".alumno.AlumnoPerfilEditarActivity">
 
     <EditText
         android:id="@+id/inputNombre"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:background="@drawable/input_alumno_perfil"
         android:ems="10"
-        android:inputType="text"
+        android:hint="Ingrese su nombre"
+        android:inputType="text|textPersonName"
         android:textColor="@color/letra_clara"
+        android:textColorHint="#9FA1A0"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/perfil_editar_nombre"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/inputNombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -34,13 +39,16 @@
 
     <EditText
         android:id="@+id/inputApellido"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="48dp"
         android:background="@drawable/input_alumno_perfil"
         android:ems="10"
-        android:inputType="text"
+        android:hint="Ingrese sus apellidos"
+        android:inputType="text|textPersonName"
         android:textColor="@color/letra_clara"
+        android:textColorHint="#9FA1A0"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,18 +60,22 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/perfil_editar_apellidos"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/inputApellido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/inputApellido" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonGuardarPerfil"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/button_alumno_perfil_guardar"
+        android:enabled="false"
         android:text="@string/perfil_editar_guardar"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -73,9 +85,9 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageEdit"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         app:layout_constraintBottom_toTopOf="@+id/inputNombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -85,37 +97,38 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonQuitarFoto"
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="104dp"
+        android:layout_marginStart="-20dp"
+        android:layout_marginBottom="-20dp"
         android:backgroundTint="#222A3F"
         app:icon="@drawable/icon_trash"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/imageView8" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
+        app:layout_constraintStart_toStartOf="@+id/imageEdit" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttonEditarFoto"
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginEnd="-20dp"
+        android:layout_marginBottom="-20dp"
         android:backgroundTint="#222A3F"
         app:icon="@drawable/icon_pencil"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/imageView8" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
+        app:layout_constraintEnd_toEndOf="@+id/imageEdit" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentHeader"
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment"
         android:layout_width="0dp"
         android:layout_height="80dp"
+        android:paddingHorizontal="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_alumno_header1"/>
+        tools:layout="@layout/fragment_alumno_header1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

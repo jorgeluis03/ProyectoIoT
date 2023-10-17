@@ -6,18 +6,21 @@
     app:startDestination="@id/alumnoInicioFragment">
 
     <fragment
-        android:id="@+id/alumnoInicioFragment"
-        android:name="com.example.proyecto_iot.AlumnoInicioFragment"
-        android:label="fragment_alumno_inicio"
-        tools:layout="@layout/fragment_alumno_inicio" />
-    <fragment
         android:id="@+id/alumnoNotificacionesFragment"
-        android:name="com.example.proyecto_iot.AlumnoNotificacionesFragment"
+        android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoNotificacionesFragment"
         android:label="fragment_alumno_notificaciones"
         tools:layout="@layout/fragment_alumno_notificaciones" />
     <fragment
         android:id="@+id/alumnoDonacionesFragment"
-        android:name="com.example.proyecto_iot.AlumnoDonacionesFragment"
+        android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoDonacionesFragment"
         android:label="fragment_alumno_donaciones"
-        tools:layout="@layout/fragment_alumno_donaciones" />
+        tools:layout="@layout/fragment_alumno_donaciones">
+    </fragment>
+
+    <fragment
+        android:id="@+id/alumnoInicioFragment"
+        android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoInicioFragment"
+        android:label="fragment_alumno_inicio"
+        tools:layout="@layout/fragment_alumno_inicio" />
+
 </navigation>

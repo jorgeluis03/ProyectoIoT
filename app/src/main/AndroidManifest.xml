@@ -16,16 +16,23 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".alumno.AlumnoDonacionConsultaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".alumno.AlumnoInicioActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Alumno">
+        </activity>
+        <activity
             android:name=".alumno.AlumnoEventoActivity"
             android:exported="false"
-            android:theme="@style/Alumno" />
-        <activity
-            android:name=".alumno.AlumnoNotificacionesActivity"
-            android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Alumno" />
         <activity
             android:name=".alumno.AlumnoPerfilEditarActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Alumno" />
         <activity
             android:name=".alumno.AlumnoPerfilContrasenaActivity"
@@ -40,10 +47,6 @@
         <activity
             android:name=".delegadoGeneral.Dg_Activity"
             android:exported="false" />
-        <activity
-            android:name=".alumno.AlumnoInicioActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".alumno.AlumnoPerfilActivity"
             android:exported="false"
