@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityConfirmarregistroBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ConfirmarregistroActivity extends AppCompatActivity {
     ActivityConfirmarregistroBinding binding;
@@ -18,6 +19,7 @@ public class ConfirmarregistroActivity extends AppCompatActivity {
         binding = ActivityConfirmarregistroBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
+        FirebaseAuth.getInstance().signOut();
 
         binding.backButton2.setOnClickListener(view -> {
             Intent intent = new Intent(ConfirmarregistroActivity.this, IngresarActivity.class);

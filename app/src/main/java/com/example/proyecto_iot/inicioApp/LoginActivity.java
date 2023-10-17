@@ -122,8 +122,13 @@ public class LoginActivity extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d("msg-test", "busqueda ok");
                         alumno = document.toObject(Alumno.class);
-                        guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
-                        redirigirSegunRol(alumno.getRol());
+                        if (alumno.getEstado().equals("activo")){
+                            guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
+                            redirigirSegunRol(alumno.getRol());
+                        } else if (alumno.getEstado().equals("pendiente")) {
+                            Log.d("msg-test", "alumno con estado pendiente");
+                        }
+                        // considerar baneado tambien :u
                     } else {
                         Log.d("msg-test", "error: usuario no encontrado");
                     }
