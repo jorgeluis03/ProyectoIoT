@@ -51,7 +51,11 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance(); // autenticacion
     private FirebaseFirestore db; // cloud firestore
     private FirebaseStorage storage; // storage
-    private Uri imageUri;
+    private String nombreNuevo;
+    private String apellidosNuevos;
+    private String urlNuevo;
+    private Uri imageUri; // data de imagen nueva seleccionada
+    private boolean nuevaFoto = false;
     int GALLERY_REQUEST_CODE = 200;
 
     @Override
@@ -120,6 +124,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                 imageUri = data.getData();
                 binding.imageEdit.setImageURI(imageUri);
                 binding.buttonGuardarPerfil.setEnabled(true);
+                nuevaFoto = true;
             } else {
                 Log.d("msg-test", "imagen no seleccionada");
             }
@@ -133,49 +138,19 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     }
 
     void guardarPerfil() {
-        actualizarInfoYFotoPerfil();
+
+        if (nuevaFoto){
+            actualizarFotoEInfo();
+        }
+        else{
+            actualizarInfo();
+        }
     }
 
-    void actualizarInfo() {
-        String userUid = mAuth.getCurrentUser().getUid();
-        String nombre = binding.inputNombre.getText().toString().trim();
-        String apellidos = binding.inputApellido.getText().toString().trim();
-
-        HashMap<String, Object> infoActualizada = new HashMap<>();
-        infoActualizada.put("apellidos", apellidos);
-        infoActualizada.put("nombre", nombre);
-        infoActualizada.put("fotoUrl", alumno.getFotoUrl());
-
-        db = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = db.collection("alumnos").document(userUid);
-        documentReference
-                .update(infoActualizada)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("msg-test", "actualizado en firestore");
-
-                        // guardar info en internal storage
-                        alumno.setNombre(nombre);
-                        alumno.setApellidos(apellidos);
-                        actualizarInternalStorage();
-
-                        // regresar a perfil activity
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("msg-test", "Error updating document: " + e);
-                    }
-                });
-    }
-
-    void actualizarInfoYFotoPerfil() {
+    void actualizarFotoEInfo(){
+        // primero actualizando la imagen de perfil
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference().child("images/" + mAuth.getCurrentUser().getUid() + ".jpg");
-
         storageReference.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -189,15 +164,58 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Log.d("msg-test", "foto actualizada en storage");
-                    String nuevaUrl = task.getResult().toString();
-                    Log.d("msg-test", "nueva url: " + nuevaUrl);
-                    alumno.setFotoUrl(nuevaUrl);
+                    urlNuevo = task.getResult().toString();
+                    Log.d("msg-test", "nueva url: " + urlNuevo);
+                    alumno.setFotoUrl(urlNuevo); // seteado para cuando se guarde en internal storage y firestore
+
+                    // luego actualizando el resto de informacion
                     actualizarInfo();
                 } else {
                     Log.d("msg-test", "error");
                 }
             }
         });
+    }
+
+    void actualizarInfo() {
+        String userUid = mAuth.getCurrentUser().getUid();
+        nombreNuevo = binding.inputNombre.getText().toString().trim();
+        apellidosNuevos = binding.inputApellido.getText().toString().trim();
+
+        HashMap<String, Object> infoActualizada = new HashMap<>();
+        infoActualizada.put("apellidos", apellidosNuevos);
+        infoActualizada.put("nombre", nombreNuevo);
+        if (nuevaFoto){
+            infoActualizada.put("fotoUrl", urlNuevo);
+        }
+
+        db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = db.collection("alumnos").document(userUid);
+        documentReference
+                .update(infoActualizada)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("msg-test", "actualizado en firestore");
+
+                        // guardar info en internal storage
+                        alumno.setNombre(nombreNuevo);
+                        alumno.setApellidos(apellidosNuevos);
+                        if (nuevaFoto){
+                            alumno.setFotoUrl(urlNuevo);
+                        }
+                        actualizarInternalStorage();
+
+                        // regresar a perfil activity
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("msg-test", "Error updating document: " + e);
+                    }
+                });
     }
 
     void actualizarInternalStorage() {
@@ -214,10 +232,10 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     void cargarInfo() {
         binding.inputNombre.setText(alumno.getNombre());
         binding.inputApellido.setText(alumno.getApellidos());
-        cargarFoto(alumno);
+        cargarFoto();
     }
 
-    void cargarFoto(Alumno alumno) {
+    void cargarFoto() {
         String url = alumno.getFotoUrl();
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(AlumnoPerfilEditarActivity.this)
