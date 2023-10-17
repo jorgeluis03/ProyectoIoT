@@ -10,9 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Objetos.Evento;
-import com.example.proyecto_iot.alumno.Objetos.Lugar;
+import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Entities.Lugar;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoEventosTodosBinding;
 
@@ -41,7 +40,7 @@ public class AlumnoEventosTodosFragment extends Fragment {
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
                 "Nombre de actividad del evento",
                 "13/09/23",
-                "Polideportivo",
+                "12:00",
                 new Lugar("Polideportivo",0)));
 
         ListaEventosAdapter adapter = new ListaEventosAdapter();

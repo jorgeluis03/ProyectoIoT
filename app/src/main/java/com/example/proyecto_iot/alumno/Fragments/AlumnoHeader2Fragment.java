@@ -11,16 +11,23 @@ import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
-import com.example.proyecto_iot.databinding.FragmentPackageAlumnoHeaderBinding;
+import com.example.proyecto_iot.databinding.FragmentAlumnoHeader2Binding;
 
-public class PackageAlumnoHeaderFragment extends Fragment {
+public class AlumnoHeader2Fragment extends Fragment {
 
-    FragmentPackageAlumnoHeaderBinding binding;
+   FragmentAlumnoHeader2Binding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentPackageAlumnoHeaderBinding.inflate(inflater, container, false);
-        binding.profileButton.setOnClickListener(view -> {
+        binding = FragmentAlumnoHeader2Binding.inflate(inflater, container, false);
+
+        Bundle bundle = getArguments();
+        if (bundle != null){
+            String header = bundle.getString("header", "nothing");
+            binding.textHeader2.setText(header);
+        }
+
+        binding.buttonPerfil.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), AlumnoPerfilActivity.class);
             startActivity(intent);
         });

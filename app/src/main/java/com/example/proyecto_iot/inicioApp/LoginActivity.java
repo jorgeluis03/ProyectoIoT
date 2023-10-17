@@ -1,33 +1,55 @@
 package com.example.proyecto_iot.inicioApp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 
-import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
-    boolean check = false;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance(); // autenticacion
+    FirebaseFirestore db = FirebaseFirestore.getInstance(); // cloud firestore
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference(); //storage
+    Alumno alumno = new Alumno();
 
-    HashMap<String, String> credenciales = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        credenciales.put("20203248", "messi"); // alumno
-        credenciales.put("20200643", "bicho"); // delegado general
-        credenciales.put("20203554", "pipipi"); // delegado actividad
 
         binding.backButton2.setOnClickListener(view -> {
             finish();
@@ -44,33 +66,87 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginButton.setOnClickListener(view -> {
             String codigo = binding.inputCodigo.getText().toString();
             String contrasena = binding.inputContrasena.getText().toString();
-            for(Map.Entry<String, String> credencial: credenciales.entrySet()){
-                if (credencial.getKey().equals(codigo) && credencial.getValue().equals(contrasena)){
-                    check = true;
-                    Intent intent = null;
-                    if (codigo.equals("20203248")){
-                        intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
-                    } else if (codigo.equals("20200643")) {
-                        intent = new Intent(LoginActivity.this, Dg_Activity.class);
-                    }
-                    //else if (codigo.equals("20203554")) {
 
-                    //}
-                    startActivity(intent);
+            mAuth.signInWithEmailAndPassword(codigo + "@app.com", contrasena)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                obtenerUserData();
+
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
+                                        .show();
+                                Log.d("msg-test", "credenciales incorrectas");
+                            }
+                        }
+                    });
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            Intent intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    void obtenerUserData() {
+        String userUid = mAuth.getCurrentUser().getUid();
+        DocumentReference docRef = db.collection("alumnos").document(userUid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("msg-test", "busqueda ok");
+                        alumno = document.toObject(Alumno.class);
+                        guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
+                        redirigirSegunRol(alumno.getRol());
+                    } else {
+                        Log.d("msg-test", "error: usuario no encontrado");
+                    }
                 }
-            }
-            if (!check){
-                Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
-                        .show();
+                else{
+                    Log.d("msg-test", "error en busqueda: "+task.getException());
+                }
             }
         });
     }
 
-    boolean camposValidos(String codigo, String contrasena){
-        return !(codigo.equals("") && contrasena.equals(""));
+    void guardarDataEnMemoria() {
+        Gson gson = new Gson();
+        String alumnoJson = gson.toJson(alumno);
+        try (FileOutputStream fileOutputStream = openFileOutput("userData", Context.MODE_PRIVATE);
+             FileWriter fileWriter = new FileWriter(fileOutputStream.getFD())) {
+            fileWriter.write(alumnoJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    void credencialesValidas(){
-
+    void redirigirSegunRol(String rol) {
+        Intent intent = null;
+        switch (rol) {
+            case "Alumno":
+                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                break;
+            case "DelegadoActividad":
+                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                break;
+            case "DelegadoGeneral":
+                intent = new Intent(LoginActivity.this, Dg_Activity.class);
+                break;
+        }
+        startActivity(intent);
+        finish();
     }
 }

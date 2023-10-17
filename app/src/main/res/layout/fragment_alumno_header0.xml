@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".alumno.Fragments.PackageAlumnoHeaderFragment">
+    tools:context=".alumno.Fragments.AlumnoHeader0Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
         <Button
@@ -20,14 +20,14 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            app:icon="@drawable/icon_user"
-            app:iconSize="32dp"
+            app:icon="@drawable/icon_perfil_user"
+            app:iconSize="36dp"
             app:iconTint="@color/white" />
 
         <Button
             android:id="@+id/logo"
             style="?attr/materialIconButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
             app:icon="@drawable/icon_bat"

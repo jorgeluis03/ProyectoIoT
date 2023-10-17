@@ -1,6 +1,8 @@
-package com.example.proyecto_iot.alumno.Objetos;
+package com.example.proyecto_iot.alumno.Entities;
 
-public class Lugar {
+import java.io.Serializable;
+
+public class Lugar implements Serializable {
     private String nombre;
     private double coordenadas;
 

@@ -4,13 +4,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
 
 public class AlumnoEventoActivity extends AppCompatActivity {
+
+    ActivityAlumnoEventoBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alumno_evento);
+        binding = ActivityAlumnoEventoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        Evento evento = (Evento) getIntent().getSerializableExtra("evento");
+        binding.textEventoTitulo.setText(evento.getTitulo());
+        binding.textEventoActividad.setText(evento.getActividad());
+        binding.textEventoDescripcion.setText(evento.getDescripcion());
+        binding.buttonEventoFecha.setText(evento.getFecha());
+        binding.buttonEventoHora.setText(evento.getHora());
+        binding.buttonEventoLugar.setText(evento.getLugar().getNombre());
+
+        binding.buttonEventoBack.setOnClickListener(view -> {
+            finish();
+        });
     }
 }

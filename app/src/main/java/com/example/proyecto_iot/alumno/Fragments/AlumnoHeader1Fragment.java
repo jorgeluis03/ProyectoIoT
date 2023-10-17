@@ -19,9 +19,11 @@ public class AlumnoHeader1Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoHeader1Binding.inflate(inflater, container, false);
-        //Bundle bundle = requireArguments();
-        //String header = bundle.getString("header", "nothing");
-        //binding.textHeader.setText(header);
+        Bundle bundle = getArguments();
+        if (bundle != null){
+            String header = bundle.getString("header", "nothing");
+            binding.textHeader.setText(header);
+        }
 
         binding.buttonBack.setOnClickListener(view -> {
             getActivity().finish();
