@@ -22,6 +22,7 @@ import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
 import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilEditarBinding;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -76,11 +77,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (inputsValidos()) {
-                    binding.buttonGuardarPerfil.setEnabled(true);
-                } else {
-                    binding.buttonGuardarPerfil.setEnabled(false);
-                }
+                binding.buttonGuardarPerfil.setEnabled(inputsValidos());
             }
 
             @Override
@@ -96,11 +93,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (inputsValidos()) {
-                    binding.buttonGuardarPerfil.setEnabled(true);
-                } else {
-                    binding.buttonGuardarPerfil.setEnabled(false);
-                }
+                binding.buttonGuardarPerfil.setEnabled(inputsValidos());
             }
 
             @Override
@@ -136,24 +129,25 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     boolean inputsValidos() {
         String nombre = binding.inputNombre.getText().toString().trim();
         String apellidos = binding.inputApellido.getText().toString().trim();
-        //Log.d("msg-test", "nombre empty: "+TextUtils.isEmpty(nombre)+" | apellidos emplty: "+TextUtils.isEmpty(apellidos) + " | nombre equal: "+nombre.equals(alumno.getNombre()) + " | apellidos equal: "+apellidos.equals(alumno.getApellidos()));
         return !TextUtils.isEmpty(nombre) && !TextUtils.isEmpty(apellidos) && (!nombre.equals(alumno.getNombre()) || !apellidos.equals(alumno.getApellidos()));
     }
 
     void guardarPerfil() {
+        actualizarInfoYFotoPerfil();
+    }
+
+    void actualizarInfo() {
         String userUid = mAuth.getCurrentUser().getUid();
         String nombre = binding.inputNombre.getText().toString().trim();
         String apellidos = binding.inputApellido.getText().toString().trim();
 
-        // actaulizar info en firebase realtime database
         HashMap<String, Object> infoActualizada = new HashMap<>();
         infoActualizada.put("apellidos", apellidos);
         infoActualizada.put("nombre", nombre);
+        infoActualizada.put("fotoUrl", alumno.getFotoUrl());
 
         db = FirebaseFirestore.getInstance();
         DocumentReference documentReference = db.collection("alumnos").document(userUid);
-        actualizarFotoPerfil();
-        /* DESCOMENTAR PARA GESTIONAR CUANDO SI Y CUANDO NO ACTUALIZAR
         documentReference
                 .update(infoActualizada)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -165,7 +159,6 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                         alumno.setNombre(nombre);
                         alumno.setApellidos(apellidos);
                         actualizarInternalStorage();
-                        actualizarFotoPerfil();
 
                         // regresar a perfil activity
                         finish();
@@ -177,29 +170,34 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                         Log.d("msg-test", "Error updating document: " + e);
                     }
                 });
-
-         */
     }
 
-    void actualizarFotoPerfil(){
+    void actualizarInfoYFotoPerfil() {
         storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference().child("images/"+mAuth.getCurrentUser().getUid()+".jpg");
-        storageReference.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Log.d("msg-test", "imagen subida");
-                        Log.d("msg-test", "url: "+storageReference.getDownloadUrl());
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("msg-test", "error al subir imagen: "+e.getMessage());
-                        finish();
-                    }
-                });
+        StorageReference storageReference = storage.getReference().child("images/" + mAuth.getCurrentUser().getUid() + ".jpg");
+
+        storageReference.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return storageReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Log.d("msg-test", "foto actualizada en storage");
+                    String nuevaUrl = task.getResult().toString();
+                    Log.d("msg-test", "nueva url: " + nuevaUrl);
+                    alumno.setFotoUrl(nuevaUrl);
+                    actualizarInfo();
+                } else {
+                    Log.d("msg-test", "error");
+                }
+            }
+        });
     }
 
     void actualizarInternalStorage() {
@@ -216,11 +214,10 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     void cargarInfo() {
         binding.inputNombre.setText(alumno.getNombre());
         binding.inputApellido.setText(alumno.getApellidos());
-
         cargarFoto(alumno);
     }
 
-    void cargarFoto(Alumno alumno){
+    void cargarFoto(Alumno alumno) {
         String url = alumno.getFotoUrl();
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(AlumnoPerfilEditarActivity.this)

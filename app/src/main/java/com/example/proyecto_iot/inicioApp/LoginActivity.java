@@ -109,8 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d("msg-test", "busqueda ok");
                         alumno = document.toObject(Alumno.class);
-                        Log.d("msg-test", "url login: "+alumno.getFotoUrl());
-                        //descargarFotoPerfil();
                         guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
                         redirigirSegunRol(alumno.getRol());
                     } else {
