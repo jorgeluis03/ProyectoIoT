@@ -15,6 +15,17 @@ public class Alumno implements Serializable {
 
     }
 
+    public Alumno(String nombre, String apellidos, String rol, String codigo, String correo, String fotoUrl, String tipo, String estado) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.rol = rol;
+        this.codigo = codigo;
+        this.correo = correo;
+        this.fotoUrl = fotoUrl;
+        this.tipo = tipo;
+        this.estado = estado;
+    }
+
     public String getNombre() {
         return nombre;
     }
