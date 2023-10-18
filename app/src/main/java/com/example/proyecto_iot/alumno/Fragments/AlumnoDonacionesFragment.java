@@ -10,17 +10,21 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -47,6 +51,9 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AlumnoDonacionesFragment extends Fragment {
@@ -56,6 +63,10 @@ public class AlumnoDonacionesFragment extends Fragment {
     ActivityResultLauncher<Intent> resultLauncher;
     Button buttonSubirImagen;
     ListaDonacionesAdapter adapter;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private Uri uriDonacion;
+    private float monto;
+    private boolean fotoAgregada = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,8 +75,7 @@ public class AlumnoDonacionesFragment extends Fragment {
 
         // Accede al código de alumno desde el JSON en la memoria interna
         String codigoAlumno = obtenerCodigoAlumnoDesdeMemoria();
-        // Configura la referencia a Cloud Firestore
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         CollectionReference donacionesRef = db.collection("donaciones");
         Log.d("FirebaseData", "Código de Alumno: " + codigoAlumno);
         donacionesRef.document(codigoAlumno).collection("id")
@@ -125,8 +135,30 @@ public class AlumnoDonacionesFragment extends Fragment {
             View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_donar, (ConstraintLayout) view.findViewById(R.id.bottomSheetContainer));
 
             // conf de botones de dialog donar
-            bottomSheetView.findViewById(R.id.buttonDialogDonar).setOnClickListener(viewDialog -> {
-                Toast.makeText(getContext(), "pipipi", Toast.LENGTH_SHORT).show();
+            Button buttonDonar = bottomSheetView.findViewById(R.id.buttonDialogDonar);
+            buttonDonar.setOnClickListener(viewDialog -> {
+                subirDonacion();
+            });
+
+            EditText inputMonto = bottomSheetView.findViewById(R.id.inputMonto);
+            inputMonto.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if (fotoAgregada){
+                        monto = Float.parseFloat(inputMonto.getText().toString());
+                        buttonDonar.setEnabled(true);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
             });
 
             bottomSheetDialog.setContentView(bottomSheetView);
@@ -140,7 +172,13 @@ public class AlumnoDonacionesFragment extends Fragment {
         return binding.getRoot();
     }
 
-    public void pickImage(){
+    private void subirDonacion(){
+        String fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        String hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+ " hrs";
+        Log.d("msg-test", "fecha: "+fecha+" hora: "+hora+" monto: "+monto);
+    }
+
+    private void pickImage(){
         Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
         resultLauncher.launch(intent);
     }
@@ -148,8 +186,9 @@ public class AlumnoDonacionesFragment extends Fragment {
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), result -> {
                     try {
-                        Uri uri = result.getData().getData(); // data de imagen
-                        buttonSubirImagen.setText(getImageName(uri, getContext()));
+                        uriDonacion = result.getData().getData(); // data de imagen
+                        buttonSubirImagen.setText(getImageName(uriDonacion));
+                        fotoAgregada = true;
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(), "Ocurrió un error", Toast.LENGTH_SHORT).show();
@@ -181,26 +220,7 @@ public class AlumnoDonacionesFragment extends Fragment {
         }
     }
 
-    String getImageName(Uri uri, Context context){
-        String res = null;
-        if (uri.getScheme().equals("content")){
-            Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()){
-                    res = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            }
-            finally {
-                cursor.close();
-            }
-            if (res == null){
-                res = uri.getPath();
-                int cutt = res.lastIndexOf("/");
-                if (cutt != -1){
-                    res = res.substring(cutt+1);
-                }
-            }
-        }
-        return res;
+    private String getImageName(Uri uri){
+        return DocumentFile.fromSingleUri(getContext(), uri).getName();
     }
 }
