@@ -68,13 +68,13 @@ public class AlumnoDonacionesFragment extends Fragment {
     private float monto;
     private boolean fotoAgregada = false;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentAlumnoDonacionesBinding.inflate(inflater, container, false);
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            binding = FragmentAlumnoDonacionesBinding.inflate(inflater, container, false);
 
-        // Accede al código de alumno desde el JSON en la memoria interna
-        String codigoAlumno = obtenerCodigoAlumnoDesdeMemoria();
+            // Accede al código de alumno desde el JSON en la memoria interna
+            String codigoAlumno = obtenerCodigoAlumnoDesdeMemoria();
 
         CollectionReference donacionesRef = db.collection("donaciones");
         Log.d("FirebaseData", "Código de Alumno: " + codigoAlumno);
@@ -107,8 +107,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                 });
 
         // Configura el adaptador
-        adapter = new ListaDonacionesAdapter(getContext(), donationList, donacion -> {
-            // Aquí puedes manejar lo que sucede cuando se hace clic en una donación
+        adapter = new ListaDonacionesAdapter(getContext(), donationList, codigoAlumno, donacion -> {
         });
         // Configura el RecyclerView
         binding.rvDonaciones.setAdapter(adapter);

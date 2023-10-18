@@ -26,11 +26,13 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
     private List<Donacion> donacionList;
     private Context context;
     private OnButtonClickListener listener;
-
-    public ListaDonacionesAdapter(Context context, List<Donacion> donacionList, OnButtonClickListener listener) {
+    private String codigoAlumno;
+    private double donacionesTotales = 0.0;
+    public ListaDonacionesAdapter(Context context, List<Donacion> donacionList,String codigoAlumno, OnButtonClickListener listener) {
         this.context = context;
         this.donacionList = donacionList;
         this.listener = listener;
+        this.codigoAlumno = codigoAlumno;
     }
 
     @NonNull
@@ -44,6 +46,12 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
     public void onBindViewHolder(@NonNull DonacionViewHolder holder, int position) {
         Donacion donacion = donacionList.get(position);
         holder.bind(donacion, listener);
+
+        String donacionString = donacion.getDonacion();
+        donacionString = donacionString.replaceAll("S/", "").trim();
+        // Sumar la donación actual a las donaciones totales
+        donacionesTotales += Double.parseDouble(donacionString);
+
     }
 
     @Override
@@ -84,6 +92,9 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                     intent.putExtra("horaDonacion", donacion.getHora());
                     intent.putExtra("montoDonacion", donacion.getDonacion());
                     intent.putExtra("fechaDonacion",donacion.getFecha());
+                    intent.putExtra("rolDonacion", donacion.getRol());
+                    intent.putExtra("codigoAlumno", codigoAlumno);
+                    intent.putExtra("donacionesTotales", String.valueOf(donacionesTotales));
                     context.startActivity(intent);
                 }
             });
