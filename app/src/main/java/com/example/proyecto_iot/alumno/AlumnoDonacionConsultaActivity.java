@@ -154,13 +154,11 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
                     double latitud = lugar.getLatitude();
                     double longitud = lugar.getLongitude();
                     // Crear un Intent para abrir la nueva actividad
-                    Intent intent = new Intent(context, MapaActivity.class);
+                    Intent intent = new Intent(AlumnoDonacionConsultaActivity.this, MapaActivity.class);
                     // Pasar los datos de latitud y longitud a la nueva actividad
                     intent.putExtra("latitud", latitud);
                     intent.putExtra("longitud", longitud);
-                    context.startActivity(intent);
-
-
+                    startActivity(intent); // Iniciar la nueva actividad
                 }
                 // Ahora puedes usar latitud y longitud como desees, por ejemplo, abrir un mapa.
                 // Puedes agregar aquí la lógica para abrir un mapa o realizar otras acciones.

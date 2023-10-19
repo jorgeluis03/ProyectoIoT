@@ -6,12 +6,15 @@ public class Donacion {
     private String donacion;
     private String fecha;
     private String rol;
-    public Donacion(String texto, String hora, String donacion, String fecha, String rol){
+    private String fotoQR;
+
+    public Donacion(String texto, String hora, String donacion, String fecha, String rol, String fotoQR){
         this.texto = texto;
         this.hora = hora;
         this.donacion = donacion;
         this.fecha = fecha;
         this.rol = rol;
+        this.fotoQR = fotoQR;
     }
 
     public String getTexto() {
@@ -52,5 +55,13 @@ public class Donacion {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public String getFotoQR() {
+        return fotoQR;
+    }
+
+    public void setFotoQR(String fotoQR) {
+        this.fotoQR = fotoQR;
     }
 }
