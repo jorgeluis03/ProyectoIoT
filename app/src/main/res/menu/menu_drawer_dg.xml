@@ -7,15 +7,18 @@
         <item
             android:id="@+id/perfil_dg"
             android:icon="@drawable/icon_perfil_user"
-            android:title="Perfil"/>
+            android:title="Perfil"
+            android:checkable="false" />
         <item
             android:id="@+id/config_dg"
             android:icon="@drawable/baseline_settings_24"
-            android:title="Configuracion"/>
+            android:title="Configuracion"
+            android:checkable="false"/>
         <item
             android:id="@+id/salir_dg"
             android:icon="@drawable/ic_exit"
-            android:title="Salir"/>
+            android:title="Salir"
+            android:checkable="false"/>
 
     </group>
 </menu>

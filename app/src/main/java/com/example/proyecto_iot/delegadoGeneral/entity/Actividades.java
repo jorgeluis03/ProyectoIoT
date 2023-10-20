@@ -12,7 +12,6 @@ public class Actividades implements Serializable {
     private String id;
     private String nombre;
     private String estado;
-    private String codigoDelegado;
 
     private Usuario delegadoActividad;
 
@@ -22,14 +21,6 @@ public class Actividades implements Serializable {
 
     public void setDelegadoActividad(Usuario delegadoActividad) {
         this.delegadoActividad = delegadoActividad;
-    }
-
-    public String getCodigoDelegado() {
-        return codigoDelegado;
-    }
-
-    public void setCodigoDelegado(String codigoDelegado) {
-        this.codigoDelegado = codigoDelegado;
     }
 
     public String getId() {

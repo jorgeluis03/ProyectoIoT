@@ -39,7 +39,8 @@
             app:menu="@menu/menu_navigation_bar_dg"
             android:layout_gravity="bottom"
             app:labelVisibilityMode="unlabeled"
-            app:itemActiveIndicatorStyle="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="?android:attr/selectableItemBackground"
+
             />
 
         <androidx.fragment.app.FragmentContainerView
@@ -64,7 +65,9 @@
         android:id="@+id/nav_view"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header_dg"
-        app:menu="@menu/menu_drawer_dg" />
+        app:menu="@menu/menu_drawer_dg"
+
+        />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

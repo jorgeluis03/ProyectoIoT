@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".delegadoGeneral.Dg_configuracion"
+            android:exported="false" />
+        <activity
             android:name=".delegadoGeneral.EditarActividad"
             android:exported="false" />
         <activity

@@ -1,31 +1,23 @@
 package com.example.proyecto_iot.delegadoGeneral;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
 import com.example.proyecto_iot.databinding.ActivityDgBinding;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -92,7 +84,9 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.config_dg){
-            Toast.makeText(this,"Configuracion",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, Dg_configuracion.class);
+            startActivity(intent);
+
         }
         if(id==R.id.salir_dg){
             //Logica para salir
@@ -104,10 +98,12 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
 
         }
         if(id==R.id.perfil_dg){
-            Toast.makeText(this,"Perfil",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, Perfil_dg.class);
+            startActivity(intent);
+
         }
 
-        drawerLayout.closeDrawer(GravityCompat.START);
+        //drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

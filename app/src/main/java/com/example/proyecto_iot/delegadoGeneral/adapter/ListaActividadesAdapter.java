@@ -2,6 +2,7 @@ package com.example.proyecto_iot.delegadoGeneral.adapter;
 
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.delegadoGeneral.CrearActividadActivity;
+import com.example.proyecto_iot.delegadoGeneral.EditarActividad;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.example.proyecto_iot.delegadoGeneral.fragmentos.Dg_actividadesFragment;
@@ -48,7 +50,11 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
     private List<Actividades> listaActividades;
     private Context context;
     FirebaseFirestore db;
+    private ActivityResultLauncher<Intent> lunchEditar;
 
+    public ListaActividadesAdapter(ActivityResultLauncher<Intent> lunchEditar) {
+        this.lunchEditar = lunchEditar;
+    }
     //override metodos
     @NonNull
     @Override
@@ -96,7 +102,10 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
             //editar
             Button buttonEditar = itemView.findViewById(R.id.buttonEditarActivi);
             buttonEditar.setOnClickListener(view -> {
-                
+
+                Intent intent = new Intent(context, EditarActividad.class);
+                intent.putExtra("actividadActual",actividades);
+                lunchEditar.launch(intent);
 
             });
 

@@ -66,8 +66,6 @@ public class CrearActividadActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 actividad.setNombre(nombreActividad);
                 actividad.setEstado("abierto");
-                actividad.setCodigoDelegado(user_delegado.getCodigo());
-
                 intent.putExtra("nombreActividad",actividad);
                 intent.putExtra("delegado",user_delegado);
                 setResult(RESULT_OK,intent);
@@ -126,7 +124,7 @@ public class CrearActividadActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(Usuario usuario) {
                                 user_delegado = usuario;
-                                editTextNombreDelegado.setText(usuario.getNombre()); // Actualiza el EditText con el nombre del usuario seleccionado
+                                editTextNombreDelegado.setText(usuario.getNombre()+' '+usuario.getApellido()); // Actualiza el EditText con el nombre del usuario seleccionado
                                 dialog.dismiss(); // Cierra el diálogo después de la selección
 
                             }

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         style="?attr/materialCardViewFilledStyle"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="#D98880"
         app:contentPadding="8dp"
         app:cardElevation="5dp">
 
@@ -37,32 +37,25 @@
                         android:layout_height="wrap_content"
                         android:text="Nombre actividad"
                         android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="16dp"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
                     <TextView
                         android:id="@+id/textViewEstadoActiv_dg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="estado"
-                        android:textColor="#797D7F"
-                        android:textSize="14dp" />
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
                     <TextView
                         android:id="@+id/textViewDeleActiv_dg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="sin delegado"
-                        android:textColor="#797D7F"
-                        android:textSize="14dp"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
                         />
-                    <Button
-                        android:id="@+id/buttomAddDelegado_dg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="#0A0E19"
-                        android:text="Asigar delegado"
-                        android:textColor="#4ECF9C" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -83,7 +76,7 @@
                         app:icon="@drawable/sharp_edit"
                         app:iconSize="30dp"
                         android:layout_marginStart="5dp"
-                        app:iconTint="@color/azul_background"
+                        app:iconTint="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -102,7 +95,7 @@
                         android:paddingBottom="0dp"
                         app:icon="@drawable/round_delete"
                         app:iconSize="30dp"
-                        app:iconTint="@color/azul_background"
+                        app:iconTint="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
