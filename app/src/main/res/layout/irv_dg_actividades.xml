@@ -16,7 +16,7 @@
         style="?attr/materialCardViewFilledStyle"
         android:backgroundTint="@color/white"
         app:contentPadding="8dp"
-        app:cardElevation="2dp">
+        app:cardElevation="5dp">
 
             <LinearLayout
                 android:id="@+id/linearLayout3"

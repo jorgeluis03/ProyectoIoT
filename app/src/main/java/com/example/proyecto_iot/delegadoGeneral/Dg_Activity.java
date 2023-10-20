@@ -84,15 +84,7 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.salir){
-            //Logica para salir
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(Dg_Activity.this, IngresarActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
 
-        }
         return  true;
     }
 
@@ -103,7 +95,13 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
             Toast.makeText(this,"Configuracion",Toast.LENGTH_SHORT).show();
         }
         if(id==R.id.salir_dg){
-            Toast.makeText(this,"Salir",Toast.LENGTH_SHORT).show();
+            //Logica para salir
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(Dg_Activity.this, IngresarActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+
         }
         if(id==R.id.perfil_dg){
             Toast.makeText(this,"Perfil",Toast.LENGTH_SHORT).show();

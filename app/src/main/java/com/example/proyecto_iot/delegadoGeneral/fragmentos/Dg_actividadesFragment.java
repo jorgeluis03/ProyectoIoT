@@ -36,6 +36,11 @@ import com.example.proyecto_iot.delegadoGeneral.entity.Empleado;
 import com.example.proyecto_iot.delegadoGeneral.entity.EmpleadoDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.example.proyecto_iot.delegadoGeneral.retrofitServices.EmpleadoService;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +52,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Dg_actividadesFragment extends Fragment {
+    private boolean actividadesCargadas = false;
+    private ListaActividadesAdapter adapter = new ListaActividadesAdapter();
 
     FragmentDgActividadesBinding binding;
-    private List<Actividades> listaAct;
+    private List<Actividades> listaAct; // Inicializa la lista
+    FirebaseFirestore db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,11 +65,13 @@ public class Dg_actividadesFragment extends Fragment {
         // Cambiar el contenido del Toolbar
         ((Dg_Activity) requireActivity()).setToolbarContent("ActiviConnect");
 
+        cargarActividades();
 
         binding.floatingButtonCrearActividadDg.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), CrearActividadActivity.class);
             launcher.launch(intent);
         });
+
 
 
         return binding.getRoot();
@@ -75,96 +85,49 @@ public class Dg_actividadesFragment extends Fragment {
             Intent resulrData = result.getData();
             if(resulrData!=null){
 
-                String nombreActividad = resulrData.getStringExtra("nombreActividad");
-                Log.d("msg-test",nombreActividad);
+                Actividades actividad = (Actividades) resulrData.getSerializableExtra("nombreActividad");
+                Usuario usuarioDelegado = (Usuario) resulrData.getSerializableExtra("delegado");
+                actividad.setDelegadoActividad(usuarioDelegado);
+                db = FirebaseFirestore.getInstance();
+                db.collection("actividades")
+                        .add(actividad)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                actividad.setId(documentReference.getId());
+                                listaAct.add(actividad);
+                                adapter.notifyDataSetChanged();
+                                Toast.makeText(getContext(),"Actividad agregada",Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
             }
 
         }
     });
 
+    public void cargarActividades(){
+        db = FirebaseFirestore.getInstance();
+        db.collection("actividades")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+                        listaAct=new ArrayList<>();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Actividades actividades = document.toObject(Actividades.class);
+                            actividades.setId(document.getId());
+                            listaAct.add(actividades);
+                        }
 
-    //Metodos para el recycleView
-    @Override
-    public void onStart() {
-        super.onStart();
-        cargarLista();
-    }
-
-    public void cargarLista(){
-        ListaActividadesAdapter adapter = new ListaActividadesAdapter(listaAct,requireContext());
-        /*adapter.setContext(getContext());
-        adapter.setListaActividades(listaAct);*/
-/*
-        binding.recycleViewActividadesDg.setAdapter(adapter);
-        binding.recycleViewActividadesDg.setLayoutManager(new LinearLayoutManager(getContext()));*/
-    }
-
-
-
-
-
-
-
-    /*@Override
-    public void onStart() {
-        super.onStart();
-        cargarlista();
-    }*/
-
-    /*public void obtenerData(){
-        empleadoService = new Retrofit.Builder()
-                .baseUrl("http://192.168.18.44:8080")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(EmpleadoService.class);
-
-    }*/
-    /*public void cargarlista(){
-
-        if(!cacheData.isEmpty()){
-            ListaEmpleadosAdapter adapter = new ListaEmpleadosAdapter();
-            adapter.setContext(getContext());
-            adapter.setListaEmpleados(cacheData);
-
-            binding.recycleViewActividadesDg.setAdapter(adapter);
-            binding.recycleViewActividadesDg.setLayoutManager(new LinearLayoutManager(getContext()));
-        }else {
-            empleadoService.obtenerLista().enqueue(new Callback<EmpleadoDto>() {
-                @Override
-                public void onResponse(Call<EmpleadoDto> call, Response<EmpleadoDto> response) {
-                    if (response.isSuccessful()){
-                        EmpleadoDto empleadoDto = response.body();
-                        Log.d("response",empleadoDto.getEstado());
-                        List<Empleado> lista = empleadoDto.getLista();
-
-                        // Limitar la lista a 7 elementos si es mayor que 7
-                        List<Empleado> cacheData7Elementos = lista.subList(0, Math.min(lista.size(), 7));
-
-                        ListaEmpleadosAdapter adapter = new ListaEmpleadosAdapter();
                         adapter.setContext(getContext());
-                        adapter.setListaEmpleados(cacheData7Elementos);
-
+                        adapter.setListaActividades(listaAct);
                         binding.recycleViewActividadesDg.setAdapter(adapter);
                         binding.recycleViewActividadesDg.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-                    }else {
-                        Log.d("response","Repuesta vacia");
+                        actividadesCargadas = true; // Marca las actividades como cargadas
                     }
-                }
-
-                @Override
-                public void onFailure(Call<EmpleadoDto> call, Throwable t) {
-                    Log.d("error","paso algo!");
-                    Log.d("error",t.getMessage());
-
-                }
-            });
-        }
-
-
-    }*/
-
+                });
+    }
 
 }

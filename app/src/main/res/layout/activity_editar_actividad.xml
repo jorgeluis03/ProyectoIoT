@@ -9,7 +9,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_Nuevaactividades_dg"
+        android:id="@+id/toolbarEditarActividadesDg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/azul_background"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Crear nueva actividad"
+        app:title="Actualizar actividad"
         ></androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
-        android:text="Crear"
+        android:text="Actualizar"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
         android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_Nuevaactividades_dg"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarEditarActividadesDg"
         app:srcCompat="@drawable/img_bat" />
 
 
