@@ -104,7 +104,8 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
     }
 
     void cargarFoto(Alumno alumno){
-        String url = alumno.getFotoUrl();
+        String url = alumno.getFotoUrl().equals("")? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png": alumno.getFotoUrl();
+
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(AlumnoPerfilActivity.this)
                 .load(url)

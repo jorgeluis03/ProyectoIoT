@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                 break;
             case "Delegado Actividad":
-                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                intent = new Intent(LoginActivity.this, DaInicioActivity.class);
                 break;
             case "Delegado General":
                 intent = new Intent(LoginActivity.this, Dg_Activity.class);
