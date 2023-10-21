@@ -9,9 +9,14 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.provider.MediaStore;
@@ -29,10 +34,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Donacion;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaDonacionesAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoDonacionesBinding;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,18 +52,24 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AlumnoDonacionesFragment extends Fragment {
 
@@ -63,18 +78,24 @@ public class AlumnoDonacionesFragment extends Fragment {
     ActivityResultLauncher<Intent> resultLauncher;
     Button buttonSubirImagen;
     ListaDonacionesAdapter adapter;
+    private String codigoAlumno;
+    private FirebaseStorage storage; // storage
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private BottomSheetDialog bottomSheetDialog;
     private Uri uriFotoDonacion;
+    private String urlNuevoDonacionCaptura;
     private float monto;
     private boolean fotoAgregada = false;
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            binding = FragmentAlumnoDonacionesBinding.inflate(inflater, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentAlumnoDonacionesBinding.inflate(inflater, container, false);
 
-            // Accede al código de alumno desde el JSON en la memoria interna
-            String codigoAlumno = obtenerCodigoAlumnoDesdeMemoria();
+        Log.d("msg-test", "recargado");
+
+        // Accede al código de alumno desde el JSON en la memoria interna
+        codigoAlumno = obtenerCodigoAlumnoDesdeMemoria();
 
         CollectionReference donacionesRef = db.collection("donaciones");
         Log.d("FirebaseData", "Código de Alumno: " + codigoAlumno);
@@ -93,7 +114,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                             String rol = idDocument.getString("rol");
                             String fotoQR = idDocument.getString("fotoQR");
                             // Realiza operaciones con los campos obtenidos
-                            Donacion donacion = new Donacion( fecha,hora,rol,fotoQR,monto_enviar,nombre);
+                            Donacion donacion = new Donacion(fecha, hora, rol, fotoQR, monto_enviar, nombre);
                             donationList.add(donacion);
                             // Agrega mensajes de depuración para verificar los datos
                             Log.d("FirebaseData", "Fecha: " + fecha);
@@ -130,9 +151,8 @@ public class AlumnoDonacionesFragment extends Fragment {
         });
         registerResult();
 
-
         binding.buttonDonar.setOnClickListener(view -> {
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+            bottomSheetDialog = new BottomSheetDialog(getActivity());
             View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_donar, (ConstraintLayout) view.findViewById(R.id.bottomSheetContainer));
 
             // conf de botones de dialog donar
@@ -150,7 +170,7 @@ public class AlumnoDonacionesFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (fotoAgregada){
+                    if (fotoAgregada) {
                         monto = Float.parseFloat(inputMonto.getText().toString());
                         buttonDonar.setEnabled(true);
                     }
@@ -173,35 +193,90 @@ public class AlumnoDonacionesFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void subirDonacion(){
+    private void subirDonacion() {
+
         String fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
-        String hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+ " hrs";
+        String hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + " hrs";
         String nombre = binding.textCuentaDonacion.getText().toString();
+        String rol = obtenerTipoAlumnoDesdeMemoria();
 
+        Donacion donacionNueva = new Donacion();
+        donacionNueva.setFecha(fecha);
+        donacionNueva.setHora(hora);
+        donacionNueva.setNombre(nombre);
+        donacionNueva.setRol(rol);
+        donacionNueva.setMonto(String.valueOf(monto));
 
+        // guardar imagen en starge para obtener url
+        UUID uuidDonacionCaptura = UUID.randomUUID();
+        storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference().child("images/donacion-" + uuidDonacionCaptura.toString() + ".jpg");
+        storageReference.putFile(uriFotoDonacion).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return storageReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Log.d("msg-test", "donacion agregada en storage");
+                    urlNuevoDonacionCaptura = task.getResult().toString();
+                    Log.d("msg-test", "nueva url: " + urlNuevoDonacionCaptura);
+                    donacionNueva.setFotoQR(urlNuevoDonacionCaptura);
 
-        Log.d("msg-test", "fecha: "+fecha+" hora: "+hora+" monto: "+monto);
+                    subirDonacionFirestore(donacionNueva);
+                } else {
+                    Log.d("msg-test", "error");
+                }
+            }
+        });
+
     }
 
-    private void pickImage(){
+    private void subirDonacionFirestore(Donacion donacionNueva) {
+        // guardar donacion en firestore
+        db.collection("donaciones").document(codigoAlumno).collection("id")
+                .add(donacionNueva)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "donacion guardada en firestore-donacion guarada exitosamente");
+                    //reiniciando fragmento para cargar nueva donacion
+                    recargarFragment();
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
+    }
+
+    private void pickImage() {
         Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
         resultLauncher.launch(intent);
     }
-    private void registerResult(){
+
+    private void recargarFragment() {
+        NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerViewHost);
+        NavController navController = NavHostFragment.findNavController(navHostFragment);
+        navController.navigate(R.id.alumnoDonacionesFragment);
+        bottomSheetDialog.dismiss();
+    }
+
+    private void registerResult() {
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), result -> {
                     try {
                         uriFotoDonacion = result.getData().getData(); // data de imagen
                         buttonSubirImagen.setText(getImageName(uriFotoDonacion));
                         fotoAgregada = true;
-                    }
-                    catch (Exception e){
-                        Toast.makeText(getContext(), "Ocurrió un error", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
                         Log.d("msg-test", e.getMessage());
                     }
                 }
         );
     }
+
     private String obtenerCodigoAlumnoDesdeMemoria() {
         // Abre el archivo JSON almacenado en la memoria interna
         try {
@@ -225,7 +300,23 @@ public class AlumnoDonacionesFragment extends Fragment {
         }
     }
 
-    private String getImageName(Uri uri){
+    private String obtenerTipoAlumnoDesdeMemoria() {
+        try (FileInputStream fileInputStream = getActivity().openFileInput("userData");
+             FileReader fileReader = new FileReader(fileInputStream.getFD());
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+
+            String jsonData = bufferedReader.readLine();
+            Gson gson = new Gson();
+            Alumno alumno = gson.fromJson(jsonData, Alumno.class);
+            return alumno.getTipo();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private String getImageName(Uri uri) {
         return DocumentFile.fromSingleUri(getContext(), uri).getName();
     }
 }
