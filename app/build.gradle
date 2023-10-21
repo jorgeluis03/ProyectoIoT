@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -49,6 +50,25 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
+    implementation "androidx.room:room-runtime:2.2.5"
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+
+    //Maps
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.maps:google-maps-services:0.2.11'
+
+
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
+    implementation("com.google.firebase:firebase-storage-ktx")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

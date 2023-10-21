@@ -16,7 +16,7 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Objetos.Notificacion;
+import com.example.proyecto_iot.alumno.Entities.Notificacion;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaNotificacionesAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoHeader2Binding;
 import com.example.proyecto_iot.databinding.FragmentAlumnoNotificacionesBinding;
@@ -32,6 +32,13 @@ public class AlumnoNotificacionesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoNotificacionesBinding.inflate(inflater, container, false);
 
+        Bundle bundle = new Bundle();
+        bundle.putString("header", "Notificaciones");
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragmentNotificacionesHeader, AlumnoHeader2Fragment.class, bundle)
+                .commit();
+
         notificacionList.add(new Notificacion("Evento de Semana de Ingeniería - Cristiano Donaldo ha enviado un nuevo mensaje al chat", "hace 2h"));
         notificacionList.add(new Notificacion("Otro evento de Semana de Ingeiería - Kike Ramos ha añadido una nueva foto al evento", "hace 8h"));
         notificacionList.add(new Notificacion("Donaciones - Su registro de donación ha sido aceptado", "hace 2d"));
@@ -46,6 +53,7 @@ public class AlumnoNotificacionesFragment extends Fragment {
 
         return binding.getRoot();
     }
+    /* daba error xd
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -59,4 +67,6 @@ public class AlumnoNotificacionesFragment extends Fragment {
             }
         });
     }
+
+     */
 }

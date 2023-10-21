@@ -20,6 +20,13 @@ public class AlumnoHeader2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoHeader2Binding.inflate(inflater, container, false);
+
+        Bundle bundle = getArguments();
+        if (bundle != null){
+            String header = bundle.getString("header", "nothing");
+            binding.textHeader2.setText(header);
+        }
+
         binding.buttonPerfil.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), AlumnoPerfilActivity.class);
             startActivity(intent);

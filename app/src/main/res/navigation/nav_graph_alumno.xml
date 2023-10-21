@@ -14,7 +14,9 @@
         android:id="@+id/alumnoDonacionesFragment"
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoDonacionesFragment"
         android:label="fragment_alumno_donaciones"
-        tools:layout="@layout/fragment_alumno_donaciones" />
+        tools:layout="@layout/fragment_alumno_donaciones">
+    </fragment>
+
     <fragment
         android:id="@+id/alumnoInicioFragment"
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoInicioFragment"

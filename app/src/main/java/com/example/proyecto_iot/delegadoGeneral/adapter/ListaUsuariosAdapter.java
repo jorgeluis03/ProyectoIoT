@@ -1,0 +1,117 @@
+package com.example.proyecto_iot.delegadoGeneral.adapter;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
+
+public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdapter.UsuariosViewHolder>{
+    private List<Usuario> listaUsuarios;
+    private Context context;
+    FirebaseFirestore db;
+
+    @NonNull
+    @Override
+    public UsuariosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.irv_dg_alumnos_regist,parent,false);
+        return new UsuariosViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull UsuariosViewHolder holder, int position) {
+        Usuario userRegi = listaUsuarios.get(position);
+        holder.usuario = userRegi;
+
+        TextView tvNombreUser = holder.itemView.findViewById(R.id.textViewNombreUserRegi_dg);
+        TextView tvCorreoUser = holder.itemView.findViewById(R.id.textViewCorreoUserRegi_dg);
+
+        tvNombreUser.setText(userRegi.getNombre()+' '+userRegi.getApellido());
+        tvCorreoUser.setText(userRegi.getCorreo());
+
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return listaUsuarios.size();
+    }
+
+
+    //SubClase ViewHolder
+    public class UsuariosViewHolder extends RecyclerView.ViewHolder{
+        Usuario usuario;
+        public UsuariosViewHolder(@NonNull View itemView) {
+
+            super(itemView);
+
+            Button buttonBanear = itemView.findViewById(R.id.buttonBanearUser);
+            buttonBanear.setOnClickListener(view -> {
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle("Banear")
+                        .setMessage("¿Estás seguro que deseas eliminar este usuario?")
+                        .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Responder a la pulsación del botón neutral
+                            }
+                        })
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Responder a la pulsación del botón positivo
+                                db = FirebaseFirestore.getInstance();
+                                db.collection("usuarios").document(usuario.getCodigo())
+                                        .delete()
+                                        .addOnSuccessListener(unused -> {
+                                            // Eliminar el usuario de la lista de datos
+                                            listaUsuarios.remove(usuario);
+
+                                            // Notificar al adaptador que los datos han cambiado
+                                            notifyDataSetChanged();
+                                            Toast.makeText(context,"Usuario eliminado",Toast.LENGTH_SHORT).show();
+
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(context,"Algo pasó",Toast.LENGTH_SHORT).show();
+
+                                        });
+                            }
+                        })
+                        .show();
+            });
+
+        }
+    }
+
+
+    //Encapsulamiento
+    public List<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+}

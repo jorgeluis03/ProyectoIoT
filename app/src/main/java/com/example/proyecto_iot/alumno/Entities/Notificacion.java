@@ -1,4 +1,4 @@
-package com.example.proyecto_iot.alumno.Objetos;
+package com.example.proyecto_iot.alumno.Entities;
 
 public class Notificacion {
     private String texto;

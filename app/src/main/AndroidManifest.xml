@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -16,15 +19,33 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".delegadoActividad.DaInicioActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Alumno" />
+            android:name=".alumno.MapaActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".delegadoGeneral.Dg_configuracion"
+            android:exported="false" />
+        <activity
+            android:name=".delegadoGeneral.EditarActividad"
+            android:exported="false" />
+        <activity
+            android:name=".delegadoGeneral.Eventos_actividad_dg"
+            android:exported="false" />
+        <activity
+            android:name=".delegadoGeneral.Perfil_dg"
+            android:exported="false" />
+        <activity
+            android:name=".alumno.AlumnoDonacionConsultaActivity"
+            android:exported="false" />
         <activity
             android:name=".alumno.AlumnoInicioActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno"></activity>
+            android:theme="@style/Alumno"/>
+        <activity
+            android:name=".delegadoActividad.DaInicioActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Alumno" />
         <activity
             android:name=".alumno.AlumnoEventoActivity"
             android:exported="false"
@@ -40,6 +61,10 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Alumno" />
+        <activity
+            android:name=".delegadoGeneral.CrearActividadActivity"
+            android:exported="false"
+            android:theme="@style/Login" />
         <activity
             android:name=".delegadoGeneral.Dg_Activity"
             android:exported="false" />
@@ -70,14 +95,9 @@
             android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.LoginActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".inicioApp.ConfirmarregistroActivity"
@@ -91,13 +111,25 @@
             android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.IngresarActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Login" />
+            android:theme="@style/Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAfL_QEGRZ8k5faL21rRYl3egNWOe5aTys" />
+
+
     </application>
 
 </manifest>

@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
-import com.example.proyecto_iot.alumno.Objetos.Evento;
+import com.example.proyecto_iot.alumno.Entities.Evento;
 
 import java.util.List;
 
@@ -44,12 +44,14 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         TextView textDescripcion = holder.itemView.findViewById(R.id.textDescripcion);
         TextView textFecha = holder.itemView.findViewById(R.id.textFecha);
         TextView textLugar = holder.itemView.findViewById(R.id.textLugar);
+        TextView textHora = holder.itemView.findViewById(R.id.textHora);
 
         textTitulo.setText(evento.getTitulo());
         textActividad.setText(evento.getActividad());
         textDescripcion.setText(evento.getDescripcion());
         textFecha.setText(evento.getFecha());
         textLugar.setText(evento.getLugar().getNombre());
+        textHora.setText(evento.getHora()+" hrs");
     }
 
     @Override
@@ -65,6 +67,7 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
             ConstraintLayout constraintLayout = itemView.findViewById(R.id.evento);
             constraintLayout.setOnClickListener(view -> {
                 Intent intent = new Intent(itemView.getContext(), AlumnoEventoActivity.class);
+                intent.putExtra("evento", evento);
                 itemView.getContext().startActivity(intent);
             });
         }

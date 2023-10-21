@@ -88,13 +88,15 @@
         app:layout_constraintStart_toStartOf="@+id/inputContrasena3" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonGuardarContrasena"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/button_alumno_perfil_guardar"
+        android:enabled="false"
         android:text="@string/perfil_contrasena_guardar"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"

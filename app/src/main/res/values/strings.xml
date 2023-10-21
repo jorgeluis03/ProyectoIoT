@@ -38,9 +38,19 @@
     <!-- EVENTO -->
     <string name="evento_apoyar">Apoyar</string>
     <string name="evento_crear">Crear evento</string>
+    <string name="evento_apoyando">Apoyando</string>
+    <string name="evento_notificaciones">Notificaciones</string>
+    <string name="evento_chat">Chat</string>
 
     <!-- DONACIONES -->
-    <string name="donaciones_cuentas">Cuentas disponibles</string>
+    <string name="donaciones_cuenta">Cuenta disponible</string>
+    <string name="donaciones_cuenta_aitel">Cuenta AITEL</string>
+
+    <string name="donaciones_cuenta_dialog_titulo">Números de cuenta disponible</string>
+    <string name="donaciones_cuenta_dialog_cuenta1_nombre">Número de yape</string>
+    <string name="donaciones_cuenta_dialog_cuenta1_texto">965790551</string>
+    <string name="donaciones_cuenta_dialog_qr">Código QR</string>
+
     <string name="donaciones_ultimas">Últimas donaciones</string>
     <string name="donaciones_donar">Donar</string>
     <string name="donaciones_dialog_guardar_captura">Captura de pantalla del pago</string>

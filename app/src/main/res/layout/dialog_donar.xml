@@ -35,15 +35,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
-    <ImageView
-        android:id="@+id/imageDonacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonSubirImagen" />
-
     <TextView
         android:id="@+id/textView21"
         android:layout_width="match_parent"
@@ -54,7 +45,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageDonacion" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSubirImagen" />
 
     <Button
         android:id="@+id/buttonDialogDonar"
@@ -62,14 +53,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/button_alumno_perfil_guardar"
+        android:enabled="false"
         android:text="@string/donaciones_dialog_button"
+        android:textColor="@color/white"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/inputMonto" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/inputMonto"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"

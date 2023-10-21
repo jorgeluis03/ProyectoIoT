@@ -28,15 +28,8 @@ public class AlumnoInicioFragment extends Fragment {
 
         // tabs para todos-apoyando
         TabLayout tabInicio = binding.tabLayout;
-
         ViewPager2 viewPagerInicio = binding.viewPager;
-        // tab de delegado actividad
-        if (intent.getStringExtra("code").equals("20203554")){
-            tabInicio.addTab(tabInicio.newTab().setText("Mis actividades"),1);
-            viewPagerInicio.setAdapter(new DaInicioViewPagerAdapter(getActivity()));
-        }else {
-            viewPagerInicio.setAdapter(new AlumnoInicioViewPagerAdapter(getActivity()));
-        }
+        viewPagerInicio.setAdapter(new AlumnoInicioViewPagerAdapter(getActivity()));
 
         tabInicio.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
