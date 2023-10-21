@@ -26,11 +26,13 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
     private List<Donacion> donacionList;
     private Context context;
     private OnButtonClickListener listener;
-
-    public ListaDonacionesAdapter(Context context, List<Donacion> donacionList, OnButtonClickListener listener) {
+    private String codigoAlumno;
+    private double donacionesTotales = 0.0;
+    public ListaDonacionesAdapter(Context context, List<Donacion> donacionList,String codigoAlumno, OnButtonClickListener listener) {
         this.context = context;
         this.donacionList = donacionList;
         this.listener = listener;
+        this.codigoAlumno = codigoAlumno;
     }
 
     @NonNull
@@ -44,6 +46,12 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
     public void onBindViewHolder(@NonNull DonacionViewHolder holder, int position) {
         Donacion donacion = donacionList.get(position);
         holder.bind(donacion, listener);
+
+        String donacionString = donacion.getMonto();
+        donacionString = donacionString.replaceAll("S/", "").trim();
+        // Sumar la donación actual a las donaciones totales
+        donacionesTotales += Double.parseDouble(donacionString);
+
     }
 
     @Override
@@ -66,9 +74,9 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         }
 
         public void bind(final Donacion donacion, final OnButtonClickListener listener) {
-            textDonacion.setText(donacion.getDonacion());
+            textDonacion.setText("S/." +""+donacion.getMonto());
             String donacionHoraConcatenada = donacion.getFecha() + " " + donacion.getHora();
-            textNombreDonacion.setText(donacion.getTexto());
+            textNombreDonacion.setText(donacion.getNombre());
             textHora.setText(donacionHoraConcatenada);
 
             button6.setOnClickListener(new View.OnClickListener() {
@@ -80,10 +88,13 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                     // Añadir esta parte para abrir la nueva actividad
                     Intent intent = new Intent(context, AlumnoDonacionConsultaActivity.class);
                     // Pasar datos al Intent. Puedes pasar cualquier dato primitivo: int, String, etc.
-                    intent.putExtra("nombreDonacion", donacion.getTexto());
+                    intent.putExtra("nombreDonacion", donacion.getNombre());
                     intent.putExtra("horaDonacion", donacion.getHora());
-                    intent.putExtra("montoDonacion", donacion.getDonacion());
+                    intent.putExtra("montoDonacion", donacion.getMonto());
                     intent.putExtra("fechaDonacion",donacion.getFecha());
+                    intent.putExtra("rolDonacion", donacion.getRol());
+                    intent.putExtra("codigoAlumno", codigoAlumno);
+                    intent.putExtra("donacionesTotales", String.valueOf(donacionesTotales));
                     context.startActivity(intent);
                 }
             });

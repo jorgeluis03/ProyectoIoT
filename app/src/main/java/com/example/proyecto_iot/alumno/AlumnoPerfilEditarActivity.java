@@ -131,13 +131,13 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         }
     }
 
-    boolean inputsValidos() {
+    private boolean inputsValidos() {
         String nombre = binding.inputNombre.getText().toString().trim();
         String apellidos = binding.inputApellido.getText().toString().trim();
         return !TextUtils.isEmpty(nombre) && !TextUtils.isEmpty(apellidos) && (!nombre.equals(alumno.getNombre()) || !apellidos.equals(alumno.getApellidos()));
     }
 
-    void guardarPerfil() {
+    private void guardarPerfil() {
 
         if (nuevaFoto){
             actualizarFotoEInfo();
@@ -147,7 +147,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         }
     }
 
-    void actualizarFotoEInfo(){
+    private void actualizarFotoEInfo(){
         // primero actualizando la imagen de perfil
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference().child("images/" + mAuth.getCurrentUser().getUid() + ".jpg");
@@ -177,7 +177,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         });
     }
 
-    void actualizarInfo() {
+    private void actualizarInfo() {
         String userUid = mAuth.getCurrentUser().getUid();
         nombreNuevo = binding.inputNombre.getText().toString().trim();
         apellidosNuevos = binding.inputApellido.getText().toString().trim();
@@ -218,7 +218,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                 });
     }
 
-    void actualizarInternalStorage() {
+    private void actualizarInternalStorage() {
         Gson gson = new Gson();
         String alumnoJson = gson.toJson(alumno);
         try (FileOutputStream fileOutputStream = openFileOutput("userData", Context.MODE_PRIVATE);
@@ -229,13 +229,13 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         }
     }
 
-    void cargarInfo() {
+    private void cargarInfo() {
         binding.inputNombre.setText(alumno.getNombre());
         binding.inputApellido.setText(alumno.getApellidos());
         cargarFoto();
     }
 
-    void cargarFoto() {
+    private void cargarFoto() {
         String url = alumno.getFotoUrl();
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(AlumnoPerfilEditarActivity.this)

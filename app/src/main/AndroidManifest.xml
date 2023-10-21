@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -16,14 +19,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".alumno.MapaActivity"
+            android:exported="false" />
+        <activity
             android:name=".alumno.AlumnoDonacionConsultaActivity"
             android:exported="false" />
         <activity
             android:name=".alumno.AlumnoInicioActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno">
-        </activity>
+            android:theme="@style/Alumno"></activity>
         <activity
             android:name=".delegadoActividad.DaInicioActivity"
             android:exported="false"
@@ -44,11 +49,10 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Alumno" />
-            <activity
+        <activity
             android:name=".delegadoGeneral.CrearActividadActivity"
             android:exported="false"
-            android:theme="@style/Login"/>
-
+            android:theme="@style/Login" />
         <activity
             android:name=".delegadoGeneral.Dg_Activity"
             android:exported="false" />
@@ -113,6 +117,12 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAfL_QEGRZ8k5faL21rRYl3egNWOe5aTys" />
+
+
     </application>
 
 </manifest>
