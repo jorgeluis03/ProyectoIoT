@@ -25,6 +25,11 @@
             android:theme="@style/Alumno">
         </activity>
         <activity
+            android:name=".delegadoActividad.DaInicioActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Alumno" />
+        <activity
             android:name=".alumno.AlumnoEventoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -74,9 +79,15 @@
             android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Login" />
+            android:theme="@style/Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".inicioApp.ConfirmarregistroActivity"
             android:exported="false"
