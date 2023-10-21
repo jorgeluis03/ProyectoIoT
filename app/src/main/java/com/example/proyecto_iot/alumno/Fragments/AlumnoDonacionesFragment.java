@@ -175,6 +175,7 @@ public class AlumnoDonacionesFragment extends Fragment {
     private void subirDonacion(){
         String fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
         String hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+ " hrs";
+        String nombre = binding.textCuentaDonacion.getText().toString();
         Log.d("msg-test", "fecha: "+fecha+" hora: "+hora+" monto: "+monto);
     }
 
