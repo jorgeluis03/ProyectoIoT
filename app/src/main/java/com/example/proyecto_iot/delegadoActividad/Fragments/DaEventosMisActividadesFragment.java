@@ -3,64 +3,53 @@ package com.example.proyecto_iot.delegadoActividad.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Objetos.Evento;
+import com.example.proyecto_iot.alumno.Objetos.Lugar;
+import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
+import com.example.proyecto_iot.databinding.FragmentAlumnoEventosApoyandoBinding;
+import com.example.proyecto_iot.databinding.FragmentDaEventosMisActividadesBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DaEventosMisActividadesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class DaEventosMisActividadesFragment extends Fragment {
+    private ArrayList<Evento> eventoList = new ArrayList<>();
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public DaEventosMisActividadesFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DaEventosMisActividadesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DaEventosMisActividadesFragment newInstance(String param1, String param2) {
-        DaEventosMisActividadesFragment fragment = new DaEventosMisActividadesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private FragmentDaEventosMisActividadesBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_da_eventos_mis_actividades, container, false);
+        binding = FragmentDaEventosMisActividadesBinding.inflate(inflater, container, false);
+
+        //eventos hardcodeados
+        eventoList.add(new Evento("Segundo evento de la semana",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
+                "Nombre de actividad del evento",
+                "10/09/23",
+                "10:00",
+                new Lugar("Cancha minas", 0),true));
+
+        eventoList.add(new Evento("Otro evento de Semana de Ingeniería",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
+                "Nombre de actividad del evento",
+                "13/09/23",
+                "13:30",
+                new Lugar("Polideportivo",0), true));
+
+        ListaEventosAdapter adapter = new ListaEventosAdapter();
+        adapter.setContext(getContext());
+        adapter.setEventoList(eventoList);
+
+        binding.rvEventosMisAct.setAdapter(adapter);
+        binding.rvEventosMisAct.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        return binding.getRoot();
     }
 }

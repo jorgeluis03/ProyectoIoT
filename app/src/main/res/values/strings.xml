@@ -37,6 +37,7 @@
 
     <!-- EVENTO -->
     <string name="evento_apoyar">Apoyar</string>
+    <string name="evento_crear">Crear evento</string>
 
     <!-- DONACIONES -->
     <string name="donaciones_cuentas">Cuentas disponibles</string>

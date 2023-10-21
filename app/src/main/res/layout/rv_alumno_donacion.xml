@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rvDonacion"
-    android:layout_width="320dp"
-    android:layout_height="115dp"
+    android:layout_width="370dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="15dp"
     android:background="@drawable/button_alumno_perfil"
@@ -14,8 +14,8 @@
     <TextView
         android:id="@+id/textNombreDonacion"
         android:layout_width="216dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:background="#222A3F"
         android:text="TextView"
         android:textColor="@color/white"
@@ -26,11 +26,11 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textHora"
-        android:layout_width="240dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#222A3F"
@@ -61,8 +61,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
+        android:text="S/2000.00"
         android:textColor="@android:color/holo_green_dark"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textHora"
         app:layout_constraintEnd_toStartOf="@+id/button6"
