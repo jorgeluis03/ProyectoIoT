@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".alumno.AlumnoChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".alumno.MapaActivity"
             android:exported="false" />
         <activity
@@ -28,7 +30,7 @@
             android:name=".alumno.AlumnoInicioActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno"></activity>
+            android:theme="@style/Alumno" />
         <activity
             android:name=".alumno.AlumnoEventoActivity"
             android:exported="false"
@@ -106,12 +108,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAfL_QEGRZ8k5faL21rRYl3egNWOe5aTys" />
-
-
     </application>
 
 </manifest>

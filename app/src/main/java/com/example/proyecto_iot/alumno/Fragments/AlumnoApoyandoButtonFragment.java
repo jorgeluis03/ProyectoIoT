@@ -29,6 +29,10 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
                     .commit();
         });
 
+        binding.buttonAbrirChat.setOnClickListener(view -> {
+
+        });
+
         return binding.getRoot();
     }
 }
