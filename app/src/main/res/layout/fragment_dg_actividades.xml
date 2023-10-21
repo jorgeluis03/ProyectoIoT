@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CACACA"
+    android:background="@color/white"
     tools:context=".delegadoGeneral.fragmentos.Dg_actividadesFragment"
     >
 
@@ -14,7 +14,7 @@
         android:id="@+id/recycleViewActividadesDg"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#EEEE"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="30dp"
+        app:tint="@color/white"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Tooltip"
         app:srcCompat="@drawable/round_add" />
 

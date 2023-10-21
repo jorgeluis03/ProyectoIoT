@@ -1,15 +1,29 @@
 package com.example.proyecto_iot.delegadoGeneral.entity;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
     private Integer id;
     private String nombre;
     private String apellido;
     private String correo;
+    private String codigo;
+    private String estado;
 
-    public Usuario(String nombre, String apellido, String correo) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Integer getId() {
