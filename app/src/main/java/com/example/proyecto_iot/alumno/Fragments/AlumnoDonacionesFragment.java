@@ -64,7 +64,7 @@ public class AlumnoDonacionesFragment extends Fragment {
     Button buttonSubirImagen;
     ListaDonacionesAdapter adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Uri uriDonacion;
+    private Uri uriFotoDonacion;
     private float monto;
     private boolean fotoAgregada = false;
 
@@ -176,6 +176,9 @@ public class AlumnoDonacionesFragment extends Fragment {
         String fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
         String hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+ " hrs";
         String nombre = binding.textCuentaDonacion.getText().toString();
+
+
+
         Log.d("msg-test", "fecha: "+fecha+" hora: "+hora+" monto: "+monto);
     }
 
@@ -187,8 +190,8 @@ public class AlumnoDonacionesFragment extends Fragment {
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), result -> {
                     try {
-                        uriDonacion = result.getData().getData(); // data de imagen
-                        buttonSubirImagen.setText(getImageName(uriDonacion));
+                        uriFotoDonacion = result.getData().getData(); // data de imagen
+                        buttonSubirImagen.setText(getImageName(uriFotoDonacion));
                         fotoAgregada = true;
                     }
                     catch (Exception e){
