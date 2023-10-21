@@ -88,11 +88,12 @@ public class AlumnoDonacionesFragment extends Fragment {
                             String fecha = idDocument.getString("fecha");
                             String hora = idDocument.getString("hora");
                             int monto = idDocument.getLong("monto").intValue();
+                            String monto_enviar = String.valueOf(monto);
                             String nombre = idDocument.getString("nombre");
                             String rol = idDocument.getString("rol");
                             String fotoQR = idDocument.getString("fotoQR");
                             // Realiza operaciones con los campos obtenidos
-                            Donacion donacion = new Donacion(nombre, hora, "S/" + monto, fecha, rol,fotoQR);
+                            Donacion donacion = new Donacion(nombre, hora, "S/" + monto, fecha, rol,fotoQR,monto_enviar,nombre);
                             donationList.add(donacion);
                             // Agrega mensajes de depuración para verificar los datos
                             Log.d("FirebaseData", "Fecha: " + fecha);
