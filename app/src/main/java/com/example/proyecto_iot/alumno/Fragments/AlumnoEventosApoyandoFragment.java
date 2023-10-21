@@ -29,6 +29,7 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
         binding = FragmentAlumnoEventosApoyandoBinding.inflate(inflater, container, false);
 
         //eventos hardcodeados
+        /*
         eventoList.add(new Evento("Segundo evento de la semana",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
                 "Nombre de actividad del evento",
@@ -42,6 +43,8 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                 "13/09/23",
                 "13:30",
                 new Lugar("Polideportivo",0), true));
+
+         */
 
         ListaEventosAdapter adapter = new ListaEventosAdapter();
         adapter.setContext(getContext());

@@ -8,22 +8,22 @@ public class Evento implements Serializable {
     private String titulo;
     private String descripcion;
     private String actividad;
-    private byte[] foto;
+    private String fotoUrl;
     private String fecha;
     private String hora;
     private Lugar lugar;
-    private LocalDateTime fechaHoraCreacion;
-
+    private String horaFechaCreacion;
     private List<Foto> fotosSubidas;
-    private boolean apoyo;
+    private String estado;
 
-    public Evento(String titulo, String descripcion, String actividad, String fecha, String hora, Lugar lugar, boolean apoyo) {
+    public Evento(String titulo, String descripcion, String actividad, String fecha, String hora, Lugar lugar, String estado) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.actividad = actividad;
         this.fecha = fecha;
         this.hora = hora;
         this.lugar = lugar;
+        this.estado = estado;
     }
 
     public String getTitulo() {
@@ -50,12 +50,12 @@ public class Evento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public String getFotoUrl() {
+        return fotoUrl;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setFotoUrl(String fotoUrl) {
+        this.fotoUrl = fotoUrl;
     }
 
     public String getFecha() {
@@ -82,12 +82,11 @@ public class Evento implements Serializable {
         this.lugar = lugar;
     }
 
-    public LocalDateTime getFechaHoraCreacion() {
-        return fechaHoraCreacion;
+    public String getHoraFechaCreacion() {
+        return horaFechaCreacion;
     }
-
-    public void setFechaHoraCreacion(LocalDateTime fechaHoraCreacion) {
-        this.fechaHoraCreacion = fechaHoraCreacion;
+    public void setHoraFechaCreacion(String horaFechaCreacion) {
+        this.horaFechaCreacion = horaFechaCreacion;
     }
 
     public List<Foto> getFotosSubidas() {
@@ -98,11 +97,12 @@ public class Evento implements Serializable {
         this.fotosSubidas = fotosSubidas;
     }
 
-    public boolean isApoyo() {
-        return apoyo;
+
+    public String getEstado() {
+        return estado;
     }
 
-    public void setApoyo(boolean apoyo) {
-        this.apoyo = apoyo;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }
