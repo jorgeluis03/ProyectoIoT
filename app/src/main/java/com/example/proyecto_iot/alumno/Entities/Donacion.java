@@ -16,6 +16,10 @@ public class Donacion {
         this.nombre = nombre;
     }
 
+    public Donacion(){
+
+    }
+
     public String getMonto() {
         return monto;
     }
