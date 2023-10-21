@@ -105,6 +105,7 @@
         android:layout_marginBottom="-20dp"
         android:backgroundTint="#222A3F"
         app:icon="@drawable/icon_trash"
+        app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
         app:layout_constraintStart_toStartOf="@+id/imageEdit" />
 
@@ -117,6 +118,7 @@
         android:layout_marginBottom="-20dp"
         android:backgroundTint="#222A3F"
         app:icon="@drawable/icon_pencil"
+        app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
         app:layout_constraintEnd_toEndOf="@+id/imageEdit" />
 
