@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.databinding.FragmentDgActividadesBinding;
 import com.example.proyecto_iot.delegadoGeneral.CrearActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
