@@ -93,7 +93,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                             String rol = idDocument.getString("rol");
                             String fotoQR = idDocument.getString("fotoQR");
                             // Realiza operaciones con los campos obtenidos
-                            Donacion donacion = new Donacion(nombre, hora, "S/" + monto, fecha, rol,fotoQR,monto_enviar,nombre);
+                            Donacion donacion = new Donacion( fecha,hora,rol,fotoQR,monto_enviar,nombre);
                             donationList.add(donacion);
                             // Agrega mensajes de depuración para verificar los datos
                             Log.d("FirebaseData", "Fecha: " + fecha);

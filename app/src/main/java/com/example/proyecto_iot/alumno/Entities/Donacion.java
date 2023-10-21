@@ -1,18 +1,14 @@
 package com.example.proyecto_iot.alumno.Entities;
 
 public class Donacion {
-    private String texto;
     private String hora;
-    private String donacion;
     private String fecha;
     private String rol;
     private String fotoQR;
     private String monto;
     private String nombre;
-    public Donacion(String texto, String hora, String donacion, String fecha, String rol, String fotoQR, String monto, String nombre){
-        this.texto = texto;
+    public Donacion(String fecha,String hora, String rol, String fotoQR, String monto, String nombre){
         this.hora = hora;
-        this.donacion = donacion;
         this.fecha = fecha;
         this.rol = rol;
         this.fotoQR = fotoQR;
@@ -36,28 +32,12 @@ public class Donacion {
         this.nombre = nombre;
     }
 
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
-
     public String getHora() {
         return hora;
     }
 
     public void setHora(String hora) {
         this.hora = hora;
-    }
-
-    public String getDonacion() {
-        return donacion;
-    }
-
-    public void setDonacion(String donacion) {
-        this.donacion = donacion;
     }
 
     public String getFecha() {
