@@ -16,18 +16,15 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.databinding.ActivityDgCrearActividadBinding;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActividadesAdapter;
+import com.example.proyecto_iot.databinding.ActivityEditarActividadBinding;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaDelegadosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
-import com.example.proyecto_iot.delegadoGeneral.entity.ActividadesDao;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -35,37 +32,52 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
-public class CrearActividadActivity extends AppCompatActivity {
-    ActivityDgCrearActividadBinding binding;
-    EditText editTextNombreDelegado;
+public class EditarActividad extends AppCompatActivity {
+    ActivityEditarActividadBinding binding;
+    FirebaseFirestore db;
+    TextInputLayout nombreAntiguo;
+    EditText delegadoAntiguo;
     List<Usuario> listaAct;
     private static  boolean delegadosCargados = false;
     Usuario user_delegado;
     RecyclerView recyclerView;
-    FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivityDgCrearActividadBinding.inflate(getLayoutInflater());
+        binding = ActivityEditarActividadBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
         //Toolbar
-        Toolbar toolbar = binding.toolbarNuevaactividadesDg;
+        Toolbar toolbar = binding.toolbarEditarActividadesDg;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //====================================
 
 
-        binding.buttonCrearActDg.setOnClickListener(view -> {
-            String nombreActividad = binding.textFieldNombreActividad.getEditText().getText().toString();
-            Actividades actividad = new Actividades();
+        Actividades actividadAEditar = (Actividades) getIntent().getSerializableExtra("actividadActual");
 
+        nombreAntiguo = binding.textFieldNombreActividadAntiguo;
+        nombreAntiguo.getEditText().setText(actividadAEditar.getNombre());
+        delegadoAntiguo = binding.editTextNombreDelegadoAntiguo;
+        delegadoAntiguo.setText(actividadAEditar.getDelegadoActividad().getNombre()+' '+actividadAEditar.getDelegadoActividad().getApellido());
+
+        delegadoAntiguo.setOnClickListener(view -> {
+            showDialog();
+        });
+
+        //Butom para actualizar
+        binding.buttonEditarActDg.setOnClickListener(view -> {
+            String nombreActividad = nombreAntiguo.getEditText().getText().toString();
+            Actividades actividad = new Actividades();
 
             if( !nombreActividad.equals("") && user_delegado!=null){
                 Intent intent = new Intent();
                 actividad.setNombre(nombreActividad);
                 actividad.setEstado("abierto");
+                actividad.setId(actividadAEditar.getId());
+
                 intent.putExtra("nombreActividad",actividad);
                 intent.putExtra("delegado",user_delegado);
                 setResult(RESULT_OK,intent);
@@ -77,14 +89,8 @@ public class CrearActividadActivity extends AppCompatActivity {
 
         });
 
-        editTextNombreDelegado = binding.editTextNombreDelegado;
-        editTextNombreDelegado.setOnClickListener(view -> {
-            showDialog();
-        });
-
 
     }
-
 
     //Flecha para regrasar al inicio
     @Override
@@ -94,7 +100,6 @@ public class CrearActividadActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     public void showDialog() {
 
 
@@ -124,7 +129,7 @@ public class CrearActividadActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(Usuario usuario) {
                                 user_delegado = usuario;
-                                editTextNombreDelegado.setText(usuario.getNombre()+' '+usuario.getApellido()); // Actualiza el EditText con el nombre del usuario seleccionado
+                                delegadoAntiguo.setText(usuario.getNombre()+' '+usuario.getApellido()); // Actualiza el EditText con el nombre del usuario seleccionado
                                 dialog.dismiss(); // Cierra el diálogo después de la selección
 
                             }

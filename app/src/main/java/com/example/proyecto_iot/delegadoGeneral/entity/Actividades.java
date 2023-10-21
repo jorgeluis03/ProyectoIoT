@@ -8,26 +8,26 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "actividades")
 public class Actividades implements Serializable {
-    @PrimaryKey(autoGenerate = true)
-
-    private Integer id;
+    private String id;
     private String nombre;
     private String estado;
 
+    private Usuario delegadoActividad;
 
-    public Actividades(int id,String nombre, String estado) {
-        this.id = id;
-        this.nombre = nombre;
-        this.estado = estado;
-
+    public Usuario getDelegadoActividad() {
+        return delegadoActividad;
     }
-    public Integer getId() {
+
+    public void setDelegadoActividad(Usuario delegadoActividad) {
+        this.delegadoActividad = delegadoActividad;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getNombre() {

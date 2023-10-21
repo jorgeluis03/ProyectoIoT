@@ -5,18 +5,5 @@
     tools:ignore="MissingDefaultResource">
 
 
-    <item
-        android:id="@+id/buscar"
-        android:title="buscar"
-        android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        />
-    <item
-        android:id="@+id/salir"
-        android:title="buscar"
-        android:icon="@drawable/ic_exit"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        />
+
 </menu>
