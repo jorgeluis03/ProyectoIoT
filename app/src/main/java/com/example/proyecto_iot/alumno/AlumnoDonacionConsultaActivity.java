@@ -67,10 +67,10 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
         // Crear el texto con diferentes colores y estilos
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
-        String monto = montoDonacion + "\n ";
+        String monto = "S/." + montoDonacion + "\n ";
         SpannableString montoSpannable= new SpannableString(monto);
         montoSpannable.setSpan(new ForegroundColorSpan(Color.parseColor("#56E846")), 0, monto.length(), 0); // Verde neon
-        montoSpannable.setSpan(new AbsoluteSizeSpan(28, true), 0, monto.length(), 0); // 16sp
+        montoSpannable.setSpan(new AbsoluteSizeSpan(30, true), 0, monto.length(), 0); // 16sp
 
         String nombre = nombreDonacion;
         SpannableString nombreSpannable = new SpannableString(nombre);
