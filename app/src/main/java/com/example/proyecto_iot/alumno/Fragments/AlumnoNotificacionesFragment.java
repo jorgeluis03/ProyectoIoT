@@ -53,6 +53,7 @@ public class AlumnoNotificacionesFragment extends Fragment {
 
         return binding.getRoot();
     }
+    /* daba error xd
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,4 +67,6 @@ public class AlumnoNotificacionesFragment extends Fragment {
             }
         });
     }
+
+     */
 }

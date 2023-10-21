@@ -196,6 +196,7 @@ public class AlumnoDonacionesFragment extends Fragment {
         });
         return binding.getRoot();
     }
+    /* tambien daba error xd
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -209,6 +210,8 @@ public class AlumnoDonacionesFragment extends Fragment {
             }
         });
     }
+
+     */
 
     private void subirDonacion() {
 

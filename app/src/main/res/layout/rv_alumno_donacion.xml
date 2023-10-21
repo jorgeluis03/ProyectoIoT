@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rvDonacion"
-    android:layout_width="320dp"
+    android:layout_width="match_parent"
     android:layout_height="115dp"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="15dp"
@@ -23,40 +23,41 @@
             android:layout_weight="6"
             android:orientation="vertical"
             tools:layout_editor_absoluteY="12dp">
-        <TextView
-            android:id="@+id/textNombreDonacion"
-            android:layout_width="match_parent"
-            android:layout_height="28dp"
-            android:layout_weight="1"
-            android:layout_marginStart="16dp"
-            android:background="#222A3F"
-            android:text="TextView"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:gravity="bottom"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textDonacion"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.183" />
 
-        <TextView
-            android:id="@+id/textHora"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:background="#222A3F"
-            android:text="TextView"
-            android:textColor="#B9B9B9"
-            android:gravity="top"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textNombreDonacion"
-            app:layout_constraintTop_toBottomOf="@+id/textNombreDonacion"
-            app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/textNombreDonacion"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:background="#222A3F"
+                android:gravity="bottom"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textDonacion"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.183" />
+
+            <TextView
+                android:id="@+id/textHora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="#222A3F"
+                android:gravity="top"
+                android:text="TextView"
+                android:textColor="#B9B9B9"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textNombreDonacion"
+                app:layout_constraintTop_toBottomOf="@+id/textNombreDonacion"
+                app:layout_constraintVertical_bias="0.0" />
         </LinearLayout>
 
         <TextView
