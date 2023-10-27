@@ -2,23 +2,16 @@ package com.example.proyecto_iot.alumno.Fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.TextView;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Entities.Notificacion;
+import com.example.proyecto_iot.alumno.Objetos.Notificacion;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaNotificacionesAdapter;
-import com.example.proyecto_iot.databinding.FragmentAlumnoHeader2Binding;
 import com.example.proyecto_iot.databinding.FragmentAlumnoNotificacionesBinding;
 
 import java.util.ArrayList;

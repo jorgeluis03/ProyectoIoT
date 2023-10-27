@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoDonacionConsultaActivity;
-import com.example.proyecto_iot.alumno.Entities.Donacion;
+import com.example.proyecto_iot.alumno.Objetos.Donacion;
 
 import java.util.List;
 

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,14 +22,12 @@ import android.text.style.AbsoluteSizeSpan;
 
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Entities.Donacion;
-import com.example.proyecto_iot.alumno.Entities.KitRecojo;
+import com.example.proyecto_iot.alumno.Objetos.KitRecojo;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;

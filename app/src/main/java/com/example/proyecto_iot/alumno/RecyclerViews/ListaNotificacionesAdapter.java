@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Entities.Notificacion;
+import com.example.proyecto_iot.alumno.Objetos.Notificacion;
 
 import java.util.List;
 

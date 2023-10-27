@@ -1,4 +1,4 @@
-package com.example.proyecto_iot.alumno.Entities;
+package com.example.proyecto_iot.alumno.Objetos;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

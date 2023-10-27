@@ -10,7 +10,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Entities.Alumno;
+import com.example.proyecto_iot.alumno.Objetos.Alumno;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
 import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilContrasenaBinding;
 import com.google.android.gms.tasks.OnCompleteListener;

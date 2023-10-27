@@ -1,6 +1,6 @@
 package com.example.proyecto_iot.delegadoActividad.Entities;
 
-import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Objetos.Evento;
 
 import java.util.List;
 

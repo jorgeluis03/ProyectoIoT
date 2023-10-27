@@ -62,7 +62,7 @@ public class DaGestionFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
                 // La vista está lista
-                TextView textView = view.findViewById(R.id.textView19);
+                TextView textView = view.findViewById(R.id.textHeader2);
                 textView.setText("Gestionar eventos");
 
                 TextView textView2 = view.findViewById(R.id.textView24);

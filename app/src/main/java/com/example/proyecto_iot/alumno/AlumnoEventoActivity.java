@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Objetos.Evento;
 import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
 
 public class AlumnoEventoActivity extends AppCompatActivity {
