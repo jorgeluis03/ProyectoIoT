@@ -28,8 +28,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Objetos.Alumno;
-import com.example.proyecto_iot.alumno.Objetos.Donacion;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
+import com.example.proyecto_iot.alumno.Entities.Donacion;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaDonacionesAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoDonacionesBinding;
 

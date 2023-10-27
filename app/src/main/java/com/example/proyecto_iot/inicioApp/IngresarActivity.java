@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
-import com.example.proyecto_iot.alumno.Objetos.Alumno;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityIngresarBinding;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.google.firebase.auth.FirebaseAuth;

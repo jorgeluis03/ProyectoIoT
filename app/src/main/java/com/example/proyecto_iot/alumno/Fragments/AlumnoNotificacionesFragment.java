@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Objetos.Notificacion;
+import com.example.proyecto_iot.alumno.Entities.Notificacion;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaNotificacionesAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoNotificacionesBinding;
 

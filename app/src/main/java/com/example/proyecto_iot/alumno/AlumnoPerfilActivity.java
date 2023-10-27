@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Objetos.Alumno;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
 import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilBinding;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;

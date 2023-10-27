@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
-import com.example.proyecto_iot.alumno.Objetos.Evento;
+import com.example.proyecto_iot.alumno.Entities.Evento;
 
 import java.util.List;
 

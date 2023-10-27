@@ -10,9 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoInicioViewPagerAdapter;
-import com.example.proyecto_iot.alumno.Objetos.Alumno;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentAlumnoInicioBinding;
 import com.example.proyecto_iot.delegadoActividad.DaInicioViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
