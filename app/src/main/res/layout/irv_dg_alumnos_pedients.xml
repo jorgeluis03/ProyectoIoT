@@ -16,8 +16,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     app:srcCompat="@drawable/img_default_user"/>
@@ -54,6 +54,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_gravity="bottom">
+
                 <Button
                     android:id="@+id/buttonAceptarUser"
                     style="?attr/materialIconButtonStyle"
@@ -64,15 +65,15 @@
                     android:paddingTop="0dp"
                     android:paddingRight="0dp"
                     android:paddingBottom="0dp"
-                    app:icon="@drawable/icon_check"
+                    android:textColorLink="#4E0D0D"
+                    app:icon="@drawable/round_check_box_24"
                     app:iconSize="30dp"
                     app:iconTint="@color/verde"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:clickable="false"/>
+                    app:layout_constraintTop_toTopOf="parent" />
                 <Button
-                    android:id="@+id/buttonBanearUser"
+                    android:id="@+id/buttonBanearUserPendi"
                     style="?attr/materialIconButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,13 +82,15 @@
                     android:paddingTop="0dp"
                     android:paddingRight="0dp"
                     android:paddingBottom="0dp"
+                    android:textColorLink="#4E0D0D"
                     app:icon="@drawable/round_delete"
                     app:iconSize="30dp"
                     app:iconTint="@color/rojo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:clickable="false"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
 
             </LinearLayout>
         </LinearLayout>

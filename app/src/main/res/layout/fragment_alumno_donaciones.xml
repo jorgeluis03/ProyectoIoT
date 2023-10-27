@@ -12,7 +12,7 @@
         android:id="@+id/fragmentDonacionesHeader"
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader2Fragment"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:paddingHorizontal="15dp"
         app:layout="@layout/fragment_alumno_header2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,11 +117,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDonaciones"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonDonar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

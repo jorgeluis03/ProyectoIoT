@@ -1,5 +1,6 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoInicioViewPagerAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoInicioBinding;
+import com.example.proyecto_iot.delegadoActividad.DaInicioViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class AlumnoInicioFragment extends Fragment {
@@ -21,6 +23,8 @@ public class AlumnoInicioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoInicioBinding.inflate(inflater, container, false);
+
+        Intent intent = getActivity().getIntent();
 
         // tabs para todos-apoyando
         TabLayout tabInicio = binding.tabLayout;

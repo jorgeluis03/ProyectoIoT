@@ -9,8 +9,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNotificaciones"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +22,8 @@
         android:id="@+id/fragmentNotificacionesHeader"
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader2Fragment"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:paddingHorizontal="15dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout="@layout/fragment_alumno_header2"/>
+        app:layout="@layout/fragment_alumno_header2"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

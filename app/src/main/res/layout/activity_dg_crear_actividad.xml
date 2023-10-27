@@ -21,34 +21,53 @@
         app:title="Crear nueva actividad"
         ></androidx.appcompat.widget.Toolbar>
 
-    <EditText
-        android:id="@+id/editTextNombreActividad_dg"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldNombreActividad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:inputType="text"
-        android:textColorLink="#00FADD"
+        android:hint="Nombre"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView8">
 
-    <TextView
-        android:id="@+id/textView"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldDelegadoActividad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="10dp"
-        android:text="Nombre de la actividad"
-        android:textColor="#797D7F"
-        android:textSize="16dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Delegado actividad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@+id/textFieldNombreActividad">
 
+        <EditText
+            android:id="@+id/editTextNombreDelegado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:textColor="#000000" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCrearAct_dg"
+        android:layout_marginBottom="10dp"/>
     <Button
         android:id="@+id/buttonCrearAct_dg"
         android:layout_width="match_parent"
@@ -69,6 +88,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_Nuevaactividades_dg"
         app:srcCompat="@drawable/img_bat" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

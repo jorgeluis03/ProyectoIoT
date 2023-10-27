@@ -14,6 +14,7 @@ import android.util.Log;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
+import com.example.proyecto_iot.delegadoActividad.DaInicioActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -158,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                 break;
             case "Delegado Actividad":
-                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                intent = new Intent(LoginActivity.this, DaInicioActivity.class);
                 break;
             case "Delegado General":
                 intent = new Intent(LoginActivity.this, Dg_Activity.class);

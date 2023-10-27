@@ -106,6 +106,15 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
             }
         });
 
+        binding.buttonQuitarFoto.setOnClickListener(view -> {
+            RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
+            Glide.with(AlumnoPerfilEditarActivity.this)
+                    .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png")
+                    .apply(requestOptions)
+                    .into(binding.imageEdit);
+            nuevaFoto = true;
+        });
+
         binding.buttonEditarFoto.setOnClickListener(view -> {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
@@ -236,7 +245,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     }
 
     private void cargarFoto() {
-        String url = alumno.getFotoUrl();
+        String url = alumno.getFotoUrl().equals("")? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png": alumno.getFotoUrl();
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(AlumnoPerfilEditarActivity.this)
                 .load(url)

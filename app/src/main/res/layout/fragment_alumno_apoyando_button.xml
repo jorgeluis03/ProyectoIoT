@@ -17,6 +17,7 @@
         android:textSize="12sp"
         app:icon="@drawable/icon_bell_ringing"
         app:iconPadding="4dp"
+        app:iconTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,6 +34,7 @@
         android:textSize="12sp"
         app:icon="@drawable/icon_chat"
         app:iconPadding="4dp"
+        app:iconTint="@color/white"
         app:layout_constraintBaseline_toBaselineOf="@+id/button11"
         app:layout_constraintStart_toEndOf="@+id/button11" />
 
@@ -43,6 +45,7 @@
         android:backgroundTint="#222A3F"
         android:text="@string/evento_apoyando"
         android:textSize="12sp"
+        app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/white"

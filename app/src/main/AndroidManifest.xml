@@ -22,12 +22,29 @@
             android:exported="false" />
         <activity
             android:name=".alumno.MapaActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".delegadoGeneral.Dg_configuracion"
+            android:exported="false" />
+        <activity
+            android:name=".delegadoGeneral.EditarActividad"
+            android:exported="false" />
+        <activity
+            android:name=".delegadoGeneral.Eventos_actividad_dg"
+            android:exported="false" />
+        <activity
+            android:name=".delegadoGeneral.Perfil_dg"
             android:exported="false" />
         <activity
             android:name=".alumno.AlumnoDonacionConsultaActivity"
             android:exported="false" />
         <activity
             android:name=".alumno.AlumnoInicioActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Alumno"/>
+        <activity
+            android:name=".delegadoActividad.DaInicioActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Alumno" />
@@ -82,7 +99,8 @@
             android:name=".inicioApp.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Login" />
+            android:theme="@style/Login">
+        </activity>
         <activity
             android:name=".inicioApp.ConfirmarregistroActivity"
             android:exported="false"
