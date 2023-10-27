@@ -39,7 +39,7 @@ public class AlumnoInicioFragment extends Fragment {
         // tabs para todos-apoyando
         TabLayout tabInicio = binding.tabLayout;
         ViewPager2 viewPagerInicio = binding.viewPager;
-        if (getRol().equals("")){
+        if (getRol().equals("Delegado Actividad")){
             tabInicio.addTab(tabInicio.newTab().setText("Mis actividades"),1);
             viewPagerInicio.setAdapter(new DaInicioViewPagerAdapter(getActivity()));
         }
@@ -77,7 +77,7 @@ public class AlumnoInicioFragment extends Fragment {
     public String getRol(){
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            try (FileInputStream fileInputStream = openFileInput("userData");
+            try (FileInputStream fileInputStream = this.getActivity().openFileInput("userData");
                  FileReader fileReader = new FileReader(fileInputStream.getFD());
                  BufferedReader bufferedReader = new BufferedReader(fileReader)){
 
@@ -91,6 +91,7 @@ public class AlumnoInicioFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 }
 

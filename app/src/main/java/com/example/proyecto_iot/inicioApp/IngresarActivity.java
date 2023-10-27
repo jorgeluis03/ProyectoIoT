@@ -73,7 +73,6 @@ public class IngresarActivity extends AppCompatActivity {
                 break;
             case "Delegado Actividad":
                 intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
-                intent.putExtra("delegado", "actividad");
                 break;
             case "Delegado General":
                 intent = new Intent(IngresarActivity.this, Dg_Activity.class);
