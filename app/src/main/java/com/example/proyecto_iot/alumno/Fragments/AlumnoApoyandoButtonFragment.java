@@ -1,5 +1,6 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoChatActivity;
 import com.example.proyecto_iot.databinding.FragmentAlumnoApoyandoButtonBinding;
 
 public class AlumnoApoyandoButtonFragment extends Fragment {
@@ -30,7 +32,8 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
         });
 
         binding.buttonAbrirChat.setOnClickListener(view -> {
-
+            Intent intent = new Intent(getContext(), AlumnoChatActivity.class);
+            startActivity(intent);
         });
 
         return binding.getRoot();

@@ -44,6 +44,7 @@
         android:layout_height="45dp"
         android:backgroundTint="#222A3F"
         android:text="@string/evento_apoyando"
+        android:textColor="@color/white"
         android:textSize="12sp"
         app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

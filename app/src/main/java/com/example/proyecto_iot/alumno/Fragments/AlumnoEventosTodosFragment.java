@@ -45,25 +45,26 @@ public class AlumnoEventosTodosFragment extends Fragment {
         adapter.setContext(getContext());
         adapter.setEventoList(eventoList);
 
-        eventChangeListener();
+        //eventChangeListener();
 
         //eventos hardcodeados
-        /*
+
         eventoList.add(new Evento("Evento de Semana de Ingeniería",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
                 "Nombre de actividad del evento",
                 "10/09/23",
                 "10:00",
-                new Lugar("Cancha minas", 0),false));
+                new Lugar("Cancha minas", 0),
+                "activo"));
 
         eventoList.add(new Evento("Otro evento de Semana de Ingeniería",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
                 "Nombre de actividad del evento",
                 "13/09/23",
                 "Polideportivo",
-                new Lugar("Polideportivo",0), false));
+                new Lugar("Polideportivo",0),
+                "activo"));
 
-         */
 
         return binding.getRoot();
     }

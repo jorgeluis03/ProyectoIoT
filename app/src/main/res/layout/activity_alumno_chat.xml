@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".alumno.AlumnoChatActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader3Fragment"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_alumno_header3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

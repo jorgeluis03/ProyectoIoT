@@ -40,6 +40,7 @@
     <string name="evento_apoyando">Apoyando</string>
     <string name="evento_notificaciones">Notificaciones</string>
     <string name="evento_chat">Chat</string>
+    <string name="evento_chat_vivo">Chat en vivo</string>
 
     <!-- DONACIONES -->
     <string name="donaciones_cuenta">Cuenta disponible</string>
