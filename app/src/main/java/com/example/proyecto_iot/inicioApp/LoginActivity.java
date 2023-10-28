@@ -11,6 +11,11 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.cometchat.chat.core.AppSettings;
+import com.cometchat.chat.core.CometChat;
+import com.cometchat.chat.exceptions.CometChatException;
+import com.cometchat.chat.models.User;
+import com.example.proyecto_iot.AppConstants;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
@@ -48,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance(); // cloud firestore
     StorageReference storageRef = FirebaseStorage.getInstance().getReference(); //storage
     Alumno alumno = new Alumno();
+    String userUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void obtenerUserData() {
-        String userUid = mAuth.getCurrentUser().getUid();
+        userUid = mAuth.getCurrentUser().getUid();
         DocumentReference docRef = db.collection("alumnos").document(userUid);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -124,8 +130,11 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("msg-test", "busqueda ok");
                         alumno = document.toObject(Alumno.class);
                         if (alumno.getEstado().equals("activo")){
+
                             guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
-                            redirigirSegunRol(alumno.getRol());
+                            // autenticar en cometchat
+                            inicializarCometChat();
+
                         } else if (alumno.getEstado().equals("pendiente")) {
                             Log.d("msg-test", "alumno con estado pendiente");
                         }
@@ -141,7 +150,47 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    void guardarDataEnMemoria() {
+
+    private void inicializarCometChat(){
+        String region = AppConstants.REGION;
+        String appID = AppConstants.APP_ID;
+        String authKey = AppConstants.AUTH_KEY;
+
+        AppSettings appSettings = new AppSettings.AppSettingsBuilder()
+                .subscribePresenceForAllUsers()
+                .setRegion(region)
+                .autoEstablishSocketConnection(true)
+                .build();
+
+        CometChat.init(LoginActivity.this, appID, appSettings, new CometChat.CallbackListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                Log.d("msg-test", "Initialization completed successfully");
+
+                // logueando en cometchat
+                CometChat.login(userUid, authKey, new CometChat.CallbackListener<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        Log.d("msg-test", "Login Successful : " + user.toString());
+                        redirigirSegunRol(alumno.getRol());
+                    }
+
+                    @Override
+                    public void onError(CometChatException e) {
+                        Log.d("msg-test", "Login failed with exception: " + e.getMessage());
+                    }
+                });
+            }
+
+            @Override
+            public void onError(CometChatException e) {
+                Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
+            }
+        });
+    }
+
+
+    private void guardarDataEnMemoria() {
         Gson gson = new Gson();
         String alumnoJson = gson.toJson(alumno);
         try (FileOutputStream fileOutputStream = openFileOutput("userData", Context.MODE_PRIVATE);
@@ -152,7 +201,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    void redirigirSegunRol(String rol) {
+    private void redirigirSegunRol(String rol) {
         Intent intent = null;
         switch (rol) {
             case "Alumno":
