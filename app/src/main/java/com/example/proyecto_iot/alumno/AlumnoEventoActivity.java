@@ -23,7 +23,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.textEventoDescripcion.setText(evento.getDescripcion());
         binding.buttonEventoFecha.setText(evento.getFecha());
         binding.buttonEventoHora.setText(evento.getHora());
-        binding.buttonEventoLugar.setText(evento.getLugar().getNombre());
 
         binding.buttonEventoBack.setOnClickListener(view -> {
             finish();
