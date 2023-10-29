@@ -73,12 +73,15 @@ public class Dg_alumnosFragment extends Fragment {
             if (position==1){
                 return new Dg_alumnos_pendFragment();
             }
+            if (position==2){
+                return new Dg_alumnos_baneadosFragment();
+            }
             return new Dg_alumnos_registrFragment();
         }
 
         @Override
         public int getItemCount() {
-            return 2;
+            return 3;
         }
     }
 }

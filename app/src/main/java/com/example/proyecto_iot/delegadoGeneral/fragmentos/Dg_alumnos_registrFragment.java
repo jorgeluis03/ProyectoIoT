@@ -65,14 +65,11 @@ public class Dg_alumnos_registrFragment extends Fragment {
 
 
     @Override
-    public void onPause() {
-        super.onPause();
-        //snapshotListener.remove();
-    }
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        snapshotListener.remove();
+        if(snapshotListener!=null){
+            snapshotListener.remove();
+        }
     }
 
 

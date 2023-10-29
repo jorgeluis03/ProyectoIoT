@@ -42,7 +42,6 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
         tvNombreUser.setText(userRegi.getNombre()+' '+userRegi.getApellido());
         tvCorreoUser.setText(userRegi.getCorreo());
 
-
     }
 
     @Override
@@ -62,34 +61,31 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
             buttonBanear.setOnClickListener(view -> {
                 new MaterialAlertDialogBuilder(context)
                         .setTitle("Banear")
-                        .setMessage("¿Estás seguro que deseas eliminar este usuario?")
-                        .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Responder a la pulsación del botón neutral
-                            }
+                        .setMessage("¿Estás seguro que deseas banear a este usuario?")
+                        .setNeutralButton("Cancelar", (dialog, which) -> {
+
+                            // Responder a la pulsación del botón neutral
+
                         })
-                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Responder a la pulsación del botón positivo
-                                db = FirebaseFirestore.getInstance();
-                                db.collection("usuarios").document(usuario.getCodigo())
-                                        .delete()
-                                        .addOnSuccessListener(unused -> {
-                                            // Eliminar el usuario de la lista de datos
-                                            listaUsuarios.remove(usuario);
+                        .setPositiveButton("Aceptar", (dialog, which) -> {
 
-                                            // Notificar al adaptador que los datos han cambiado
-                                            notifyDataSetChanged();
-                                            Toast.makeText(context,"Usuario eliminado",Toast.LENGTH_SHORT).show();
+                            // Responder a la pulsación del botón positivo
+                            db = FirebaseFirestore.getInstance();
+                            db.collection("usuarios").document(usuario.getCodigo())
+                                    .update("estado","baneado")
+                                    .addOnSuccessListener(unused -> {
+                                        // Eliminar el usuario de la lista de datos
+                                        listaUsuarios.remove(usuario);
 
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(context,"Algo pasó",Toast.LENGTH_SHORT).show();
+                                        // Notificar al adaptador que los datos han cambiado
+                                        notifyDataSetChanged();
+                                        Toast.makeText(context,"Usuario baneado",Toast.LENGTH_SHORT).show();
 
-                                        });
-                            }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(context,"Algo pasó",Toast.LENGTH_SHORT).show();
+
+                                    });
                         })
                         .show();
             });
