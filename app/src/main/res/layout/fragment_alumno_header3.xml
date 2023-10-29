@@ -42,6 +42,7 @@
         style="?attr/materialIconButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         app:icon="@drawable/icon_back1"
         app:iconSize="22dp"
         app:iconTint="#FFFFFF"

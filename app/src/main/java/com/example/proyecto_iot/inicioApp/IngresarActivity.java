@@ -49,6 +49,7 @@ public class IngresarActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            //TODO: Añadir logueo en cometchat
             try (FileInputStream fileInputStream = openFileInput("userData");
                  FileReader fileReader = new FileReader(fileInputStream.getFD());
                  BufferedReader bufferedReader = new BufferedReader(fileReader)){

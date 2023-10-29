@@ -96,28 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            try (FileInputStream fileInputStream = openFileInput("userData");
-                 FileReader fileReader = new FileReader(fileInputStream.getFD());
-                 BufferedReader bufferedReader = new BufferedReader(fileReader)){
-
-                String jsonData = bufferedReader.readLine();
-                Gson gson = new Gson();
-                Alumno alumnoAutenticado = gson.fromJson(jsonData, Alumno.class);
-
-                redirigirSegunRol(alumnoAutenticado.getRol());
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
     void obtenerUserData() {
         userUid = mAuth.getCurrentUser().getUid();
         DocumentReference docRef = db.collection("alumnos").document(userUid);

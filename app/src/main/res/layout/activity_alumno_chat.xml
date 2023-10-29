@@ -7,7 +7,7 @@
     tools:context=".alumno.AlumnoChatActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView2"
+        android:id="@+id/fragmentHeader"
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader3Fragment"
         android:layout_width="match_parent"
         android:layout_height="90dp"
@@ -16,12 +16,21 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_alumno_header3" />
 
-    <com.cometchat.chatuikit.messages.CometChatMessages
-        android:id="@+id/groupChat"
+    <com.cometchat.chatuikit.messagelist.CometChatMessageList
+        android:id="@+id/groupMessages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/groupComposer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView2" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentHeader" />
+
+    <com.cometchat.chatuikit.messagecomposer.CometChatMessageComposer
+        android:id="@+id/groupComposer"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

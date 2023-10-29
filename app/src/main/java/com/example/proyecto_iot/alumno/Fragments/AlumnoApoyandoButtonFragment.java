@@ -36,7 +36,7 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
         binding.buttonAbrirChat.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), AlumnoChatActivity.class);
             Evento evento = ((AlumnoEventoActivity) getActivity()).getEvento();
-            intent.putExtra("chatID", evento.getChatID());
+            intent.putExtra("evento", evento);
             startActivity(intent);
         });
 
