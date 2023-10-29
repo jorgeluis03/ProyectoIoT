@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoChatActivity;
+import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
+import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.databinding.FragmentAlumnoApoyandoButtonBinding;
 
 public class AlumnoApoyandoButtonFragment extends Fragment {
@@ -33,6 +35,8 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
 
         binding.buttonAbrirChat.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), AlumnoChatActivity.class);
+            Evento evento = ((AlumnoEventoActivity) getActivity()).getEvento();
+            intent.putExtra("chatID", evento.getChatID());
             startActivity(intent);
         });
 

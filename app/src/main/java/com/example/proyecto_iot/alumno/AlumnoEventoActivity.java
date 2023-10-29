@@ -9,7 +9,8 @@ import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
 
 public class AlumnoEventoActivity extends AppCompatActivity {
 
-    ActivityAlumnoEventoBinding binding;
+    private ActivityAlumnoEventoBinding binding;
+    private Evento evento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +18,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding = ActivityAlumnoEventoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Evento evento = (Evento) getIntent().getSerializableExtra("evento");
+        evento = (Evento) getIntent().getSerializableExtra("evento");
         binding.textEventoTitulo.setText(evento.getTitulo());
         binding.textEventoActividad.setText(evento.getActividad());
         binding.textEventoDescripcion.setText(evento.getDescripcion());
@@ -27,5 +28,9 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.buttonEventoBack.setOnClickListener(view -> {
             finish();
         });
+    }
+
+    public Evento getEvento() {
+        return evento;
     }
 }
