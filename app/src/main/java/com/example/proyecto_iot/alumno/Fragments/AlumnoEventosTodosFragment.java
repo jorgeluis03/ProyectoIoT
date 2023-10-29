@@ -16,10 +16,14 @@ import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Entities.Lugar;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoEventosTodosBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -38,54 +42,32 @@ public class AlumnoEventosTodosFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoEventosTodosBinding.inflate(inflater, container, false);
 
-
-        binding.rvEventos.setAdapter(adapter);
-        binding.rvEventos.setLayoutManager(new LinearLayoutManager(getContext()));
+        db.collection("eventos")
+                .orderBy("fechaHoraCreacion", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            Log.d("msg-test", "busqueda eventos ok "+task.getResult().size());
+                            for (QueryDocumentSnapshot document: task.getResult()){
+                                Evento evento = document.toObject(Evento.class);
+                                eventoList.add(evento);
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+                        else{
+                            Log.d("msg-test", "error al recuperar eventos");
+                        }
+                    }
+                });
 
         adapter.setContext(getContext());
         adapter.setEventoList(eventoList);
 
-        //eventChangeListener();
-
-        //eventos hardcodeados
-
-        eventoList.add(new Evento("Evento de Semana de Ingeniería",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
-                "Nombre de actividad del evento",
-                "10/09/23",
-                "10:00",
-                new Lugar("Cancha minas", 0),
-                "activo"));
-
-        eventoList.add(new Evento("Otro evento de Semana de Ingeniería",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor mi, vehicula sit.",
-                "Nombre de actividad del evento",
-                "13/09/23",
-                "Polideportivo",
-                new Lugar("Polideportivo",0),
-                "activo"));
-
+        binding.rvEventos.setAdapter(adapter);
+        binding.rvEventos.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return binding.getRoot();
-    }
-
-    private void eventChangeListener(){
-        db.collection("eventos")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null){
-                            Log.d("msg-test", "error: "+error.getMessage());
-                            return;
-                        }
-
-                        for (DocumentChange dc: value.getDocumentChanges()){
-                            if (dc.getType() == DocumentChange.Type.ADDED){
-                                eventoList.add(dc.getDocument().toObject(Evento.class));
-                            }
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                });
     }
 }

@@ -43,15 +43,13 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         TextView textActividad = holder.itemView.findViewById(R.id.textActividad);
         TextView textDescripcion = holder.itemView.findViewById(R.id.textDescripcion);
         TextView textFecha = holder.itemView.findViewById(R.id.textFecha);
-        TextView textLugar = holder.itemView.findViewById(R.id.textLugar);
         TextView textHora = holder.itemView.findViewById(R.id.textHora);
 
         textTitulo.setText(evento.getTitulo());
         textActividad.setText(evento.getActividad());
         textDescripcion.setText(evento.getDescripcion());
         textFecha.setText(evento.getFecha());
-        textLugar.setText(evento.getLugar().getNombre());
-        textHora.setText(evento.getHora()+" hrs");
+        textHora.setText(evento.getHora());
     }
 
     @Override
