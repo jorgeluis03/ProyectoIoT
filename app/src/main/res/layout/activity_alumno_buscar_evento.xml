@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".alumno.AlumnoBuscarEventoActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentHeaderBuscar"
+        android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader4Fragment"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_alumno_header4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
