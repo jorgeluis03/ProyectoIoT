@@ -69,6 +69,7 @@ public class Dg_alumnos_pendFragment extends Fragment {
 
     }
 
+
     //Agregar el RealDataTime para cuando alguien se registre
 
     private void cargarListaUserPendi() {
