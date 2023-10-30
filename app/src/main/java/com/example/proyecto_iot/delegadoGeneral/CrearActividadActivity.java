@@ -28,6 +28,7 @@ import com.example.proyecto_iot.delegadoGeneral.adapter.ListaDelegadosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.entity.ActividadesDao;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
+import com.google.android.material.search.SearchView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -45,6 +46,7 @@ public class CrearActividadActivity extends AppCompatActivity {
     Usuario user_delegado;
     RecyclerView recyclerView;
     FirebaseFirestore db;
+    SearchView txtBuscar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +104,9 @@ public class CrearActividadActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.buttomsheetlayout_dg);
 
+        
+
+
         db = FirebaseFirestore.getInstance();
         db.collection("usuarios")
                 .whereEqualTo("estado","activo")
@@ -152,5 +157,7 @@ public class CrearActividadActivity extends AppCompatActivity {
 
 
     }
+
+
 
 }

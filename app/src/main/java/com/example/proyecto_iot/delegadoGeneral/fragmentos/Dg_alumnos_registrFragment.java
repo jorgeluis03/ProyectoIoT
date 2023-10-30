@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosRegistrBinding;
@@ -23,7 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dg_alumnos_registrFragment extends Fragment {
+public class Dg_alumnos_registrFragment extends Fragment implements SearchView.OnQueryTextListener {
     FragmentDgAlumnosRegistrBinding binding;
     private List<Usuario> listaUserRegi = new ArrayList<>();
     private static boolean usuariosRegiCargado = false;
@@ -60,9 +61,10 @@ public class Dg_alumnos_registrFragment extends Fragment {
 
 
 
+
+
         return binding.getRoot();
     }
-
 
     @Override
     public void onDestroy() {
@@ -73,4 +75,13 @@ public class Dg_alumnos_registrFragment extends Fragment {
     }
 
 
+    @Override
+    public boolean onQueryTextSubmit(String s) { // pueda ir buscando en tiempo real
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        return false;
+    }
 }
