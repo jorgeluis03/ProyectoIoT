@@ -8,6 +8,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:background="@color/azul_background"
@@ -34,7 +35,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/input_alumno_donar"
             android:fontFamily="@font/nunito_sans"
-            android:hint="Título de evento"
+            android:hint="Título, actividad de evento"
             android:inputType="text"
             android:textColor="@color/black"
             android:textColorHint="#787878"
@@ -45,4 +46,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerBuscador"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
