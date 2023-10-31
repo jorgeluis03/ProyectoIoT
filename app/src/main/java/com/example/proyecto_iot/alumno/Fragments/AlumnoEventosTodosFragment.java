@@ -49,7 +49,7 @@ public class AlumnoEventosTodosFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            Log.d("msg-test", "busqueda eventos ok "+task.getResult().size());
+                            Log.d("msg-test", "busqueda eventos todos ok: "+task.getResult().size());
                             for (QueryDocumentSnapshot document: task.getResult()){
                                 Evento evento = document.toObject(Evento.class);
                                 eventoList.add(evento);
