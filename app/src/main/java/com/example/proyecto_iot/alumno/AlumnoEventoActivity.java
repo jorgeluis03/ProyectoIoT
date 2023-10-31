@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
@@ -95,6 +98,13 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.textEventoDescripcion.setText(evento.getDescripcion());
         binding.buttonEventoFecha.setText(evento.getFecha());
         binding.buttonEventoHora.setText(evento.getHora());
+
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
+        Glide.with(AlumnoEventoActivity.this)
+                .load(evento.getFotoUrl())
+                .apply(requestOptions)
+                .into(binding.imageEvento);
+
     }
 
     public Evento getEvento() {
