@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuariosPendiAdapter.UsuariosViewHolder>{
-    private List<Usuario> listaUsuariosPendi;
+    private List<Alumno> listaUsuariosPendi;
     private Context context;
     FirebaseFirestore db;
 
@@ -33,13 +34,13 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
 
     @Override
     public void onBindViewHolder(@NonNull UsuariosViewHolder holder, int position) {
-        Usuario userRegi = listaUsuariosPendi.get(position);
-        holder.usuario = userRegi;
+        Alumno userRegi = listaUsuariosPendi.get(position);
+        holder.alumno = userRegi;
 
         TextView tvNombreUser = holder.itemView.findViewById(R.id.textViewNombreUserPendi_dg);
         TextView tvCorreoUser = holder.itemView.findViewById(R.id.textViewCorreoUserPendi_dg);
 
-        tvNombreUser.setText(userRegi.getNombre()+' '+userRegi.getApellido());
+        tvNombreUser.setText(userRegi.getNombre()+' '+userRegi.getApellidos());
         tvCorreoUser.setText(userRegi.getCorreo());
 
 
@@ -53,7 +54,7 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
 
     //SubClase ViewHolder
     public class UsuariosViewHolder extends RecyclerView.ViewHolder{
-        Usuario usuario;
+        Alumno alumno;
         public UsuariosViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -62,11 +63,11 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
             buttonAceptar.setOnClickListener(view -> {
 
                 db = FirebaseFirestore.getInstance();
-                db.collection("usuarios").document(usuario.getCodigo())
+                db.collection("usuarios").document(alumno.getCodigo())
                                 .update("estado","activo")
                                 .addOnSuccessListener(unused -> {
                                     // Eliminar el usuario de la lista de datos
-                                    listaUsuariosPendi.remove(usuario);
+                                    listaUsuariosPendi.remove(alumno);
                                     // Notificar al adaptador que los datos han cambiado
                                     notifyDataSetChanged();
                                     Toast.makeText(context,"Usuario aceptado",Toast.LENGTH_SHORT).show();
@@ -97,11 +98,11 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
                             public void onClick(DialogInterface dialog, int which) {
                                 // Responder a la pulsación del botón positivo
                                 db = FirebaseFirestore.getInstance();
-                                db.collection("usuarios").document(usuario.getCodigo())
+                                db.collection("usuarios").document(alumno.getCodigo())
                                         .delete()
                                         .addOnSuccessListener(unused -> {
                                             // Eliminar el usuario de la lista de datos
-                                            listaUsuariosPendi.remove(usuario);
+                                            listaUsuariosPendi.remove(alumno);
 
                                             // Notificar al adaptador que los datos han cambiado
                                             notifyDataSetChanged();
@@ -128,11 +129,11 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
                 }*/
 
     //Encapsulamiento
-    public List<Usuario> getListaUsuarios() {
+    public List<Alumno> getListaUsuarios() {
         return listaUsuariosPendi;
     }
 
-    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+    public void setListaUsuarios(List<Alumno> listaUsuarios) {
         this.listaUsuariosPendi = listaUsuarios;
     }
 
