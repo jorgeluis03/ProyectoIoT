@@ -41,6 +41,8 @@
     <string name="evento_notificaciones">Notificaciones</string>
     <string name="evento_chat">Chat</string>
     <string name="evento_chat_vivo">Chat en vivo</string>
+    <string name="evento_subir_foto">Subir foto</string>
+
 
     <!-- DONACIONES -->
     <string name="donaciones_cuenta">Cuenta disponible</string>

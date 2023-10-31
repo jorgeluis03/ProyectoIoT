@@ -149,12 +149,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutEventoInfo">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerViewEventoSubirFotos"
+        <Button
+            android:id="@+id/buttonSubirFotos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="16dp"
+            android:text="@string/evento_subir_foto"
+            android:visibility="gone"
+            app:icon="@drawable/icon_plus" />
 
         <ImageView
             android:id="@+id/imageView12"
