@@ -34,24 +34,9 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding = ActivityAlumnoEventoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        eventoID = getIntent().getStringExtra("eventoID");
-
-        db.collection("eventos")
-                .document(eventoID)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
-                            evento = task.getResult().toObject(Evento.class);
-                            cargarInfoEvento();
-                            insertarFragmentButtons(savedInstanceState);
-                        }
-                        else {
-                            Log.d("msg-test", "AlumnoEventoActivity: error al obtener evento");
-                        }
-                    }
-                });
+        evento = (Evento) getIntent().getSerializableExtra("evento");
+        cargarInfoEvento();
+        insertarFragmentButtons(savedInstanceState);
 
         binding.buttonEventoBack.setOnClickListener(view -> {
             finish();
@@ -62,7 +47,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         db.collection("alumnos")
                 .document(userUid)
                 .collection("eventos")
-                .document(eventoID)
+                .document("evento"+evento.getFechaHoraCreacion().toString())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -104,7 +89,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .load(evento.getFotoUrl())
                 .apply(requestOptions)
                 .into(binding.imageEvento);
-
     }
 
     public Evento getEvento() {
