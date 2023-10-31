@@ -12,7 +12,6 @@ public class Alumno implements Serializable {
     private String fotoUrl;
     private String tipo; // Alumno o Egresado
     private String estado; // activo, inactivo (considerando que se puede eliminar cuenta), pendiente, baneado
-    private ArrayList<String> eventos;
     public Alumno(){
 
     }
@@ -92,11 +91,4 @@ public class Alumno implements Serializable {
         this.estado = estado;
     }
 
-    public ArrayList<String> getEventos() {
-        return eventos;
-    }
-
-    public void setEventos(ArrayList<String> eventos) {
-        this.eventos = eventos;
-    }
 }

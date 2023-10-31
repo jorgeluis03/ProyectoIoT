@@ -22,6 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firestore.v1.Document;
 
 import java.util.ArrayList;
 
@@ -42,18 +45,18 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
 
         db.collection("alumnos")
                 .document(userUid)
+                .collection("eventos")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            Alumno alumno = task.getResult().toObject(Alumno.class);
-                            for (String eventoId: alumno.getEventos()){
-                                buscarEventos(eventoId);
+                            for (QueryDocumentSnapshot document: task.getResult()){
+                                buscarEventos(document.getId());
                             }
                         }
                         else{
-                            Log.d("msg-test", "AlumnoEventosApoyandoFragment error buscando alumno");
+                            Log.d("msg-test", "AlumnoEventosApoyandoFragment: error en busqueda de eventos apoyados");
                         }
                     }
                 });
@@ -76,6 +79,7 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
                             Evento evento = task.getResult().toObject(Evento.class);
+                            Log.d("msg-test", "evento apoyado encontrado: "+evento.getTitulo());
                             eventoApoyandoList.add(evento);
                             adapter.notifyDataSetChanged();
                         }
