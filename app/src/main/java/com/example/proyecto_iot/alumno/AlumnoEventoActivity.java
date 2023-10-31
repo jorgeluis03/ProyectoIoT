@@ -22,6 +22,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment;
 import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
@@ -31,6 +32,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class AlumnoEventoActivity extends AppCompatActivity {
 
@@ -49,6 +51,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
 
         evento = (Evento) getIntent().getSerializableExtra("evento");
         cargarInfoEvento();
+        cargarFotos();
         insertarFragmentButtons(savedInstanceState);
 
         binding.buttonSubirFotos.setOnClickListener(view -> {
@@ -104,12 +107,26 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                     imageUri = result.getData().getData();
                     //abrir dialog de subir foto
                     abrirDialogSubirFoto();
-
-                    //binding.imageEdit.setImageURI(imageUri);
-                    //binding.buttonGuardarPerfil.setEnabled(true);
                 }
             }
     );
+
+    private void cargarFotos(){
+        db.collection("eventos")
+                .document("evento"+evento.getFechaHoraCreacion().toString())
+                .collection("fotos")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        for (QueryDocumentSnapshot document: task.getResult()){
+                            Foto foto = document.toObject(Foto.class);
+                        }
+                    }
+                    else{
+                        Log.d("msg-test", "error al cargar fotos");
+                    }
+                });
+    }
 
     private void abrirDialogSubirFoto(){
         bottomSheetDialog = new BottomSheetDialog(AlumnoEventoActivity.this);
