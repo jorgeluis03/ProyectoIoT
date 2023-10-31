@@ -76,7 +76,7 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
 
         tvNombreActividad.setText(act.getNombre());
         tvEstado.setText("• "+act.getEstado());
-        tvDelegadoAsignado.setText("Delegado: "+act.getDelegadoActividad().getNombre()+' '+act.getDelegadoActividad().getApellido());
+        tvDelegadoAsignado.setText("Delegado: "+act.getDelegadoActividad().getNombre()+' '+act.getDelegadoActividad().getApellidos());
 
             /*buttonAsiganarDelegado.setEnabled(false);
             buttonAsiganarDelegado.setBackgroundColor(Color.LTGRAY);

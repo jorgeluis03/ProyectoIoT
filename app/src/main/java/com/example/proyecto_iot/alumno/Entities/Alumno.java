@@ -3,6 +3,7 @@ package com.example.proyecto_iot.alumno.Entities;
 import java.io.Serializable;
 
 public class Alumno implements Serializable {
+    private String id;
     private String nombre;
     private String apellidos;
     private String rol; // DelegadoGeneral, DelegadoActividad o Alumno
@@ -15,7 +16,8 @@ public class Alumno implements Serializable {
 
     }
 
-    public Alumno(String nombre, String apellidos, String rol, String codigo, String correo, String fotoUrl, String tipo, String estado) {
+    public Alumno(String id, String nombre, String apellidos, String rol, String codigo, String correo, String fotoUrl, String tipo, String estado) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.rol = rol;
@@ -88,5 +90,13 @@ public class Alumno implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

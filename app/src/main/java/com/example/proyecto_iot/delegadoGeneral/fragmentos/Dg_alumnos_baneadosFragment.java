@@ -13,56 +13,50 @@ import android.view.ViewGroup;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosBaneadosBinding;
-import com.example.proyecto_iot.databinding.FragmentDgAlumnosPendBinding;
-import com.example.proyecto_iot.databinding.FragmentDgAlumnosRegistrBinding;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActividadesAdapter;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosBaneadosAdapter;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosPendiAdapter;
-import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dg_alumnos_pendFragment extends Fragment {
-    FragmentDgAlumnosPendBinding binding;
-    ListenerRegistration listenerRegistration;
-    private List<Alumno> listaUserPendi;
+
+public class Dg_alumnos_baneadosFragment extends Fragment {
+    FragmentDgAlumnosBaneadosBinding binding;
     FirebaseFirestore db;
+    ListenerRegistration listenerRegistration;
+    private List<Alumno> listaUserBaneados;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentDgAlumnosPendBinding.inflate(inflater,container,false);
+        binding = FragmentDgAlumnosBaneadosBinding.inflate(inflater,container,false);
 
         db = FirebaseFirestore.getInstance(); //obtengo la isntancia
 
         //Escuchar en tiempo real los cambios
         listenerRegistration = db.collection("alumnos")
-                .whereEqualTo("estado","inactivo")
+                .whereEqualTo("estado","baneado")
                 .addSnapshotListener((snapshot, error) ->{
                     if (error != null) {
                         Log.w("msg-test", "Listen failed.", error);
                         return;
                     }
-                    listaUserPendi = new ArrayList<>();
+                    listaUserBaneados = new ArrayList<>();
 
                     for (QueryDocumentSnapshot documentSnapshot: snapshot){
                         Alumno alumno = documentSnapshot.toObject(Alumno.class);
-                        listaUserPendi.add(alumno);
+                        listaUserBaneados.add(alumno);
                     }
 
                     //Llamar al adapter
-                    ListaUsuariosPendiAdapter adapter = new ListaUsuariosPendiAdapter();
+                    ListaUsuariosBaneadosAdapter adapter = new ListaUsuariosBaneadosAdapter();
                     adapter.setContext(getContext());
-                    adapter.setListaUsuarios(listaUserPendi);
+                    adapter.setLista(listaUserBaneados);
 
-                    binding.recycleViewUserPendi.setAdapter(adapter);
-                    binding.recycleViewUserPendi.setLayoutManager(new LinearLayoutManager(getContext()));
+                    binding.recycleViewUserBaneados.setAdapter(adapter);
+                    binding.recycleViewUserBaneados.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
                 });
@@ -70,14 +64,7 @@ public class Dg_alumnos_pendFragment extends Fragment {
 
 
 
-
-
         return binding.getRoot();
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-
     }
 
     @Override
