@@ -25,7 +25,7 @@ public class AlumnoApoyarButtonFragment extends Fragment {
             AlumnoApoyandoButtonFragment apoyandoFragment = new AlumnoApoyandoButtonFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerViewEventoButtons, apoyandoFragment)
+                    .replace(R.id.fragmentEventoButtons, apoyandoFragment)
                     .addToBackStack(null)
                     .commit();
         });

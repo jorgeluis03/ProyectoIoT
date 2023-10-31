@@ -1,15 +1,29 @@
 package com.example.proyecto_iot.alumno;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
+import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment;
 import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AlumnoEventoActivity extends AppCompatActivity {
 
-    ActivityAlumnoEventoBinding binding;
+    private ActivityAlumnoEventoBinding binding;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String userUid = FirebaseAuth.getInstance().getUid();
+    private Evento evento;
+    private String eventoID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,15 +31,69 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding = ActivityAlumnoEventoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Evento evento = (Evento) getIntent().getSerializableExtra("evento");
+        eventoID = getIntent().getStringExtra("eventoID");
+
+        db.collection("eventos")
+                .document(eventoID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            evento = task.getResult().toObject(Evento.class);
+                            cargarInfoEvento();
+                            insertarFragmentButtons(savedInstanceState);
+                        }
+                        else {
+                            Log.d("msg-test", "AlumnoEventoActivity: error al obtener evento");
+                        }
+                    }
+                });
+
+        binding.buttonEventoBack.setOnClickListener(view -> {
+            finish();
+        });
+    }
+
+    private void insertarFragmentButtons(Bundle savedInstanceState){
+        db.collection("alumnos")
+                .document(userUid)
+                .collection("eventos")
+                .document(eventoID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if (savedInstanceState == null){
+                                if (document.exists()){ // evento en lista de eventos de alumno (evento apoyado)
+                                    getSupportFragmentManager().beginTransaction()
+                                            .setReorderingAllowed(true)
+                                            .add(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
+                                            .commit();
+                                }
+                                else{ // evento no apoyado
+                                    getSupportFragmentManager().beginTransaction()
+                                            .setReorderingAllowed(true)
+                                            .add(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
+                                            .commit();
+                                }
+                            }
+                        }
+                        else{
+                            Log.d("msg-test", "AlumnoEventoActivity: error al buscar evento");
+                        }
+                    }
+                });
+
+    }
+
+    private void cargarInfoEvento(){
         binding.textEventoTitulo.setText(evento.getTitulo());
         binding.textEventoActividad.setText(evento.getActividad());
         binding.textEventoDescripcion.setText(evento.getDescripcion());
         binding.buttonEventoFecha.setText(evento.getFecha());
         binding.buttonEventoHora.setText(evento.getHora());
-
-        binding.buttonEventoBack.setOnClickListener(view -> {
-            finish();
-        });
     }
 }
