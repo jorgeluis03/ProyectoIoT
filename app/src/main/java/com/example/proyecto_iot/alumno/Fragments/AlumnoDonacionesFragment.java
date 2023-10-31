@@ -230,7 +230,7 @@ public class AlumnoDonacionesFragment extends Fragment {
         // guardar imagen en starge para obtener url
         UUID uuidDonacionCaptura = UUID.randomUUID();
         storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference().child("images/donacion-" + uuidDonacionCaptura.toString() + ".jpg");
+        StorageReference storageReference = storage.getReference().child("images/donaciones/" + uuidDonacionCaptura.toString() + ".jpg");
         storageReference.putFile(uriFotoDonacion).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
