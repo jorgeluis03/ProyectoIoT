@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.proyecto_iot.alumno.Entities.Alumno;
+
 import java.io.Serializable;
 
 public class Actividades implements Serializable {
@@ -13,13 +15,13 @@ public class Actividades implements Serializable {
     private String nombre;
     private String estado;
 
-    private Usuario delegadoActividad;
+    private Alumno delegadoActividad;
 
-    public Usuario getDelegadoActividad() {
+    public Alumno getDelegadoActividad() {
         return delegadoActividad;
     }
 
-    public void setDelegadoActividad(Usuario delegadoActividad) {
+    public void setDelegadoActividad(Alumno delegadoActividad) {
         this.delegadoActividad = delegadoActividad;
     }
 

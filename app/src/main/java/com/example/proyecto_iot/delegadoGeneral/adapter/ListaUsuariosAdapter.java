@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdapter.UsuariosViewHolder>{
-    private List<Usuario> listaUsuarios;
+    private List<Alumno> listaUsuarios;
     private Context context;
     FirebaseFirestore db;
 
@@ -33,13 +34,13 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
 
     @Override
     public void onBindViewHolder(@NonNull UsuariosViewHolder holder, int position) {
-        Usuario userRegi = listaUsuarios.get(position);
-        holder.usuario = userRegi;
+        Alumno userRegi = listaUsuarios.get(position);
+        holder.alumno = userRegi;
 
         TextView tvNombreUser = holder.itemView.findViewById(R.id.textViewNombreUserRegi_dg);
         TextView tvCorreoUser = holder.itemView.findViewById(R.id.textViewCorreoUserRegi_dg);
 
-        tvNombreUser.setText(userRegi.getNombre()+' '+userRegi.getApellido());
+        tvNombreUser.setText(userRegi.getNombre()+' '+userRegi.getApellidos());
         tvCorreoUser.setText(userRegi.getCorreo());
 
     }
@@ -52,7 +53,7 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
 
     //SubClase ViewHolder
     public class UsuariosViewHolder extends RecyclerView.ViewHolder{
-        Usuario usuario;
+        Alumno alumno;
         public UsuariosViewHolder(@NonNull View itemView) {
 
             super(itemView);
@@ -71,11 +72,11 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
 
                             // Responder a la pulsación del botón positivo
                             db = FirebaseFirestore.getInstance();
-                            db.collection("usuarios").document(usuario.getCodigo())
+                            db.collection("alumnos").document(alumno.getId())
                                     .update("estado","baneado")
                                     .addOnSuccessListener(unused -> {
                                         // Eliminar el usuario de la lista de datos
-                                        listaUsuarios.remove(usuario);
+                                        listaUsuarios.remove(alumno);
 
                                         // Notificar al adaptador que los datos han cambiado
                                         notifyDataSetChanged();
@@ -95,11 +96,11 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
 
 
     //Encapsulamiento
-    public List<Usuario> getListaUsuarios() {
+    public List<Alumno> getListaUsuarios() {
         return listaUsuarios;
     }
 
-    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+    public void setListaUsuarios(List<Alumno> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
 

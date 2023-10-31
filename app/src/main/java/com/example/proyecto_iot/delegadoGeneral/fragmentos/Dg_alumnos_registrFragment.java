@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosRegistrBinding;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosPendiAdapter;
@@ -26,8 +27,7 @@ import java.util.List;
 
 public class Dg_alumnos_registrFragment extends Fragment implements SearchView.OnQueryTextListener {
     FragmentDgAlumnosRegistrBinding binding;
-    private List<Usuario> listaUserRegi = new ArrayList<>();
-    private static boolean usuariosRegiCargado = false;
+    private List<Alumno> listaUserRegi;
     ListenerRegistration snapshotListener;
     FirebaseFirestore db;
     @Override
@@ -36,7 +36,7 @@ public class Dg_alumnos_registrFragment extends Fragment implements SearchView.O
         binding=FragmentDgAlumnosRegistrBinding.inflate(inflater,container,false);
 
         db=FirebaseFirestore.getInstance();
-        snapshotListener = db.collection("usuarios")
+        snapshotListener = db.collection("alumnos")
                 .whereEqualTo("estado","activo")
                 .addSnapshotListener((snapshot,error) ->{
 
@@ -46,9 +46,9 @@ public class Dg_alumnos_registrFragment extends Fragment implements SearchView.O
                     }
                     listaUserRegi = new ArrayList<>(); // Inicializa la lista
                     for(QueryDocumentSnapshot document: snapshot){
-                        Usuario usuario = document.toObject(Usuario.class);
-                        Log.d("msg-test", "id: " + document.getId() + " | Nombre: " + usuario.getNombre() + " estado: " + usuario.getEstado());
-                        listaUserRegi.add(usuario);
+                        Alumno alumno = document.toObject(Alumno.class);
+                        Log.d("msg-test", "id: " + document.getId() + " | Nombre: " + alumno.getNombre() + " estado: " + alumno.getEstado());
+                        listaUserRegi.add(alumno);
                     }
                     ListaUsuariosAdapter adapter = new ListaUsuariosAdapter();
                     adapter.setContext(getContext());
@@ -56,7 +56,6 @@ public class Dg_alumnos_registrFragment extends Fragment implements SearchView.O
                     binding.recycleViewUserRegi.setAdapter(adapter);
                     binding.recycleViewUserRegi.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                    usuariosRegiCargado = true;
                 });
 
 

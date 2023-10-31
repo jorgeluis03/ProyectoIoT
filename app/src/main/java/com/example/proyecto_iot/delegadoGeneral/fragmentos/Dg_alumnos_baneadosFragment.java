@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosBaneadosBinding;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosBaneadosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
@@ -26,7 +27,7 @@ public class Dg_alumnos_baneadosFragment extends Fragment {
     FragmentDgAlumnosBaneadosBinding binding;
     FirebaseFirestore db;
     ListenerRegistration listenerRegistration;
-    private List<Usuario> listaUserBaneados;
+    private List<Alumno> listaUserBaneados;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class Dg_alumnos_baneadosFragment extends Fragment {
         db = FirebaseFirestore.getInstance(); //obtengo la isntancia
 
         //Escuchar en tiempo real los cambios
-        listenerRegistration = db.collection("usuarios")
+        listenerRegistration = db.collection("alumnos")
                 .whereEqualTo("estado","baneado")
                 .addSnapshotListener((snapshot, error) ->{
                     if (error != null) {
@@ -45,8 +46,8 @@ public class Dg_alumnos_baneadosFragment extends Fragment {
                     listaUserBaneados = new ArrayList<>();
 
                     for (QueryDocumentSnapshot documentSnapshot: snapshot){
-                        Usuario usuario = documentSnapshot.toObject(Usuario.class);
-                        listaUserBaneados.add(usuario);
+                        Alumno alumno = documentSnapshot.toObject(Alumno.class);
+                        listaUserBaneados.add(alumno);
                     }
 
                     //Llamar al adapter

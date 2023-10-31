@@ -10,15 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 
 import java.util.List;
 
 public class ListaDelegadosAdapter extends RecyclerView.Adapter<ListaDelegadosAdapter.UsuariosViewHolder>{
-    private List<Usuario> listaUsuarios;
+    private List<Alumno> listaUsuarios;
     private Context context;
+
     public interface OnItemClickListener {
-        void onItemClick(Usuario usuario);
+        void onItemClick(Alumno alumno);
     }
 
     private OnItemClickListener onItemClickListener;
@@ -36,8 +38,8 @@ public class ListaDelegadosAdapter extends RecyclerView.Adapter<ListaDelegadosAd
 
     @Override
     public void onBindViewHolder(@NonNull UsuariosViewHolder holder, int position) {
-        Usuario user = listaUsuarios.get(position);
-        holder.usuario = user;
+        Alumno user = listaUsuarios.get(position);
+        holder.alumno = user;
 
         holder.itemView.setOnClickListener(view -> {
             if (onItemClickListener != null) {
@@ -48,7 +50,7 @@ public class ListaDelegadosAdapter extends RecyclerView.Adapter<ListaDelegadosAd
         TextView tvNombreUser = holder.itemView.findViewById(R.id.textViewNombreDelegado);
         TextView tvCorreoUser = holder.itemView.findViewById(R.id.textViewCorreoDelegado);
 
-        tvNombreUser.setText(user.getNombre()+' '+user.getApellido());
+        tvNombreUser.setText(user.getNombre()+' '+user.getApellidos());
         tvCorreoUser.setText(user.getCorreo());
 
     }
@@ -61,7 +63,7 @@ public class ListaDelegadosAdapter extends RecyclerView.Adapter<ListaDelegadosAd
 
     //SubClase ViewHolder
     public class UsuariosViewHolder extends RecyclerView.ViewHolder{
-        Usuario usuario;
+        Alumno alumno;
         public UsuariosViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -74,11 +76,11 @@ public class ListaDelegadosAdapter extends RecyclerView.Adapter<ListaDelegadosAd
 
 
     //Encapsulamiento
-    public List<Usuario> getListaUsuarios() {
+    public List<Alumno> getListaUsuarios() {
         return listaUsuarios;
     }
 
-    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+    public void setListaUsuarios(List<Alumno> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
 
