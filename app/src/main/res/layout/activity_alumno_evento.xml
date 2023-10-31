@@ -45,11 +45,9 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView10">
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerViewEventoButtons"
-            android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment"
+            android:id="@+id/fragmentEventoButtons"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout="@layout/fragment_alumno_apoyar_button" />
+            android:layout_height="50dp" />
 
         <TextView
             android:id="@+id/textEventoTitulo"

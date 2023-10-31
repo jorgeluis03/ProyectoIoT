@@ -77,7 +77,7 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
             ConstraintLayout constraintLayout = itemView.findViewById(R.id.evento);
             constraintLayout.setOnClickListener(view -> {
                 Intent intent = new Intent(itemView.getContext(), AlumnoEventoActivity.class);
-                intent.putExtra("evento", evento);
+                intent.putExtra("eventoID", "evento"+evento.getFechaHoraCreacion());
                 itemView.getContext().startActivity(intent);
             });
         }

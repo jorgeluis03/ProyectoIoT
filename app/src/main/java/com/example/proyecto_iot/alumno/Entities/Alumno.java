@@ -1,6 +1,7 @@
 package com.example.proyecto_iot.alumno.Entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Alumno implements Serializable {
     private String nombre;
@@ -89,4 +90,5 @@ public class Alumno implements Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
 }
