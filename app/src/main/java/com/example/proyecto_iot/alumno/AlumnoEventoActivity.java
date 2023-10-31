@@ -34,6 +34,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.sql.Timestamp;
+
 public class AlumnoEventoActivity extends AppCompatActivity {
 
     private ActivityAlumnoEventoBinding binding;
@@ -137,6 +139,8 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         Button botonSubirFoto = bottomSheetView.findViewById(R.id.buttonDialogSubirFoto);
         botonSubirFoto.setOnClickListener(view -> {
             // subir foto a firestore y storage
+            String descripcion = bottomSheetView.findViewById(R.id.inputDescripcion).toString();
+            Timestamp fechaHoraSubida = new Timestamp(System.currentTimeMillis());
         });
 
         bottomSheetDialog.setContentView(bottomSheetView);
