@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment;
+import com.example.proyecto_iot.alumno.RecyclerViews.ListaFotosEventoAdapter;
 import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +37,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlumnoEventoActivity extends AppCompatActivity {
 
@@ -44,6 +48,8 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     private Evento evento;
     private Uri imageUri;
     private BottomSheetDialog bottomSheetDialog;
+    private ArrayList<Foto> fotoList = new ArrayList<>();
+    private ListaFotosEventoAdapter adapter = new ListaFotosEventoAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +113,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK){
                     imageUri = result.getData().getData();
-                    //abrir dialog de subir foto
                     abrirDialogSubirFoto();
                 }
             }
@@ -122,12 +127,20 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                     if (task.isSuccessful()){
                         for (QueryDocumentSnapshot document: task.getResult()){
                             Foto foto = document.toObject(Foto.class);
+                            fotoList.add(foto);
                         }
+                        adapter.notifyDataSetChanged();
                     }
                     else{
                         Log.d("msg-test", "error al cargar fotos");
                     }
                 });
+
+        adapter.setContext(AlumnoEventoActivity.this);
+        adapter.setFotoList(fotoList);
+
+        binding.rvFotos.setAdapter(adapter);
+        binding.rvFotos.setLayoutManager(new LinearLayoutManager(AlumnoEventoActivity.this));
     }
 
     private void abrirDialogSubirFoto(){

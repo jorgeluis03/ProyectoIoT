@@ -1,6 +1,8 @@
 package com.example.proyecto_iot.alumno.Entities;
 
-import java.sql.Timestamp;
+
+import com.google.firebase.Timestamp;
+
 
 public class Foto {
     private String alumnoID;
