@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,5 +64,13 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
 
     private void desapoyarEvento(){
 
+        // quitar alumno de lista de apoyos del evento
+
+        // quitar evento de lista eventos de alumno
+
+        // quitar alumno de grupo de cometchat
+
+        ((AlumnoEventoActivity)getActivity()).recreate();
+        Log.d("msg-test", "recargado");
     }
 }
