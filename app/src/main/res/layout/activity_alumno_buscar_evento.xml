@@ -6,13 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".alumno.AlumnoBuscarEventoActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentHeaderBuscar"
-        android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader4Fragment"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
+        android:background="@color/azul_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_alumno_header4" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/buttonBack"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/icon_back1"
+            app:iconTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/inputBuscarEvento"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/input_alumno_donar"
+            android:fontFamily="@font/nunito_sans"
+            android:hint="Título de evento"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textColorHint="#787878"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
