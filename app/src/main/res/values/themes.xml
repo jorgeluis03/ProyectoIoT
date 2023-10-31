@@ -23,7 +23,7 @@
 
     <style name="Alumno" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:fontFamily">@font/nunito_sans</item>
-        <item name="colorPrimary">@color/azul_background</item>
+        <item name="colorPrimaryDark">@color/azul_background</item>
         <item name="android:screenOrientation">portrait</item>
 
     </style>
