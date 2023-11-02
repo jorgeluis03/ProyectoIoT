@@ -17,7 +17,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp">
 
             <ImageView
                 android:id="@+id/imageEvento"
@@ -153,7 +154,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:background="@drawable/button_alumno_perfil"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
@@ -171,7 +171,7 @@
                     android:text="@string/evento_subir_foto"
                     android:textColor="@color/white"
                     android:textSize="14sp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:backgroundTint="@null"
                     app:icon="@drawable/icon_plus"
                     app:iconSize="14dp"

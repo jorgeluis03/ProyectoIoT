@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -35,6 +36,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -44,9 +47,11 @@ public class AlumnoEventoActivity extends AppCompatActivity {
 
     private ActivityAlumnoEventoBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseStorage storage;
     private String userUid = FirebaseAuth.getInstance().getUid();
     private Evento evento;
     private Uri imageUri;
+    private String fotoSubidaUrl;
     private BottomSheetDialog bottomSheetDialog;
     private ArrayList<Foto> fotoList = new ArrayList<>();
     private ListaFotosEventoAdapter adapter = new ListaFotosEventoAdapter();
@@ -72,35 +77,33 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         });
     }
 
-    private void insertarFragmentButtons(Bundle savedInstanceState){
+    private void insertarFragmentButtons(Bundle savedInstanceState) {
         db.collection("alumnos")
                 .document(userUid)
                 .collection("eventos")
-                .document("evento"+evento.getFechaHoraCreacion().toString())
+                .document("evento" + evento.getFechaHoraCreacion().toString())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (savedInstanceState == null){
-                                if (document.exists()){ // evento en lista de eventos de alumno (evento apoyado)
+                            if (savedInstanceState == null) {
+                                if (document.exists()) { // evento en lista de eventos de alumno (evento apoyado)
                                     getSupportFragmentManager().beginTransaction()
                                             .setReorderingAllowed(true)
                                             .add(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
                                             .commit();
 
                                     binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                                }
-                                else{ // evento no apoyado
+                                } else { // evento no apoyado
                                     getSupportFragmentManager().beginTransaction()
                                             .setReorderingAllowed(true)
                                             .add(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
                                             .commit();
                                 }
                             }
-                        }
-                        else{
+                        } else {
                             Log.d("msg-test", "AlumnoEventoActivity: error al buscar evento");
                         }
                     }
@@ -111,27 +114,26 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if (result.getResultCode() == Activity.RESULT_OK){
+                if (result.getResultCode() == Activity.RESULT_OK) {
                     imageUri = result.getData().getData();
                     abrirDialogSubirFoto();
                 }
             }
     );
 
-    private void cargarFotos(){
+    private void cargarFotos() {
         db.collection("eventos")
-                .document("evento"+evento.getFechaHoraCreacion().toString())
+                .document("evento" + evento.getFechaHoraCreacion().toString())
                 .collection("fotos")
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                        for (QueryDocumentSnapshot document: task.getResult()){
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
                             Foto foto = document.toObject(Foto.class);
                             fotoList.add(foto);
                         }
                         adapter.notifyDataSetChanged();
-                    }
-                    else{
+                    } else {
                         Log.d("msg-test", "error al cargar fotos");
                     }
                 });
@@ -140,10 +142,16 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         adapter.setFotoList(fotoList);
 
         binding.rvFotos.setAdapter(adapter);
-        binding.rvFotos.setLayoutManager(new LinearLayoutManager(AlumnoEventoActivity.this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AlumnoEventoActivity.this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        binding.rvFotos.setLayoutManager(linearLayoutManager);
     }
 
-    private void abrirDialogSubirFoto(){
+    private void abrirDialogSubirFoto() {
         bottomSheetDialog = new BottomSheetDialog(AlumnoEventoActivity.this);
         View bottomSheetView = LayoutInflater.from(AlumnoEventoActivity.this).inflate(R.layout.dialog_alumno_subir_foto, (ConstraintLayout) findViewById(R.id.bottomSheetSubirFoto));
 
@@ -151,16 +159,61 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         imagenFoto.setImageURI(imageUri);
         Button botonSubirFoto = bottomSheetView.findViewById(R.id.buttonDialogSubirFoto);
         botonSubirFoto.setOnClickListener(view -> {
+
             // subir foto a firestore y storage
-            String descripcion = bottomSheetView.findViewById(R.id.inputDescripcion).toString();
-            Timestamp fechaHoraSubida = new Timestamp(System.currentTimeMillis());
+            EditText inputDescripcion = bottomSheetView.findViewById(R.id.inputDescripcion);
+            subirFoto(inputDescripcion.getText().toString());
+
         });
 
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
     }
 
-    private void cargarInfoEvento(){
+    private void subirFoto(String descripcion) {
+        Foto fotoNueva = new Foto();
+        fotoNueva.setFechaHoraSubida(com.google.firebase.Timestamp.now());
+        fotoNueva.setDescripcion(descripcion);
+
+        String userUid = FirebaseAuth.getInstance().getUid();
+        fotoNueva.setAlumnoID(userUid);
+
+        storage = FirebaseStorage.getInstance();
+        StorageReference reference = storage.getReference().child("evento" + evento.getFechaHoraCreacion().toString() + "/" + imageUri.getLastPathSegment() + ".jpg");
+        reference.putFile(imageUri).continueWithTask(task -> {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return reference.getDownloadUrl();
+                })
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("msg-test", "foto de evento agregada en storage");
+                        fotoNueva.setFotoUrl(task.getResult().toString());
+                        subirFotoFirestore(fotoNueva);
+                    } else {
+                        Log.d("msg-test", "error");
+                    }
+                });
+
+    }
+
+    private void subirFotoFirestore(Foto fotoNueva){
+        db.collection("eventos")
+                .document("evento"+ evento.getFechaHoraCreacion().toString())
+                .collection("fotos")
+                .add(fotoNueva)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "foto guardada en firestore exitosamente");
+                    finish();
+                    startActivity(getIntent());
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
+    }
+
+    private void cargarInfoEvento() {
         binding.textEventoTitulo.setText(evento.getTitulo());
         binding.textEventoActividad.setText(evento.getActividad());
         binding.textEventoDescripcion.setText(evento.getDescripcion());
