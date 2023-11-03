@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 Alumno alumnoAutenticado = gson.fromJson(jsonData, Alumno.class);
 
-                redirigirSegunRol(alumnoAutenticado.getRol());
+                redirigirSegunRol(alumnoAutenticado);
             }
             catch (IOException e){
                 e.printStackTrace();
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                         alumno = document.toObject(Alumno.class);
                         if (alumno.getEstado().equals("activo")){
                             guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
-                            redirigirSegunRol(alumno.getRol());
+                            redirigirSegunRol(alumno);
                         }
                         if (alumno.getEstado().equals("inactivo")) {
                             Toast.makeText(LoginActivity.this, "El usuario aún no ha sido aceptado por el administrador de la aplicación.", Toast.LENGTH_SHORT).show();
@@ -150,15 +150,20 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    void redirigirSegunRol(String rol) {
+    void redirigirSegunRol(Alumno alumno) {
         Intent intent = null;
+        String rol = alumno.getRol();
         switch (rol) {
             case "Alumno":
-                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
-                break;
-            case "Delegado Actividad":
-                intent = new Intent(LoginActivity.this, DaInicioActivity.class);
-                break;
+                if (alumno.getActividadesId() != null && alumno.getActividadesId().size()>0){
+                    // caso delegadoActividad
+                    intent = new Intent(LoginActivity.this, DaInicioActivity.class);
+                    break;
+                }else {
+                    // caso no actividades
+                    intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                    break;
+                }
             case "Delegado General":
                 intent = new Intent(LoginActivity.this, Dg_Activity.class);
                 break;

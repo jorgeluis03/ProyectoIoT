@@ -1,6 +1,7 @@
 package com.example.proyecto_iot.alumno.Entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Alumno implements Serializable {
     private String id;
@@ -12,6 +13,7 @@ public class Alumno implements Serializable {
     private String fotoUrl;
     private String tipo; // Alumno o Egresado
     private String estado; // activo, inactivo (considerando que se puede eliminar cuenta), pendiente, baneado
+    private ArrayList<String> actividadesId;
     public Alumno(){
 
     }
@@ -98,5 +100,13 @@ public class Alumno implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public ArrayList<String> getActividadesId() {
+        return actividadesId;
+    }
+
+    public void setActividadesId(ArrayList<String> actividadesId) {
+        this.actividadesId = actividadesId;
     }
 }

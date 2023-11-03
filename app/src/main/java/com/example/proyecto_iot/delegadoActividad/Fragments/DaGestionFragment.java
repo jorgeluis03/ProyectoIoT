@@ -35,13 +35,6 @@ public class DaGestionFragment extends Fragment {
         actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
         actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
         actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
-        actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
-        actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
-        actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
-        actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
-        actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
-        actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
-        actividadList.add(new Actividad("Práctica de barra Básquet", "26/07","15:40"));
 
 
         ListaActividadesAdpater adapter = new ListaActividadesAdpater();

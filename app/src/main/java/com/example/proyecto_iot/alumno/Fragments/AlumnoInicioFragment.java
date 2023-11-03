@@ -39,7 +39,7 @@ public class AlumnoInicioFragment extends Fragment {
         // tabs para todos-apoyando
         TabLayout tabInicio = binding.tabLayout;
         ViewPager2 viewPagerInicio = binding.viewPager;
-        if (getRol().equals("Delegado Actividad")){
+        if (ifDelegadoActividad()){
             tabInicio.addTab(tabInicio.newTab().setText("Mis actividades"),1);
             viewPagerInicio.setAdapter(new DaInicioViewPagerAdapter(getActivity()));
         }
@@ -74,7 +74,7 @@ public class AlumnoInicioFragment extends Fragment {
 
         return binding.getRoot();
     }
-    public String getRol(){
+    public boolean ifDelegadoActividad(){
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             try (FileInputStream fileInputStream = this.getActivity().openFileInput("userData");
@@ -84,14 +84,13 @@ public class AlumnoInicioFragment extends Fragment {
                 String jsonData = bufferedReader.readLine();
                 Gson gson = new Gson();
                 alumno = gson.fromJson(jsonData, Alumno.class);
-
-                return alumno.getRol();
             }
             catch (IOException e){
                 e.printStackTrace();
             }
+            return alumno.getActividadesId()!=null && alumno.getActividadesId().size()>0;
         }
-        return null;
+        return false;
     }
 }
 

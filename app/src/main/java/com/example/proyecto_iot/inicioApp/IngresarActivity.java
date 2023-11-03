@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityIngresarBinding;
+import com.example.proyecto_iot.delegadoActividad.DaInicioActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -57,7 +58,7 @@ public class IngresarActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 Alumno alumnoAutenticado = gson.fromJson(jsonData, Alumno.class);
 
-                redirigirSegunRol(alumnoAutenticado.getRol());
+                redirigirSegunRol(alumnoAutenticado);
             }
             catch (IOException e){
                 e.printStackTrace();
@@ -65,15 +66,20 @@ public class IngresarActivity extends AppCompatActivity {
         }
     }
 
-    void redirigirSegunRol(String rol) {
+    void redirigirSegunRol(Alumno alumno) {
         Intent intent = null;
+        String rol = alumno.getRol();
         switch (rol) {
             case "Alumno":
-                intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
-                break;
-            case "Delegado Actividad":
-                intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
-                break;
+                if (alumno.getActividadesId() != null && alumno.getActividadesId().size()>0){
+                    // caso delegadoActividad
+                    intent = new Intent(IngresarActivity.this, DaInicioActivity.class);
+                    break;
+                }else {
+                    // caso no actividades
+                    intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
+                    break;
+                }
             case "Delegado General":
                 intent = new Intent(IngresarActivity.this, Dg_Activity.class);
                 break;
