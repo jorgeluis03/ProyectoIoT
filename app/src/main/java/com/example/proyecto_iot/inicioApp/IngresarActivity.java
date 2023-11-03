@@ -59,8 +59,8 @@ public class IngresarActivity extends AppCompatActivity {
         if (currentUser != null) {
 
             //logueo en cometchat en caso haya caducado
-            userUid = currentUser.getUid();
-            verficarLogueoCometChat();
+            //userUid = currentUser.getUid();
+            //verficarLogueoCometChat();
 
             try (FileInputStream fileInputStream = openFileInput("userData");
                  FileReader fileReader = new FileReader(fileInputStream.getFD());
