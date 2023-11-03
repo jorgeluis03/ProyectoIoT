@@ -63,8 +63,7 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
         String codigoAlumno = intent.getStringExtra("codigoAlumno");
         String rolAlumnoFromDonacion = intent.getStringExtra("rolDonacion");
         String donacionesTotales = intent.getStringExtra("donacionesTotales");
-
-
+        
         // Encontrar el TextView
         TextView donacionInfoTextView = findViewById(R.id.donacionInfoTextView);
 
@@ -172,7 +171,21 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
             }
         });
 
-        Button selectLugar = findViewById(R.id.SelectCoords);
+
+        /////////////////////
+        Button Comollegar = findViewById(R.id.Comollegar);
+        Comollegar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AlumnoDonacionConsultaActivity.this, Delegado_select_map_activity.class);
+                Log.d("MiApp", "Iniciando MapaDelegadoActividad"); // Agregar este log
+                startActivity(intent); // Iniciar la nueva actividad
+            }
+        });
+        //// trae nombre del lugar del mapa
+
+
+        /*Button selectLugar = findViewById(R.id.SelectCoords);
         final AtomicReference<LugarSeleccionado> lugarRef2 = new AtomicReference<>();
 
         selectLugar.setOnClickListener(new View.OnClickListener() {
@@ -258,7 +271,7 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
                 }
                 // Puedes agregar aquí la lógica para manejar el caso en el que no se haya seleccionado un lugar.
             }
-        });
+        });*/
 
     }
 }

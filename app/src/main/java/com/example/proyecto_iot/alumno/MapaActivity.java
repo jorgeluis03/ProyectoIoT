@@ -112,7 +112,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void abrirVistaRuta(LatLng destino) {
         // Crear un URI para la navegación en Google Maps
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + destino.latitude + "," + destino.longitude);
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + destino.latitude + "," + destino.longitude+ "&mode=w");
 
         // Crear un Intent con la acción ACTION_VIEW
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
