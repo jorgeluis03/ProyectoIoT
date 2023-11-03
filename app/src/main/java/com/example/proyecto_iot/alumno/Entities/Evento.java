@@ -1,30 +1,18 @@
 package com.example.proyecto_iot.alumno.Entities;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Date;
 
 public class Evento implements Serializable {
     private String titulo;
     private String descripcion;
     private String actividad;
-    private byte[] foto;
+    private String fotoUrl;
     private String fecha;
     private String hora;
-    private Lugar lugar;
-    private LocalDateTime fechaHoraCreacion;
-
-    private List<Foto> fotosSubidas;
-    private boolean apoyo;
-
-    public Evento(String titulo, String descripcion, String actividad, String fecha, String hora, Lugar lugar, boolean apoyo) {
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.actividad = actividad;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.lugar = lugar;
-    }
+    private Date fechaHoraCreacion;
+    private String estado;
+    private String chatID;
 
     public String getTitulo() {
         return titulo;
@@ -32,14 +20,6 @@ public class Evento implements Serializable {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public String getActividad() {
-        return actividad;
-    }
-
-    public void setActividad(String actividad) {
-        this.actividad = actividad;
     }
 
     public String getDescripcion() {
@@ -50,12 +30,20 @@ public class Evento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public String getActividad() {
+        return actividad;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setActividad(String actividad) {
+        this.actividad = actividad;
+    }
+
+    public String getFotoUrl() {
+        return fotoUrl;
+    }
+
+    public void setFotoUrl(String fotoUrl) {
+        this.fotoUrl = fotoUrl;
     }
 
     public String getFecha() {
@@ -74,35 +62,27 @@ public class Evento implements Serializable {
         this.hora = hora;
     }
 
-    public Lugar getLugar() {
-        return lugar;
-    }
-
-    public void setLugar(Lugar lugar) {
-        this.lugar = lugar;
-    }
-
-    public LocalDateTime getFechaHoraCreacion() {
+    public Date getFechaHoraCreacion() {
         return fechaHoraCreacion;
     }
 
-    public void setFechaHoraCreacion(LocalDateTime fechaHoraCreacion) {
+    public void setFechaHoraCreacion(Date fechaHoraCreacion) {
         this.fechaHoraCreacion = fechaHoraCreacion;
     }
 
-    public List<Foto> getFotosSubidas() {
-        return fotosSubidas;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setFotosSubidas(List<Foto> fotosSubidas) {
-        this.fotosSubidas = fotosSubidas;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    public boolean isApoyo() {
-        return apoyo;
+    public String getChatID() {
+        return chatID;
     }
 
-    public void setApoyo(boolean apoyo) {
-        this.apoyo = apoyo;
+    public void setChatID(String chatID) {
+        this.chatID = chatID;
     }
 }

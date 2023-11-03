@@ -1,5 +1,7 @@
 package com.example.proyecto_iot.alumno;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -111,8 +113,10 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         });
 
         binding.buttonEditarFoto.setOnClickListener(view -> {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+            //Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            //startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+            Intent galleryIntent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+            openImageLauncher.launch(galleryIntent);
         });
 
         binding.buttonGuardarPerfil.setOnClickListener(view -> {
@@ -120,6 +124,19 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         });
     }
 
+    ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK){
+                    imageUri = result.getData().getData();
+                    binding.imageEdit.setImageURI(imageUri);
+                    binding.buttonGuardarPerfil.setEnabled(true);
+                    nuevaFoto = true;
+                }
+            }
+    );
+
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -134,6 +151,8 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
             }
         }
     }
+
+     */
 
     private boolean inputsValidos() {
         String nombre = binding.inputNombre.getText().toString().trim();

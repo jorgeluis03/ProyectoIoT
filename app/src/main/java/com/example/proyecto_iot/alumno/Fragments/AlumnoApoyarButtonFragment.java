@@ -22,12 +22,9 @@ public class AlumnoApoyarButtonFragment extends Fragment {
         binding = FragmentAlumnoApoyarButtonBinding.inflate(inflater, container, false);
 
         binding.buttonEventoApoyar.setOnClickListener(view -> {
-            AlumnoApoyandoButtonFragment apoyandoFragment = new AlumnoApoyandoButtonFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerViewEventoButtons, apoyandoFragment)
-                    .addToBackStack(null)
-                    .commit();
+            // agregar alumno a lista de apoyos del evento
+            // agregar evento a lista de eventos de alumno
+            // agregar alumno a grupo de cometchat
         });
 
         return binding.getRoot();

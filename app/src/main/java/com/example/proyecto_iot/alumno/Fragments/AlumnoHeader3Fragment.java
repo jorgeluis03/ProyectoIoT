@@ -1,6 +1,5 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,27 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
-import com.example.proyecto_iot.databinding.FragmentAlumnoHeader2Binding;
+import com.example.proyecto_iot.databinding.FragmentAlumnoHeader3Binding;
 
-public class AlumnoHeader2Fragment extends Fragment {
+public class AlumnoHeader3Fragment extends Fragment {
+    private FragmentAlumnoHeader3Binding binding;
 
-    FragmentAlumnoHeader2Binding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAlumnoHeader2Binding.inflate(inflater, container, false);
-
+        binding = FragmentAlumnoHeader3Binding.inflate(inflater, container, false);
         Bundle bundle = getArguments();
         if (bundle != null){
             String header = bundle.getString("header", "nothing");
-            binding.textHeader2.setText(header);
+            binding.textHeader3.setText(header);
         }
 
-        binding.buttonPerfil.setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), AlumnoPerfilActivity.class);
-            startActivity(intent);
+        binding.buttonBack3.setOnClickListener(view -> {
+            getActivity().finish();
         });
+
         return binding.getRoot();
     }
 }

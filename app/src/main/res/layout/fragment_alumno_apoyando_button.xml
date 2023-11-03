@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/buttonAbrirChat"
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -44,10 +44,11 @@
         android:layout_height="45dp"
         android:backgroundTint="#222A3F"
         android:text="@string/evento_apoyando"
+        android:textColor="@color/white"
         android:textSize="12sp"
         app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/white"
-        app:strokeWidth="1dp" />
+        app:strokeWidth=".8dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

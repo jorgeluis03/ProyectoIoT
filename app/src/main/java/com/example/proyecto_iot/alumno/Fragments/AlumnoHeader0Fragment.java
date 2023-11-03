@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.proyecto_iot.alumno.AlumnoBuscarEventoActivity;
 import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
 import com.example.proyecto_iot.databinding.FragmentAlumnoHeader0Binding;
 
@@ -21,6 +22,10 @@ public class AlumnoHeader0Fragment extends Fragment {
         binding = FragmentAlumnoHeader0Binding.inflate(inflater, container, false);
         binding.profileButton.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), AlumnoPerfilActivity.class);
+            startActivity(intent);
+        });
+        binding.searchButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), AlumnoBuscarEventoActivity.class);
             startActivity(intent);
         });
         return binding.getRoot();

@@ -5,12 +5,18 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Entities.Evento;
@@ -38,15 +44,21 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         TextView textActividad = holder.itemView.findViewById(R.id.textActividad);
         TextView textDescripcion = holder.itemView.findViewById(R.id.textDescripcion);
         TextView textFecha = holder.itemView.findViewById(R.id.textFecha);
-        TextView textLugar = holder.itemView.findViewById(R.id.textLugar);
         TextView textHora = holder.itemView.findViewById(R.id.textHora);
+        ImageView imageEvento = holder.itemView.findViewById(R.id.imageEvento);
 
         textTitulo.setText(evento.getTitulo());
         textActividad.setText(evento.getActividad());
         textDescripcion.setText(evento.getDescripcion());
         textFecha.setText(evento.getFecha());
-        textLugar.setText(evento.getLugar().getNombre());
-        textHora.setText(evento.getHora()+" hrs");
+        textHora.setText(evento.getHora());
+
+        String fotoUrl = evento.getFotoUrl();
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
+        Glide.with(getContext())
+                .load(fotoUrl)
+                .apply(requestOptions)
+                .into(imageEvento);
     }
 
     @Override
