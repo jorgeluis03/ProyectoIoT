@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityEditarActividadBinding;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaDelegadosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
@@ -38,9 +39,9 @@ public class EditarActividad extends AppCompatActivity {
     FirebaseFirestore db;
     TextInputLayout nombreAntiguo;
     EditText delegadoAntiguo;
-    List<Usuario> listaAct;
+    List<Alumno> listaAct;
     private static  boolean delegadosCargados = false;
-    Usuario user_delegado;
+    Alumno user_delegado;
     RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class EditarActividad extends AppCompatActivity {
         nombreAntiguo = binding.textFieldNombreActividadAntiguo;
         nombreAntiguo.getEditText().setText(actividadAEditar.getNombre());
         delegadoAntiguo = binding.editTextNombreDelegadoAntiguo;
-        delegadoAntiguo.setText(actividadAEditar.getDelegadoActividad().getNombre()+' '+actividadAEditar.getDelegadoActividad().getApellido());
+        delegadoAntiguo.setText(actividadAEditar.getDelegadoActividad().getNombre()+' '+actividadAEditar.getDelegadoActividad().getApellidos());
 
         delegadoAntiguo.setOnClickListener(view -> {
             showDialog();
@@ -108,7 +109,7 @@ public class EditarActividad extends AppCompatActivity {
         dialog.setContentView(R.layout.buttomsheetlayout_dg);
 
         db = FirebaseFirestore.getInstance();
-        db.collection("usuarios")
+        db.collection("alumnos")
                 .whereEqualTo("estado","activo")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -118,8 +119,8 @@ public class EditarActividad extends AppCompatActivity {
                         listaAct = new ArrayList<>(); // Inicializa la lista
 
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            Usuario usuario = document.toObject(Usuario.class);
-                            listaAct.add(usuario);
+                            Alumno alumno = document.toObject(Alumno.class);
+                            listaAct.add(alumno);
                         }
 
                         ListaDelegadosAdapter adapter = new ListaDelegadosAdapter();
@@ -127,9 +128,9 @@ public class EditarActividad extends AppCompatActivity {
                         adapter.setListaUsuarios(listaAct);
                         adapter.setOnItemClickListener(new ListaDelegadosAdapter.OnItemClickListener() {
                             @Override
-                            public void onItemClick(Usuario usuario) {
-                                user_delegado = usuario;
-                                delegadoAntiguo.setText(usuario.getNombre()+' '+usuario.getApellido()); // Actualiza el EditText con el nombre del usuario seleccionado
+                            public void onItemClick(Alumno alumno) {
+                                user_delegado = alumno;
+                                delegadoAntiguo.setText(alumno.getNombre()+' '+alumno.getApellidos()); // Actualiza el EditText con el nombre del usuario seleccionado
                                 dialog.dismiss(); // Cierra el diálogo después de la selección
 
                             }
@@ -139,7 +140,7 @@ public class EditarActividad extends AppCompatActivity {
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-                        delegadosCargados = true; // Marca las delegados como cargadas
+
 
 
                     }

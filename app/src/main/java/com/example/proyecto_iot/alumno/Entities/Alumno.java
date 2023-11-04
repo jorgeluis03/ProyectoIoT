@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Alumno implements Serializable {
+    private String id;
     private String nombre;
     private String apellidos;
     private String rol; // DelegadoGeneral, DelegadoActividad o Alumno
@@ -16,7 +17,8 @@ public class Alumno implements Serializable {
 
     }
 
-    public Alumno(String nombre, String apellidos, String rol, String codigo, String correo, String fotoUrl, String tipo, String estado) {
+    public Alumno(String id, String nombre, String apellidos, String rol, String codigo, String correo, String fotoUrl, String tipo, String estado) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.rol = rol;
@@ -91,4 +93,11 @@ public class Alumno implements Serializable {
         this.estado = estado;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

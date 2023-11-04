@@ -3,6 +3,7 @@ package com.example.proyecto_iot.delegadoGeneral.fragmentos;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
@@ -10,6 +11,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -73,12 +76,17 @@ public class Dg_alumnosFragment extends Fragment {
             if (position==1){
                 return new Dg_alumnos_pendFragment();
             }
+            if (position==2){
+                return new Dg_alumnos_baneadosFragment();
+            }
             return new Dg_alumnos_registrFragment();
         }
 
         @Override
         public int getItemCount() {
-            return 2;
+            return 3;
         }
     }
+
+
 }

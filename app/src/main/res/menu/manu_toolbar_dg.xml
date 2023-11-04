@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
 
+    <item
+        android:id="@+id/buscar"
+        android:title="Buscar"
+        android:icon="@drawable/ic_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"/>
 
 
 </menu>

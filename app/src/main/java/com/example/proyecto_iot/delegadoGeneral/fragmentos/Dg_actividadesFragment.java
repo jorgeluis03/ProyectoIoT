@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.databinding.FragmentDgActividadesBinding;
 import com.example.proyecto_iot.delegadoGeneral.CrearActividadActivity;
@@ -97,7 +98,7 @@ public class Dg_actividadesFragment extends Fragment {
             Intent resultData = result.getData();
             if (resultData != null) {
                 Actividades actividad = (Actividades) resultData.getSerializableExtra("nombreActividad");
-                Usuario usuarioDelegado = (Usuario) resultData.getSerializableExtra("delegado");
+                Alumno usuarioDelegado = (Alumno) resultData.getSerializableExtra("delegado");
                 actividad.setDelegadoActividad(usuarioDelegado);
 
 
@@ -145,7 +146,7 @@ public class Dg_actividadesFragment extends Fragment {
     private void lunchEditar(Intent resultData){
         if (resultData != null) {
             Actividades actividad = (Actividades) resultData.getSerializableExtra("nombreActividad");
-            Usuario usuarioDelegado = (Usuario) resultData.getSerializableExtra("delegado");
+            Alumno usuarioDelegado = (Alumno) resultData.getSerializableExtra("delegado");
             actividad.setDelegadoActividad(usuarioDelegado);
             Log.d("msg-test", "luncher acti: " + actividad.getNombre()+" id: "+actividad.getId());
             Log.d("msg-test", "luncher dele: " + actividad.getDelegadoActividad().getNombre());
@@ -182,6 +183,9 @@ public class Dg_actividadesFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        listenerRegistration.remove();
+        if (listenerRegistration!=null){
+            listenerRegistration.remove();
+        }
+
     }
 }

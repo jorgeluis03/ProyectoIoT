@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cometchat.chat.core.AppSettings;
 import com.cometchat.chat.core.CometChat;
@@ -25,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -116,7 +119,13 @@ public class LoginActivity extends AppCompatActivity {
                         } else if (alumno.getEstado().equals("pendiente")) {
                             Log.d("msg-test", "alumno con estado pendiente");
                         }
-                        // considerar baneado tambien :u
+                        else if (alumno.getEstado().equals("inactivo")) {
+                            Toast.makeText(LoginActivity.this, "El usuario aún no ha sido aceptado por el administrador de la aplicación.", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (alumno.getEstado().equals("baneado")) {
+                            Toast.makeText(LoginActivity.this, "El usuario ha sido baneado por el administrador de la aplicacion.", Toast.LENGTH_SHORT).show();
+                        }
+
                     } else {
                         Log.d("msg-test", "error: usuario no encontrado");
                     }
