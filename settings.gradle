@@ -13,6 +13,7 @@ dependencyResolutionManagement {
         maven {
             url "https://dl.cloudsmith.io/public/cometchat/cometchat/maven/"
         }
+        maven { url "https://jitpack.io" }
     }
 }
 

@@ -3,21 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/azul_background">
 
     <!-- Barra de herramientas o título -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarConfig"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:layout_height="56dp"
+        android:background="@color/azul_background"
+        app:title="Configuración"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Configuracion"
-        ></androidx.appcompat.widget.Toolbar>
+        app:navigationIcon="?android:attr/homeAsUpIndicator"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        app:dividerColor="#3D3D3D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarConfig" />
 
     <!-- Contenido de configuración -->
     <ScrollView
@@ -40,13 +51,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Recibir notificaciones" />
+                android:text="Recibir notificaciones"
+                android:textColor="@color/white"/>
 
             <!-- Opción de configuración 2 (por ejemplo, idioma) -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Idioma" />
+                android:text="Idioma"
+                android:textColor="@color/white"/>
 
             <Spinner
                 android:id="@+id/spinnerLanguage"
@@ -58,7 +71,8 @@
                 android:id="@+id/buttonAccountSettings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ajustes de cuenta" />
+                android:text="Ajustes de cuenta"
+                android:textColor="@color/white"/>
 
             <!-- Más opciones de configuración aquí -->
 

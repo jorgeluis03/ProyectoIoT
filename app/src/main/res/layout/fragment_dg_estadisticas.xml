@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".delegadoGeneral.fragmentos.Dg_estadisticasFragment"
-    android:background="#EEEE"
+    android:background="@color/azul_background"
     android:padding="10dp"
     android:orientation="vertical"
     >
