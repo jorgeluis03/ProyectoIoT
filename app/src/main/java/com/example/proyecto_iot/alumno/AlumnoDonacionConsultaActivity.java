@@ -110,7 +110,7 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
         Button recogoKitButton = findViewById(R.id.button);
         final AtomicReference<GeoPoint> lugarRef = new AtomicReference<>(); // Variable final tipo AtomicReference
 
-        if ("egresado".equals(rolAlumnoFromDonacion)) {
+        if (rolAlumnoFromDonacion != null && rolAlumnoFromDonacion.equalsIgnoreCase("egresado")) {
             Log.d("FirebaseData", "Condición: Rol es 'egresado'");
             if(Double.parseDouble(donacionesTotales) > 100.00) {
                 Log.d("FirebaseData", "Condición: Donaciones totales > 100.00");
