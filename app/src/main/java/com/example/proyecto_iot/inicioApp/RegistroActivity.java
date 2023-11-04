@@ -57,14 +57,14 @@ public class RegistroActivity extends AppCompatActivity {
 
 
         progressBar  = binding.progressBar;
-        progressBar.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.GONE);
 
         binding.backButton.setOnClickListener(view -> {
             onBackPressed();
         });
 
         sendButton.setOnClickListener(view -> {
-            setInPogressBar(true);
+            //setInPogressBar(true);
             if (validFields()){
 
                 // crear usuario en firebase authentication
@@ -73,7 +73,7 @@ public class RegistroActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
-                                    setInPogressBar(false);
+                                    //setInPogressBar(false);
                                     Log.d("msg-test", "usuario creado en authentication");
                                     // crear usuario en firestore
                                     crearUsuarioFirestore();
@@ -86,7 +86,7 @@ public class RegistroActivity extends AppCompatActivity {
             }
         });
     }
-    public void setInPogressBar(boolean inProgress){
+    /*public void setInPogressBar(boolean inProgress){
         if(inProgress){
             progressBar.setVisibility(View.VISIBLE);
             sendButton.setVisibility(View.GONE);
@@ -96,7 +96,7 @@ public class RegistroActivity extends AppCompatActivity {
             sendButton.setVisibility(View.VISIBLE);
             return;
         }
-    }
+    }*/
 
     boolean validFields(){
         name = binding.editNameSign.getEditText().getText().toString();
