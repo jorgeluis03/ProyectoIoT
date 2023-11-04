@@ -14,11 +14,6 @@
         android:title="Alumnos"
         />
 
-    <item
-        android:id="@+id/dg_notificacionesFragment"
-        android:enabled="true"
-        android:icon="@drawable/icon_bell_dark"
-        android:title="Notificaciones" />
 
     <item
         android:id="@+id/dg_estadisticasFragment"

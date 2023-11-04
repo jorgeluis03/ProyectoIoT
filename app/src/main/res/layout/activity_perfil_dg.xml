@@ -43,14 +43,13 @@
         app:layout_constraintTop_toBottomOf="@+id/divider">
 
         <ImageView
-            android:id="@+id/imageViewPerfil"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_perfil_user"
-             />
+            android:background="@drawable/circular_bg"
+            android:src="@drawable/icon_perfil_user"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="40dp"
+            android:id="@+id/imageViewPerfildg"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textFieldNombrePerfil"
@@ -135,6 +134,11 @@
                 android:textColor="@color/letra_clara" />
 
         </com.google.android.material.textfield.TextInputLayout>
+        <ProgressBar
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/profile_progress_bar"/>
 
 
     </LinearLayout>

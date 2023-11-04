@@ -8,10 +8,12 @@
     android:background="@color/azul_background">
     
     <ImageView
+        android:id="@+id/imgPerfilDrawer"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:src="@drawable/icon_perfil_user"/>
     <TextView
+        android:id="@+id/textViewUsernameDrawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jorge Luis Dominguez Chavez"

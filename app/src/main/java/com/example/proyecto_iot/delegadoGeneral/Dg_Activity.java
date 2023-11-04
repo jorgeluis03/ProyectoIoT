@@ -12,14 +12,19 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityDgBinding;
+import com.example.proyecto_iot.delegadoGeneral.utils.AndroidUtilDg;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -39,6 +44,10 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
     NavController navController;
     FirebaseAuth auth = FirebaseAuth.getInstance(); // autenticacion
     FirebaseFirestore db;
+
+    ImageView imgPerfilDrawer;
+    TextView usernamePerfilDrawer;
+    Alumno usuarioActual;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +59,9 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         //================================
 
         drawerLayout = binding.drawerLayoutDg;
+        imgPerfilDrawer = drawerLayout.findViewById(R.id.imgPerfilDrawer);
+        usernamePerfilDrawer = drawerLayout.findViewById(R.id.textViewUsernameDrawer);
+
         NavigationView navigationView = binding.navView;
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -58,26 +70,7 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        FirebaseUser currentUser = auth.getCurrentUser();
-
-        if (currentUser!=null){
-            String id = currentUser.getUid();
-            Log.d("msg-test",id);
-
-            db= FirebaseFirestore.getInstance();
-            db.collection("alumnos")
-                    .document(id)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        DocumentSnapshot result = task.getResult();
-                        Alumno alumno = result.toObject(Alumno.class);
-                        Log.d("msg-test","nombre logeado: "+alumno.getNombre()+' '+alumno.getApellidos());
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.d("msg-test","Algo pasoo");
-                    });
-        }
-
+        //getDatosUsuario();
 
         buttomnavigationDg = binding.buttomnavigationDg;
         //Cargar el navigationComponent (navHost) en el bottomnavigation
@@ -86,6 +79,29 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         NavigationUI.setupWithNavController(buttomnavigationDg,navController);
         //===============================================================
 
+    }
+    public void getDatosUsuario(){
+
+        //obtener la foto mia de FirebaseStorage (Descargar archivos)
+        /*FirebaseUtilDg.getPerfilUsuarioActualPicStorageRef().getDownloadUrl()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Uri uri = task.getResult();
+                        //carga el uri en la ImageView
+                        AndroidUtilDg.setPerfilImg(Dg_Activity.this,uri,imgPerfilDrawer);
+                    }
+                });*/
+
+        FirebaseUtilDg.getUsuarioActualDetalles().get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Log.d("msg-test","task success");
+                usuarioActual = task.getResult().toObject(Alumno.class);
+                usernamePerfilDrawer.setText(usuarioActual.getNombre()+' '+usuarioActual.getApellidos());
+                Log.d("msg-test",usuarioActual.getNombre()+' '+usuarioActual.getApellidos());
+            }else {
+                Log.d("msg-test","task error");
+            }
+        });
     }
     public void setToolbarContent(String title) {
         getSupportActionBar().setTitle(title);
