@@ -13,6 +13,7 @@ public class Alumno implements Serializable {
     private String fotoUrl;
     private String tipo; // Alumno o Egresado
     private String estado; // activo, inactivo (considerando que se puede eliminar cuenta), pendiente, baneado
+    private String fcmToken;
     public Alumno(){
 
     }
@@ -99,5 +100,13 @@ public class Alumno implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

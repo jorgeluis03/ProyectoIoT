@@ -35,6 +35,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ktx.Firebase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class Dg_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -70,7 +71,7 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        //getDatosUsuario();
+
 
         buttomnavigationDg = binding.buttomnavigationDg;
         //Cargar el navigationComponent (navHost) en el bottomnavigation
@@ -79,27 +80,18 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         NavigationUI.setupWithNavController(buttomnavigationDg,navController);
         //===============================================================
 
+
+        /*Siempre que iniciamos sesion llegarmos a la actividad principal
+        y aqui se va a generar el token para las notificaciones*/
+        getFCMToken();
+
     }
-    public void getDatosUsuario(){
-
-        //obtener la foto mia de FirebaseStorage (Descargar archivos)
-        /*FirebaseUtilDg.getPerfilUsuarioActualPicStorageRef().getDownloadUrl()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                        Uri uri = task.getResult();
-                        //carga el uri en la ImageView
-                        AndroidUtilDg.setPerfilImg(Dg_Activity.this,uri,imgPerfilDrawer);
-                    }
-                });*/
-
-        FirebaseUtilDg.getUsuarioActualDetalles().get().addOnCompleteListener(task -> {
+    public void getFCMToken(){
+        //recupero el token
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                Log.d("msg-test","task success");
-                usuarioActual = task.getResult().toObject(Alumno.class);
-                usernamePerfilDrawer.setText(usuarioActual.getNombre()+' '+usuarioActual.getApellidos());
-                Log.d("msg-test",usuarioActual.getNombre()+' '+usuarioActual.getApellidos());
-            }else {
-                Log.d("msg-test","task error");
+                String token = task.getResult();
+                FirebaseUtilDg.getUsuarioActualDetalles().update("fcmToken", token);
             }
         });
     }
@@ -152,11 +144,21 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         }
         if(id==R.id.salir_dg){
             //Logica para salir
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(Dg_Activity.this, IngresarActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            //Borrar el token al cerrar sesion
+            FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
+                if(task.isSuccessful()){
+
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(Dg_Activity.this, IngresarActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+
+                }
+            });
+
+
+
 
         }
         if(id==R.id.perfil_dg){
