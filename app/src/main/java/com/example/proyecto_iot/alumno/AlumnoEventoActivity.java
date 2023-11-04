@@ -177,6 +177,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Foto foto = document.toObject(Foto.class);
                             fotoList.add(foto);
+                            Log.d("msg-test", "foto: "+foto.getDescripcion());
                         }
                         adapter.notifyDataSetChanged();
                     } else {
@@ -188,13 +189,13 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         adapter.setFotoList(fotoList);
 
         binding.rvFotos.setAdapter(adapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AlumnoEventoActivity.this){
+        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AlumnoEventoActivity.this){
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
-        };
-        binding.rvFotos.setLayoutManager(linearLayoutManager);
+        };*/
+        binding.rvFotos.setLayoutManager(new LinearLayoutManager(AlumnoEventoActivity.this));
     }
 
     private void abrirDialogSubirFoto() {
