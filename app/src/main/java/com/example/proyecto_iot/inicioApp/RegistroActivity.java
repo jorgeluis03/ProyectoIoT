@@ -129,7 +129,7 @@ public class RegistroActivity extends AppCompatActivity {
                     jsonObject.put("to",usuarioDg.getFcmToken());
 
 
-                    //callApi(jsonObject);
+                    callApi(jsonObject);
 
 
                 }catch (Exception e){
