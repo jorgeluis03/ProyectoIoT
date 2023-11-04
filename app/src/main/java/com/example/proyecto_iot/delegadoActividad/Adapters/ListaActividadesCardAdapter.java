@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
+import com.example.proyecto_iot.delegadoActividad.DaGestionEventosActivity;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 
 import java.util.List;
@@ -64,13 +66,12 @@ public class ListaActividadesCardAdapter extends RecyclerView.Adapter<ListaActiv
     }
 
     public class ActividadCardViewHolder extends RecyclerView.ViewHolder{
-
         Actividades actividad;
         public ActividadCardViewHolder(@NonNull View itemView) {
             super(itemView);
-            ConstraintLayout constraintLayout = itemView.findViewById(R.id.actividadCard);
-            constraintLayout.setOnClickListener(view -> {
-                Intent intent = new Intent(itemView.getContext(), AlumnoEventoActivity.class);
+            Button button = itemView.findViewById(R.id.buttonCard);
+            button.setOnClickListener(view -> {
+                Intent intent = new Intent(itemView.getContext(), DaGestionEventosActivity.class);
                 intent.putExtra("actividadCard", actividad);
                 itemView.getContext().startActivity(intent);
             });
