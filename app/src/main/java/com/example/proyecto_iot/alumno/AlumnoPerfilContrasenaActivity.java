@@ -41,7 +41,7 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
 
         alumno = (Alumno) getIntent().getSerializableExtra("alumno");
 
-        binding.inputContrasena1.addTextChangedListener(new TextWatcher() {
+        binding.inputContrasena1.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -62,7 +62,7 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
             }
         });
 
-        binding.inputContrasena2.addTextChangedListener(new TextWatcher() {
+        binding.inputContrasena2.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -83,7 +83,7 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
             }
         });
 
-        binding.inputContrasena3.addTextChangedListener(new TextWatcher() {
+        binding.inputContrasena3.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -105,9 +105,9 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
         });
 
         binding.buttonGuardarContrasena.setOnClickListener(view -> {
-            String contrasena1 = binding.inputContrasena1.getText().toString().trim();
-            String contrasena2 = binding.inputContrasena2.getText().toString().trim();
-            String contrasena3 = binding.inputContrasena3.getText().toString().trim();
+            String contrasena1 = binding.inputContrasena1.getEditText().getText().toString().trim();
+            String contrasena2 = binding.inputContrasena2.getEditText().getText().toString().trim();
+            String contrasena3 = binding.inputContrasena3.getEditText().getText().toString().trim();
             Log.d("msg-test", "pass1: "+contrasena1+" | pass2: "+contrasena2+" | pass3: "+contrasena3);
             guardarContrasena();
         });
@@ -116,9 +116,9 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
     void guardarContrasena() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        String contrasena1 = binding.inputContrasena1.getText().toString().trim();
-        String contrasena2 = binding.inputContrasena2.getText().toString().trim();
-        String contrasena3 = binding.inputContrasena3.getText().toString().trim();
+        String contrasena1 = binding.inputContrasena1.getEditText().getText().toString().trim();
+        String contrasena2 = binding.inputContrasena2.getEditText().getText().toString().trim();
+        String contrasena3 = binding.inputContrasena3.getEditText().getText().toString().trim();
 
         //reautenticando para validar contraseña actual
         AuthCredential credential = EmailAuthProvider.getCredential(alumno.getCodigo() + "@app.com", contrasena1);
@@ -151,9 +151,9 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
     }
 
     boolean inputsValidos() {
-        String contrasena1 = binding.inputContrasena1.getText().toString().trim();
-        String contrasena2 = binding.inputContrasena2.getText().toString().trim();
-        String contrasena3 = binding.inputContrasena3.getText().toString().trim();
+        String contrasena1 = binding.inputContrasena1.getEditText().getText().toString().trim();
+        String contrasena2 = binding.inputContrasena2.getEditText().getText().toString().trim();
+        String contrasena3 = binding.inputContrasena3.getEditText().getText().toString().trim();
 
         return !TextUtils.isEmpty(contrasena1) && !TextUtils.isEmpty(contrasena2) && !TextUtils.isEmpty(contrasena3);
     }
