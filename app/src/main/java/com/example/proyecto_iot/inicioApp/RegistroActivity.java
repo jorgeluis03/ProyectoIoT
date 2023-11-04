@@ -74,7 +74,6 @@ public class RegistroActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
-                                    setInPogressBar(false);
                                     Log.d("msg-test", "usuario creado en authentication");
                                     // crear usuario en firestore
                                     crearUsuarioFirestore();
@@ -120,8 +119,7 @@ public class RegistroActivity extends AppCompatActivity {
                     Log.d("msg-test", "usuario guardado en firestore");
                     //enviar la notificacion al delegado general
                     enviarNotificacion();
-
-
+                    setInPogressBar(false);
 
                     Intent intent = new Intent(RegistroActivity.this, ConfirmarregistroActivity.class);
                     startActivity(intent);
