@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".alumno.MapaEventoActivityAlumno"
+            android:exported="false" />
+        <activity
             android:name=".alumno.Delegado_select_map_activity"
             android:exported="false" />
         <activity
