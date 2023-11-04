@@ -114,7 +114,9 @@ public class LoginActivity extends AppCompatActivity {
 
                             guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
                             // autenticar en cometchat
-                            inicializarCometChat();
+                            if (!alumno.getRol().equals("Delegado General")){
+                                inicializarCometChat();
+                            }
 
                         } else if (alumno.getEstado().equals("pendiente")) {
                             Log.d("msg-test", "alumno con estado pendiente");
