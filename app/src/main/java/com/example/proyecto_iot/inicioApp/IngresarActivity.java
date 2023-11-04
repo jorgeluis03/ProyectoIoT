@@ -130,7 +130,7 @@ public class IngresarActivity extends AppCompatActivity {
         boolean valido = false;
         switch (rol) {
             case "Alumno":
-                if (alumno.getActividadesId() == null && alumno.getActividadesId().size()>0){
+                if (alumno.getActividadesId() == null){
                     // caso no actividades
                     intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
                     break;
