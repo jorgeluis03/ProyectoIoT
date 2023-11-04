@@ -133,6 +133,9 @@ public class LoginActivity extends AppCompatActivity {
                             if (!alumno.getRol().equals("Delegado General")){
                                 inicializarCometChat();
                             }
+                            else{
+                                redirigirSegunRol(alumno);
+                            }
 
                         } else if (alumno.getEstado().equals("pendiente")) {
                             Log.d("msg-test", "alumno con estado pendiente");
