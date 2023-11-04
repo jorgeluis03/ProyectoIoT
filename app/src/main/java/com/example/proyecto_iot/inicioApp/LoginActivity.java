@@ -20,6 +20,7 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
 import com.example.proyecto_iot.delegadoActividad.DaInicioActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
+import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -40,6 +41,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -126,10 +128,9 @@ public class LoginActivity extends AppCompatActivity {
                         if (alumno.getEstado().equals("activo")){
 
                             guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
-                            redirigirSegunRol(alumno);
 
                             // autenticar en cometchat
-                            //inicializarCometChat();
+                            inicializarCometChat();
 
                         } else if (alumno.getEstado().equals("pendiente")) {
                             Log.d("msg-test", "alumno con estado pendiente");
@@ -206,13 +207,25 @@ public class LoginActivity extends AppCompatActivity {
     void redirigirSegunRol(Alumno alumno) {
         Intent intent = null;
         String rol = alumno.getRol();
+        ArrayList<Actividades> actividades = alumno.getActividadesId();
+        boolean valido = false;
         switch (rol) {
             case "Alumno":
-                if (alumno.getActividadesId() != null && alumno.getActividadesId().size()>0){
-                    // caso delegadoActividad
-                    intent = new Intent(LoginActivity.this, DaInicioActivity.class);
+                if (actividades == null){
+                    // caso no actividades
+                    intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                     break;
                 }else {
+                    for(Actividades a: actividades){
+                        if (a.getEstado().equals("abierto")){
+                            valido = true;
+                        }
+                    }
+                    if (valido){
+                        // caso delegadoActividad
+                        intent = new Intent(LoginActivity.this, DaInicioActivity.class);
+                        break;
+                    }
                     // caso no actividades
                     intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
                     break;

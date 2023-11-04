@@ -16,6 +16,7 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityIngresarBinding;
 import com.example.proyecto_iot.delegadoActividad.DaInicioActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
+import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
@@ -24,6 +25,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class IngresarActivity extends AppCompatActivity {
 
@@ -59,8 +61,8 @@ public class IngresarActivity extends AppCompatActivity {
         if (currentUser != null) {
 
             //logueo en cometchat en caso haya caducado
-            //userUid = currentUser.getUid();
-            //verficarLogueoCometChat();
+            userUid = currentUser.getUid();
+            verficarLogueoCometChat();
 
             try (FileInputStream fileInputStream = openFileInput("userData");
                  FileReader fileReader = new FileReader(fileInputStream.getFD());
@@ -124,13 +126,26 @@ public class IngresarActivity extends AppCompatActivity {
     void redirigirSegunRol(Alumno alumno) {
         Intent intent = null;
         String rol = alumno.getRol();
+        ArrayList<Actividades> actividades = alumno.getActividadesId();
+        boolean valido = false;
         switch (rol) {
             case "Alumno":
-                if (alumno.getActividadesId() != null && alumno.getActividadesId().size()>0){
-                    // caso delegadoActividad
-                    intent = new Intent(IngresarActivity.this, DaInicioActivity.class);
+                if (alumno.getActividadesId() == null && alumno.getActividadesId().size()>0){
+                    // caso no actividades
+                    intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
                     break;
+
                 }else {
+                    for (Actividades a: actividades){
+                        if (a.getEstado().equals("abierto")){
+                            valido = true;
+                        }
+                    }
+                    if (valido){
+                        // caso delegadoActividad
+                        intent = new Intent(IngresarActivity.this, DaInicioActivity.class);
+                        break;
+                    }
                     // caso no actividades
                     intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
                     break;

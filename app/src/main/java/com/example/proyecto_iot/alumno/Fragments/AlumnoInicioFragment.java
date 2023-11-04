@@ -14,6 +14,7 @@ import com.example.proyecto_iot.alumno.AlumnoInicioViewPagerAdapter;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentAlumnoInicioBinding;
 import com.example.proyecto_iot.delegadoActividad.DaInicioViewPagerAdapter;
+import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AlumnoInicioFragment extends Fragment {
 
@@ -76,6 +78,7 @@ public class AlumnoInicioFragment extends Fragment {
     }
     public boolean ifDelegadoActividad(){
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        boolean valido = false;
         if (currentUser != null) {
             try (FileInputStream fileInputStream = this.getActivity().openFileInput("userData");
                  FileReader fileReader = new FileReader(fileInputStream.getFD());
@@ -84,13 +87,22 @@ public class AlumnoInicioFragment extends Fragment {
                 String jsonData = bufferedReader.readLine();
                 Gson gson = new Gson();
                 alumno = gson.fromJson(jsonData, Alumno.class);
+                ArrayList<Actividades> actividades = alumno.getActividadesId();
+                if (actividades==null){
+                    valido = false;
+                }else {
+                    for (Actividades a: actividades){
+                        if (a.getEstado().equals("abierto")){
+                            valido = true;
+                        }
+                    }
+                }
             }
             catch (IOException e){
                 e.printStackTrace();
             }
-            return alumno.getActividadesId()!=null && alumno.getActividadesId().size()>0;
         }
-        return false;
+        return valido;
     }
 }
 
