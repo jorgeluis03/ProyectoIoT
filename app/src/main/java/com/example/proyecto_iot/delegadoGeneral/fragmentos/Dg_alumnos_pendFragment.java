@@ -1,7 +1,12 @@
 package com.example.proyecto_iot.delegadoGeneral.fragmentos;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -34,24 +39,29 @@ public class Dg_alumnos_pendFragment extends Fragment {
     ListenerRegistration listenerRegistration;
     private List<Alumno> listaUserPendi;
     FirebaseFirestore db;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentDgAlumnosPendBinding.inflate(inflater,container,false);
+        binding = FragmentDgAlumnosPendBinding.inflate(inflater, container, false);
 
         db = FirebaseFirestore.getInstance(); //obtengo la isntancia
 
         //Escuchar en tiempo real los cambios
         listenerRegistration = db.collection("alumnos")
-                .whereEqualTo("estado","inactivo")
-                .addSnapshotListener((snapshot, error) ->{
+                .whereEqualTo("estado", "inactivo")
+                .addSnapshotListener((snapshot, error) -> {
                     if (error != null) {
                         Log.w("msg-test", "Listen failed.", error);
                         return;
                     }
+                    //notificacion
+
+                    
                     listaUserPendi = new ArrayList<>();
 
-                    for (QueryDocumentSnapshot documentSnapshot: snapshot){
+                    for (QueryDocumentSnapshot documentSnapshot : snapshot) {
                         Alumno alumno = documentSnapshot.toObject(Alumno.class);
                         listaUserPendi.add(alumno);
                     }
@@ -68,23 +78,16 @@ public class Dg_alumnos_pendFragment extends Fragment {
                 });
 
 
-
-
-
-
         return binding.getRoot();
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(listenerRegistration!=null){
+        if (listenerRegistration != null) {
             listenerRegistration.remove();
         }
     }
+
+
 }

@@ -13,10 +13,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityDgBinding;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,6 +26,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.ktx.Firebase;
 
 
 public class Dg_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -31,7 +37,8 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
     ActivityDgBinding binding;
     BottomNavigationView buttomnavigationDg;
     NavController navController;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance(); // autenticacion
+    FirebaseAuth auth = FirebaseAuth.getInstance(); // autenticacion
+    FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +58,25 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        FirebaseUser currentUser = auth.getCurrentUser();
 
+        if (currentUser!=null){
+            String id = currentUser.getUid();
+            Log.d("msg-test",id);
 
-
+            db= FirebaseFirestore.getInstance();
+            db.collection("alumnos")
+                    .document(id)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        DocumentSnapshot result = task.getResult();
+                        Alumno alumno = result.toObject(Alumno.class);
+                        Log.d("msg-test","nombre logeado: "+alumno.getNombre()+' '+alumno.getApellidos());
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.d("msg-test","Algo pasoo");
+                    });
+        }
 
 
         buttomnavigationDg = binding.buttomnavigationDg;

@@ -1,10 +1,19 @@
 package com.example.proyecto_iot.inicioApp;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static android.Manifest.permission.POST_NOTIFICATIONS;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityIngresarBinding;
@@ -23,11 +32,13 @@ public class IngresarActivity extends AppCompatActivity {
     private ActivityIngresarBinding binding;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();;
     Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityIngresarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         binding.buttonRegistrarme.setOnClickListener(view -> {
             intent = new Intent(IngresarActivity.this, RegistroActivity.class);
@@ -81,4 +92,7 @@ public class IngresarActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
+
 }

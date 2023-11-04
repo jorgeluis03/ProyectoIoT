@@ -2,6 +2,7 @@ package com.example.proyecto_iot.inicioApp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class RegistroActivity extends AppCompatActivity {
     private String pass;
     private String type;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    String CHANNEL_ID = "canalDelegadoGeneral";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,9 @@ public class RegistroActivity extends AppCompatActivity {
                 .addOnSuccessListener(unused -> {
                     Log.d("msg-test", "usuario guardado en firestore");
                     // si se puede enviar correo xd
+                    //Notificacion
+
+
                     Intent intent = new Intent(RegistroActivity.this, ConfirmarregistroActivity.class);
                     startActivity(intent);
                 })
@@ -87,4 +92,5 @@ public class RegistroActivity extends AppCompatActivity {
                     e.printStackTrace();
                 });
     }
+
 }
