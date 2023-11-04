@@ -14,7 +14,7 @@ import com.example.proyecto_iot.delegadoActividad.Entities.Actividad;
 
 import java.util.List;
 
-public class ListaActividadesAdpater extends RecyclerView.Adapter<ListaActividadesAdpater.ActividadViewHolder> {
+public class ListaEventosActividadesAdpater extends RecyclerView.Adapter<ListaEventosActividadesAdpater.ActividadViewHolder> {
 
     private List<Actividad> actividadList;
 
