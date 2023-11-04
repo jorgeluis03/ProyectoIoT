@@ -25,18 +25,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonEdit2"
+        android:id="@+id/buttonJugador"
         style="?attr/materialIconButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:icon="@drawable/icon_pencil"
+        app:icon="@drawable/icon_running_outline"
         app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDelete2"
         app:layout_constraintEnd_toStartOf="@+id/buttonDelete2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/buttonDelete2" />
+
+    <Button
+        android:id="@+id/buttonBarra"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/icon_barra_filled"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/materialSwitch"
+        app:layout_constraintEnd_toStartOf="@+id/materialSwitch"
+        app:layout_constraintTop_toTopOf="@+id/materialSwitch" />
 
     <TextView
-        android:id="@+id/textHoraAct2"
+        android:id="@+id/textTipoAlumno"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -46,21 +57,10 @@
         android:textColor="#B9B9B9"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonParticipantes2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonBarra"
         app:layout_constraintStart_toStartOf="@+id/nombreApoyo"
         app:layout_constraintTop_toBottomOf="@+id/nombreApoyo"
         app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/buttonParticipantes2"
-        style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/icon_user"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonEdit2"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nombreApoyo"
@@ -72,9 +72,19 @@
         android:text="TextView"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonParticipantes2"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/buttonBarra"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/materialSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:checked="false"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDelete2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonJugador"
+        app:layout_constraintTop_toTopOf="@+id/buttonDelete2"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
