@@ -26,7 +26,9 @@ import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityIngresarBinding;
+import com.example.proyecto_iot.delegadoActividad.DaInicioActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
+import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
@@ -35,11 +37,12 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class IngresarActivity extends AppCompatActivity {
 
     private ActivityIngresarBinding binding;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Intent intent;
     String userUid;
 
@@ -83,7 +86,7 @@ public class IngresarActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 Alumno alumnoAutenticado = gson.fromJson(jsonData, Alumno.class);
 
-                redirigirSegunRol(alumnoAutenticado.getRol());
+                redirigirSegunRol(alumnoAutenticado);
             }
             catch (IOException e){
                 e.printStackTrace();
@@ -134,15 +137,33 @@ public class IngresarActivity extends AppCompatActivity {
         });
     }
 
-    void redirigirSegunRol(String rol) {
+    void redirigirSegunRol(Alumno alumno) {
         Intent intent = null;
+        String rol = alumno.getRol();
+        ArrayList<Actividades> actividades = alumno.getActividadesId();
+        boolean valido = false;
         switch (rol) {
             case "Alumno":
-                intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
-                break;
-            case "Delegado Actividad":
-                intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
-                break;
+                if (alumno.getActividadesId() == null){
+                    // caso no actividades
+                    intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
+                    break;
+
+                }else {
+                    for (Actividades a: actividades){
+                        if (a.getEstado().equals("abierto")){
+                            valido = true;
+                        }
+                    }
+                    if (valido){
+                        // caso delegadoActividad
+                        intent = new Intent(IngresarActivity.this, DaInicioActivity.class);
+                        break;
+                    }
+                    // caso no actividades
+                    intent = new Intent(IngresarActivity.this, AlumnoInicioActivity.class);
+                    break;
+                }
             case "Delegado General":
                 intent = new Intent(IngresarActivity.this, Dg_Activity.class);
                 break;

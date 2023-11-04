@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,7 +25,6 @@ import android.text.style.AbsoluteSizeSpan;
 
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Entities.Donacion;
 import com.example.proyecto_iot.alumno.Entities.KitRecojo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

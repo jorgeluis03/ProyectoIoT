@@ -37,6 +37,7 @@
 
     <!-- EVENTO -->
     <string name="evento_apoyar">Apoyar</string>
+    <string name="evento_crear">Crear evento</string>
     <string name="evento_apoyando">Apoyando</string>
     <string name="evento_notificaciones">Notificaciones</string>
     <string name="evento_chat">Chat</string>
