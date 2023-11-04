@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
@@ -106,7 +107,39 @@ public class RegistroActivity extends AppCompatActivity {
         pass = binding.editPasswSign.getEditText().getText().toString(); // validar que contraseña tenga al menos 6 caracteres
         type = binding.userTypeSpinner.getEditText().getText().toString();
 
-        return !TextUtils.isEmpty(name) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(code) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(type);
+        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(code) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(type)){
+            return true;
+        }else {
+            if(name.isEmpty()){
+                binding.editNameSign.setError("campo vacio");
+            }
+
+            if (lastName.isEmpty()) {
+                binding.editLastnameSign.setError("campo vacio");
+            }
+            if (code.isEmpty()){
+                binding.editCodeSign.setError("campo vacio");
+
+            }
+            if(email.isEmpty()){
+                binding.editEmailSign.setError("campo vacio");
+
+            }
+            if (pass.isEmpty()) {
+                binding.editPasswSign.setError("campo vacio");
+
+            }
+            if (type.isEmpty()){
+                binding.userTypeSpinner.setError("campo vacio");
+
+            }
+
+            setInPogressBar(false);
+            Toast.makeText(this,"Complete todos los campos",Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+
     }
 
     void crearUsuarioFirestore(){
