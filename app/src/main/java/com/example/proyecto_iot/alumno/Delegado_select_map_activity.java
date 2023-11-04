@@ -11,10 +11,10 @@ import android.text.InputType;
 import android.util.Log;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.proyecto_iot.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,6 +25,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Delegado_select_map_activity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap googleMap;
@@ -57,7 +66,6 @@ public class Delegado_select_map_activity extends AppCompatActivity implements O
 
         // Solicitar permiso de ubicación
         requestLocationPermission();
-
         // Habilitar la capa de ubicación si se tiene permiso
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             googleMap.setMyLocationEnabled(true);
@@ -117,7 +125,6 @@ public class Delegado_select_map_activity extends AppCompatActivity implements O
     // Método para mostrar un cuadro de diálogo para ingresar el nombre del lugar
     // Cambia el método showInputDialog para incluir las coordenadas al hacer clic en "Enviar"
     private void showInputDialog(final LatLng latLng) {
-        Log.d("MapaDelegadoActividad", "Mostrando cuadro de diálogo para ingresar nombre del lugar");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Indique el nombre de este lugar:");
 
@@ -129,19 +136,49 @@ public class Delegado_select_map_activity extends AppCompatActivity implements O
         builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String lugarNombre = input.getText().toString();
+                final String lugarNombre = input.getText().toString();
+                // Crear una referencia a la colección "lugares"
+                CollectionReference lugaresRef = FirebaseFirestore.getInstance().collection("lugares");
+                // Crear un documento con un nombre específico basado en el nombre del lugar
+                DocumentReference lugarDocumento = lugaresRef.document(lugarNombre);
+                // Crea un objeto que represente los datos a enviar a Firestore
+                Map<String, Object> datosLugar = new HashMap<>();
+                // Crea un objeto GeoPoint con las coordenadas
+                GeoPoint geoPoint = new GeoPoint(latLng.latitude, latLng.longitude);
+                datosLugar.put("coordenadas", geoPoint);
 
-                // Aquí puedes enviar el nombre y las coordenadas (latLng) a donde desees
-                // Puedes utilizar lugarNombre y latLng para enviar la información a través de una API o almacenarla en una base de datos, por ejemplo.
+                // Añadir el nombre al documento en la colección
+                datosLugar.put("nombre", lugarNombre);
 
-                // Aquí puedes usar lugarNombre y latLng como desees, por ejemplo, mostrarlos en un registro de log
-                Log.d("MapaDelegadoActividad", "Nombre del lugar: " + lugarNombre);
-                Log.d("MapaDelegadoActividad", "Coordenadas del lugar: " + latLng.toString());
-                Intent intent = new Intent(Delegado_select_map_activity.this, AlumnoDonacionConsultaActivity.class);
-                intent.putExtra("nombre_lugar", lugarNombre);
-                startActivity(intent);
+                // Añadir los datos al documento en la colección
+                lugarDocumento.set(datosLugar)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // El nuevo lugar se añadió con éxito a Firestore
+                                // Puedes agregar aquí cualquier acción adicional después de enviar los datos.
+                                if (lugarNombre != null && !lugarNombre.isEmpty()) {
+                                    Intent intent = new Intent(Delegado_select_map_activity.this, AlumnoDonacionConsultaActivity.class);
+                                    intent.putExtra("nombre_lugar", lugarNombre);
+                                    Log.e("Delegado_select_map_activity", "lugarNombre se está enviando y es "+lugarNombre);
+
+                                    startActivity(intent);
+                                } else {
+                                    Log.e("Delegado_select_map_activity", "lugarNombre es nulo o vacío. No se envió el intent.");
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Ocurrió un error al agregar el lugar a Firestore
+                            }
+                        });
+
+                dialog.dismiss();
             }
         });
+
 
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
@@ -152,6 +189,7 @@ public class Delegado_select_map_activity extends AppCompatActivity implements O
 
         builder.show();
     }
+
 
     // Método para solicitar permiso de ubicación si no está habilitado
     private void requestLocationPermission() {

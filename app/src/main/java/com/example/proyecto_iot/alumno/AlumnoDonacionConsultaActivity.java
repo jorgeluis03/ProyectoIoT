@@ -38,8 +38,10 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
@@ -63,7 +65,15 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
         String codigoAlumno = intent.getStringExtra("codigoAlumno");
         String rolAlumnoFromDonacion = intent.getStringExtra("rolDonacion");
         String donacionesTotales = intent.getStringExtra("donacionesTotales");
-        
+
+        // Recibir el valor "nombre_lugar" si proviene de Delegado_select_map_activity
+        String nombreLugar = intent.getStringExtra("nombre_lugar");
+        Log.d("AlumnoDonacionConsultaActivity", "Valor de nombreLugar recibido: " + nombreLugar);
+
+
+
+
+
         // Encontrar el TextView
         TextView donacionInfoTextView = findViewById(R.id.donacionInfoTextView);
 
@@ -101,7 +111,9 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
         final AtomicReference<GeoPoint> lugarRef = new AtomicReference<>(); // Variable final tipo AtomicReference
 
         if ("egresado".equals(rolAlumnoFromDonacion)) {
+            Log.d("FirebaseData", "Condición: Rol es 'egresado'");
             if(Double.parseDouble(donacionesTotales) > 100.00) {
+                Log.d("FirebaseData", "Condición: Donaciones totales > 100.00");
                 // Cambiar la información de la fecha
                 CollectionReference donacionesRef = db.collection("KitRecojo");
                 Log.d("FirebaseData", "Código de Alumno: " + codigoAlumno);
@@ -127,9 +139,12 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
                                     if ("no recogido".equals(estado)) {
                                         // Acceder a los TextView por ID
                                         recogoKitButton.setText("No recogido");
+                                        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm 'hrs'", Locale.getDefault());
+                                        String fechaFormateada = sdf.format(fechaHora.toDate());
+
                                         TextView fechaRecojoKitTextView = findViewById(R.id.FechaRecojoKit);
-                                        // Establecer el valor en el TextView
-                                        fechaRecojoKitTextView.setText(fechaHora.toDate().toString());
+                                        // Establecer el valor formateado en el TextView
+                                        fechaRecojoKitTextView.setText(fechaFormateada);
                                     } else if ("recogido".equals(estado)) {
                                         recogoKitButton.setText("Entregado");
                                         kitRecojoLayout.setVisibility(View.INVISIBLE);
@@ -143,10 +158,12 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
                             }
                         });
             }else if(Double.parseDouble(donacionesTotales) <= 100.00){
+                Log.d("FirebaseData", "Condición: Donaciones totales <= 100.00");
                 recogoKitButton.setText("NO APLICA");
                 kitRecojoLayout.setVisibility(View.INVISIBLE);
             }
         }else {
+            Log.d("FirebaseData", "Condición: Rol no es 'egresado'");
             recogoKitButton.setText("NO APLICA");
             kitRecojoLayout.setVisibility(View.INVISIBLE);
         }

@@ -1,5 +1,7 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
+import static java.util.Collections.*;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -69,10 +71,16 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class AlumnoDonacionesFragment extends Fragment {
@@ -112,7 +120,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                         for (QueryDocumentSnapshot idDocument : task.getResult()) {
                             String fecha = idDocument.getString("fecha");
                             String hora = idDocument.getString("hora");
-                            int monto = idDocument.getLong("monto").intValue();
+                            Double monto = idDocument.getDouble("monto");
                             String monto_enviar = String.valueOf(monto);
                             String nombre = idDocument.getString("nombre");
                             String rol = idDocument.getString("rol");
@@ -127,6 +135,22 @@ public class AlumnoDonacionesFragment extends Fragment {
                             Log.d("FirebaseData", "Nombre: " + nombre);
                             Log.d("FirebaseData", "Rol: " + rol);
                         }
+// Aplica la lógica de ordenamiento aquí
+                        donationList.sort(new Comparator<Donacion>() {
+                            @Override
+                            public int compare(Donacion donacion1, Donacion donacion2) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("es", "ES"));                                try {
+                                    Date date1 = dateFormat.parse(donacion1.getFecha());
+                                    Date date2 = dateFormat.parse(donacion2.getFecha());
+                                    int comparisonResult = date2.compareTo(date1); // Ordena de más reciente a más antigua
+                                    return comparisonResult;
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                    return 0;
+                                }
+                            }
+                        });
+
                         adapter.notifyDataSetChanged();
                     } else {
                         Log.e("FirebaseData", "Error al obtener datos de Firestore: " + task.getException());
