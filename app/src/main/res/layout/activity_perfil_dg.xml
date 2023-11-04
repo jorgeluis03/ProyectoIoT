@@ -4,24 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azul_background"
     tools:context=".delegadoGeneral.Perfil_dg">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarPerfil"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_height="56dp"
+        android:background="@color/azul_background"
+        app:title="Perfil"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="Perfil" />
+        app:navigationIcon="?android:attr/homeAsUpIndicator"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0.1dp"
+        app:dividerColor="#3D3D3D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarPerfil" />
@@ -46,7 +50,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/icon_perfil_user"
-            app:tint="@color/azul_background" />
+             />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textFieldNombrePerfil"
@@ -65,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Jorge Luis"
-                android:textColor="#000000" />
+                android:textColor="@color/letra_clara" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Dominguez Chavez"
-                android:textColor="#000000" />
+                android:textColor="@color/letra_clara" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="a20200643@pucp.edu.pe"
-                android:textColor="#000000" />
+                android:textColor="@color/letra_clara" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,7 +132,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="20200643"
-                android:textColor="#000000" />
+                android:textColor="@color/letra_clara" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

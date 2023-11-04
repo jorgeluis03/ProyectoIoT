@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -30,16 +31,20 @@
             android:exported="false" />
         <activity
             android:name=".delegadoGeneral.Dg_configuracion"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral"/>
         <activity
             android:name=".delegadoGeneral.EditarActividad"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral"/>
         <activity
             android:name=".delegadoGeneral.Eventos_actividad_dg"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral"/>
         <activity
             android:name=".delegadoGeneral.Perfil_dg"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral"/>
         <activity
             android:name=".alumno.AlumnoDonacionConsultaActivity"
             android:exported="false" />
@@ -71,10 +76,11 @@
         <activity
             android:name=".delegadoGeneral.CrearActividadActivity"
             android:exported="false"
-            android:theme="@style/Login" />
+            android:theme="@style/DelegadoGeneral" />
         <activity
             android:name=".delegadoGeneral.Dg_Activity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral"/>
         <activity
             android:name=".alumno.AlumnoPerfilActivity"
             android:exported="false"

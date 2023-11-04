@@ -11,7 +11,8 @@
         android:id="@+id/dg_alumnosFragment"
         android:enabled="true"
         android:icon="@drawable/icon_users_solid"
-        android:title="Alumnos" />
+        android:title="Alumnos"
+        />
 
     <item
         android:id="@+id/dg_notificacionesFragment"
