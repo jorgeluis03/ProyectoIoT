@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
@@ -42,6 +45,8 @@ public class RegistroActivity extends AppCompatActivity {
     private String email;
     private String pass;
     private String type;
+    Button sendButton;
+    ProgressBar progressBar;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     String CHANNEL_ID = "canalDelegadoGeneral";
     @Override
@@ -50,11 +55,16 @@ public class RegistroActivity extends AppCompatActivity {
         binding = ActivityRegistroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        progressBar  = binding.progressBar;
+        progressBar.setVisibility(View.GONE);
+
         binding.backButton.setOnClickListener(view -> {
             onBackPressed();
         });
 
-        binding.sendButton.setOnClickListener(view -> {
+        sendButton.setOnClickListener(view -> {
+            setInPogressBar(true);
             if (validFields()){
 
                 // crear usuario en firebase authentication
@@ -63,6 +73,7 @@ public class RegistroActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
+                                    setInPogressBar(false);
                                     Log.d("msg-test", "usuario creado en authentication");
                                     // crear usuario en firestore
                                     crearUsuarioFirestore();
@@ -74,6 +85,17 @@ public class RegistroActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+    public void setInPogressBar(boolean inProgress){
+        if(inProgress){
+            progressBar.setVisibility(View.VISIBLE);
+            sendButton.setVisibility(View.GONE);
+            return;
+        }else {
+            progressBar.setVisibility(View.GONE);
+            sendButton.setVisibility(View.VISIBLE);
+            return;
+        }
     }
 
     boolean validFields(){
