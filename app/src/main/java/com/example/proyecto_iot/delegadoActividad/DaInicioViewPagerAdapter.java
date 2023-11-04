@@ -18,8 +18,6 @@ public class DaInicioViewPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0:
-                return new AlumnoEventosTodosFragment();
             case 1:
                 return new DaEventosMisActividadesFragment();
             case 2:
