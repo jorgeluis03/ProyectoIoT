@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -33,9 +34,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -74,6 +79,47 @@ public class AlumnoEventoActivity extends AppCompatActivity {
 
         binding.buttonEventoBack.setOnClickListener(view -> {
             finish();
+        });
+        binding.buttonEventoLugar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Obtén el nombre del lugar desde tu evento o de donde sea que lo tengas
+                String nombreLugar = evento.getLugar(); // Asegúrate de tener el nombre del lugar
+
+                // Realiza la consulta en la colección "lugares" para obtener las coordenadas
+                CollectionReference lugaresRef = db.collection("lugares");
+                Query query = lugaresRef.whereEqualTo("nombre", nombreLugar);
+
+                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                GeoPoint coordenadas = document.getGeoPoint("coordenadas");
+
+                                if (coordenadas != null) {
+                                    // Accede a la latitud y longitud desde coordenadas
+                                    double latitud = coordenadas.getLatitude();
+                                    double longitud = coordenadas.getLongitude();
+
+                                    // Crea un Intent para abrir la nueva actividad (en este caso, un mapa)
+                                    Intent intent = new Intent(AlumnoEventoActivity.this, MapaEventoActivityAlumno.class);
+                                    // Pasa los datos de latitud y longitud a la nueva actividad
+                                    intent.putExtra("latitud", latitud);
+                                    intent.putExtra("longitud", longitud);
+                                    startActivity(intent); // Inicia la nueva actividad (mapa)
+                                } else {
+                                    // Si no se encontraron coordenadas, puedes mostrar un mensaje de error o tomar otra acción.
+                                    Toast.makeText(AlumnoEventoActivity.this, "No se encontraron coordenadas para este lugar", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } else {
+                                // Si hubo un error en la consulta, puedes mostrar un mensaje de error o tomar otra acción.
+                            Toast.makeText(AlumnoEventoActivity.this, "Error al buscar coordenadas: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
         });
     }
 
@@ -219,6 +265,8 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.textEventoDescripcion.setText(evento.getDescripcion());
         binding.buttonEventoFecha.setText(evento.getFecha());
         binding.buttonEventoHora.setText(evento.getHora());
+        binding.buttonEventoLugar.setText(evento.getLugar());
+
 
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(AlumnoEventoActivity.this)
