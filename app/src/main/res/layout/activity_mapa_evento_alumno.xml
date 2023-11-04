@@ -33,6 +33,6 @@
         map:cameraZoom="19"
         map:uiRotateGestures="true"
         map:uiZoomControls="true"
-        tools:context=".alumno.MapaActivity" />
+        tools:context=".alumno.MapaEventoActivityAlumno" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

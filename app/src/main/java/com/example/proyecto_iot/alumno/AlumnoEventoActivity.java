@@ -103,7 +103,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                                     double longitud = coordenadas.getLongitude();
 
                                     // Crea un Intent para abrir la nueva actividad (en este caso, un mapa)
-                                    Intent intent = new Intent(AlumnoEventoActivity.this, MapaActivity.class);
+                                    Intent intent = new Intent(AlumnoEventoActivity.this, MapaEventoActivityAlumno.class);
                                     // Pasa los datos de latitud y longitud a la nueva actividad
                                     intent.putExtra("latitud", latitud);
                                     intent.putExtra("longitud", longitud);
