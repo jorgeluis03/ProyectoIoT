@@ -106,8 +106,8 @@ public class AlumnoDonacionesFragment extends Fragment {
                         for (QueryDocumentSnapshot idDocument : task.getResult()) {
                             String fecha = idDocument.getString("fecha");
                             String hora = idDocument.getString("hora");
-                            Double monto = idDocument.getDouble("monto");
-                            String monto_enviar = String.valueOf(monto);
+                            String monto = idDocument.getString("monto");
+                            String monto_enviar = monto;
                             String nombre = idDocument.getString("nombre");
                             String rol = idDocument.getString("rol");
                             String fotoQR = idDocument.getString("fotoQR");
