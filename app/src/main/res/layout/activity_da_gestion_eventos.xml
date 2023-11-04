@@ -4,13 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azul_background"
     tools:context=".delegadoActividad.DaGestionEventosActivity">
+
+    <TextView
+        android:id="@+id/textHeaderGestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Gestionar eventos"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/rvActividadesEventos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textSubtitleGestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/rvActividadesEventos"
+        app:layout_constraintEnd_toEndOf="@+id/textHeaderGestion"
+        app:layout_constraintStart_toStartOf="@+id/textHeaderGestion"
+        app:layout_constraintTop_toBottomOf="@+id/textHeaderGestion"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <Button
+        android:id="@+id/buttonEventoABack"
+        style="?attr/materialIconButtonFilledStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#A3141B32"
+        app:icon="@drawable/icon_back1"
+        app:iconTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonCreateEvent2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_alumno_perfil_guardar"
         android:text="@string/evento_crear"
@@ -22,7 +62,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvActividades"
+        android:id="@+id/rvActividadesEventos"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -30,17 +70,7 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonCreateEvent2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentHeader3"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEventoABack"
         app:layout_constraintVertical_bias="0.0" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentHeader3"
-        android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader2Fragment"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingHorizontal="15dp"
-        app:layout="@layout/fragment_alumno_header2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

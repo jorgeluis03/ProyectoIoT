@@ -14,10 +14,6 @@ public class Evento implements Serializable {
     private String estado;
     private String chatID;
 
-    public Evento(String segundoEventoDeLaSemana, String s, String nombreDeActividadDelEvento, String s1, String s2, Lugar canchaMinas, boolean b) {
-    }
-
-    public Evento(){};
 
     public String getTitulo() {
         return titulo;

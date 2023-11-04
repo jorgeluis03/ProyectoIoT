@@ -16,19 +16,13 @@ import android.widget.TextView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
-import com.example.proyecto_iot.alumno.Entities.Evento;
-import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.databinding.FragmentDaGestionBinding;
 import com.example.proyecto_iot.delegadoActividad.Adapters.ListaActividadesCardAdapter;
-import com.example.proyecto_iot.delegadoActividad.Adapters.ListaEventosActividadesAdpater;
-import com.example.proyecto_iot.delegadoActividad.Entities.Actividad;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
