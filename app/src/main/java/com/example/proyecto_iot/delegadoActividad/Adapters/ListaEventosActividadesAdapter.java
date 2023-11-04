@@ -103,7 +103,8 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     }
 
     private void cargarAdapter(Evento evento) {
-        String name = "eventoWed Nov 01 23:54:25 GMT-05:00 2023";
+        String name = "evento"+evento.getFechaHoraCreacion().toString();
+        Log.d("msg-test", evento.getFechaHoraCreacion().toString());
         db.collection("eventos")
                 .document(name)
                 .collection("apoyos")
