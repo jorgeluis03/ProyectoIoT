@@ -76,7 +76,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         alumno = (Alumno) getIntent().getSerializableExtra("alumno");
         cargarInfo();
 
-        binding.inputNombre.addTextChangedListener(new TextWatcher() {
+        binding.inputNombre.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -92,7 +92,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
             }
         });
 
-        binding.inputApellido.addTextChangedListener(new TextWatcher() {
+        binding.inputApellidos.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -160,8 +160,8 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
      */
 
     private boolean inputsValidos() {
-        String nombre = binding.inputNombre.getText().toString().trim();
-        String apellidos = binding.inputApellido.getText().toString().trim();
+        String nombre = binding.inputNombre.getEditText().getText().toString().trim();
+        String apellidos = binding.inputApellidos.getEditText().getText().toString().trim();
         return !TextUtils.isEmpty(nombre) && !TextUtils.isEmpty(apellidos) && (!nombre.equals(alumno.getNombre()) || !apellidos.equals(alumno.getApellidos()));
     }
 
@@ -207,8 +207,8 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
 
     private void actualizarInfo() {
         String userUid = mAuth.getCurrentUser().getUid();
-        nombreNuevo = binding.inputNombre.getText().toString().trim();
-        apellidosNuevos = binding.inputApellido.getText().toString().trim();
+        nombreNuevo = binding.inputNombre.getEditText().getText().toString().trim();
+        apellidosNuevos = binding.inputApellidos.getEditText().getText().toString().trim();
 
         HashMap<String, Object> infoActualizada = new HashMap<>();
         infoActualizada.put("apellidos", apellidosNuevos);
@@ -258,8 +258,9 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     }
 
     private void cargarInfo() {
-        binding.inputNombre.setText(alumno.getNombre());
-        binding.inputApellido.setText(alumno.getApellidos());
+        binding.inputNombre.getEditText().setText(alumno.getNombre());
+        binding.inputApellidos.getEditText().setText(alumno.getApellidos());
+        binding.inputCorreo.getEditText().setText(alumno.getCorreo());
         cargarFoto();
     }
 

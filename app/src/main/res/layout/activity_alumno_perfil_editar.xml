@@ -7,64 +7,71 @@
     android:background="@color/azul_background"
     tools:context=".alumno.AlumnoPerfilEditarActivity">
 
-    <EditText
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:background="@drawable/input_alumno_perfil"
         android:ems="10"
-        android:hint="Ingrese su nombre"
-        android:inputType="text|textPersonName"
-        android:textColor="@color/letra_clara"
-        android:textColorHint="#9FA1A0"
-        android:textSize="14sp"
+        android:hint="@string/perfil_editar_nombre"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintVertical_bias="0.44">
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/perfil_editar_nombre"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/inputNombre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/inputNombre" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/inputApellido"
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputApellidos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/input_alumno_perfil"
+        android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Ingrese sus apellidos"
+        android:hint="@string/perfil_editar_apellidos"
         android:inputType="text|textPersonName"
-        android:textColor="@color/letra_clara"
-        android:textColorHint="#9FA1A0"
-        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputNombre" />
+        app:layout_constraintTop_toBottomOf="@+id/inputNombre">
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputCorreo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/perfil_editar_apellidos"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/inputApellido"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Correo"
+        android:inputType="text|textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/inputApellido" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputApellidos">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text|textEmailAddress"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonGuardarPerfil"
@@ -81,7 +88,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputApellido"
+        app:layout_constraintTop_toBottomOf="@+id/inputApellidos"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView

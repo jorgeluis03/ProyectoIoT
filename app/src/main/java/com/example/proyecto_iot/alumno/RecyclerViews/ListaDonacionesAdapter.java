@@ -2,6 +2,7 @@ package com.example.proyecto_iot.alumno.RecyclerViews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoDonacionConsultaActivity;
 import com.example.proyecto_iot.alumno.Entities.Donacion;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonacionesAdapter.DonacionViewHolder> {
@@ -48,9 +50,11 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         holder.bind(donacion, listener);
 
         String donacionString = donacion.getMonto();
-        donacionString = donacionString.replaceAll("S/", "").trim();
+/*      donacionString = donacionString.replaceAll("S/", "").trim();*/
         // Sumar la donación actual a las donaciones totales
         donacionesTotales += Double.parseDouble(donacionString);
+        Log.d("DonacionAdapter", "Monto de donación: " + donacionString);
+        Log.d("DonacionAdapter", "Donaciones totales: " + donacionesTotales);
 
     }
 
@@ -74,7 +78,9 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         }
 
         public void bind(final Donacion donacion, final OnButtonClickListener listener) {
-            textDonacion.setText("S/." +""+donacion.getMonto());
+            DecimalFormat df = new DecimalFormat("#0.00");
+            String montoFormateado = df.format(Double.parseDouble(donacion.getMonto()));
+            textDonacion.setText("S/." +""+montoFormateado);
             String donacionHoraConcatenada = donacion.getFecha() + " " + donacion.getHora();
             textNombreDonacion.setText(donacion.getNombre());
             textHora.setText(donacionHoraConcatenada);
@@ -90,7 +96,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                     // Pasar datos al Intent. Puedes pasar cualquier dato primitivo: int, String, etc.
                     intent.putExtra("nombreDonacion", donacion.getNombre());
                     intent.putExtra("horaDonacion", donacion.getHora());
-                    intent.putExtra("montoDonacion", donacion.getMonto());
+                    intent.putExtra("montoDonacion",montoFormateado);
                     intent.putExtra("fechaDonacion",donacion.getFecha());
                     intent.putExtra("rolDonacion", donacion.getRol());
                     intent.putExtra("codigoAlumno", codigoAlumno);

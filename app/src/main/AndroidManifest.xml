@@ -25,6 +25,12 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/azul_background" />
         <activity
+            android:name=".alumno.MapaEventoActivityAlumno"
+            android:exported="false" />
+        <activity
+            android:name=".alumno.Delegado_select_map_activity"
+            android:exported="false" />
+        <activity
             android:name=".alumno.AlumnoBuscarEventoActivity"
             android:exported="false"
             android:theme="@style/Alumno" />
@@ -116,7 +122,7 @@
             android:name=".inicioApp.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Login"></activity>
+            android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.ConfirmarregistroActivity"
             android:exported="false"

@@ -7,85 +7,70 @@
     android:background="@color/azul_background"
     tools:context=".alumno.AlumnoPerfilContrasenaActivity">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputContrasena1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:background="@drawable/input_alumno_perfil"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="@color/letra_clara"
-        android:textSize="14sp"
+        android:hint="@string/perfil_contrasena"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/fragmentHeader"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintVertical_bias="0.19999999"
+        app:endIconMode="password_toggle">
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/perfil_contrasena"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/inputContrasena1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/inputContrasena1" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:inputType="textPassword"/>
 
-    <EditText
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputContrasena2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/input_alumno_perfil"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="@color/letra_clara"
-        android:textSize="14sp"
+        android:layout_marginTop="24dp"
+        android:hint="@string/perfil_contrasena2"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputContrasena1" />
+        app:layout_constraintTop_toBottomOf="@+id/inputContrasena1">
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/perfil_contrasena2"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/inputContrasena2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/inputContrasena2" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
-    <EditText
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputContrasena3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/input_alumno_perfil"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="@color/letra_clara"
-        android:textSize="14sp"
+        android:layout_marginTop="24dp"
+        android:hint="@string/perfil_contrasena3"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputContrasena2" />
+        app:layout_constraintTop_toBottomOf="@+id/inputContrasena2">
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/perfil_contrasena3"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/inputContrasena3"
-        app:layout_constraintStart_toStartOf="@+id/inputContrasena3" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonGuardarContrasena"

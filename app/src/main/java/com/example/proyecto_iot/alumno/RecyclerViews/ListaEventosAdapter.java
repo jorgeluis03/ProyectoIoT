@@ -49,7 +49,9 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         TextView textFecha = holder.itemView.findViewById(R.id.textFecha);
         TextView textHora = holder.itemView.findViewById(R.id.textHora);
         ImageView imageEvento = holder.itemView.findViewById(R.id.imageEvento);
+        TextView lugar = holder.itemView.findViewById(R.id.textLugar);
 
+        lugar.setText(evento.getLugar());
         textTitulo.setText(evento.getTitulo());
         textActividad.setText(evento.getActividad());
         textDescripcion.setText(evento.getDescripcion());

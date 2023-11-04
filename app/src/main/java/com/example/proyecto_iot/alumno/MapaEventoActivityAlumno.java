@@ -31,7 +31,7 @@ import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.DirectionsResult;
 
-public class MapaDelegadoActividad extends AppCompatActivity implements OnMapReadyCallback {
+public class MapaEventoActivityAlumno extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap googleMap;
     private FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -41,7 +41,7 @@ public class MapaDelegadoActividad extends AppCompatActivity implements OnMapRea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mapa);
+        setContentView(R.layout.activity_mapa_evento_alumno);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.parseColor("#0A0E19"));
@@ -112,7 +112,7 @@ public class MapaDelegadoActividad extends AppCompatActivity implements OnMapRea
 
     private void abrirVistaRuta(LatLng destino) {
         // Crear un URI para la navegación en Google Maps
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + destino.latitude + "," + destino.longitude);
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + destino.latitude + "," + destino.longitude+ "&mode=w");
 
         // Crear un Intent con la acción ACTION_VIEW
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);

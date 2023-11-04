@@ -13,6 +13,15 @@ public class Evento implements Serializable {
     private Date fechaHoraCreacion;
     private String estado;
     private String chatID;
+    private String lugar;
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
+    }
 
     public String getTitulo() {
         return titulo;
