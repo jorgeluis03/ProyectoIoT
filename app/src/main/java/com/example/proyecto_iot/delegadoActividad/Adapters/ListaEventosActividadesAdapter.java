@@ -21,12 +21,14 @@ import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.delegadoActividad.Entities.Actividad;
+import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -37,7 +39,8 @@ import java.util.List;
 public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEventosActividadesAdapter.EventoAViewHolder> {
 
     private List<Evento> eventoAList;
-    ArrayList<Alumno> apoyos = new ArrayList<>();
+    ApoyoDto apoyo;
+    ArrayList<ApoyoDto> apoyos = new ArrayList<>();
 
     private Context context;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -108,6 +111,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         db.collection("eventos")
                 .document(name)
                 .collection("apoyos")
+                .orderBy("codigo", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -115,7 +119,9 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                         if (task.isSuccessful()) {
                             Log.d("msg-test", "busqueda apoyos ok: "+task.getResult().size());
                             for (QueryDocumentSnapshot document: task.getResult()){
-                                buscarAlumno(document.getId());
+                                apoyo = new ApoyoDto();
+                                apoyo.setCategoria(document.getString("categoria"));
+                                buscarAlumno(document.getId(), apoyo);
                             }
                             adapter.notifyDataSetChanged();
 
@@ -126,7 +132,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 });
     }
 
-    private void buscarAlumno(String alumnoId){
+    private void buscarAlumno(String alumnoId, ApoyoDto apoyo){
         db.collection("alumnos")
                 .document(alumnoId)
                 .get()
@@ -137,7 +143,8 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                             Alumno alumno = task.getResult().toObject(Alumno.class);
                             Log.d("msg-test", "apoyO encontrado: "+alumno.getNombre());
                             if (alumno.getEstado().equals("activo")){
-                                apoyos.add(alumno);
+                                apoyo.setAlumno(alumno);
+                                apoyos.add(apoyo);
                                 adapter.notifyDataSetChanged();
                             }
                         }

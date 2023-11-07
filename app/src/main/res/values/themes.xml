@@ -95,4 +95,14 @@
     <style name="BottomNavTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/letra_clara</item>
     </style>
+
+    <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Switch" parent="">
+        <item name="android:colorControlNormal">#00FFB3</item>
+        <item name="android:colorControlActivated">#22755C</item>
+        <item name="android:colorControlHighlight">#22755C</item>
+    </style>
 </resources>
