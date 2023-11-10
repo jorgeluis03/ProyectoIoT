@@ -23,6 +23,7 @@ public class Evento implements Serializable {
         this.lugar = lugar;
     }
 
+
     public String getTitulo() {
         return titulo;
     }

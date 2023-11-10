@@ -16,11 +16,6 @@
         android:label="fragment_dg_alumnos"
         tools:layout="@layout/fragment_dg_alumnos" />
     <fragment
-        android:id="@+id/dg_notificacionesFragment"
-        android:name="com.example.proyecto_iot.delegadoGeneral.fragmentos.Dg_notificacionesFragment"
-        android:label="fragment_dg_notificaciones"
-        tools:layout="@layout/fragment_dg_notificaciones" />
-    <fragment
         android:id="@+id/dg_estadisticasFragment"
         android:name="com.example.proyecto_iot.delegadoGeneral.fragmentos.Dg_estadisticasFragment"
         android:label="fragment_dg_estadisticas"

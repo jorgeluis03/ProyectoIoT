@@ -21,6 +21,8 @@ public class AlumnoInicioActivity extends AppCompatActivity {
         binding = ActivityAlumnoInicioBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+
         BottomNavigationView bottomNavigationView = binding.bottomNavigationView;
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerViewHost);
         NavController navController = NavHostFragment.findNavController(navHostFragment);

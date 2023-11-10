@@ -6,9 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -23,18 +20,14 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
 import com.example.proyecto_iot.delegadoActividad.DaInicioActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
+import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -99,6 +92,28 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            try (FileInputStream fileInputStream = openFileInput("userData");
+                 FileReader fileReader = new FileReader(fileInputStream.getFD());
+                 BufferedReader bufferedReader = new BufferedReader(fileReader)){
+
+                String jsonData = bufferedReader.readLine();
+                Gson gson = new Gson();
+                Alumno alumnoAutenticado = gson.fromJson(jsonData, Alumno.class);
+
+                redirigirSegunRol(alumnoAutenticado);
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     void obtenerUserData() {
         userUid = mAuth.getCurrentUser().getUid();
         DocumentReference docRef = db.collection("alumnos").document(userUid);
@@ -113,8 +128,14 @@ public class LoginActivity extends AppCompatActivity {
                         if (alumno.getEstado().equals("activo")){
 
                             guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
+
                             // autenticar en cometchat
-                            inicializarCometChat();
+                            if (!alumno.getRol().equals("Delegado General")){
+                                inicializarCometChat();
+                            }
+                            else{
+                                redirigirSegunRol(alumno);
+                            }
 
                         } else if (alumno.getEstado().equals("pendiente")) {
                             Log.d("msg-test", "alumno con estado pendiente");
@@ -159,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(User user) {
                         Log.d("msg-test", "Login Successful : " + user.toString());
-                        redirigirSegunRol(alumno.getRol());
+                        redirigirSegunRol(alumno);
                     }
 
                     @Override
@@ -188,15 +209,32 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void redirigirSegunRol(String rol) {
+    void redirigirSegunRol(Alumno alumno) {
         Intent intent = null;
+        String rol = alumno.getRol();
+        ArrayList<Actividades> actividades = alumno.getActividadesId();
+        boolean valido = false;
         switch (rol) {
             case "Alumno":
-                intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
-                break;
-            case "Delegado Actividad":
-                intent = new Intent(LoginActivity.this, DaInicioActivity.class);
-                break;
+                if (actividades == null){
+                    // caso no actividades
+                    intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                    break;
+                }else {
+                    for(Actividades a: actividades){
+                        if (a.getEstado().equals("abierto")){
+                            valido = true;
+                        }
+                    }
+                    if (valido){
+                        // caso delegadoActividad
+                        intent = new Intent(LoginActivity.this, DaInicioActivity.class);
+                        break;
+                    }
+                    // caso no actividades
+                    intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                    break;
+                }
             case "Delegado General":
                 intent = new Intent(LoginActivity.this, Dg_Activity.class);
                 break;

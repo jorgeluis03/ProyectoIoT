@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".delegadoGeneral.CrearActividadActivity"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:background="@color/azul_background">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -20,6 +21,15 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="Actualizar actividad"
         ></androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        app:dividerColor="#3D3D3D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarEditarActividadesDg" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textFieldNombreActividadAntiguo"
@@ -37,7 +47,7 @@
             android:id="@+id/editTextNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000000" />
+            android:textColor="@color/letra_clara" />
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -59,13 +69,14 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:focusable="false"
-            android:textColor="#000000" />
+            android:textColor="@color/letra_clara" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0.1dp"
+        app:dividerColor="#3D3D3D"
         app:layout_constraintBottom_toTopOf="@+id/buttonEditarAct_dg"
         android:layout_marginBottom="10dp"/>
     <Button
@@ -86,7 +97,7 @@
         android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarEditarActividadesDg"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         app:srcCompat="@drawable/img_bat" />
 
 

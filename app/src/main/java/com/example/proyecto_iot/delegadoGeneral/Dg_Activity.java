@@ -12,18 +12,30 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityDgBinding;
+import com.example.proyecto_iot.delegadoGeneral.utils.AndroidUtilDg;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.android.material.navigation.NavigationView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.ktx.Firebase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class Dg_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -31,7 +43,12 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
     ActivityDgBinding binding;
     BottomNavigationView buttomnavigationDg;
     NavController navController;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance(); // autenticacion
+    FirebaseAuth auth = FirebaseAuth.getInstance(); // autenticacion
+    FirebaseFirestore db;
+
+    ImageView imgPerfilDrawer;
+    TextView usernamePerfilDrawer;
+    Alumno usuarioActual;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +60,9 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         //================================
 
         drawerLayout = binding.drawerLayoutDg;
+        imgPerfilDrawer = drawerLayout.findViewById(R.id.imgPerfilDrawer);
+        usernamePerfilDrawer = drawerLayout.findViewById(R.id.textViewUsernameDrawer);
+
         NavigationView navigationView = binding.navView;
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -53,9 +73,6 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
 
 
 
-
-
-
         buttomnavigationDg = binding.buttomnavigationDg;
         //Cargar el navigationComponent (navHost) en el bottomnavigation
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment_dg);
@@ -63,6 +80,20 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         NavigationUI.setupWithNavController(buttomnavigationDg,navController);
         //===============================================================
 
+
+        /*Siempre que iniciamos sesion llegarmos a la actividad principal
+        y aqui se va a generar el token para las notificaciones*/
+        getFCMToken();
+
+    }
+    public void getFCMToken(){
+        //recupero el token
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                String token = task.getResult();
+                FirebaseUtilDg.getUsuarioActualDetalles().update("fcmToken", token);
+            }
+        });
     }
     public void setToolbarContent(String title) {
         getSupportActionBar().setTitle(title);
@@ -113,11 +144,21 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         }
         if(id==R.id.salir_dg){
             //Logica para salir
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(Dg_Activity.this, IngresarActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            //Borrar el token al cerrar sesion
+            FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
+                if(task.isSuccessful()){
+
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(Dg_Activity.this, IngresarActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+
+                }
+            });
+
+
+
 
         }
         if(id==R.id.perfil_dg){

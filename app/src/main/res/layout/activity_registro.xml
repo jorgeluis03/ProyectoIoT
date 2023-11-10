@@ -9,6 +9,15 @@
     android:paddingEnd="30dp"
     tools:context=".inicioApp.RegistroActivity">
 
+    <ProgressBar
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userTypeSpinner"/>
     <Button
         android:id="@+id/sendButton"
         style="@style/Widget.Material3.Button.ElevatedButton"

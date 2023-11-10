@@ -15,6 +15,7 @@
         android:layout_height="match_parent">
 
 
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_actividades_dg"
             android:layout_width="match_parent"
@@ -39,12 +40,21 @@
             app:menu="@menu/menu_navigation_bar_dg"
             android:layout_gravity="bottom"
             app:labelVisibilityMode="unlabeled"
-            android:background="?android:attr/selectableItemBackground"
+            style="@style/BottomNavigationView"
 
             />
 
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:id="@+id/divider"
+            app:dividerColor="#3D3D3D"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/buttomnavigation_dg"/>
+
         <androidx.fragment.app.FragmentContainerView
-            android:background="@color/white"
+            android:background="@color/azul_background"
             android:id="@+id/navHostFragment_dg"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
@@ -53,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_actividades_dg"
-            app:layout_constraintBottom_toTopOf="@+id/buttomnavigation_dg"
+            app:layout_constraintBottom_toTopOf="@+id/divider"
             app:navGraph="@navigation/nav_graph_dg_inicio" />
 
 

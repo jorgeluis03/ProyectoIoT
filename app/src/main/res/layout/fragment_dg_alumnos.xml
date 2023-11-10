@@ -30,11 +30,17 @@
             android:layout_height="wrap_content"
             android:text="Baneados" />
     </com.google.android.material.tabs.TabLayout>
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:id="@+id/divider"
+        app:dividerColor="#3D3D3D"
+        />
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerAlumnos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"/>
+        android:layout_height="match_parent" />
 
 
 
