@@ -56,7 +56,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     private String userUid = FirebaseAuth.getInstance().getUid();
     private Evento evento;
     private Uri imageUri;
-    private String fotoSubidaUrl;
     private BottomSheetDialog bottomSheetDialog;
     private ArrayList<Foto> fotoList = new ArrayList<>();
     private ListaFotosEventoAdapter adapter = new ListaFotosEventoAdapter();

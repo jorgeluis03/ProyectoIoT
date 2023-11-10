@@ -42,7 +42,22 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoEventosApoyandoBinding.inflate(inflater, container, false);
 
+        // obteniendo ids de eventos apoyados
 
+        db.collection("alumnos")
+                .document(userUid)
+                .collection("eventos")
+                .addSnapshotListener((value, error) -> {
+                    if (error != null){
+                        Log.d("msg-test", "Listen failed in eventos apoyando", error);
+                        return;
+                    }
+                    for (QueryDocumentSnapshot doc: value){
+                        buscarEventos(doc.getId());
+                    }
+                });
+
+        /*
         db.collection("alumnos")
                 .document(userUid)
                 .collection("eventos")
@@ -50,16 +65,17 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            for (QueryDocumentSnapshot document: task.getResult()){
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 buscarEventos(document.getId());
                             }
-                        }
-                        else{
+                        } else {
                             Log.d("msg-test", "AlumnoEventosApoyandoFragment: error en busqueda de eventos apoyados");
                         }
                     }
                 });
+
+         */
 
         adapter.setContext(getContext());
         adapter.setEventoList(eventoApoyandoList);
@@ -70,21 +86,21 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void buscarEventos(String eventoId){
+    private void buscarEventos(String eventoId) {
+
         db.collection("eventos")
                 .document(eventoId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Evento evento = task.getResult().toObject(Evento.class);
-                            Log.d("msg-test", "evento apoyado encontrado: "+evento.getTitulo());
+                            Log.d("msg-test", "evento apoyado encontrado: " + evento.getTitulo());
                             eventoApoyandoList.add(evento);
                             adapter.notifyDataSetChanged();
-                        }
-                        else{
-                            Log.d("msg-test", "AlumnoEventosApoyandoFragment error buscando evento: "+eventoId);
+                        } else {
+                            Log.d("msg-test", "AlumnoEventosApoyandoFragment error buscando evento: " + eventoId);
                         }
                     }
                 });
