@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,9 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
     private OnButtonClickListener listener;
     private String codigoAlumno;
     private double donacionesTotales = 0.0;
+    private double donacionesTotalesValidadas;
+
+
     public ListaDonacionesAdapter(Context context, List<Donacion> donacionList,String codigoAlumno, OnButtonClickListener listener) {
         this.context = context;
         this.donacionList = donacionList;
@@ -43,19 +47,15 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         View view = LayoutInflater.from(context).inflate(R.layout.rv_alumno_donacion, parent, false);
         return new DonacionViewHolder(view);
     }
+    public void setDonacionesTotalesValidadas(double total) {
+        this.donacionesTotalesValidadas = total;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull DonacionViewHolder holder, int position) {
         Donacion donacion = donacionList.get(position);
         holder.bind(donacion, listener);
-
-        String donacionString = donacion.getMonto();
-/*      donacionString = donacionString.replaceAll("S/", "").trim();*/
-        // Sumar la donación actual a las donaciones totales
-        donacionesTotales += Double.parseDouble(donacionString);
-        Log.d("DonacionAdapter", "Monto de donación: " + donacionString);
-        Log.d("DonacionAdapter", "Donaciones totales: " + donacionesTotales);
-
+        Log.d("DonacionAdapter", "Donaciones totales validadas: " + donacionesTotalesValidadas);
     }
 
     @Override
@@ -68,12 +68,15 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         TextView textHora;
         TextView textDonacion;
         Button button6;
+        ImageView imageViewEstado;
+
 
         public DonacionViewHolder(@NonNull View itemView) {
             super(itemView);
             textNombreDonacion = itemView.findViewById(R.id.textNombreDonacion);
             textHora = itemView.findViewById(R.id.textHora);
             textDonacion = itemView.findViewById(R.id.textDonacion);
+            imageViewEstado = itemView.findViewById(R.id.imageViewEstado);
             button6 = itemView.findViewById(R.id.button6);
         }
 
@@ -84,6 +87,19 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
             String donacionHoraConcatenada = donacion.getFecha() + " " + donacion.getHora();
             textNombreDonacion.setText(donacion.getNombre());
             textHora.setText(donacionHoraConcatenada);
+
+            if (donacion.getEstado().equals("validado")) {
+                imageViewEstado.setImageResource(R.drawable.check);
+                button6.setVisibility(View.VISIBLE);
+            } else if(donacion.getEstado().equals("por validar")){
+                imageViewEstado.setImageResource(R.drawable.time);
+                button6.setVisibility(View.INVISIBLE);
+                button6.setVisibility(View.GONE);
+            } else if(donacion.getEstado().equals("denegado")){
+                imageViewEstado.setImageResource(R.drawable.deny);
+                button6.setVisibility(View.INVISIBLE);
+                button6.setVisibility(View.GONE);
+            }
 
             button6.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,7 +116,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                     intent.putExtra("fechaDonacion",donacion.getFecha());
                     intent.putExtra("rolDonacion", donacion.getRol());
                     intent.putExtra("codigoAlumno", codigoAlumno);
-                    intent.putExtra("donacionesTotales", String.valueOf(donacionesTotales));
+                    intent.putExtra("donacionesTotales", String.valueOf(donacionesTotalesValidadas));
                     context.startActivity(intent);
                 }
             });

@@ -7,17 +7,28 @@ public class Donacion {
     private String fotoQR;
     private String monto;
     private String nombre;
-    public Donacion(String fecha,String hora, String rol, String fotoQR, String monto, String nombre){
+    private String estado;
+
+    public Donacion(String fecha,String hora, String rol, String fotoQR, String monto, String nombre, String estado){
         this.hora = hora;
         this.fecha = fecha;
         this.rol = rol;
         this.fotoQR = fotoQR;
         this.monto = monto;
         this.nombre = nombre;
+        this.estado = estado;
     }
 
     public Donacion(){
 
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getMonto() {

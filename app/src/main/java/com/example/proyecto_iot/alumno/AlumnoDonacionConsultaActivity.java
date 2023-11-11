@@ -105,7 +105,7 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
 
         LinearLayout kitRecojoLayout = findViewById(R.id.KitRecojo);
 
-        Button recogoKitButton = findViewById(R.id.button);
+        Button recojoKitButton = findViewById(R.id.button);
         final AtomicReference<GeoPoint> lugarRef = new AtomicReference<>(); // Variable final tipo AtomicReference
 
         if (rolAlumnoFromDonacion != null && rolAlumnoFromDonacion.equalsIgnoreCase("egresado")) {
@@ -136,7 +136,7 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
 
                                     if ("no recogido".equals(estado)) {
                                         // Acceder a los TextView por ID
-                                        recogoKitButton.setText("No recogido");
+                                        recojoKitButton.setText("No recogido");
                                         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm 'hrs'", Locale.getDefault());
                                         String fechaFormateada = sdf.format(fechaHora.toDate());
 
@@ -144,7 +144,7 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
                                         // Establecer el valor formateado en el TextView
                                         fechaRecojoKitTextView.setText(fechaFormateada);
                                     } else if ("recogido".equals(estado)) {
-                                        recogoKitButton.setText("Entregado");
+                                        recojoKitButton.setText("Entregado");
                                         kitRecojoLayout.setVisibility(View.INVISIBLE);
                                     }
 
@@ -157,12 +157,12 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
                         });
             }else if(Double.parseDouble(donacionesTotales) <= 100.00){
                 Log.d("FirebaseData", "Condición: Donaciones totales <= 100.00");
-                recogoKitButton.setText("NO APLICA");
+                recojoKitButton.setText("Aún no aplica");
                 kitRecojoLayout.setVisibility(View.INVISIBLE);
             }
         }else {
             Log.d("FirebaseData", "Condición: Rol no es 'egresado'");
-            recogoKitButton.setText("NO APLICA");
+            recojoKitButton.setText("Aplica solo para egresados");
             kitRecojoLayout.setVisibility(View.INVISIBLE);
         }
         Button buttonMaps = findViewById(R.id.ButtonMaps);

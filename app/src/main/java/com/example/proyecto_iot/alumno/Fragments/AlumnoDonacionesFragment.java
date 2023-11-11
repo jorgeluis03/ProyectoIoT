@@ -41,8 +41,11 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -63,10 +66,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 public class AlumnoDonacionesFragment extends Fragment {
@@ -103,6 +109,8 @@ public class AlumnoDonacionesFragment extends Fragment {
                     Log.d("FirebaseData", "Consulta exitosa"); // Agrega este mensaje de depuración
                     if (task.isSuccessful()) {
                         Log.d("FirebaseData", "Consulta exitosa en la colección 'donaciones x2'"); // Agrega este mensaje de depuración
+                        double donacionesTotalesValidadas = 0.0;
+                        String rolUsuario = "";
                         for (QueryDocumentSnapshot idDocument : task.getResult()) {
                             String fecha = idDocument.getString("fecha");
                             String hora = idDocument.getString("hora");
@@ -111,8 +119,21 @@ public class AlumnoDonacionesFragment extends Fragment {
                             String nombre = idDocument.getString("nombre");
                             String rol = idDocument.getString("rol");
                             String fotoQR = idDocument.getString("fotoQR");
+                            String estado = idDocument.getString("estado");
+                            if ("validado".equals(estado)) {
+                                String montoString = idDocument.getString("monto");
+                                try {
+                                    double montoValidado = Double.parseDouble(montoString);
+                                    donacionesTotalesValidadas += montoValidado;
+                                } catch (NumberFormatException e) {
+                                    Log.e("Firestore", "Error al parsear el monto a double", e);
+                                }
+                            }
+                            if (rolUsuario.isEmpty()) {
+                                rolUsuario = idDocument.getString("rol");
+                            }
                             // Realiza operaciones con los campos obtenidos
-                            Donacion donacion = new Donacion(fecha, hora, rol, fotoQR, monto_enviar, nombre);
+                            Donacion donacion = new Donacion(fecha, hora, rol, fotoQR, monto_enviar, nombre, estado);
                             donationList.add(donacion);
                             // Agrega mensajes de depuración para verificar los datos
                             Log.d("FirebaseData", "Fecha: " + fecha);
@@ -120,23 +141,45 @@ public class AlumnoDonacionesFragment extends Fragment {
                             Log.d("FirebaseData", "Monto: " + monto);
                             Log.d("FirebaseData", "Nombre: " + nombre);
                             Log.d("FirebaseData", "Rol: " + rol);
+                            Log.d("FirebaseData", "Estado: " + rol);
+                            Log.d("FirebaseData", "------------------------ ");
+
+
                         }
+                        adapter.setDonacionesTotalesValidadas(donacionesTotalesValidadas);
 // Aplica la lógica de ordenamiento aquí
                         donationList.sort(new Comparator<Donacion>() {
-                            @Override
+                              @Override
                             public int compare(Donacion donacion1, Donacion donacion2) {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("es", "ES"));                                try {
-                                    Date date1 = dateFormat.parse(donacion1.getFecha());
-                                    Date date2 = dateFormat.parse(donacion2.getFecha());
-                                    int comparisonResult = date2.compareTo(date1); // Ordena de más reciente a más antigua
-                                    return comparisonResult;
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", new Locale("es", "ES"));
+                                try {
+                                    String dateTime1 = donacion1.getFecha() + " " + donacion1.getHora();
+                                    String dateTime2 = donacion2.getFecha() + " " + donacion2.getHora();
+                                    Date date1 = dateFormat.parse(dateTime1);
+                                    Date date2 = dateFormat.parse(dateTime2);
+                                    return date2.compareTo(date1); // Ordena de más reciente a más antigua considerando fecha y hora
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                     return 0;
                                 }
                             }
                         });
-
+                        // Encontrar la última fecha de donación válida
+                        Date lastValidDonationDate = null;
+                        for (Donacion donacion : donationList) {
+                            if ("validado".equals(donacion.getEstado())) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", new Locale("es", "ES"));
+                                try {
+                                    lastValidDonationDate = dateFormat.parse(donacion.getFecha() + " " + donacion.getHora());
+                                    break; // Salir del bucle después de encontrar la primera donación válida
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        if ("Egresado".equals(rolUsuario)) {
+                            verificarYCrearKitRecojoSiEsNecesario(codigoAlumno, donacionesTotalesValidadas, lastValidDonationDate);
+                        }
                         adapter.notifyDataSetChanged();
                     } else {
                         Log.e("FirebaseData", "Error al obtener datos de Firestore: " + task.getException());
@@ -222,6 +265,42 @@ public class AlumnoDonacionesFragment extends Fragment {
     }
 
      */
+    private void verificarYCrearKitRecojoSiEsNecesario(String codigoAlumno, double donacionesTotalesValidadas, Date lastDonationDate) {
+        db.collection("KitRecojo").document(codigoAlumno).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (!document.exists() && donacionesTotalesValidadas > 100) {
+                    crearDocumentoKitRecojo(codigoAlumno, lastDonationDate);
+                }
+            } else {
+                Log.e("Firestore", "Error al verificar en KitRecojo", task.getException());
+            }
+        });
+    }
+
+    private void crearDocumentoKitRecojo(String codigoAlumno, Date lastDonationDate) {
+        Calendar calendar = Calendar.getInstance();
+        if (lastDonationDate != null) {
+            calendar.setTime(lastDonationDate); // Usar la última fecha de donación
+        }
+        calendar.add(Calendar.WEEK_OF_YEAR, 1); // Añadir una semana
+        calendar.set(Calendar.HOUR_OF_DAY, 9);  // Configurar la hora a las 9:00
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+
+        // Crear el documento para KitRecojo
+        Map<String, Object> kitRecojoData = new HashMap<>();
+        kitRecojoData.put("Lugar", new GeoPoint(-12.07314, -77.0815708));
+        kitRecojoData.put("estado", "no recogido");
+        kitRecojoData.put("fechaHora", new Timestamp(calendar.getTime()));
+
+        // Guardar el documento en Firestore
+        db.collection("KitRecojo").document(codigoAlumno)
+                .set(kitRecojoData)
+                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Documento KitRecojo creado para " + codigoAlumno))
+                .addOnFailureListener(e -> Log.e("Firestore", "Error al crear documento en KitRecojo", e));
+    }
 
     private void subirDonacion() {
 
@@ -236,6 +315,7 @@ public class AlumnoDonacionesFragment extends Fragment {
         donacionNueva.setNombre(nombre);
         donacionNueva.setRol(rol);
         donacionNueva.setMonto(String.valueOf(monto));
+        donacionNueva.setEstado("por validar");
 
         // guardar imagen en starge para obtener url
         UUID uuidDonacionCaptura = UUID.randomUUID();
