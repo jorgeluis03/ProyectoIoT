@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,9 +24,12 @@ import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.delegadoActividad.Entities.Actividad;
 import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -71,6 +75,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     }
     public class EventoAViewHolder extends RecyclerView.ViewHolder{
         Evento evento;
+        Context context;
         public EventoAViewHolder(@NonNull View itemView) {
             super(itemView);
             TextView textView = itemView.findViewById(R.id.textActividad2);
@@ -80,6 +85,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
 
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                 View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_da_apoyos, (LinearLayout) view.findViewById(R.id.dialogListApoyos));
+                Button button = bottomSheetView.findViewById(R.id.button2);
                 cargarAdapter(evento);
 
                 adapter.setContext(getContext());
@@ -90,13 +96,11 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 bottomSheetDialog.setContentView(bottomSheetView);
 
-
                 bottomSheetDialog.show();
             });
             Button borrar = itemView.findViewById(R.id.buttonDelete);
             borrar.setOnClickListener(view -> {
-                mostrarConfirmacionDialog(textView.getText().toString());
-
+                mostrarConfirmacionDialog(evento, itemView);
             });
             Button editar = itemView.findViewById(R.id.buttonEdit);
             editar.setOnClickListener(view -> {
@@ -121,6 +125,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                             for (QueryDocumentSnapshot document: task.getResult()){
                                 apoyo = new ApoyoDto();
                                 apoyo.setCategoria(document.getString("categoria"));
+                                apoyo.setEventoId(name);
                                 buscarAlumno(document.getId(), apoyo);
                             }
                             adapter.notifyDataSetChanged();
@@ -161,14 +166,14 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
 
     public void setContext(Context context){this.context = context;}
 
-    private void mostrarConfirmacionDialog(String nombre){
+    private void mostrarConfirmacionDialog(Evento evento, View itemView){
         MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(getContext());
         alertDialog.setTitle("Eliminar evento");
-        alertDialog.setMessage("¿Está seguro que desea eliminar el evento \""+nombre+"\"? Este cambio será permanente.");
+        alertDialog.setMessage("¿Está seguro que desea eliminar el evento \""+evento.getTitulo()+"\"? Este cambio será permanente y se notificará a los que estén interesados en el evento.");
         alertDialog.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                eliminarEvento();
+                eliminarEvento(evento, itemView);
             }
         });
         alertDialog.setNeutralButton("Volver", new DialogInterface.OnClickListener() {
@@ -178,10 +183,48 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         });
         alertDialog.show();
     }
-    private void eliminarEvento() {
+    private void eliminarEvento(Evento evento, View itemView) {
         //TODO eliminar evento de apoyos de alumnos
         //eliminar evento de actividad
         //eliminar evento de eventos
+        db = FirebaseFirestore.getInstance();
+        db.collection("alumnos").whereArrayContains("eventos",evento.getFechaHoraCreacion().toString())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document: queryDocumentSnapshots){
+                            String alumnoId = document.getId();
+                            db.collection("alumnos")
+                                    .document(alumnoId)
+                                    .collection("eventos")
+                                    .document(evento.getFechaHoraCreacion().toString())
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            db.collection("eventos").document(evento.getFechaHoraCreacion().toString())
+                                                    .delete()
+                                                    .addOnSuccessListener(unused -> {
+                                                        eventoAList.remove(evento);
+                                                        notifyDataSetChanged();
+                                                        Snackbar.make(itemView, "Se eliminó al alumno "+apoyo.getAlumno().getNombre()+" de la lista de apoyos.", Snackbar.LENGTH_SHORT).show();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Snackbar.make(itemView, "No se pudo eliminar a "+apoyo.getAlumno().getNombre()+" de la lista de apoyos.", Snackbar.LENGTH_SHORT).show();
+                                                    });
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                        }
+                                    });
+                        }
+                    }
+                });
+
     }
 
 }

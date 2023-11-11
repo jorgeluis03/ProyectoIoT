@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class ApoyoDto implements Serializable {
     private Alumno alumno;
     private String categoria;
+    private String eventoId;
 
     public Alumno getAlumno() {
         return alumno;
@@ -22,5 +23,13 @@ public class ApoyoDto implements Serializable {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public String getEventoId() {
+        return eventoId;
+    }
+
+    public void setEventoId(String eventoId) {
+        this.eventoId = eventoId;
     }
 }
