@@ -113,7 +113,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                                 }
                             }
                         } else {
-                                // Si hubo un error en la consulta, puedes mostrar un mensaje de error o tomar otra acción.
+                            // Si hubo un error en la consulta, puedes mostrar un mensaje de error o tomar otra acción.
                             Toast.makeText(AlumnoEventoActivity.this, "Error al buscar coordenadas: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -123,37 +123,32 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     }
 
     private void insertarFragmentButtons(Bundle savedInstanceState) {
+
         db.collection("alumnos")
                 .document(userUid)
                 .collection("eventos")
                 .document("evento" + evento.getFechaHoraCreacion().toString())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (savedInstanceState == null) {
-                                if (document.exists()) { // evento en lista de eventos de alumno (evento apoyado)
-                                    getSupportFragmentManager().beginTransaction()
-                                            .setReorderingAllowed(true)
-                                            .add(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
-                                            .commit();
-
-                                    binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                                } else { // evento no apoyado
-                                    getSupportFragmentManager().beginTransaction()
-                                            .setReorderingAllowed(true)
-                                            .add(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
-                                            .commit();
-                                }
-                            }
-                        } else {
-                            Log.d("msg-test", "AlumnoEventoActivity: error al buscar evento");
+                .addSnapshotListener(((value, error) -> {
+                    if (error != null){
+                        Log.d("msg-test", "Listen failed in evento activity");
+                        return;
+                    }
+                    if (savedInstanceState == null){
+                        if (value != null && value.exists()){ // evento en lista de eventos de alumno (evento apoyado)
+                            getSupportFragmentManager().beginTransaction()
+                                    .setReorderingAllowed(true)
+                                    .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
+                                    .commit();
+                            binding.buttonSubirFotos.setVisibility(View.VISIBLE);
+                        }
+                        else{ // evento no apoyado
+                            getSupportFragmentManager().beginTransaction()
+                                    .setReorderingAllowed(true)
+                                    .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
+                                    .commit();
                         }
                     }
-                });
-
+                }));
     }
 
     private ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(
@@ -176,7 +171,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Foto foto = document.toObject(Foto.class);
                             fotoList.add(foto);
-                            Log.d("msg-test", "foto: "+foto.getDescripcion());
+                            Log.d("msg-test", "foto: " + foto.getDescripcion());
                         }
                         adapter.notifyDataSetChanged();
                     } else {
@@ -244,9 +239,9 @@ public class AlumnoEventoActivity extends AppCompatActivity {
 
     }
 
-    private void subirFotoFirestore(Foto fotoNueva){
+    private void subirFotoFirestore(Foto fotoNueva) {
         db.collection("eventos")
-                .document("evento"+ evento.getFechaHoraCreacion().toString())
+                .document("evento" + evento.getFechaHoraCreacion().toString())
                 .collection("fotos")
                 .add(fotoNueva)
                 .addOnSuccessListener(documentReference -> {
