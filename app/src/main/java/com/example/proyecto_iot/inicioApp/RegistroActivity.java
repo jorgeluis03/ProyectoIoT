@@ -68,21 +68,7 @@ public class RegistroActivity extends AppCompatActivity {
             setInPogressBar(true);
             if (validFields()){
 
-                // crear usuario en firebase authentication
-                mAuth.createUserWithEmailAndPassword(code+"@app.com", pass)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    Log.d("msg-test", "usuario creado en authentication");
-                                    // crear usuario en firestore
-                                    crearUsuarioFirestore();
-                                }
-                                else{
-                                    Log.d("msg-test", "error al crear usuario");
-                                }
-                            }
-                        });
+                crearUsuarioAuthentication();
             }
         });
     }
@@ -96,6 +82,23 @@ public class RegistroActivity extends AppCompatActivity {
             sendButton.setVisibility(View.VISIBLE);
             return;
         }
+    }
+
+    private void crearUsuarioAuthentication(){
+        mAuth.createUserWithEmailAndPassword(code+"@app.com", pass)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            Log.d("msg-test", "usuario creado en authentication");
+
+                            crearUsuarioFirestore();
+                        }
+                        else{
+                            Log.d("msg-test", "error al crear usuario");
+                        }
+                    }
+                });
     }
 
     boolean validFields(){
@@ -150,6 +153,7 @@ public class RegistroActivity extends AppCompatActivity {
                 .addOnSuccessListener(unused -> {
                     Log.d("msg-test", "usuario guardado en firestore");
                     //enviar la notificacion al delegado general
+
                     enviarNotificacion();
                     setInPogressBar(false);
 
