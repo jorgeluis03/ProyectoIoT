@@ -13,6 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cometchat.chat.core.AppSettings;
+import com.cometchat.chat.core.CometChat;
+import com.cometchat.chat.exceptions.CometChatException;
+import com.cometchat.chat.models.User;
+import com.example.proyecto_iot.AppConstants;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
@@ -44,7 +49,6 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
         tvNombreUser.setText(userRegi.getNombre()+' '+userRegi.getApellidos());
         tvCorreoUser.setText(userRegi.getCorreo());
 
-
     }
 
     @Override
@@ -75,21 +79,13 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
                             db.collection("alumnos").document(alumno.getId())
                                     .update("estado","activo")
                                     .addOnSuccessListener(unused -> {
-                                        // Eliminar el usuario de la lista de datos
-                                        listaUsuariosPendi.remove(alumno);
-                                        // Notificar al adaptador que los datos han cambiado
-                                        notifyDataSetChanged();
-                                        Toast.makeText(context,"Usuario aceptado",Toast.LENGTH_SHORT).show();
+                                        crearUsuarioCometChat(alumno);
                                     })
                                     .addOnFailureListener(e -> {
                                         Toast.makeText(context,"algo pasó",Toast.LENGTH_SHORT).show();
                                     });
-
                         })
                         .show();
-
-
-
             });
 
             //Rechazar solicitud
@@ -113,6 +109,9 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
                                 db.collection("alumnos").document(alumno.getId())
                                         .delete()
                                         .addOnSuccessListener(unused -> {
+
+                                            eliminarUsuarioAuthentication();
+
                                             // Eliminar el usuario de la lista de datos
                                             listaUsuariosPendi.remove(alumno);
 
@@ -131,6 +130,59 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
 
             });
         }
+    }
+
+    private void crearUsuarioCometChat(Alumno alumno){
+        String region = AppConstants.REGION;
+        String appID = AppConstants.APP_ID;
+        String authKey = AppConstants.AUTH_KEY;
+
+        AppSettings appSettings = new AppSettings.AppSettingsBuilder()
+                .subscribePresenceForAllUsers()
+                .setRegion(region)
+                .autoEstablishSocketConnection(true)
+                .build();
+
+        CometChat.init(getContext(), appID, appSettings, new CometChat.CallbackListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                Log.d("msg-test", "Initialization completed successfully");
+
+                // creando usuario
+                User nuevoUsuario = new User();
+                nuevoUsuario.setUid(alumno.getId());
+                nuevoUsuario.setName(alumno.getNombre()+" "+alumno.getApellidos());
+
+                CometChat.createUser(nuevoUsuario, authKey, new CometChat.CallbackListener<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        Log.d("msg-test", "usuario creado: "+user.toString());
+
+                        // Eliminar el usuario de la lista de datos
+                        listaUsuariosPendi.remove(alumno);
+                        // Notificar al adaptador que los datos han cambiado
+                        notifyDataSetChanged();
+
+                        Toast.makeText(context,"Usuario aceptado",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(CometChatException e) {
+                        Log.d("msg-test", "error creando usuario: "+e.getMessage());
+                    }
+                });
+
+            }
+
+            @Override
+            public void onError(CometChatException e) {
+                Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
+            }
+        });
+    }
+
+    private void eliminarUsuarioAuthentication(){
+
     }
 
     /*int position = getAdapterPosition();

@@ -17,10 +17,13 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityRegistroBinding;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -49,6 +52,7 @@ public class RegistroActivity extends AppCompatActivity {
     ProgressBar progressBar;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     String CHANNEL_ID = "canalDelegadoGeneral";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,7 @@ public class RegistroActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        progressBar  = binding.progressBar;
+        progressBar = binding.progressBar;
         sendButton = binding.sendButton;
         progressBar.setVisibility(View.GONE);
 
@@ -66,42 +70,44 @@ public class RegistroActivity extends AppCompatActivity {
 
         sendButton.setOnClickListener(view -> {
             setInPogressBar(true);
-            if (validFields()){
-
+            if (validFields()) {
                 crearUsuarioAuthentication();
             }
         });
     }
-    public void setInPogressBar(boolean inProgress){
-        if(inProgress){
+
+    public void setInPogressBar(boolean inProgress) {
+        if (inProgress) {
             progressBar.setVisibility(View.VISIBLE);
             sendButton.setVisibility(View.GONE);
             return;
-        }else {
+        } else {
             progressBar.setVisibility(View.GONE);
             sendButton.setVisibility(View.VISIBLE);
             return;
         }
     }
 
-    private void crearUsuarioAuthentication(){
-        mAuth.createUserWithEmailAndPassword(code+"@app.com", pass)
+    private void crearUsuarioAuthentication() {
+        mAuth.createUserWithEmailAndPassword(code + "@app.com", pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d("msg-test", "usuario creado en authentication");
-
                             crearUsuarioFirestore();
-                        }
-                        else{
-                            Log.d("msg-test", "error al crear usuario");
+                        } else {
+                            String msg = task.getException().getMessage();
+                            if (msg.equals("The email address is already in use by another account.")){
+                                Toast.makeText(RegistroActivity.this, "El código ingresado ya se encuentra registrado", Toast.LENGTH_SHORT).show();
+                            }
+                            setInPogressBar(false);
                         }
                     }
                 });
     }
 
-    boolean validFields(){
+    boolean validFields() {
         name = binding.editNameSign.getEditText().getText().toString();
         lastName = binding.editLastnameSign.getEditText().getText().toString();
         code = binding.editCodeSign.getEditText().getText().toString();
@@ -109,21 +115,21 @@ public class RegistroActivity extends AppCompatActivity {
         pass = binding.editPasswSign.getEditText().getText().toString(); // validar que contraseña tenga al menos 6 caracteres
         type = binding.userTypeSpinner.getEditText().getText().toString();
 
-        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(code) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(type)){
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(code) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(type)) {
             return true;
-        }else {
-            if(name.isEmpty()){
+        } else {
+            if (name.isEmpty()) {
                 binding.editNameSign.setError("campo vacio");
             }
 
             if (lastName.isEmpty()) {
                 binding.editLastnameSign.setError("campo vacio");
             }
-            if (code.isEmpty()){
+            if (code.isEmpty()) {
                 binding.editCodeSign.setError("campo vacio");
 
             }
-            if(email.isEmpty()){
+            if (email.isEmpty()) {
                 binding.editEmailSign.setError("campo vacio");
 
             }
@@ -131,22 +137,22 @@ public class RegistroActivity extends AppCompatActivity {
                 binding.editPasswSign.setError("campo vacio");
 
             }
-            if (type.isEmpty()){
+            if (type.isEmpty()) {
                 binding.userTypeSpinner.setError("campo vacio");
 
             }
 
             setInPogressBar(false);
-            Toast.makeText(this,"Complete todos los campos",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_SHORT).show();
 
             return false;
         }
 
     }
 
-    void crearUsuarioFirestore(){
+    void crearUsuarioFirestore() {
         FirebaseUser user = mAuth.getCurrentUser();
-        Alumno nuevoAlumno = new Alumno(user.getUid(),name, lastName, "Alumno", code, email, "", type, "inactivo");
+        Alumno nuevoAlumno = new Alumno(user.getUid(), name, lastName, "Alumno", code, email, "", type, "inactivo");
         db.collection("alumnos")
                 .document(user.getUid())
                 .set(nuevoAlumno)
@@ -164,32 +170,33 @@ public class RegistroActivity extends AppCompatActivity {
                     e.printStackTrace();
                 });
     }
-    public void enviarNotificacion(){
+
+    public void enviarNotificacion() {
         //current username, message, currentUserId, otherUserToken
-        FirebaseUtilDg.getCollAlumnos().whereEqualTo("codigo","20200643").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+        FirebaseUtilDg.getCollAlumnos().whereEqualTo("codigo", "20200643").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
                 Alumno usuarioDg = task.getResult().toObjects(Alumno.class).get(0);
                 try {
                     JSONObject jsonObject = new JSONObject();
 
                     JSONObject notificationObj = new JSONObject();
-                    notificationObj.put("title","Solicitud de registro");
-                    notificationObj.put("body","Un nuevo usuario solicita ser miembro de ActiviConnect");
+                    notificationObj.put("title", "Solicitud de registro");
+                    notificationObj.put("body", "Un nuevo usuario solicita ser miembro de ActiviConnect");
 
 
                     //JSONObject dataObj = new JSONObject();
                     //dataObj.put("userId",currentUser.getUserId());   //mismo identificador que el putExtra del splashActivity
 
 
-                    jsonObject.put("notification",notificationObj);
+                    jsonObject.put("notification", notificationObj);
                     //jsonObject.put("data",dataObj);
-                    jsonObject.put("to",usuarioDg.getFcmToken());
+                    jsonObject.put("to", usuarioDg.getFcmToken());
 
 
                     callApi(jsonObject);
 
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -198,7 +205,8 @@ public class RegistroActivity extends AppCompatActivity {
 
 
     }
-    public void callApi(JSONObject jsonObject){
+
+    public void callApi(JSONObject jsonObject) {
         MediaType JSON = MediaType.get("application/json");
         OkHttpClient client = new OkHttpClient();
         String url = "https://fcm.googleapis.com/fcm/send";
@@ -206,7 +214,7 @@ public class RegistroActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
-                .header("Authorization","Bearer AAAAZ6GvChg:APA91bGcMRy5DGWg6JBjNDsXSzKHFqrcZ9nE-blBNJGw9BPHXYAlHW1pdzn0n0BSf-PrhRjg_PO7qUmZPWhL4mEGuoHO-Sk7u8Ui1UZU4pIKSKplfE7wxQO6c1wiY073Jm6fzkR2Kg0q")
+                .header("Authorization", "Bearer AAAAZ6GvChg:APA91bGcMRy5DGWg6JBjNDsXSzKHFqrcZ9nE-blBNJGw9BPHXYAlHW1pdzn0n0BSf-PrhRjg_PO7qUmZPWhL4mEGuoHO-Sk7u8Ui1UZU4pIKSKplfE7wxQO6c1wiY073Jm6fzkR2Kg0q")
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
