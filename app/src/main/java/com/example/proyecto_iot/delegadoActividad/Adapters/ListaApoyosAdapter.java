@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,6 +111,7 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
             MaterialSwitch materialSwitch = itemView.findViewById(R.id.materialSwitch);
             TextView nombre = itemView.findViewById(R.id.nombreApoyo);
             materialSwitch.setOnClickListener(view ->{
+                Log.d("msg-test","Switch: "+materialSwitch.isChecked());
                 if (materialSwitch.isChecked()){
                     mostrarConfirmacionDialog(true, nombre.getText().toString(),itemView, materialSwitch, apoyo);
                 }else {
@@ -137,6 +139,11 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
 
     private void actualizarApoyoDeleteEnDb(ApoyoDto apoyo, View view) {
         db = FirebaseFirestore.getInstance();
+        db.collection("alumnos").document(apoyo.getAlumno().getId())
+                .collection("eventos").document(apoyo.getEventoId())
+                .delete()
+                .addOnSuccessListener(unused -> {})
+                .addOnFailureListener(e -> {});
         db.collection("eventos").document(apoyo.getEventoId())
                 .collection("apoyos").document(apoyo.getAlumno().getId())
                 .delete()
@@ -146,6 +153,7 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
                     Snackbar.make(view, "Se eliminó al alumno "+apoyo.getAlumno().getNombre()+" de la lista de apoyos.", Snackbar.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
+                    //TODO: volver a agregar el documento de evento dentro de la coleccion alumno/eventos
                     Snackbar.make(view, "No se pudo eliminar a "+apoyo.getAlumno().getNombre()+" de la lista de apoyos.", Snackbar.LENGTH_SHORT).show();
                 });
     }
@@ -171,7 +179,6 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
         alertDialog.setTitle("Confirmación");
         alertDialog.setMessage(cambioApoyo);
         alertDialog.setPositiveButton("Sí", (dialogInterface, i) -> {
-            actualizarApoyoEnDb(apoyo, b, itemView);
             if (b){
                 jugador.setImageResource(R.drawable.icon_running);
                 jugador.setImageTintList(colorBat);
@@ -183,14 +190,13 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
                 barra.setImageResource(R.drawable.icon_barra_filled);
                 barra.setImageTintList(colorBat);
             }
+            actualizarApoyoEnDb(apoyo, b, itemView);
         });
         alertDialog.setNegativeButton("Regresar", (dialogInterface, i) -> {
             materialSwitch.setChecked(!b);
         });
-        alertDialog.setOnDismissListener(dialogInterface -> {
-            materialSwitch.setChecked(!b);
-        });
         alertDialog.setOnCancelListener(dialogInterface -> {
+            Log.d("msg-test","Estado Cancel");
             materialSwitch.setChecked(!b);
         });
         alertDialog.show();
@@ -218,8 +224,8 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
                     Snackbar.make(view, "Se actualizó la categoría de "+apoyo.getAlumno().getNombre()+" a "+ categoria, Snackbar.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(context,"Algo pasó",Toast.LENGTH_SHORT).show();
-
+                    notifyDataSetChanged();
+                    Snackbar.make(view, "Ocurrió un error durante la actualizacoión de "+apoyo.getAlumno().getNombre()+". Inténtelo más tarde.", Snackbar.LENGTH_SHORT).show();
                 });
     }
 }

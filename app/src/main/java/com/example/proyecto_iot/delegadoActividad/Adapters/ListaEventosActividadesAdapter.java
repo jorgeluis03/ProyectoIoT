@@ -2,6 +2,7 @@ package com.example.proyecto_iot.delegadoActividad.Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
+import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
 import com.example.proyecto_iot.delegadoActividad.Entities.Actividad;
 import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -78,14 +80,12 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         Context context;
         public EventoAViewHolder(@NonNull View itemView) {
             super(itemView);
-            TextView textView = itemView.findViewById(R.id.textActividad2);
             Button participantes = itemView.findViewById(R.id.buttonParticipantes);
             participantes.setOnClickListener(view -> {
                 apoyos = new ArrayList<>();
 
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                 View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_da_apoyos, (LinearLayout) view.findViewById(R.id.dialogListApoyos));
-                Button button = bottomSheetView.findViewById(R.id.button2);
                 cargarAdapter(evento);
 
                 adapter.setContext(getContext());
@@ -100,11 +100,12 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
             });
             Button borrar = itemView.findViewById(R.id.buttonDelete);
             borrar.setOnClickListener(view -> {
-                mostrarConfirmacionDialog(evento, itemView);
+                mostrarConfirmacionDeleteDialog(evento, itemView);
             });
             Button editar = itemView.findViewById(R.id.buttonEdit);
             editar.setOnClickListener(view -> {
-
+                Intent intent = new Intent(view.getContext(), DaEditEventoActivity.class);
+                view.getContext().startActivity(intent);
             });
         }
     }
@@ -166,7 +167,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
 
     public void setContext(Context context){this.context = context;}
 
-    private void mostrarConfirmacionDialog(Evento evento, View itemView){
+    private void mostrarConfirmacionDeleteDialog(Evento evento, View itemView){
         MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(getContext());
         alertDialog.setTitle("Eliminar evento");
         alertDialog.setMessage("¿Está seguro que desea eliminar el evento \""+evento.getTitulo()+"\"? Este cambio será permanente y se notificará a los que estén interesados en el evento.");
@@ -184,47 +185,41 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         alertDialog.show();
     }
     private void eliminarEvento(Evento evento, View itemView) {
-        //TODO eliminar evento de apoyos de alumnos
-        //eliminar evento de actividad
-        //eliminar evento de eventos
         db = FirebaseFirestore.getInstance();
+        //eliminando evento de 'apoyos' del alumno
         db.collection("alumnos").whereArrayContains("eventos",evento.getFechaHoraCreacion().toString())
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot document: queryDocumentSnapshots){
-                            String alumnoId = document.getId();
-                            db.collection("alumnos")
-                                    .document(alumnoId)
-                                    .collection("eventos")
-                                    .document(evento.getFechaHoraCreacion().toString())
-                                    .delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            db.collection("eventos").document(evento.getFechaHoraCreacion().toString())
-                                                    .delete()
-                                                    .addOnSuccessListener(unused -> {
-                                                        eventoAList.remove(evento);
-                                                        notifyDataSetChanged();
-                                                        Snackbar.make(itemView, "Se eliminó al alumno "+apoyo.getAlumno().getNombre()+" de la lista de apoyos.", Snackbar.LENGTH_SHORT).show();
-                                                    })
-                                                    .addOnFailureListener(e -> {
-                                                        Snackbar.make(itemView, "No se pudo eliminar a "+apoyo.getAlumno().getNombre()+" de la lista de apoyos.", Snackbar.LENGTH_SHORT).show();
-                                                    });
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-
-                                        }
-                                    });
-                        }
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document: queryDocumentSnapshots){
+                        String alumnoId = document.getId();
+                        db.collection("alumnos")
+                                .document(alumnoId)
+                                .collection("eventos")
+                                .document(evento.getFechaHoraCreacion().toString())
+                                .delete()
+                                .addOnSuccessListener(aVoid -> {})
+                                .addOnFailureListener(e -> {});
                     }
                 });
-
+        //eliminando evento de actividades
+        db.collection("actividades").document(evento.getActividad())
+                .collection("eventos").document(evento.getFechaHoraCreacion().toString())
+                .delete()
+                .addOnSuccessListener(unused -> {})
+                .addOnFailureListener(e -> {});
+        //eliminando evento de eventos
+        db.collection("eventos").document(evento.getFechaHoraCreacion().toString())
+                .delete()
+                .addOnSuccessListener(unused -> {
+                    eventoAList.remove(evento);
+                    notifyDataSetChanged();
+                    Snackbar.make(itemView, "Se eliminó exitosamente el evento "+evento.getTitulo()+" de la actividad "+evento.getActividad()+".", Snackbar.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Snackbar.make(itemView, "No se pudo el evento "+evento.getTitulo()+" de la actividad "+evento.getActividad()+". Intente más tarde.", Snackbar.LENGTH_SHORT).show();
+                    // TODO DA: volver a escribir el evento en 'eventos' de los alumnos
+                    // TODO DA: volver a escribir el evento en 'eventos' de la actividad
+                });
     }
 
 }

@@ -18,12 +18,19 @@
         android:theme="@style/Theme.Proyecto_IoT"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".delegadoActividad.DaEditEventoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Da"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/img_bat" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/azul_background" />
+
         <activity
             android:name=".alumno.MapaEventoActivityAlumno"
             android:exported="false" />
@@ -34,7 +41,7 @@
             android:name=".delegadoActividad.DaGestionEventosActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno"/>
+            android:theme="@style/Alumno" />
         <activity
             android:name=".alumno.AlumnoBuscarEventoActivity"
             android:exported="false"
@@ -49,19 +56,19 @@
         <activity
             android:name=".delegadoGeneral.Dg_configuracion"
             android:exported="false"
-            android:theme="@style/DelegadoGeneral"/>
+            android:theme="@style/DelegadoGeneral" />
         <activity
             android:name=".delegadoGeneral.EditarActividad"
             android:exported="false"
-            android:theme="@style/DelegadoGeneral"/>
+            android:theme="@style/DelegadoGeneral" />
         <activity
             android:name=".delegadoGeneral.Eventos_actividad_dg"
             android:exported="false"
-            android:theme="@style/DelegadoGeneral"/>
+            android:theme="@style/DelegadoGeneral" />
         <activity
             android:name=".delegadoGeneral.Perfil_dg"
             android:exported="false"
-            android:theme="@style/DelegadoGeneral"/>
+            android:theme="@style/DelegadoGeneral" />
         <activity
             android:name=".alumno.AlumnoDonacionConsultaActivity"
             android:exported="false" />
@@ -97,7 +104,7 @@
         <activity
             android:name=".delegadoGeneral.Dg_Activity"
             android:exported="false"
-            android:theme="@style/DelegadoGeneral"/>
+            android:theme="@style/DelegadoGeneral" />
         <activity
             android:name=".alumno.AlumnoPerfilActivity"
             android:exported="false"
@@ -156,6 +163,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAfL_QEGRZ8k5faL21rRYl3egNWOe5aTys" />
+
         <service
             android:name=".delegadoGeneral.FCMNotificationService"
             android:exported="false">
