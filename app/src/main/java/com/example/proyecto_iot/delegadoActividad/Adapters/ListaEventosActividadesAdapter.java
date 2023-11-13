@@ -188,7 +188,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     private void eliminarEvento(Evento evento, View itemView) {
         db = FirebaseFirestore.getInstance();
         //eliminando evento de 'apoyos' del alumno
-        db.collection("alumnos").whereArrayContains("eventos",evento.getFechaHoraCreacion().toString())
+        db.collection("alumnos").whereArrayContains("eventos","evento"+evento.getFechaHoraCreacion().toString())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document: queryDocumentSnapshots){
@@ -196,7 +196,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                         db.collection("alumnos")
                                 .document(alumnoId)
                                 .collection("eventos")
-                                .document(evento.getFechaHoraCreacion().toString())
+                                .document("evento"+evento.getFechaHoraCreacion().toString())
                                 .delete()
                                 .addOnSuccessListener(aVoid -> {})
                                 .addOnFailureListener(e -> {});
@@ -204,12 +204,12 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 });
         //eliminando evento de actividades
         db.collection("actividades").document(evento.getActividad())
-                .collection("eventos").document(evento.getFechaHoraCreacion().toString())
+                .collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
                 .delete()
                 .addOnSuccessListener(unused -> {})
                 .addOnFailureListener(e -> {});
         //eliminando evento de eventos
-        db.collection("eventos").document(evento.getFechaHoraCreacion().toString())
+        db.collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
                 .delete()
                 .addOnSuccessListener(unused -> {
                     eventoAList.remove(evento);

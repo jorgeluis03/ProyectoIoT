@@ -1,11 +1,13 @@
 package com.example.proyecto_iot.delegadoActividad.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Entities.Lugar;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.databinding.FragmentDaEventosMisActividadesBinding;
+import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -73,6 +76,12 @@ public class DaEventosMisActividadesFragment extends Fragment {
 
         binding.rvEventosMisAct.setAdapter(adapter);
         binding.rvEventosMisAct.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        binding.floatingActionButton.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), DaEditEventoActivity.class);
+            intent.putExtra("actividades", actividadList);
+            startActivity(intent);
+        });
 
         return binding.getRoot();
     }

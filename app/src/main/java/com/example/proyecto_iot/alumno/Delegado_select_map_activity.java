@@ -32,6 +32,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -132,50 +133,20 @@ public class Delegado_select_map_activity extends AppCompatActivity implements O
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
-
         builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 final String lugarNombre = input.getText().toString();
-                // Crear una referencia a la colección "lugares"
-                CollectionReference lugaresRef = FirebaseFirestore.getInstance().collection("lugares");
-                // Crear un documento con un nombre específico basado en el nombre del lugar
-                DocumentReference lugarDocumento = lugaresRef.document(lugarNombre);
-                // Crea un objeto que represente los datos a enviar a Firestore
                 Map<String, Object> datosLugar = new HashMap<>();
-                // Crea un objeto GeoPoint con las coordenadas
-                GeoPoint geoPoint = new GeoPoint(latLng.latitude, latLng.longitude);
-                datosLugar.put("coordenadas", geoPoint);
-
-                // Añadir el nombre al documento en la colección
+                //GeoPoint geoPoint = new GeoPoint(latLng.latitude, latLng.longitude);
+                datosLugar.put("latitud", latLng.latitude);
+                datosLugar.put("logitud", latLng.longitude);
                 datosLugar.put("nombre", lugarNombre);
-
-                // Añadir los datos al documento en la colección
-                lugarDocumento.set(datosLugar)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // El nuevo lugar se añadió con éxito a Firestore
-                                // Puedes agregar aquí cualquier acción adicional después de enviar los datos.
-                                if (lugarNombre != null && !lugarNombre.isEmpty()) {
-                                    Intent intent = new Intent(Delegado_select_map_activity.this, AlumnoDonacionConsultaActivity.class);
-                                    intent.putExtra("nombre_lugar", lugarNombre);
-                                    Log.e("Delegado_select_map_activity", "lugarNombre se está enviando y es "+lugarNombre);
-
-                                    startActivity(intent);
-                                } else {
-                                    Log.e("Delegado_select_map_activity", "lugarNombre es nulo o vacío. No se envió el intent.");
-                                }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Ocurrió un error al agregar el lugar a Firestore
-                            }
-                        });
-
-                dialog.dismiss();
+                Log.d("msg-test", "textocheck"+datosLugar.get("nombre").toString());
+                Intent intent = new Intent();
+                intent.putExtra("lugar", (Serializable) datosLugar);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
@@ -190,8 +161,6 @@ public class Delegado_select_map_activity extends AppCompatActivity implements O
         builder.show();
     }
 
-
-    // Método para solicitar permiso de ubicación si no está habilitado
     private void requestLocationPermission() {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},

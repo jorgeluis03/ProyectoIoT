@@ -63,6 +63,12 @@ public class DaGestionEventosActivity extends AppCompatActivity {
 
         binding.rvActividadesEventos.setAdapter(adapter);
         binding.rvActividadesEventos.setLayoutManager(new LinearLayoutManager(DaGestionEventosActivity.this));
+
+        binding.buttonCreateEvent2.setOnClickListener(view -> {
+            Intent intent1 = new Intent(DaGestionEventosActivity.this, DaEditEventoActivity.class);
+            intent1.putExtra("actividadName", a.getNombre());
+            startActivity(intent1);
+        });
     }
     private void buscarEventos(String eventoId){
         db.collection("eventos")

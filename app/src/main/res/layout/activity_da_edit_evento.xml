@@ -170,8 +170,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:simpleItems="@array/tipo_usuario" />
+                    android:textSize="14sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -277,7 +276,9 @@
                     android:layout_height="wrap_content"
                     android:maxLength="20"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:clickable="true"
+                    android:editable="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
