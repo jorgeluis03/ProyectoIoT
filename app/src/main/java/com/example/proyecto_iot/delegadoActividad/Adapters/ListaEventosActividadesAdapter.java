@@ -105,6 +105,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
             Button editar = itemView.findViewById(R.id.buttonEdit);
             editar.setOnClickListener(view -> {
                 Intent intent = new Intent(view.getContext(), DaEditEventoActivity.class);
+                intent.putExtra("evento", evento);
                 view.getContext().startActivity(intent);
             });
         }

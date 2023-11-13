@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/button_alumno_perfil_guardar"
+                android:background="@drawable/button_da_finish_event"
                 android:text="Finalizar evento"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -72,6 +72,24 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputPlaceEvent" />
+
+            <Button
+                android:id="@+id/buttonSaveChangeEvent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:enabled="false"
+                android:background="@drawable/button_alumno_evento_subir_foto"
+                android:text="Guardar cambios"
+                android:textColor="@color/letra_gris"
+                android:textSize="16sp"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonFinishEvent" />
 
             <ImageView
                 android:id="@+id/imageView10"
@@ -81,7 +99,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/cancha_de_minas" />
+                android:src="@drawable/icon_upload"/>
 
             <ImageView
                 android:id="@+id/opaco"
@@ -124,11 +142,36 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView10">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textTitleEvent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="20"
+                    android:maxLength="40"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/selectActividad"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:hint="Actividad"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputTituloEvent"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/textSelectActividad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:simpleItems="@array/tipo_usuario" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,9 +184,10 @@
                 android:hint="Descripción del evento"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputTituloEvent">
+                app:layout_constraintTop_toBottomOf="@+id/selectActividad">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textDescripEvent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|top"
@@ -201,11 +245,14 @@
                     app:endIconMode="custom">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textHourEvent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLength="20"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:clickable="true"
+                        android:editable="false"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -214,17 +261,18 @@
                 android:id="@+id/inputPlaceEvent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
                 android:layout_marginTop="16dp"
                 android:hint="Lugar"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 app:endIconDrawable="@drawable/text_icon_marker_map_filled"
                 app:endIconMode="custom"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-                app:layout_constraintWidth_percent="0.5">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textPlaceEvent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLength="20"

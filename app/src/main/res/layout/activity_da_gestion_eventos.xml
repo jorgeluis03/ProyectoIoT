@@ -11,7 +11,7 @@
         android:id="@+id/textHeaderGestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="Gestionar eventos"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -26,12 +26,13 @@
         android:id="@+id/textSubtitleGestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/rvActividadesEventos"
         app:layout_constraintEnd_toEndOf="@+id/textHeaderGestion"
         app:layout_constraintStart_toStartOf="@+id/textHeaderGestion"
         app:layout_constraintTop_toBottomOf="@+id/textHeaderGestion"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonEventoABack"

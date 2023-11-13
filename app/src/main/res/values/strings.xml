@@ -17,6 +17,7 @@
     <!-- SIGNIN -->
     <string name="signin_instruction">Completa tus datos para continuar:</string>
     <string name="send">Enviar</string>
+
     <string-array name="tipo_usuario">
         <item name="estudiante" type="string">Estudiante</item>
         <item name="egresado" type="string">Egresado</item>
