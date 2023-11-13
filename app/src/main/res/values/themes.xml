@@ -27,6 +27,13 @@
         <item name="android:screenOrientation">portrait</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
     </style>
+    <style name="Da" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/nunito_sans</item>
+        <item name="colorPrimaryDark">@color/azul_background</item>
+        <item name="colorPrimary">@color/verde_bat</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+    </style>
 
     <style name="AlumnoNotificacionRV" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:fontFamily">@font/nunito_sans</item>
@@ -94,5 +101,23 @@
 
     <style name="BottomNavTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/letra_clara</item>
+    </style>
+
+    <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Switch" parent="">
+        <item name="android:colorControlNormal">#00FFB3</item>
+        <item name="android:colorControlActivated">#22755C</item>
+        <item name="android:colorControlHighlight">#22755C</item>
+    </style>
+
+    <style name="Widget.AppTheme.MaterialDatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="materialCalendarHeaderToggleButton">@style/Widget.AppTheme.MaterialCalendar.HeaderToggleButton</item>
+    </style>
+
+    <style name="Widget.AppTheme.MaterialCalendar.HeaderToggleButton" parent="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton">
+        <item name="android:visibility">gone</item>
     </style>
 </resources>

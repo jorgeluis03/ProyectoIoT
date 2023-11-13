@@ -8,21 +8,67 @@
     android:orientation="vertical"
     android:paddingHorizontal="0dp">
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="150dp"
+        android:layout_height="12dp"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/textColorWhite" />
+
     <TextView
         android:id="@+id/textView19"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:text="Lista de apoyos para el evento"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_apoyos_list"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <!-- AppBarLayout with SearchBar -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/azul_background">
+
+            <com.google.android.material.search.SearchBar
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="string/searchbar_hint" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- NestedScrollView for Search Results -->
+        <com.google.android.material.search.SearchView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="string/searchbar_hint"
+            app:layout_anchor="@id/search_bar">
+            <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
+        </com.google.android.material.search.SearchView>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <!-- Search suggestions/results go here -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_apoyos_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- RecyclerView for the main content -->
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </LinearLayout>

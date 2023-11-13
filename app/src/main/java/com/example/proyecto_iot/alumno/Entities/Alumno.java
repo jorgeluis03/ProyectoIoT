@@ -121,4 +121,9 @@ public class Alumno implements Serializable {
     public void setActividadesId(ArrayList<Actividades> actividadesId) {
         this.actividadesId = actividadesId;
     }
+    public String getFullNameFormal(){
+        String[] nombre = this.nombre.split(" ");
+        String[] last = this.apellidos.split(" ");
+        return last[0]+", "+nombre[0];
+    }
 }

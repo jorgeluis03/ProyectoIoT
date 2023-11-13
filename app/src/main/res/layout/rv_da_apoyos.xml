@@ -21,30 +21,32 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/buttonEdit"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/buttonJugador"
         style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/icon_running_outline"
-        app:iconTint="@color/white"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon_running_outline"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/buttonDelete2"
         app:layout_constraintEnd_toStartOf="@+id/buttonDelete2"
         app:layout_constraintTop_toTopOf="@+id/buttonDelete2" />
 
-    <Button
+    <ImageButton
         android:id="@+id/buttonBarra"
         style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/icon_barra_filled"
-        app:iconTint="@color/white"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon_barra_outline"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/materialSwitch"
         app:layout_constraintEnd_toStartOf="@+id/materialSwitch"
-        app:layout_constraintTop_toTopOf="@+id/materialSwitch" />
+        app:layout_constraintTop_toTopOf="@+id/materialSwitch"
+         />
 
     <TextView
         android:id="@+id/textTipoAlumno"
@@ -79,12 +81,16 @@
 
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/materialSwitch"
+        style="@style/Widget.App.Switch"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:checked="false"
+        android:checked="true"
         app:layout_constraintBottom_toBottomOf="@+id/buttonDelete2"
         app:layout_constraintEnd_toStartOf="@+id/buttonJugador"
         app:layout_constraintTop_toTopOf="@+id/buttonDelete2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:thumbTint="@color/verde_bat"
+        app:trackDecorationTint="#939393"
+        app:trackTint="#838383" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
