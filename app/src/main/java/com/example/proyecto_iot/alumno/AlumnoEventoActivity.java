@@ -8,6 +8,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +36,7 @@ import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -79,6 +83,39 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.buttonEventoBack.setOnClickListener(view -> {
             finish();
         });
+
+        binding.buttonEventoFecha.setOnClickListener(view -> {
+            MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(AlumnoEventoActivity.this);
+            alertDialog.setTitle("Confirmación");
+            alertDialog.setMessage("¿Desea agregar el evento en el calendario?");
+            alertDialog.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            alertDialog.show();
+        });
+
+        binding.buttonEventoHora.setOnClickListener(view -> {
+            MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(AlumnoEventoActivity.this);
+            alertDialog.setTitle("Confirmación");
+            alertDialog.setMessage("¿Desea agregar una alarma para el evento?");
+            alertDialog.setPositiveButton("Agregar", ((dialogInterface, i) -> {
+
+            }));
+            alertDialog.setNegativeButton("Cancelar", ((dialogInterface, i) -> {
+
+            }));
+            alertDialog.show();
+        });
+
         binding.buttonEventoLugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,15 +221,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         adapter.setFotoList(fotoList);
 
         binding.rvFotos.setAdapter(adapter);
-        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AlumnoEventoActivity.this){
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        binding.rvFotos.setLayoutManager(linearLayoutManager);
-
-         */
         binding.rvFotos.setLayoutManager(new LinearLayoutManager(AlumnoEventoActivity.this));
     }
 
