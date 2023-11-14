@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Foto;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEventoAdapter.FotoViewHolder>{
@@ -34,14 +35,21 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
         Foto foto = fotoList.get(position);
         holder.foto = foto;
 
-        TextView textDescripcion = holder.itemView.findViewById(R.id.textDescipcionFoto);
-        textDescripcion.setText(foto.getDescripcion());
         ImageView imagenFoto = holder.itemView.findViewById(R.id.imageFoto);
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(getContext())
                 .load(foto.getFotoUrl())
                 .apply(requestOptions)
                 .into(imagenFoto);
+
+        TextView textDescripcion = holder.itemView.findViewById(R.id.textDescipcionFoto);
+        textDescripcion.setText(foto.getDescripcion());
+
+        TextView textFechaPublicacion = holder.itemView.findViewById(R.id.textFechaPublicación);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM, dd");
+        String fechaFormateada = simpleDateFormat.format(foto.getFechaHoraSubida().toDate());
+        textFechaPublicacion.setText(fechaFormateada);
     }
 
     @Override
