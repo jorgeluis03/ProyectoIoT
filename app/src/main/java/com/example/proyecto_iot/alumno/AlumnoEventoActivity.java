@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,7 +50,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AlumnoEventoActivity extends AppCompatActivity {
@@ -91,7 +96,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             alertDialog.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
+                    crearEventoEnCalendario();
                 }
             });
             alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -106,9 +111,9 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.buttonEventoHora.setOnClickListener(view -> {
             MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(AlumnoEventoActivity.this);
             alertDialog.setTitle("Confirmación");
-            alertDialog.setMessage("¿Desea agregar una alarma para el evento?");
+            alertDialog.setMessage("¿Desea agregar el evento en el calendario?");
             alertDialog.setPositiveButton("Agregar", ((dialogInterface, i) -> {
-
+                crearEventoEnCalendario();
             }));
             alertDialog.setNegativeButton("Cancelar", ((dialogInterface, i) -> {
 
@@ -300,6 +305,35 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .load(evento.getFotoUrl())
                 .apply(requestOptions)
                 .into(binding.imageEvento);
+    }
+
+    private void crearEventoEnCalendario(){
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setData(CalendarContract.Events.CONTENT_URI);
+        intent.putExtra(CalendarContract.Events.TITLE, evento.getTitulo());
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Ubicación del evento");
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, evento.getDescripcion());
+
+        long timeMillis = obtenerMilis(evento.getFecha(), evento.getHora());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, timeMillis);
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, timeMillis+3600000); // duracion del evento por defecto de una hora
+
+        startActivity(intent);
+    }
+
+    private long obtenerMilis(String fecha, String hora){
+        String fechaCompleta = fecha + " " + hora;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm 'hrs'");
+
+        try {
+            Date date = dateFormat.parse(fechaCompleta);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            return calendar.getTimeInMillis();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     // funcion necesaria para chat
