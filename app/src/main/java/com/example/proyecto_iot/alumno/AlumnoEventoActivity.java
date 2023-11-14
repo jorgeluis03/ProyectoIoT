@@ -189,7 +189,10 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             public boolean canScrollVertically() {
                 return false;
             }
-        };*/
+        };
+        binding.rvFotos.setLayoutManager(linearLayoutManager);
+
+         */
         binding.rvFotos.setLayoutManager(new LinearLayoutManager(AlumnoEventoActivity.this));
     }
 
