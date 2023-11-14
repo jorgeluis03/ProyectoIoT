@@ -1,6 +1,7 @@
 package com.example.proyecto_iot.alumno.RecyclerViews;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Foto;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -41,6 +45,22 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
                 .load(foto.getFotoUrl())
                 .apply(requestOptions)
                 .into(imagenFoto);
+
+        TextView textNombre = holder.itemView.findViewById(R.id.textAlumnoNombre);
+
+        FirebaseFirestore.getInstance()
+                .collection("alumnos")
+                .document(foto.getAlumnoID())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Alumno alumno = task.getResult().toObject(Alumno.class);
+                        textNombre.setText(alumno.getNombre()+" "+alumno.getApellidos()+":");
+                    }
+                    else {
+                        Log.d("msg-test", "error buscando alumno de foto: "+task.getException().getMessage());
+                    }
+                });
 
         TextView textDescripcion = holder.itemView.findViewById(R.id.textDescipcionFoto);
         textDescripcion.setText(foto.getDescripcion());

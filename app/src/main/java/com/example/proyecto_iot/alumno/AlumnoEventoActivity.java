@@ -165,6 +165,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         db.collection("eventos")
                 .document("evento" + evento.getFechaHoraCreacion().toString())
                 .collection("fotos")
+                .orderBy("fechaHoraSubida", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
