@@ -3,12 +3,12 @@ package com.example.proyecto_iot.delegadoActividad.Adapters;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,27 +19,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
-import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
-import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment;
-import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
-import com.example.proyecto_iot.delegadoActividad.Entities.Actividad;
 import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
+import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEventosActividadesAdapter.EventoAViewHolder> {
@@ -47,6 +46,9 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     private List<Evento> eventoAList;
     ApoyoDto apoyo;
     ArrayList<ApoyoDto> apoyos = new ArrayList<>();
+    public ArrayList<Actividades> actividadList = new ArrayList<>();
+    public ArrayList<Actividades> actividadesList = new ArrayList<>();
+    private Actividades currentActividad;
 
     private Context context;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -117,7 +119,6 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         db.collection("eventos")
                 .document(name)
                 .collection("apoyos")
-                .orderBy("codigo", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -185,9 +186,10 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         });
         alertDialog.show();
     }
-    private void eliminarEvento(Evento evento, View itemView) {
+    public void eliminarEvento(Evento evento, View itemView) {
         db = FirebaseFirestore.getInstance();
         //eliminando evento de 'apoyos' del alumno
+        //TODO DA: eliminar correctamente el evento de apoyos del alumno
         db.collection("alumnos").whereArrayContains("eventos","evento"+evento.getFechaHoraCreacion().toString())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -203,11 +205,31 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                     }
                 });
         //eliminando evento de actividades
-        db.collection("actividades").document(evento.getActividad())
+        actividadList = obtenerActividadesDesdeMemoria();
+        Log.d("msg-test","Se cargó desde memoria: " + actividadList.get(0).getId());
+        Actividades a;
+        for (Actividades actividad: actividadList){
+            a = new Actividades();
+            Log.d("msg-test","validando:"+ actividad.getId());
+            a = buscarActividad(actividad.getId());
+            actividadesList.add(a);
+            Log.d("msg-test", "Cargando: " +a.getId());
+        }
+        Log.d("msg-test","Actividades obtenidas: "+actividadesList.size());
+        Log.d("msg-test", "texto: "+actividadesList.get(0).getId());
+        currentActividad = new Actividades();
+        for (Actividades ac: actividadesList){
+            if (ac.getNombre().equals(evento.getActividad())){
+                currentActividad = ac;
+                Log.d("msg-test","Actividad actual encontrada");
+                break;
+            }
+        }
+        db.collection("actividades").document(currentActividad.getId())
                 .collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
                 .delete()
-                .addOnSuccessListener(unused -> {})
-                .addOnFailureListener(e -> {});
+                .addOnSuccessListener(unused -> {Log.d("msg-test", "eliminado de actividades");})
+                .addOnFailureListener(e -> {Log.d("msg-test", "no se pudo eliminar de actividades");});
         //eliminando evento de eventos
         db.collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
                 .delete()
@@ -221,6 +243,54 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                     // TODO DA: volver a escribir el evento en 'eventos' de los alumnos
                     // TODO DA: volver a escribir el evento en 'eventos' de la actividad
                 });
+    }
+    public ArrayList<Actividades> obtenerActividadesDesdeMemoria() {
+        try (FileInputStream fileInputStream = getContext().openFileInput("userData");
+             FileReader fileReader = new FileReader(fileInputStream.getFD());
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+
+            String jsonData = bufferedReader.readLine();
+            Gson gson = new Gson();
+            Alumno alumno = gson.fromJson(jsonData, Alumno.class);
+            return alumno.getActividadesId();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public Actividades buscarActividad(String id) {
+        AsyncTask<String, Void, Actividades> task = new AsyncTask<String, Void, Actividades>() {
+            @Override
+            protected Actividades doInBackground(String... strings) {
+                Actividades ac = null; // Inicializa a null para manejar casos donde no se encuentra la actividad
+
+                try {
+                    Task<DocumentSnapshot> task = db.collection("actividades").document(strings[0]).get();
+                    DocumentSnapshot documentSnapshot = Tasks.await(task);
+
+                    if (documentSnapshot.exists()) {
+                        Actividades a = documentSnapshot.toObject(Actividades.class);
+                        Log.d("msg-test", "actividad encontrada: " + a.getNombre());
+
+                        if (a.getEstado().equals("abierto")) {
+                            ac = a;
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d("msg-test", "DaGestionFragment error buscando act: " + e.getMessage());
+                }
+
+                return ac;
+            }
+        };
+
+        try {
+            return task.execute(id).get();
+        } catch (Exception e) {
+            Log.d("msg-test", "Error al ejecutar AsyncTask: " + e.getMessage());
+            return null;
+        }
     }
 
 }

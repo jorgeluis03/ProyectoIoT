@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -137,16 +138,21 @@ public class Delegado_select_map_activity extends AppCompatActivity implements O
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 final String lugarNombre = input.getText().toString();
-                Map<String, Object> datosLugar = new HashMap<>();
-                //GeoPoint geoPoint = new GeoPoint(latLng.latitude, latLng.longitude);
-                datosLugar.put("latitud", latLng.latitude);
-                datosLugar.put("logitud", latLng.longitude);
-                datosLugar.put("nombre", lugarNombre);
-                Log.d("msg-test", "textocheck"+datosLugar.get("nombre").toString());
-                Intent intent = new Intent();
-                intent.putExtra("lugar", (Serializable) datosLugar);
-                setResult(RESULT_OK, intent);
-                finish();
+                if (!lugarNombre.trim().equals("")){
+                    Map<String, Object> datosLugar = new HashMap<>();
+                    //GeoPoint geoPoint = new GeoPoint(latLng.latitude, latLng.longitude);
+                    datosLugar.put("latitud", latLng.latitude);
+                    datosLugar.put("longitud", latLng.longitude);
+                    datosLugar.put("nombre", lugarNombre);
+                    Log.d("msg-test", "textocheck"+datosLugar.get("nombre").toString());
+                    Intent intent = new Intent();
+                    intent.putExtra("lugar", (Serializable) datosLugar);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }else {
+                    Snackbar.make(Delegado_select_map_activity.this.getCurrentFocus(), "Debe ingresar un nombre al lugar.", Snackbar.LENGTH_SHORT).show();
+                }
+
             }
         });
 

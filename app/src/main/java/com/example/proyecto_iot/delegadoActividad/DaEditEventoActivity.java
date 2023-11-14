@@ -8,12 +8,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -22,7 +20,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -30,29 +27,29 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.AlumnoDonacionConsultaActivity;
-import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Delegado_select_map_activity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
-import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.example.proyecto_iot.databinding.ActivityDaEditEventoBinding;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
@@ -63,22 +60,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class DaEditEventoActivity extends AppCompatActivity {
     ActivityDaEditEventoBinding binding;
+    Evento eventoGuardar = new Evento();
     boolean isExistEvent;
     boolean changedImage = false;
-    private Uri imageUri;
+    private Uri imageUri = null;
     Map<String, Object> datoRecibido = new HashMap<>();
     private Evento evento;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -87,6 +81,8 @@ public class DaEditEventoActivity extends AppCompatActivity {
     private BottomSheetDialog bottomSheetDialog;
     ArrayList<String> listaFinal = new ArrayList<>();
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yy");
+    ArrayList<Actividades> actividadesList = new ArrayList<>();
+        Actividades currentActividad;
     private static final int ACTIVIDAD_MAPS_REQUEST_CODE = 2;
 
     @Override
@@ -100,10 +96,9 @@ public class DaEditEventoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         evento = (Evento) intent.getSerializableExtra("evento");
         actividadList = obtenerActividadesDesdeMemoria();
-        String actividadName = intent.getStringExtra("actividadName");
+        Actividades actividadName = (Actividades) intent.getSerializableExtra("actividadName");
         if (evento == null){
             isExistEvent = false;
-            actividadList = obtenerActividadesDesdeMemoria();
             AutoCompleteTextView autoCompleteTextView = binding.textSelectActividad;
             for (Actividades actividad: actividadList){
                 buscarActividad(actividad.getId());
@@ -113,9 +108,9 @@ public class DaEditEventoActivity extends AppCompatActivity {
             autoCompleteTextView.setAdapter(adapter);
 
             if (actividadName != null){
-                binding.textSelectActividad.setText(actividadName);
+                binding.textSelectActividad.setText(actividadName.getNombre());
                 binding.textSelectActividad.setEnabled(false);
-                binding.textSubtitleEventEdition.setText("Actividad: "+actividadName);
+                binding.textSubtitleEventEdition.setText("Actividad: "+actividadName.getNombre());
             }
 
             binding.buttonFinishEvent.setVisibility(View.GONE);
@@ -257,20 +252,47 @@ public class DaEditEventoActivity extends AppCompatActivity {
 
         binding.buttonSaveChangeEvent.setOnClickListener(view -> {
             if (binding.buttonSaveChangeEvent.isEnabled()){
+                binding.buttonSaveChangeEvent.setEnabled(false);
                 if (isExistEvent){
-
+                    Map<String, Object> eventoUpdate = new HashMap<>();
+                    if (datoRecibido.get("nombre")!=null){
+                        guardarLugar(datoRecibido);
+                        eventoUpdate.put("lugar", binding.textPlaceEvent.getText().toString());
+                    }
+                    if (!binding.textDescripEvent.getText().toString().equals(evento.getDescripcion())){
+                        eventoUpdate.put("descripcion", binding.textDescripEvent.getText().toString());
+                    }
+                    if (!binding.textDateEvent.getText().toString().equals(evento.getFecha())){
+                        eventoUpdate.put("fecha", binding.textDateEvent.getText().toString());
+                    }
+                    if (!binding.textHourEvent.getText().toString().equals(evento.getHora())){
+                        eventoUpdate.put("hora", binding.textHourEvent.getText().toString());
+                    }
+                    subirUpdateEventoFirestore(eventoUpdate);
+                    if (imageUri!=null){
+                        subirFoto(imageUri, evento.getFechaHoraCreacion().toString());
+                    }
+                    finish();
                 }else {
+                    for (Actividades a: actividadesList){
+                        if (a.getNombre().equals(binding.textSelectActividad.getText().toString())){
+                            currentActividad = a;
+                            break;
+                        }
+                    }
                     guardarLugar(datoRecibido);
-                    Map<String, Object> eventoGuardar = new HashMap<>();
-                    eventoGuardar.put("actividad", binding.textSelectActividad.getText().toString());
-                    eventoGuardar.put("chatID", "");
-                    eventoGuardar.put("descripcion", binding.textDescripEvent.getText().toString());
-                    eventoGuardar.put("estado", "activo");
-                    eventoGuardar.put("fecha", binding.textDateEvent);
-                    eventoGuardar.put("fechaHoraCreacion", "evento"+ Timestamp.now());
-                    eventoGuardar.put("hora", binding.textDateEvent);
-                    eventoGuardar.put("titulo", binding.textTitleEvent);
-                    eventoGuardar.put("lugar", binding.textPlaceEvent);
+                    eventoGuardar.setActividad(currentActividad.getNombre());
+                    eventoGuardar.setChatID(""); //TODO DA: vincular con CometChat
+                    eventoGuardar.setDescripcion(binding.textDescripEvent.getText().toString());
+                    eventoGuardar.setEstado("activo");
+                    eventoGuardar.setFecha(binding.textDateEvent.getText().toString());
+                    eventoGuardar.setFechaHoraCreacion(Date.from(Instant.now()));
+                    eventoGuardar.setHora(binding.textHourEvent.getText().toString());
+                    eventoGuardar.setTitulo(binding.textTitleEvent.getText().toString());
+                    eventoGuardar.setLugar(binding.textPlaceEvent.getText().toString());
+                    eventoGuardar.setFotoUrl("");
+                    subirNuevoEventoFirestore();
+                    subirFoto(imageUri, eventoGuardar.getFechaHoraCreacion().toString());
                 }
             }else {
                 String mensaje;
@@ -286,7 +308,26 @@ public class DaEditEventoActivity extends AppCompatActivity {
     }
 
     private void guardarLugar(Map<String, Object> datoRecibido) {
+        CollectionReference lugaresRef = FirebaseFirestore.getInstance().collection("lugares");
+        DocumentReference lugarDocumento = lugaresRef.document(datoRecibido.get("nombre").toString());
+        Map<String, Object> datosLugar = new HashMap<>();
+        GeoPoint geoPoint = new GeoPoint(Double.parseDouble(datoRecibido.get("latitud").toString()), Double.parseDouble(datoRecibido.get("longitud").toString()));
+        datosLugar.put("coordenadas", geoPoint);
 
+        datosLugar.put("nombre", datoRecibido.get("nombre").toString());
+
+        lugarDocumento.set(datosLugar)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
     }
 
 
@@ -437,9 +478,10 @@ public class DaEditEventoActivity extends AppCompatActivity {
     private void mostrarTimePicker(MaterialTimePicker timePicker) {
         timePicker.show(getSupportFragmentManager(), "tag");
         timePicker.addOnPositiveButtonClickListener(view -> {
-            if (!binding.buttonSaveChangeEvent.isEnabled()){
-                binding.buttonSaveChangeEvent.setEnabled(true);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
+            if (isExistEvent){
+                validarChangeForm(evento);
+            }else {
+                validarCompleteForm(evento);
             }
             String minutes;
             String hour;
@@ -460,9 +502,10 @@ public class DaEditEventoActivity extends AppCompatActivity {
     public void mostrarDatePicker(MaterialDatePicker datePicker){
         datePicker.show(getSupportFragmentManager(), "tag");
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            if (!binding.buttonSaveChangeEvent.isEnabled()){
-                binding.buttonSaveChangeEvent.setEnabled(true);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
+            if (isExistEvent){
+                validarChangeForm(evento);
+            }else {
+                validarCompleteForm(evento);
             }
             selection = Instant.ofEpochMilli((Long) selection)
                     .plus(6, ChronoUnit.HOURS)
@@ -501,9 +544,9 @@ public class DaEditEventoActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
     }
-    private void subirFoto() {
+    private void subirFoto(Uri imageUri, String id) {
         storage = FirebaseStorage.getInstance();
-        StorageReference reference = storage.getReference().child("eventos/evento" + evento.getFechaHoraCreacion().toString() + ".jpg");
+        StorageReference reference = storage.getReference().child("eventos/evento" + id + ".jpg");
         reference.putFile(imageUri).continueWithTask(task -> {
                     if (!task.isSuccessful()) {
                         throw task.getException();
@@ -513,21 +556,57 @@ public class DaEditEventoActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Log.d("msg-test", "foto perfil de evento agregada en storage");
-                        //subirFotoFirestore(task.getResult().toString());
+                        subirFotoFirestore(task.getResult().toString(), id);
                     } else {
                         Log.d("msg-test", "error");
                     }
                 });
 
     }
-    private void subirFotoFirestore(String url) {
+    private void subirFotoFirestore(String url, String id) {
+        eventoGuardar.setFotoUrl(url);
         db.collection("eventos")
-                .document("evento" + evento.getFechaHoraCreacion().toString())
+                .document("evento"+id)
                 .update("fotoUrl", url)
                 .addOnSuccessListener(documentReference -> {
                     Log.d("msg-test", "foto guardada en firestore exitosamente");
+                    Snackbar.make(DaEditEventoActivity.this.getCurrentFocus(), "Se ha creado el evento exitosamente", Snackbar.LENGTH_SHORT).show();
+                    Map<String, String> estado = new HashMap<>();
+                    estado.put("estado",eventoGuardar.getEstado());
+                    db.collection("actividades")
+                            .document(currentActividad.getId()).collection("eventos")
+                            .document("evento"+eventoGuardar.getFechaHoraCreacion().toString())
+                            .set(estado)
+                            .addOnSuccessListener(unused ->{
+                                Snackbar.make(DaEditEventoActivity.this.getCurrentFocus(), "Se ha creado el evento exitosamente", Snackbar.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                //TODO DA: borrar evento creado
+                                Log.d("msg-test", "No se pudo actualizar en actividades");
+                            });
                     finish();
-                    startActivity(getIntent());
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
+    }
+    private void subirNuevoEventoFirestore() {
+        db.collection("eventos")
+                .document("evento"+eventoGuardar.getFechaHoraCreacion().toString())
+                .set(eventoGuardar)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "foto guardada en firestore exitosamente");
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
+    }
+    private void subirUpdateEventoFirestore(Map<String, Object> eventoUpdate) {
+        db.collection("eventos")
+                .document("evento"+evento.getFechaHoraCreacion().toString())
+                .update(eventoUpdate)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "foto guardada en firestore exitosamente");
                 })
                 .addOnFailureListener(e -> {
                     e.printStackTrace();
@@ -560,6 +639,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
                             Log.d("msg-test", "actividad encontrada: "+a.getNombre());
                             if (a.getEstado().equals("abierto")){
                                 listaFinal.add(a.getNombre());
+                                actividadesList.add(a);
                             }
                         }
                         else{

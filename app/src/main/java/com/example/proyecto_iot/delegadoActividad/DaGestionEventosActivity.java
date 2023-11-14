@@ -66,7 +66,7 @@ public class DaGestionEventosActivity extends AppCompatActivity {
 
         binding.buttonCreateEvent2.setOnClickListener(view -> {
             Intent intent1 = new Intent(DaGestionEventosActivity.this, DaEditEventoActivity.class);
-            intent1.putExtra("actividadName", a.getNombre());
+            intent1.putExtra("actividadName", a);
             startActivity(intent1);
         });
     }
