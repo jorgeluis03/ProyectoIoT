@@ -35,6 +35,8 @@ public class AlumnoApoyarButtonFragment extends Fragment {
 
         binding = FragmentAlumnoApoyarButtonBinding.inflate(inflater, container, false);
 
+        cargarBoton();
+
         evento = ((AlumnoEventoActivity) getActivity()).getEvento();
 
         binding.buttonEventoApoyar.setOnClickListener(view -> {
@@ -118,5 +120,11 @@ public class AlumnoApoyarButtonFragment extends Fragment {
                 Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
             }
         });
+    }
+
+    private void cargarBoton(){
+        if (evento.getEstado().equals("")){
+            binding.buttonEventoApoyar.setVisibility(View.GONE);
+        }
     }
 }

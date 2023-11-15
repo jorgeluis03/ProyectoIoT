@@ -45,6 +45,7 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         holder.evento = evento;
 
         TextView textDelegado = holder.itemView.findViewById(R.id.textDelegadoActividad);
+        TextView textEstado = holder.itemView.findViewById(R.id.textEstado);
         TextView textTitulo = holder.itemView.findViewById(R.id.textTitulo);
         TextView textActividad = holder.itemView.findViewById(R.id.textActividad);
         TextView textDescripcion = holder.itemView.findViewById(R.id.textDescripcion);
@@ -61,11 +62,15 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Alumno alumno = task.getResult().toObject(Alumno.class);
-                        textDelegado.setText("Deleg: "+alumno.getNombre()+" "+alumno.getApellidos());
+                        textDelegado.setText(alumno.getNombre()+" "+alumno.getApellidos());
                     } else {
                         Log.d("msg-test", "error buscando delegado de evento: " + task.getException().getMessage());
                     }
                 });
+
+        if (evento.getEstado().equals("")){ // si está finalizado se muestra mensaje
+            textEstado.setVisibility(View.VISIBLE);
+        }
 
         textTitulo.setText(evento.getTitulo());
         textActividad.setText(evento.getActividad());

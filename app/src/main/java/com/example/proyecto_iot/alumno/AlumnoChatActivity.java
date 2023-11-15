@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.cometchat.chat.constants.CometChatConstants;
 import com.cometchat.chat.core.AppSettings;
@@ -37,6 +38,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .replace(R.id.fragmentHeader, AlumnoHeader3Fragment.class, bundle)
                 .commit();
+        cargarInterfaz();
         inicializarCometChatGrupo();
     }
 
@@ -76,5 +78,11 @@ public class AlumnoChatActivity extends AppCompatActivity {
                 Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
             }
         });
+    }
+
+    private void cargarInterfaz(){
+        if (evento.getEstado().equals("")){
+            binding.groupComposer.setVisibility(View.GONE);
+        }
     }
 }

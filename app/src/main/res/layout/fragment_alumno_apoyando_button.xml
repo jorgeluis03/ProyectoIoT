@@ -7,10 +7,11 @@
     tools:context=".alumno.Fragments.AlumnoApoyandoButtonFragment">
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/buttonNotificaciones"
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/shape_round_box"
         android:backgroundTint="@color/black"
         android:insetLeft="0dp"
         android:insetTop="0dp"
@@ -43,8 +44,8 @@
         app:icon="@drawable/icon_chat"
         app:iconPadding="4dp"
         app:iconTint="@color/white"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button11"
-        app:layout_constraintStart_toEndOf="@+id/button11" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonNotificaciones"
+        app:layout_constraintStart_toEndOf="@+id/buttonNotificaciones" />
 
     <Button
         android:id="@+id/buttonEventoApoyando"
