@@ -81,7 +81,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
     }
 
     private void cargarInterfaz(){
-        if (evento.getEstado().equals("")){
+        if (evento.getEstado().equals("inactivo")){
             binding.groupComposer.setVisibility(View.GONE);
         }
     }

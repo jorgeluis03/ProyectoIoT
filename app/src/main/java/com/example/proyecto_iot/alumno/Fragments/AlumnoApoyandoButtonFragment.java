@@ -146,7 +146,7 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
     }
 
     private void cargarBotones(){
-        if (evento.getEstado().equals("")){
+        if (evento.getEstado().equals("inactivo")){
             binding.buttonNotificaciones.setVisibility(View.GONE);
             binding.buttonEventoApoyando.setVisibility(View.GONE);
         }

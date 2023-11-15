@@ -68,7 +68,7 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
                     }
                 });
 
-        if (evento.getEstado().equals("")){ // si está finalizado se muestra mensaje
+        if (evento.getEstado().equals("inactivo")){ // si está finalizado se muestra mensaje
             textEstado.setVisibility(View.VISIBLE);
         }
 

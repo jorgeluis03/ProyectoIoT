@@ -123,7 +123,7 @@ public class AlumnoApoyarButtonFragment extends Fragment {
     }
 
     private void cargarBoton(){
-        if (evento.getEstado().equals("")){
+        if (evento.getEstado().equals("inactivo")){
             binding.buttonEventoApoyar.setVisibility(View.GONE);
         }
     }
