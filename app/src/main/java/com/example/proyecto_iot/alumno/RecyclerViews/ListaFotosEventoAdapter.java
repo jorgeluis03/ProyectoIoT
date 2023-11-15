@@ -23,9 +23,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEventoAdapter.FotoViewHolder>{
+public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEventoAdapter.FotoViewHolder> {
     private List<Foto> fotoList;
     private Context context;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @NonNull
     @Override
@@ -48,17 +49,15 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
 
         TextView textNombre = holder.itemView.findViewById(R.id.textAlumnoNombre);
 
-        FirebaseFirestore.getInstance()
-                .collection("alumnos")
+        db.collection("alumnos")
                 .document(foto.getAlumnoID())
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         Alumno alumno = task.getResult().toObject(Alumno.class);
-                        textNombre.setText(alumno.getNombre()+" "+alumno.getApellidos()+":");
-                    }
-                    else {
-                        Log.d("msg-test", "error buscando alumno de foto: "+task.getException().getMessage());
+                        textNombre.setText(alumno.getNombre() + " " + alumno.getApellidos() + ":");
+                    } else {
+                        Log.d("msg-test", "error buscando alumno de foto: " + task.getException().getMessage());
                     }
                 });
 
@@ -77,8 +76,9 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
         return fotoList.size();
     }
 
-    public class FotoViewHolder extends RecyclerView.ViewHolder{
+    public class FotoViewHolder extends RecyclerView.ViewHolder {
         Foto foto;
+
         public FotoViewHolder(@NonNull View itemView) {
             super(itemView);
         }

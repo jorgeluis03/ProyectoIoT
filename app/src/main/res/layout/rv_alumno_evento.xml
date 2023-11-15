@@ -12,9 +12,20 @@
     android:padding="30dp">
 
     <TextView
+        android:id="@+id/textDelegadoActividad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#B9B9B9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:background="#222A3F"
         android:text="TextView"
         android:textColor="@color/white"
@@ -22,13 +33,13 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textDelegadoActividad" />
 
     <TextView
         android:id="@+id/textActividad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="#222A3F"
         android:text="TextView"
         android:textColor="#B9B9B9"
@@ -40,7 +51,7 @@
         android:id="@+id/textDescripcion"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="#222A3F"
         android:text="TextView"
         android:textColor="@color/white"
@@ -102,4 +113,5 @@
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textLugar"
         app:layout_constraintEnd_toEndOf="@+id/imageEvento" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

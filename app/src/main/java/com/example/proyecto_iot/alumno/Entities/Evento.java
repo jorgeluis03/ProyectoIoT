@@ -14,6 +14,7 @@ public class Evento implements Serializable {
     private String estado;
     private String chatID;
     private String lugar;
+    private String delegado;
 
     public String getLugar() {
         return lugar;
@@ -94,5 +95,13 @@ public class Evento implements Serializable {
 
     public void setChatID(String chatID) {
         this.chatID = chatID;
+    }
+
+    public String getDelegado() {
+        return delegado;
+    }
+
+    public void setDelegado(String delegado) {
+        this.delegado = delegado;
     }
 }

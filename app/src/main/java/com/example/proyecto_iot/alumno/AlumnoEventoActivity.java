@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
@@ -171,19 +172,18 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .collection("eventos")
                 .document("evento" + evento.getFechaHoraCreacion().toString())
                 .addSnapshotListener(((value, error) -> {
-                    if (error != null){
+                    if (error != null) {
                         Log.d("msg-test", "Listen failed in evento activity");
                         return;
                     }
-                    if (savedInstanceState == null){
-                        if (value != null && value.exists()){ // evento en lista de eventos de alumno (evento apoyado)
+                    if (savedInstanceState == null) {
+                        if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
                             getSupportFragmentManager().beginTransaction()
                                     .setReorderingAllowed(true)
                                     .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
                                     .commit();
                             binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                        }
-                        else{ // evento no apoyado
+                        } else { // evento no apoyado
                             getSupportFragmentManager().beginTransaction()
                                     .setReorderingAllowed(true)
                                     .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
@@ -292,6 +292,19 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     }
 
     private void cargarInfoEvento() {
+
+        db.collection("alumnos")
+                .document(evento.getDelegado())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Alumno alumno = task.getResult().toObject(Alumno.class);
+                        binding.textDelegadoActividad.setText("Delegado: "+alumno.getNombre()+" "+alumno.getApellidos());
+                    } else {
+                        Log.d("msg-test", "error buscando delegado de evento: " + task.getException().getMessage());
+                    }
+                });
+
         binding.textEventoTitulo.setText(evento.getTitulo());
         binding.textEventoActividad.setText(evento.getActividad());
         binding.textEventoDescripcion.setText(evento.getDescripcion());
@@ -307,7 +320,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .into(binding.imageEvento);
     }
 
-    private void crearEventoEnCalendario(){
+    private void crearEventoEnCalendario() {
         Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setData(CalendarContract.Events.CONTENT_URI);
         intent.putExtra(CalendarContract.Events.TITLE, evento.getTitulo());
@@ -316,12 +329,12 @@ public class AlumnoEventoActivity extends AppCompatActivity {
 
         long timeMillis = obtenerMilis(evento.getFecha(), evento.getHora());
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, timeMillis);
-        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, timeMillis+3600000); // duracion del evento por defecto de una hora
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, timeMillis + 3600000); // duracion del evento por defecto de una hora
 
         startActivity(intent);
     }
 
-    private long obtenerMilis(String fecha, String hora){
+    private long obtenerMilis(String fecha, String hora) {
         String fechaCompleta = fecha + " " + hora;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm 'hrs'");
 

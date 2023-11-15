@@ -64,6 +64,14 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/textDelegadoActividad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="TextView"
+                    android:textColor="#B9B9B9" />
+
+                <TextView
                     android:id="@+id/textEventoTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -109,7 +117,7 @@
                         android:textSize="12sp"
                         app:backgroundTint="@null"
                         app:icon="@drawable/icon_calendar_filled"
-                        app:iconPadding="2dp"
+                        app:iconPadding="4dp"
                         app:iconTint="#353535" />
 
                     <Button
@@ -126,7 +134,7 @@
                         android:textSize="12sp"
                         app:backgroundTint="@null"
                         app:icon="@drawable/icon_clock_filled"
-                        app:iconPadding="2dp"
+                        app:iconPadding="4dp"
                         app:iconTint="#353535" />
 
                     <Button
