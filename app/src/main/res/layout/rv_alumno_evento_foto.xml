@@ -64,7 +64,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        app:backgroundTint="@color/azul_background"
         app:icon="@drawable/ic_share"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textDescipcionFoto"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:iconTint="#B3B3B3"
+        app:layout_constraintBottom_toBottomOf="@+id/textFechaPublicación"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textDescipcionFoto" />
 </androidx.constraintlayout.widget.ConstraintLayout>

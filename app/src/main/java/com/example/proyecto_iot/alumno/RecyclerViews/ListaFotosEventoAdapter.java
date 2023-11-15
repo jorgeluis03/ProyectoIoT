@@ -88,9 +88,9 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
             itemView.findViewById(R.id.buttonShare).setOnClickListener(view -> {
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
-
                 shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(foto.getFotoUrl()));
-                shareIntent.setType("image/jpeg");
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                shareIntent.setType("image/*");
                 getContext().startActivity(Intent.createChooser(shareIntent, getContext().getResources().getText(R.string.send)));
             });
         }
