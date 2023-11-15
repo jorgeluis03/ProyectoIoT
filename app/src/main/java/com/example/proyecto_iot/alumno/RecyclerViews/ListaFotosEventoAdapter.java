@@ -1,6 +1,8 @@
 package com.example.proyecto_iot.alumno.RecyclerViews;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -81,6 +84,15 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
 
         public FotoViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            itemView.findViewById(R.id.buttonShare).setOnClickListener(view -> {
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+
+                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(foto.getFotoUrl()));
+                shareIntent.setType("image/jpeg");
+                getContext().startActivity(Intent.createChooser(shareIntent, getContext().getResources().getText(R.string.send)));
+            });
         }
     }
 
