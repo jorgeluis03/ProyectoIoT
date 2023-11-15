@@ -182,7 +182,7 @@
                     android:background="@drawable/button_alumno_evento_subir_foto"
                     android:text="@string/evento_subir_foto"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:visibility="gone"
                     app:backgroundTint="@null"
                     app:icon="@drawable/icon_plus"
