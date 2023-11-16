@@ -32,6 +32,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
     ProgressBar progressBar;
     ListenerRegistration listenerRegistration;
     List<DonacionDto>  listaDonaciones;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
                                     return;
                                 }
                                 listaDonaciones = new ArrayList<>();
+
                                 for (QueryDocumentSnapshot snapshot : value) {
                                     String idDocDonacion = snapshot.getId();
                                     FirebaseUtilDg.getDonante(codigoDonante)
@@ -84,6 +86,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
                                                     DonacionDto donacionDto = new DonacionDto(idDocDonacion,codigoDonante,dona.getFecha()+' '+ dona.getHora(),dona.getMonto(),nombreDonante);
 
                                                     listaDonaciones.add(donacionDto);
+
                                                     // aca va el adapter
                                                     ListaDonacionesAdapter adapter = new ListaDonacionesAdapter();
                                                     adapter.setLista(listaDonaciones);
@@ -98,6 +101,9 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
                                             });
 
 
+                                }
+                                if(listaDonaciones.isEmpty()){
+                                    setInProgress(false);
                                 }
 
 

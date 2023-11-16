@@ -60,11 +60,12 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
                         <TextView
+                            android:id="@+id/cantEstudiantes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-black"
-                            android:text="354"
+                            android:text=""
                             android:textAlignment="textEnd"
                             android:textColor="#FFFFFF"
                             android:textSize="24sp"
@@ -88,11 +89,12 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/cantEgresados"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-black"
-                            android:text="189"
+                            android:text=""
                             android:textAlignment="textEnd"
                             android:textColor="#FFFFFF"
                             android:textSize="24sp"
@@ -152,11 +154,12 @@
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/montoDonacion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:text="S/ 1354.67"
+                    android:text=""
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
                     android:textStyle="bold" />
