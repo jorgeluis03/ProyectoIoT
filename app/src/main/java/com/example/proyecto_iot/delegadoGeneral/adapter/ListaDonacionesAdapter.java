@@ -1,6 +1,8 @@
 package com.example.proyecto_iot.delegadoGeneral.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.delegadoGeneral.dto.DonacionDto;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
@@ -56,6 +60,48 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
             montoDonacion = itemView.findViewById(R.id.montoDonacion);
             btnAceptar = itemView.findViewById(R.id.btnAceptarDonacion);
             btnRechazar = itemView.findViewById(R.id.btnRechazarDonacion);
+
+            btnAceptar.setOnClickListener(view -> {
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle("Validar")
+                        .setMessage("¿Estás seguro que deseas validar esta donación?")
+                        .setPositiveButton("Aceptar", (dialogInterface, i) -> {
+                            FirebaseUtilDg.getColeccionIdDonantes(donacionDto.getCodigoDonante())
+                                .document(donacionDto.getIdDocumento())
+                                        .update("estado","validado")
+                                                .addOnSuccessListener(unused -> {
+                                                    lista.remove(donacionDto);
+                                                    notifyDataSetChanged();
+                                                });
+                            Log.d("msg-don","codigo donante "+donacionDto.getCodigoDonante());
+                            Log.d("msg-don","id document "+donacionDto.getIdDocumento());
+                        })
+                        .setNeutralButton("Cancelar", (dialogInterface, i) -> {
+                            //
+                        })
+                        .show();
+            });
+
+            btnRechazar.setOnClickListener(view -> {
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle("Denegar")
+                        .setMessage("¿Estás seguro que deseas denegar esta donación?")
+                        .setPositiveButton("Aceptar", (dialogInterface, i) -> {
+                            FirebaseUtilDg.getColeccionIdDonantes(donacionDto.getCodigoDonante())
+                                    .document(donacionDto.getIdDocumento())
+                                    .update("estado","denegado")
+                                    .addOnSuccessListener(unused -> {
+                                        lista.remove(donacionDto);
+                                        notifyDataSetChanged();
+                                    });
+                            Log.d("msg-don","codigo donante "+donacionDto.getCodigoDonante());
+                            Log.d("msg-don","id document "+donacionDto.getIdDocumento());
+                        })
+                        .setNeutralButton("Cancelar", (dialogInterface, i) -> {
+                            //
+                        })
+                        .show();
+            });
 
         }
 

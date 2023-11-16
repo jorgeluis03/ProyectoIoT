@@ -31,7 +31,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progressBar;
     ListenerRegistration listenerRegistration;
-    List<DonacionDto>  listaDonaciones = new ArrayList<>();
+    List<DonacionDto>  listaDonaciones;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +44,8 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
 
 
         setInProgress(true);
-        obtenerDonacionesSinValidar();
 
+        obtenerDonacionesSinValidar();
 
 
         btnBack.setOnClickListener(view -> {
@@ -59,20 +59,20 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
             if (task.isSuccessful()){
 
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                    String idDocument = documentSnapshot.getId();
+                    String codigoDonante = documentSnapshot.getId();
                     Log.d("msg-don", documentSnapshot.getId());
 
-                    listenerRegistration = FirebaseUtilDg.getColeccionIdDonantes(idDocument)
+                    listenerRegistration = FirebaseUtilDg.getColeccionIdDonantes(codigoDonante)
                             .whereEqualTo("estado","por validar")
                             .addSnapshotListener((value, error) -> {
                                 if (error != null) {
                                     Log.w("msg-don", "Listen failed.", error);
                                     return;
                                 }
-
+                                listaDonaciones = new ArrayList<>();
                                 for (QueryDocumentSnapshot snapshot : value) {
-
-                                    FirebaseUtilDg.getDonante(idDocument)
+                                    String idDocDonacion = snapshot.getId();
+                                    FirebaseUtilDg.getDonante(codigoDonante)
                                             .get().addOnCompleteListener(task1 -> {
                                                 if (task1.isSuccessful()){
 
@@ -81,7 +81,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
                                                     DocumentSnapshot document = task1.getResult().getDocuments().get(0);
                                                     String nombreDonante = document.getString("nombre")+ ' '+ document.getString("apellidos");
                                                     Donacion dona = snapshot.toObject(Donacion.class);
-                                                    DonacionDto donacionDto = new DonacionDto(dona.getFecha()+' '+ dona.getHora(),dona.getMonto(),nombreDonante);
+                                                    DonacionDto donacionDto = new DonacionDto(idDocDonacion,codigoDonante,dona.getFecha()+' '+ dona.getHora(),dona.getMonto(),nombreDonante);
 
                                                     listaDonaciones.add(donacionDto);
                                                     // aca va el adapter

@@ -4,12 +4,33 @@ public class DonacionDto {
     private String horaFecha;
     private String monto;
     private String nombreDonante;
+    private String idDocumento;
+    private String codigoDonante;
 
 
-    public DonacionDto(String hora, String monto, String nombreDonante) {
+
+    public DonacionDto(String idDocumento,String codigoDonante,String hora, String monto, String nombreDonante) {
+        this.idDocumento=idDocumento;
+        this.codigoDonante = codigoDonante;
         this.horaFecha = hora;
         this.monto = monto;
         this.nombreDonante = nombreDonante;
+    }
+
+    public String getCodigoDonante() {
+        return codigoDonante;
+    }
+
+    public void setCodigoDonante(String codigoDonante) {
+        this.codigoDonante = codigoDonante;
+    }
+
+    public String getIdDocumento() {
+        return idDocumento;
+    }
+
+    public void setIdDocumento(String idDocumento) {
+        this.idDocumento = idDocumento;
     }
 
     public String getHorahoraFecha() {
