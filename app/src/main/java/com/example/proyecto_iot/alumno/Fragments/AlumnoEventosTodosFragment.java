@@ -57,7 +57,7 @@ public class AlumnoEventosTodosFragment extends Fragment {
                             adapter.notifyDataSetChanged();
                         }
                         else{
-                            Log.d("msg-test", "error al recuperar eventos");
+                            Log.d("msg-test", "error al recuperar eventos: "+task.getException().getMessage());
                         }
                     }
                 });
