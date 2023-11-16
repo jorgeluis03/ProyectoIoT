@@ -1,6 +1,8 @@
 package com.example.proyecto_iot.alumno.Entities;
 
-public class Donacion {
+import java.io.Serializable;
+
+public class Donacion implements Serializable {
     private String hora;
     private String fecha;
     private String rol;

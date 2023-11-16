@@ -11,16 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosRegistrBinding;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosAdapter;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosPendiAdapter;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;

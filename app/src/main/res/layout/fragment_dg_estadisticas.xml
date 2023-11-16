@@ -104,7 +104,14 @@
                 </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDonaciones"
+            android:clickable="true"
+            android:focusable="true"
+            android:checkable="true"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

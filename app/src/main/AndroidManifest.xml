@@ -6,10 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
-    <!--Place Picker-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Place Picker -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -22,10 +20,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".delegadoActividad.DaEditEventoActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Da"
+            android:name=".delegadoGeneral.DgEstadisticasDetallesActivity"
             android:exported="false" />
+        <activity
+            android:name=".delegadoActividad.DaEditEventoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Da" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -36,13 +37,13 @@
 
         <activity
             android:name=".alumno.MapaEventoActivityAlumno"
-            android:parentActivityName=".delegadoActividad.DaEditEventoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".delegadoActividad.DaEditEventoActivity" />
         <activity
             android:name=".alumno.Delegado_select_map_activity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno"
-            android:exported="false" />
+            android:theme="@style/Alumno" />
         <activity
             android:name=".delegadoActividad.DaGestionEventosActivity"
             android:exported="false"

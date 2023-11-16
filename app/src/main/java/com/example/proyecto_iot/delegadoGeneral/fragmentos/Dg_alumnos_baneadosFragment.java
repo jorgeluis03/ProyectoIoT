@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosBaneadosBinding;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosBaneadosAdapter;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;

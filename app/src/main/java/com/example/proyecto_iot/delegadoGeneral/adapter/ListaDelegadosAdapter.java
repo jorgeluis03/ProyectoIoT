@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 
 import java.util.List;
 

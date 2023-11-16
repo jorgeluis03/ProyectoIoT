@@ -16,15 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
-import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.databinding.FragmentDgActividadesBinding;
 import com.example.proyecto_iot.delegadoGeneral.CrearActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;

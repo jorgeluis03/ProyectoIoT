@@ -20,7 +20,6 @@ import com.cometchat.chat.models.User;
 import com.example.proyecto_iot.AppConstants;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
 

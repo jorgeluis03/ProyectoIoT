@@ -11,33 +11,25 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityDgCrearActividadBinding;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaDelegadosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
-import com.example.proyecto_iot.delegadoGeneral.entity.ActividadesDao;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.android.material.search.SearchView;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class CrearActividadActivity extends AppCompatActivity {
     ActivityDgCrearActividadBinding binding;
