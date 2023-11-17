@@ -87,7 +87,8 @@
     <!-- VERIFICATION CODE -->
     <string name="fg_verification_label">Correo enviado</string>
     <string name="fg_verification_instruction">Ingresa el código aquí:</string>
-    <string name="fg_verification_context">Se ha enviado un código de verificación al correo que indicaste, en caso de que exista una cuenta vinculada.</string>
+    <!--<string name="fg_verification_context">Se ha enviado un código de verificación al correo que indicaste, en caso de que exista una cuenta vinculada.</string>-->
+    <string name="fg_verification_context">Se ha enviado un correo para que reestablezca su contraseña, recuerda que este tiene un tiempo límite hasta caducar.</string>
 
     <!-- CHANGE PASSW -->
     <string name="ch_passw_label">Cambio de contraseña</string>

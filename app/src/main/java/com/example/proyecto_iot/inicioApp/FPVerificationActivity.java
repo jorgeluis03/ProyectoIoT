@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
 import com.example.proyecto_iot.databinding.ActivityFpverificationBinding;
 
 public class FPVerificationActivity extends AppCompatActivity {
@@ -27,18 +28,23 @@ public class FPVerificationActivity extends AppCompatActivity {
         });
 
         binding.forgPasswNext.setOnClickListener(view -> {
-            Intent intent = new Intent(FPVerificationActivity.this, ChangePasswActivity.class);
+            Intent intent = new Intent(FPVerificationActivity.this, IngresarActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
         });
 
+        /*
         inputCode1 = binding.inputCode1;
         inputCode2 = binding.inputCode2;
         inputCode3 = binding.inputCode3;
         inputCode4 = binding.inputCode4;
 
-        hideHintOnClick();
+         */
 
-        setJumpToNextInput();
+        //hideHintOnClick();
+
+        //setJumpToNextInput();
     }
     private void hideHintOnClick(){
         inputCode1.setOnFocusChangeListener((v, hasFocus) -> {
