@@ -70,10 +70,10 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
         binding.loginButton.setOnClickListener(view -> {
-            String codigo = binding.inputCodigo.getText().toString();
+            String correo = binding.inputCorreo.getText().toString();
             String contrasena = binding.inputContrasena.getText().toString();
 
-            mAuth.signInWithEmailAndPassword(codigo + "@app.com", contrasena)
+            mAuth.signInWithEmailAndPassword(correo, contrasena)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
