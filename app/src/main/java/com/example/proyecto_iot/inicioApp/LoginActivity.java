@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import com.cometchat.chat.core.AppSettings;
@@ -70,25 +72,32 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
         binding.loginButton.setOnClickListener(view -> {
-            String correo = binding.inputCorreo.getText().toString();
+
+            String correoOCodigo = binding.inputCorreo.getText().toString();
             String contrasena = binding.inputContrasena.getText().toString();
 
-            mAuth.signInWithEmailAndPassword(correo, contrasena)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                obtenerUserData();
+            if (esCorreo(correoOCodigo)){
 
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
-                                        .show();
-                                Log.d("msg-test", "credenciales incorrectas");
+                mAuth.signInWithEmailAndPassword(correoOCodigo, contrasena)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    obtenerUserData();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
+                                            .show();
+                                    Log.d("msg-test", "credenciales incorrectas");
+                                }
                             }
-                        }
-                    });
+                        });
+
+            }
+            else{ // se esta ingresando con codigo
+
+            }
         });
     }
 
@@ -241,5 +250,9 @@ public class LoginActivity extends AppCompatActivity {
         }
         startActivity(intent);
         finish();
+    }
+
+    private boolean esCorreo(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }
