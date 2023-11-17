@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,21 +18,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.delegadoGeneral.DgEventosPorActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.EditarActividad;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividadesAdapter.ActividesViewHolder> {
     private List<Actividades> listaActividades;
+    private List<Actividades> listaActividadesOriginal;
     private Context context;
     FirebaseFirestore db;
     private ActivityResultLauncher<Intent> lunchEditar;
 
-    public ListaActividadesAdapter(ActivityResultLauncher<Intent> lunchEditar) {
+    public ListaActividadesAdapter(ActivityResultLauncher<Intent> lunchEditar, Context context, List<Actividades> listaActividades) {
         this.lunchEditar = lunchEditar;
+        this.listaActividades = listaActividades;
+        listaActividadesOriginal = new ArrayList<>();
+        listaActividadesOriginal.addAll(listaActividades);
     }
     //override metodos
     @NonNull
@@ -48,21 +56,26 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
         holder.actividades = act;
 
         TextView tvNombreActividad = holder.itemView.findViewById(R.id.textViewNombreActividad_dg);
-        TextView tvEstado = holder.itemView.findViewById(R.id.textViewEstadoActiv_dg);
         TextView tvDelegadoAsignado = holder.itemView.findViewById(R.id.textViewDeleActiv_dg);
-        //Button buttonAsiganarDelegado = holder.itemView.findViewById(R.id.buttomAddDelegado_dg);
+
 
         tvNombreActividad.setText(act.getNombre());
-        tvEstado.setText("• "+act.getEstado());
         tvDelegadoAsignado.setText("Delegado: "+act.getDelegadoActividad().getNombre()+' '+act.getDelegadoActividad().getApellidos());
-
-            /*buttonAsiganarDelegado.setEnabled(false);
-            buttonAsiganarDelegado.setBackgroundColor(Color.LTGRAY);
-            buttonAsiganarDelegado.setVisibility(View.GONE);*/
+    }
 
 
+    public void filtrado(String txtbuscar){
+        int longitud = txtbuscar.length();
+        if(longitud==0){
+            listaActividades.clear();
+            listaActividades.addAll(listaActividadesOriginal);
+        }else {
+            List<Actividades> collecion = listaActividades.stream()
+                    .filter(i -> i.getNombre().toLowerCase().contains(txtbuscar.toLowerCase()))
+                    .collect(Collectors.toList());
 
-
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -78,7 +91,15 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
             super(itemView);
 
             //editar
-            Button buttonEditar = itemView.findViewById(R.id.buttonEditarActivi);
+            ImageButton buttonEditar = itemView.findViewById(R.id.buttonEditarActivi);
+            TextView btnVerEventos = itemView.findViewById(R.id.tv_verDetalles);
+
+            btnVerEventos.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DgEventosPorActividadActivity.class);
+                intent.putExtra("idActividad",actividades.getId());
+                context.startActivity(intent);
+            });
+
             buttonEditar.setOnClickListener(view -> {
 
                 Intent intent = new Intent(context, EditarActividad.class);
@@ -88,7 +109,7 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
             });
 
             //borrar
-            Button buttonBorrar = itemView.findViewById(R.id.buttonEliminarActivi);
+            ImageButton buttonBorrar = itemView.findViewById(R.id.buttonEliminarActivi);
             buttonBorrar.setOnClickListener(view -> {
 
                 new MaterialAlertDialogBuilder(context)
@@ -140,6 +161,14 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
 
     public void setListaActividades(List<Actividades> listaActividades) {
         this.listaActividades = listaActividades;
+    }
+
+    public List<Actividades> getListaActividadesOriginal() {
+        return listaActividadesOriginal;
+    }
+
+    public void setListaActividadesOriginal(List<Actividades> listaActividadesOriginal) {
+        this.listaActividadesOriginal = listaActividadesOriginal;
     }
 
     public Context getContext() {

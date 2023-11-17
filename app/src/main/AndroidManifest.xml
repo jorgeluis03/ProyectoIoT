@@ -20,8 +20,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".delegadoGeneral.DgEventosPorActividadActivity"
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral"/>
+        <activity
             android:name=".delegadoGeneral.DgEstadisticasDetallesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral"/>
         <activity
             android:name=".delegadoActividad.DaEditEventoActivity"
             android:exported="false"

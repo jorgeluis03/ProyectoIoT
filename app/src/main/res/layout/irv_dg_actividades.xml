@@ -1,116 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--textViewNombreActividad_dg
+textViewEstadoActiv_dg
+textViewDeleActiv_dg
+buttonEditarActivi
+buttonEliminarActivi
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/azul_background"
-    android:orientation="horizontal"
     >
 
-    <com.google.android.material.card.MaterialCardView
+    <ImageView
+        android:id="@+id/imageViewIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="2dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/img_bat"
+        android:background="@drawable/circle_bg"/>
+
+    <RelativeLayout
+        android:id="@+id/relativeLay"
+        android:layout_toRightOf="@id/imageViewIcon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        style="?attr/materialCardViewFilledStyle"
-        android:backgroundTint="#D98880"
-        app:contentPadding="8dp"
-        app:cardElevation="5dp">
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/textViewNombreActividad_dg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre Actividad"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_below="@+id/textViewNombreActividad_dg"
+            android:id="@+id/textViewDeleActiv_dg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delgado actividad"
+            android:textColor="#CACACA"
+            android:fontFamily="@font/nunito_sans" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="match_parent"
+
+        <RelativeLayout
+            android:layout_below="@+id/textViewDeleActiv_dg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/buttonEditarActivi"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_edit"
+                android:layout_marginEnd="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/grey" />
+            <ImageButton
+                android:id="@+id/buttonEliminarActivi"
+                android:layout_toRightOf="@+id/buttonEditarActivi"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/grey" />
+
+            <TextView
+                android:id="@+id/tv_verDetalles"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                tools:layout_editor_absoluteY="16dp">
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Ver eventos"
+                android:textAllCaps="false"
+                android:textColor="#03A9F4"
+                android:layout_marginEnd="10dp"
+                />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/textViewNombreActividad_dg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Nombre actividad"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/textViewEstadoActiv_dg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="estado"
-                        android:textColor="@color/white"
-                        android:textSize="16dp" />
-                    <TextView
-                        android:id="@+id/textViewDeleActiv_dg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="sin delegado"
-                        android:textColor="@color/white"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="5dp"
-                    android:layout_gravity="bottom">
-                    <Button
-                        android:id="@+id/buttonEditarActivi"
-                        style="?attr/materialIconButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:insetLeft="0dp"
-                        android:paddingLeft="0dp"
-                        android:paddingTop="0dp"
-                        android:paddingRight="0dp"
-                        android:paddingBottom="0dp"
-                        app:icon="@drawable/sharp_edit"
-                        app:iconSize="30dp"
-                        android:layout_marginStart="5dp"
-                        app:iconTint="@color/white"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:clickable="true"/>
-
-
-                    <Button
-                        android:id="@+id/buttonEliminarActivi"
-                        style="?attr/materialIconButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:insetLeft="0dp"
-                        android:paddingLeft="0dp"
-                        android:paddingTop="0dp"
-                        android:paddingRight="0dp"
-                        android:paddingBottom="0dp"
-                        app:icon="@drawable/round_delete"
-                        app:iconSize="30dp"
-                        app:iconTint="@color/white"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:clickable="true"/>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
+        </RelativeLayout>
 
 
 
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-
-</LinearLayout>
+    </RelativeLayout>
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="wrap_content"
+        android:layout_height="0.1dp"
+        app:dividerColor="@color/grey"
+        android:layout_below="@+id/relativeLay"/>
+</RelativeLayout>

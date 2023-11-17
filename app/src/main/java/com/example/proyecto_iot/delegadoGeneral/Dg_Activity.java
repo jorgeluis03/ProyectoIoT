@@ -71,8 +71,6 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
-
         buttomnavigationDg = binding.buttomnavigationDg;
         //Cargar el navigationComponent (navHost) en el bottomnavigation
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment_dg);
@@ -99,40 +97,6 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         getSupportActionBar().setTitle(title);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.manu_toolbar_dg,menu);
-
-        MenuItem menuItem = menu.findItem(R.id.buscar);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Buscar");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-
-                return false;
-            }
-        });
-
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        return  true;
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

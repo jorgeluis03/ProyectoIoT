@@ -39,4 +39,12 @@ public class FirebaseUtilDg {
         return FirebaseUtilDg.getDonaciones().document(idDocument).collection("id");
     }
 
+    public static CollectionReference getColeccionEventos(){
+        return FirebaseFirestore.getInstance().collection("eventos");
+    }
+
+    //para storage
+    public static StorageReference getFotoEvento(){
+        return FirebaseStorage.getInstance().getReference().child("profile_pic").child("");
+    }
 }
