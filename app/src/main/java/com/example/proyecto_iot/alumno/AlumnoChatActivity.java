@@ -59,7 +59,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
                 Log.d("msg-test", "Initialization completed successfully");
                 MessageListStyle listStyle = new MessageListStyle();
                 listStyle.setBorderWidth(0);
-                listStyle.setBackground(Color.parseColor("#303b57"));
+                listStyle.setBackground(Color.parseColor("#a4aaba"));
                 listStyle.setTimeStampTextColor(Color.parseColor("#b9b9b9"));
                 listStyle.setLoadingIconTint(Color.parseColor("#ffffff"));
                 binding.groupMessages.setGroup(group);
