@@ -96,7 +96,20 @@ public class LoginActivity extends AppCompatActivity {
 
             }
             else{ // se esta ingresando con codigo
+                db.collection("alumnos")
+                        .whereEqualTo("codigo", correoOCodigo)
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()){
+                                for (DocumentSnapshot documentSnapshot: task.getResult()){
+                                    Alumno alumnoLogueado = (Alumno) task.getResult().toObjects(Alumno.class);
+                                }
+                            }
+                            else{
+                                Log.d("msg-test", "Error al recuperar alumno mediante codigo: "+task.getException().getMessage());
+                            }
 
+                        });
             }
         });
     }
