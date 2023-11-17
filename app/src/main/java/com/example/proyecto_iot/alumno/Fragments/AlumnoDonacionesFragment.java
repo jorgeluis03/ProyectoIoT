@@ -151,7 +151,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                         adapter.setDonacionesTotalesValidadas(donacionesTotalesValidadas);
 // Aplica la lógica de ordenamiento aquí
                         donationList.sort(new Comparator<Donacion>() {
-                              @Override
+                            @Override
                             public int compare(Donacion donacion1, Donacion donacion2) {
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", new Locale("es", "ES"));
                                 try {
@@ -251,6 +251,7 @@ public class AlumnoDonacionesFragment extends Fragment {
         });
         return binding.getRoot();
     }
+
     /* tambien daba error xd
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -351,24 +352,36 @@ public class AlumnoDonacionesFragment extends Fragment {
 
     private void subirDonacionFirestore(Donacion donacionNueva) {
 
-        db.collection("donaciones").document(codigoAlumno);
+        HashMap<String, String> vacio = new HashMap<>();
+        vacio.put("a", "b");
 
-        // guardar donacion en firestore
         db.collection("donaciones")
                 .document(codigoAlumno)
-                .collection("id")
-                .add(donacionNueva)
-                .addOnSuccessListener(documentReference -> {
-                    Log.d("msg-test", "donacion guardada en firestore-donacion guarada exitosamente");
+                .set(vacio)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
 
-                    //lanzar notificacion para el delago general
-                    enviarNotificacion();
+                        // guardar donacion en firestore
+                        db.collection("donaciones")
+                                .document(codigoAlumno)
+                                .collection("id")
+                                .add(donacionNueva)
+                                .addOnSuccessListener(documentReference -> {
+                                    Log.d("msg-test", "donacion guardada en firestore-donacion guarada exitosamente");
 
-                    //reiniciando fragmento para cargar nueva donacion
-                    recargarFragment();
-                })
-                .addOnFailureListener(e -> {
-                    e.printStackTrace();
+                                    //lanzar notificacion para el delago general
+                                    enviarNotificacion();
+
+                                    //reiniciando fragmento para cargar nueva donacion
+                                    recargarFragment();
+                                })
+                                .addOnFailureListener(e -> {
+                                    e.printStackTrace();
+                                });
+
+                    } else {
+                        Log.d("msg-test", "error al crear doc donacion: " + task.getException().getMessage());
+                    }
                 });
     }
 
