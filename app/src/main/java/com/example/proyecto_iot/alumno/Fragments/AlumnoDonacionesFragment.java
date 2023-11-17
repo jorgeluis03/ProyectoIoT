@@ -350,8 +350,13 @@ public class AlumnoDonacionesFragment extends Fragment {
     }
 
     private void subirDonacionFirestore(Donacion donacionNueva) {
+
+        db.collection("donaciones").document(codigoAlumno);
+
         // guardar donacion en firestore
-        db.collection("donaciones").document(codigoAlumno).collection("id")
+        db.collection("donaciones")
+                .document(codigoAlumno)
+                .collection("id")
                 .add(donacionNueva)
                 .addOnSuccessListener(documentReference -> {
                     Log.d("msg-test", "donacion guardada en firestore-donacion guarada exitosamente");
