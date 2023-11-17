@@ -73,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:hint="@string/hint_email"
+        android:hint="@string/hint_email_or_code"
         android:textColorHint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

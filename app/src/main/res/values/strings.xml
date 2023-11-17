@@ -68,6 +68,7 @@
     <string name="hint_lastname">Apellidos</string>
     <string name="hint_code">Código PUCP</string>
     <string name="hint_email">Correo</string>
+    <string name="hint_email_or_code">Correo o Código PUCP</string>
     <string name="hint_passw">Contraseña</string>
     <string name="hint_user_type">Tipo de usuario</string>
 
