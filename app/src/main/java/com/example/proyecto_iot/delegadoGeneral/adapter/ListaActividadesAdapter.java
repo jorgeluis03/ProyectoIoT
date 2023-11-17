@@ -30,16 +30,14 @@ import java.util.stream.Collectors;
 
 public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividadesAdapter.ActividesViewHolder> {
     private List<Actividades> listaActividades;
-    private List<Actividades> listaActividadesOriginal;
     private Context context;
     FirebaseFirestore db;
     private ActivityResultLauncher<Intent> lunchEditar;
 
     public ListaActividadesAdapter(ActivityResultLauncher<Intent> lunchEditar, Context context, List<Actividades> listaActividades) {
         this.lunchEditar = lunchEditar;
+        this.context =context;
         this.listaActividades = listaActividades;
-        listaActividadesOriginal = new ArrayList<>();
-        listaActividadesOriginal.addAll(listaActividades);
     }
     //override metodos
     @NonNull
@@ -63,20 +61,6 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
         tvDelegadoAsignado.setText("Delegado: "+act.getDelegadoActividad().getNombre()+' '+act.getDelegadoActividad().getApellidos());
     }
 
-
-    public void filtrado(String txtbuscar){
-        int longitud = txtbuscar.length();
-        if(longitud==0){
-            listaActividades.clear();
-            listaActividades.addAll(listaActividadesOriginal);
-        }else {
-            List<Actividades> collecion = listaActividades.stream()
-                    .filter(i -> i.getNombre().toLowerCase().contains(txtbuscar.toLowerCase()))
-                    .collect(Collectors.toList());
-
-        }
-        notifyDataSetChanged();
-    }
 
     @Override
     public int getItemCount() {
@@ -161,14 +145,6 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
 
     public void setListaActividades(List<Actividades> listaActividades) {
         this.listaActividades = listaActividades;
-    }
-
-    public List<Actividades> getListaActividadesOriginal() {
-        return listaActividadesOriginal;
-    }
-
-    public void setListaActividadesOriginal(List<Actividades> listaActividadesOriginal) {
-        this.listaActividadesOriginal = listaActividadesOriginal;
     }
 
     public Context getContext() {

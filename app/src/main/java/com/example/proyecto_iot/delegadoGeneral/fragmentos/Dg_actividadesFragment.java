@@ -32,9 +32,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dg_actividadesFragment extends Fragment implements  SearchView.OnQueryTextListener{
+public class Dg_actividadesFragment extends Fragment {
     private boolean actividadesCargadas = false;
-    SearchView txtBuscar;
     ActivityResultLauncher<Intent> lunchEditar;
     private ListaActividadesAdapter adapter;
     FragmentDgActividadesBinding binding;
@@ -46,7 +45,7 @@ public class Dg_actividadesFragment extends Fragment implements  SearchView.OnQu
                              Bundle savedInstanceState) {
         binding=FragmentDgActividadesBinding.inflate(inflater,container,false);
 
-        txtBuscar = binding.searchActiv;
+
 
         lunchEditar = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -66,7 +65,6 @@ public class Dg_actividadesFragment extends Fragment implements  SearchView.OnQu
             launcher.launch(intent);
         });
 
-        txtBuscar.setOnQueryTextListener(this);
         return binding.getRoot();
     }
 
@@ -167,14 +165,4 @@ public class Dg_actividadesFragment extends Fragment implements  SearchView.OnQu
 
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        adapter.filtrado(newText);
-        return false;
-    }
 }

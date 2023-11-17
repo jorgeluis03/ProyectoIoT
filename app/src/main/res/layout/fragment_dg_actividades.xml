@@ -8,19 +8,12 @@
     tools:context=".delegadoGeneral.fragmentos.Dg_actividadesFragment"
     >
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchActiv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/azul_background"
-
-        />
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="wrap_content"
         android:layout_height="0.1dp"
         app:dividerColor="@color/grey"
         android:id="@+id/divider"
-        android:layout_below="@id/searchActiv"/>
+       />
 
 
     <androidx.recyclerview.widget.RecyclerView

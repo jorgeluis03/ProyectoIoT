@@ -61,6 +61,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
 
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                     String codigoDonante = documentSnapshot.getId();
+
                     Log.d("msg-don", documentSnapshot.getId());
 
                     listenerRegistration = FirebaseUtilDg.getColeccionIdDonantes(codigoDonante)

@@ -44,8 +44,7 @@ public class Dg_estadisticasFragment extends Fragment {
         cantEstudiantes = binding.cantEstudiantes;
         cantEgresados = binding.cantEgresados;
 
-        cargarSaldoDonacion();
-        cargarCantidadUsuarios();
+
 
         cardView.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), DgEstadisticasDetallesActivity.class);
@@ -61,7 +60,8 @@ public class Dg_estadisticasFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        cargarSaldoDonacion();
+        cargarCantidadUsuarios();
     }
 
     @Override
