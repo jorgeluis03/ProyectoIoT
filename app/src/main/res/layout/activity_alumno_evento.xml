@@ -70,7 +70,8 @@
                     android:layout_marginTop="10dp"
                     android:text="TextView"
                     android:textColor="#B9B9B9"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textEventoTitulo"
