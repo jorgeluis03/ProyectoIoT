@@ -13,9 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.delegadoGeneral.dto.DonacionDto;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -71,7 +75,11 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                                         .update("estado","validado")
                                                 .addOnSuccessListener(unused -> {
                                                     lista.remove(donacionDto);
+
                                                     notifyDataSetChanged();
+
+                                                    //enviar notificacion al donante de que se aprobó
+                                                    enviarNotificacion(donacionDto.getCodigoDonante());
                                                 });
                             Log.d("msg-don","codigo donante "+donacionDto.getCodigoDonante());
                             Log.d("msg-don","id document "+donacionDto.getIdDocumento());
@@ -106,6 +114,38 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         }
 
     }
+
+
+    //metodo enviar notificacion
+    public void enviarNotificacion(String codigoDonador) {
+        //current username, message, currentUserId, otherUserToken
+        FirebaseUtilDg.getCollAlumnos().whereEqualTo("codigo", codigoDonador).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Alumno usuarioDg = task.getResult().toObjects(Alumno.class).get(0);
+                try {
+                    JSONObject jsonObject = new JSONObject();
+
+                    JSONObject notificationObj = new JSONObject();
+                    notificationObj.put("title", "Solicitud de registro");
+                    notificationObj.put("body", "Un nuevo usuario solicita ser miembro de ActiviConnect");
+
+                    jsonObject.put("notification", notificationObj);
+                    jsonObject.put("to", usuarioDg.getFcmToken());
+
+                    //llamar a la api
+                    FirebaseFCMUtils.callApi(jsonObject);
+
+
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+
+
+    }
+
 
     //encapsulamiento
 

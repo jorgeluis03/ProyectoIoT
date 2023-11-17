@@ -37,6 +37,8 @@ import com.example.proyecto_iot.alumno.Entities.Donacion;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaDonacionesAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoDonacionesBinding;
 
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -353,6 +355,10 @@ public class AlumnoDonacionesFragment extends Fragment {
                 .add(donacionNueva)
                 .addOnSuccessListener(documentReference -> {
                     Log.d("msg-test", "donacion guardada en firestore-donacion guarada exitosamente");
+
+                    //lanzar notificacion para el delago general
+                    enviarNotificacion();
+
                     //reiniciando fragmento para cargar nueva donacion
                     recargarFragment();
                 })
@@ -429,4 +435,35 @@ public class AlumnoDonacionesFragment extends Fragment {
     private String getImageName(Uri uri) {
         return DocumentFile.fromSingleUri(getContext(), uri).getName();
     }
+
+    public void enviarNotificacion() {
+        //current username, message, currentUserId, otherUserToken
+        FirebaseUtilDg.getCollAlumnos().whereEqualTo("codigo", "20200643").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Alumno usuarioDg = task.getResult().toObjects(Alumno.class).get(0);
+                try {
+                    JSONObject jsonObject = new JSONObject();
+
+                    JSONObject notificationObj = new JSONObject();
+                    notificationObj.put("title", "Donación Aitel");
+                    notificationObj.put("body", "Ha llegado una nueva donación para Aitel");
+
+                    jsonObject.put("notification", notificationObj);
+                    jsonObject.put("to", usuarioDg.getFcmToken());
+
+                    //llamar a la api
+                    FirebaseFCMUtils.callApi(jsonObject);
+
+
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+
+
+    }
+
+
 }
