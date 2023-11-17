@@ -126,8 +126,8 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                     JSONObject jsonObject = new JSONObject();
 
                     JSONObject notificationObj = new JSONObject();
-                    notificationObj.put("title", "Solicitud de registro");
-                    notificationObj.put("body", "Un nuevo usuario solicita ser miembro de ActiviConnect");
+                    notificationObj.put("title", "Donación aprobada");
+                    notificationObj.put("body", "Gracias por su donación hacia Aitel");
 
                     jsonObject.put("notification", notificationObj);
                     jsonObject.put("to", usuarioDg.getFcmToken());
