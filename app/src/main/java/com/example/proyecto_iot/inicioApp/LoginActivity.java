@@ -33,6 +33,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
@@ -78,21 +79,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (esCorreo(correoOCodigo)){
 
-                mAuth.signInWithEmailAndPassword(correoOCodigo, contrasena)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    obtenerUserData();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
-                                            .show();
-                                    Log.d("msg-test", "credenciales incorrectas");
-                                }
-                            }
-                        });
+                loguearEnAuthentication(correoOCodigo, contrasena);
 
             }
             else{ // se esta ingresando con codigo
@@ -101,8 +88,15 @@ public class LoginActivity extends AppCompatActivity {
                         .get()
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()){
-                                for (DocumentSnapshot documentSnapshot: task.getResult()){
-                                    Alumno alumnoLogueado = (Alumno) task.getResult().toObjects(Alumno.class);
+                                if (task.getResult().size() > 0){ // se encontro al alumno con el codigo ingresado
+                                    for (QueryDocumentSnapshot doc: task.getResult()){
+                                        Log.d("msg-test", "doc: "+doc);
+                                        Alumno alumno = doc.toObject(Alumno.class);
+                                        loguearEnAuthentication(alumno.getCorreo(), contrasena);
+                                    }
+                                }
+                                else{
+                                    // el codigo ingresado es incorreco
                                 }
                             }
                             else{
@@ -134,6 +128,24 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void loguearEnAuthentication(String correo, String contrasena){
+        mAuth.signInWithEmailAndPassword(correo, contrasena)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            obtenerUserData();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
+                                    .show();
+                            Log.d("msg-test", "credenciales incorrectas");
+                        }
+                    }
+                });
     }
 
     void obtenerUserData() {
