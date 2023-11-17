@@ -35,9 +35,9 @@ public class AlumnoApoyarButtonFragment extends Fragment {
 
         binding = FragmentAlumnoApoyarButtonBinding.inflate(inflater, container, false);
 
-        cargarBoton();
-
         evento = ((AlumnoEventoActivity) getActivity()).getEvento();
+
+        cargarBoton();
 
         binding.buttonEventoApoyar.setOnClickListener(view -> {
             guardarAlumnoEnEvento();

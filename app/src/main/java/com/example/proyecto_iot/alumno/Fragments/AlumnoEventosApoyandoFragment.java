@@ -57,26 +57,6 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                     }
                 });
 
-        /*
-        db.collection("alumnos")
-                .document(userUid)
-                .collection("eventos")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                buscarEventos(document.getId());
-                            }
-                        } else {
-                            Log.d("msg-test", "AlumnoEventosApoyandoFragment: error en busqueda de eventos apoyados");
-                        }
-                    }
-                });
-
-         */
-
         adapter.setContext(getContext());
         adapter.setEventoList(eventoApoyandoList);
 
