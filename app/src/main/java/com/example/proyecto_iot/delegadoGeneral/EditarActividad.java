@@ -1,5 +1,9 @@
 package com.example.proyecto_iot.delegadoGeneral;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +20,8 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
@@ -33,13 +39,10 @@ import java.util.List;
 
 public class EditarActividad extends AppCompatActivity {
     ActivityEditarActividadBinding binding;
-    FirebaseFirestore db;
     TextInputLayout nombreAntiguo;
-    EditText delegadoAntiguo;
-    List<Alumno> listaAct;
-    private static  boolean delegadosCargados = false;
+    TextView delegadoAntiguo;
     Alumno user_delegado;
-    RecyclerView recyclerView;
+    RelativeLayout relativeLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +60,19 @@ public class EditarActividad extends AppCompatActivity {
         Actividades actividadAEditar = (Actividades) getIntent().getSerializableExtra("actividadActual");
 
         nombreAntiguo = binding.textFieldNombreActividadAntiguo;
+        relativeLayout = binding.rlAsig;
+
         nombreAntiguo.getEditText().setText(actividadAEditar.getNombre());
-        delegadoAntiguo = binding.editTextNombreDelegadoAntiguo;
+        delegadoAntiguo = binding.tvnombreDelegado;
         delegadoAntiguo.setText(actividadAEditar.getDelegadoActividad().getNombre()+' '+actividadAEditar.getDelegadoActividad().getApellidos());
 
-        delegadoAntiguo.setOnClickListener(view -> {
-            showDialog();
+
+
+        relativeLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(this, DgAsignarDelegadoActivity.class);
+            launcher.launch(intent);
         });
+
 
         //Butom para actualizar
         binding.buttonEditarActDg.setOnClickListener(view -> {
@@ -98,62 +107,14 @@ public class EditarActividad extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void showDialog() {
-
-
-        Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.buttomsheetlayout_dg);
-
-        db = FirebaseFirestore.getInstance();
-        db.collection("alumnos")
-                .whereEqualTo("estado","activo")
-                .get()
-                .addOnCompleteListener(task -> {
-
-                    if (task.isSuccessful()) {
-                        QuerySnapshot queryDocumentSnapshots = task.getResult();
-                        listaAct = new ArrayList<>(); // Inicializa la lista
-
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            Alumno alumno = document.toObject(Alumno.class);
-                            listaAct.add(alumno);
-                        }
-
-                        ListaDelegadosAdapter adapter = new ListaDelegadosAdapter();
-                        adapter.setContext(this);
-                        adapter.setListaUsuarios(listaAct);
-                        adapter.setOnItemClickListener(new ListaDelegadosAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(Alumno alumno) {
-                                user_delegado = alumno;
-                                delegadoAntiguo.setText(alumno.getNombre()+' '+alumno.getApellidos()); // Actualiza el EditText con el nombre del usuario seleccionado
-                                dialog.dismiss(); // Cierra el diálogo después de la selección
-
-                            }
-                        });
-
-                        recyclerView = dialog.findViewById(R.id.recycleViewAsignarDelegado);
-                        recyclerView.setAdapter(adapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
-
-                    }
-                    dialog.show();
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-                    dialog.getWindow().setGravity(Gravity.BOTTOM);
-
-                });
-
-
-
-
-
-
-    }
-
+    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            Intent resultData = result.getData();
+            if(resultData!=null){
+                user_delegado = (Alumno) resultData.getSerializableExtra("delegado");
+                delegadoAntiguo.setText(user_delegado.getNombre()+' '+user_delegado.getApellidos());
+            }
+        }
+    });
 }

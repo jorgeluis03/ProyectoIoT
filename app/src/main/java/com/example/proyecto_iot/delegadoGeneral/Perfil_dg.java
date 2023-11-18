@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -38,18 +40,14 @@ public class Perfil_dg extends AppCompatActivity {
     ImageView imgPerfil;
     Uri uriImgPerfilSeleccionada;
     ProgressBar progressBar;
-
+    ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPerfilDgBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //Toolbar
-        Toolbar toolbar = binding.toolbarPerfil;
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //====================================
+
 
         textFielnombre = binding.textFieldNombrePerfil;
         textFielapellido = binding.textFieldApellidoPerfil;
@@ -57,6 +55,7 @@ public class Perfil_dg extends AppCompatActivity {
         textFielcorreo = binding.textFieldCorreoPerfil;
         imgPerfil = binding.imageViewPerfildg;
         progressBar = binding.profileProgressBar;
+        btnBack = binding.buttonBack;
 
         getDatosUsuario();
 
@@ -89,6 +88,9 @@ public class Perfil_dg extends AppCompatActivity {
                     });
         });
 
+        btnBack.setOnClickListener(view -> {
+            getOnBackPressedDispatcher().onBackPressed();
+        });
     }
     public void btnGuardarCambios(){
         String newNombre = textFielnombre.getEditText().getText().toString();

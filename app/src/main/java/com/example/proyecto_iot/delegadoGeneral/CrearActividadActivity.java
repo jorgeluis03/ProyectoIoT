@@ -1,5 +1,9 @@
 package com.example.proyecto_iot.delegadoGeneral;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +20,8 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
@@ -33,12 +39,10 @@ import java.util.List;
 
 public class CrearActividadActivity extends AppCompatActivity {
     ActivityDgCrearActividadBinding binding;
-    EditText editTextNombreDelegado;
-    List<Alumno> listaAct;
+    TextView nombreDelegado;
     Alumno user_delegado;
-    RecyclerView recyclerView;
     FirebaseFirestore db;
-    SearchView txtBuscar;
+    RelativeLayout relativeLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,14 @@ public class CrearActividadActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //====================================
 
+        //declaranciones
+        relativeLayout = binding.rlAsig;
+        nombreDelegado = binding.tvnombreDelegado;
+
+        relativeLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(this, DgAsignarDelegadoActivity.class);
+            launcher.launch(intent);
+        });
 
         binding.buttonCrearActDg.setOnClickListener(view -> {
             String nombreActividad = binding.textFieldNombreActividad.getEditText().getText().toString();
@@ -71,11 +83,6 @@ public class CrearActividadActivity extends AppCompatActivity {
 
         });
 
-        editTextNombreDelegado = binding.editTextNombreDelegado;
-        editTextNombreDelegado.setOnClickListener(view -> {
-            showDialog();
-        });
-
 
     }
 
@@ -89,16 +96,28 @@ public class CrearActividadActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            Intent resultData = result.getData();
+            if(resultData!=null){
+                user_delegado = (Alumno) resultData.getSerializableExtra("delegado");
+                nombreDelegado.setText(user_delegado.getNombre()+' '+user_delegado.getApellidos());
+            }
+        }
+    });
+
+
     public void showDialog() {
 
-
+        /*
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.buttomsheetlayout_dg);
-
+        */
         
 
-
+        /*
         db = FirebaseFirestore.getInstance();
         db.collection("alumnos")
                 .whereEqualTo("estado","activo")
@@ -141,7 +160,7 @@ public class CrearActividadActivity extends AppCompatActivity {
                     dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                     dialog.getWindow().setGravity(Gravity.BOTTOM);
 
-                });
+                });*/
 
 
 
@@ -149,7 +168,5 @@ public class CrearActividadActivity extends AppCompatActivity {
 
 
     }
-
-
 
 }
