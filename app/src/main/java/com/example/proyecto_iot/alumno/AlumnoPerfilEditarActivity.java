@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,10 +19,14 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
@@ -37,10 +44,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     private ActivityAlumnoPerfilEditarBinding binding;
@@ -53,7 +64,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     private String urlNuevo;
     private Uri imageUri; // data de imagen nueva seleccionada
     private boolean nuevaFoto = false;
-    int GALLERY_REQUEST_CODE = 200;
+    private String noFotoUrl = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,15 +117,16 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         binding.buttonQuitarFoto.setOnClickListener(view -> {
             RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
             Glide.with(AlumnoPerfilEditarActivity.this)
-                    .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png")
+                    .load(noFotoUrl)
                     .apply(requestOptions)
                     .into(binding.imageEdit);
+
+            binding.buttonGuardarPerfil.setEnabled(true);
             nuevaFoto = true;
+            obtenerUriImageView();
         });
 
         binding.buttonEditarFoto.setOnClickListener(view -> {
-            //Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            //startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
             Intent galleryIntent = new Intent(MediaStore.ACTION_PICK_IMAGES);
             openImageLauncher.launch(galleryIntent);
         });
@@ -135,24 +147,6 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                 }
             }
     );
-
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                imageUri = data.getData();
-                binding.imageEdit.setImageURI(imageUri);
-                binding.buttonGuardarPerfil.setEnabled(true);
-                nuevaFoto = true;
-            } else {
-                Log.d("msg-test", "imagen no seleccionada");
-            }
-        }
-    }
-
-     */
 
     private boolean inputsValidos() {
         String nombre = binding.inputNombre.getEditText().getText().toString().trim();
@@ -266,6 +260,29 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                 .load(url)
                 .apply(requestOptions)
                 .into(binding.imageEdit);
+    }
+
+    private void obtenerUriImageView(){
+        Glide.with(AlumnoPerfilEditarActivity.this)
+                .asBitmap()
+                .load(noFotoUrl)
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        String path = MediaStore.Images.Media.insertImage( // bitmap en archivo temporal
+                                getContentResolver(),
+                                resource,
+                                "noFotoImagen",
+                                null
+                        );
+                        imageUri = Uri.parse(path);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
     }
 
 }

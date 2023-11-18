@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,9 +20,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -292,14 +295,14 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     }
 
     private void cargarInfoEvento() {
-
         db.collection("alumnos")
                 .document(evento.getDelegado())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Alumno alumno = task.getResult().toObject(Alumno.class);
-                        binding.textDelegadoActividad.setText("Delegado: "+alumno.getNombre()+" "+alumno.getApellidos());
+                        binding.textDelegadoActividad.setText(alumno.getNombre()+" "+alumno.getApellidos());
+                        cargarDelegadoDialog(alumno);
                     } else {
                         Log.d("msg-test", "error buscando delegado de evento: " + task.getException().getMessage());
                     }
@@ -347,6 +350,32 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    private void cargarDelegadoDialog(Alumno delegado){
+        float density = getResources().getDisplayMetrics().density;
+        Dialog dialog = new Dialog(AlumnoEventoActivity.this);
+        dialog.setContentView(R.layout.dialog_delegado_actividad);
+        dialog.getWindow().setLayout((int) (320*density), ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(AlumnoEventoActivity.this.getDrawable(R.drawable.shape_user_dialog));
+
+        TextView textNombreDelegadoDialog = dialog.findViewById(R.id.textNombreDelegadoActividad);
+        TextView textCodigoDelegadoDialog = dialog.findViewById(R.id.textCodigoDelegadoActividad);
+        TextView textCorreoDelegadoDialog = dialog.findViewById(R.id.textCorreoDelegadoActividad);
+        ImageView imageDelegadoDialog = dialog.findViewById(R.id.imageDelegadoActividad);
+
+        textNombreDelegadoDialog.setText(delegado.getNombre()+" "+delegado.getApellidos());
+        textCodigoDelegadoDialog.setText(delegado.getCodigo());
+        textCorreoDelegadoDialog.setText(delegado.getCorreo());
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
+        Glide.with(AlumnoEventoActivity.this)
+                .load(delegado.getFotoUrl())
+                .apply(requestOptions)
+                .into(imageDelegadoDialog);
+
+        binding.textDelegadoActividad.setOnClickListener(view -> {
+            dialog.show();
+        });
     }
 
     // funcion necesaria para chat

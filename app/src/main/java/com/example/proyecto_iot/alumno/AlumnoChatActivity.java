@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.cometchat.chat.constants.CometChatConstants;
 import com.cometchat.chat.core.AppSettings;
@@ -37,10 +38,11 @@ public class AlumnoChatActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .replace(R.id.fragmentHeader, AlumnoHeader3Fragment.class, bundle)
                 .commit();
-        inicializarCometChatGrupo();
+        cargarInterfaz();
+        cargarEstilosCometChat();
     }
 
-    private void inicializarCometChatGrupo() {
+    private void cargarEstilosCometChat() {
         String region = AppConstants.REGION;
         String appID = AppConstants.APP_ID;
         Group group = new Group(evento.getChatID(), null, CometChatConstants.GROUP_TYPE_PRIVATE, null);
@@ -55,9 +57,12 @@ public class AlumnoChatActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String s) {
                 Log.d("msg-test", "Initialization completed successfully");
+
+                binding.groupMessages.setLoadingIconTintColor(Color.GRAY);
+
                 MessageListStyle listStyle = new MessageListStyle();
                 listStyle.setBorderWidth(0);
-                listStyle.setBackground(Color.parseColor("#303b57"));
+                listStyle.setBackground(Color.parseColor("#a4aaba"));
                 listStyle.setTimeStampTextColor(Color.parseColor("#b9b9b9"));
                 listStyle.setLoadingIconTint(Color.parseColor("#ffffff"));
                 binding.groupMessages.setGroup(group);
@@ -76,5 +81,11 @@ public class AlumnoChatActivity extends AppCompatActivity {
                 Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
             }
         });
+    }
+
+    private void cargarInterfaz(){
+        if (evento.getEstado().equals("inactivo")){
+            binding.groupComposer.setVisibility(View.GONE);
+        }
     }
 }
