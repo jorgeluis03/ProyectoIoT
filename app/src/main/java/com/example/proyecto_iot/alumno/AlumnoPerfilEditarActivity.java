@@ -127,7 +127,8 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         });
 
         binding.buttonEditarFoto.setOnClickListener(view -> {
-            Intent galleryIntent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+            Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            galleryIntent.setType("image/*");
             openImageLauncher.launch(galleryIntent);
         });
 
