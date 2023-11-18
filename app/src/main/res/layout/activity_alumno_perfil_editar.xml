@@ -8,128 +8,6 @@
     tools:context=".alumno.AlumnoPerfilEditarActivity">
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputNombre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:ems="10"
-        android:hint="@string/perfil_editar_nombre"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputApellidos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="@string/perfil_editar_apellidos"
-        android:inputType="text|textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputNombre">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputCorreo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Correo"
-        android:inputType="text|textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputApellidos">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text|textEmailAddress"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/buttonGuardarPerfil"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/button_alumno_perfil_guardar"
-        android:enabled="false"
-        android:text="@string/perfil_editar_guardar"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputApellidos"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/imageEdit"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/inputNombre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/fragmentHeader"
-        app:layout_constraintVertical_bias="0.3"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/buttonQuitarFoto"
-        style="?attr/materialIconButtonFilledStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-20dp"
-        android:layout_marginBottom="-20dp"
-        android:backgroundTint="#222A3F"
-        app:icon="@drawable/icon_trash"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
-        app:layout_constraintStart_toStartOf="@+id/imageEdit" />
-
-    <Button
-        android:id="@+id/buttonEditarFoto"
-        style="?attr/materialIconButtonFilledStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="-20dp"
-        android:layout_marginBottom="-20dp"
-        android:backgroundTint="#222A3F"
-        app:icon="@drawable/icon_pencil"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
-        app:layout_constraintEnd_toEndOf="@+id/imageEdit" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentHeader"
         android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment"
@@ -140,5 +18,132 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_alumno_header1" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentHeader">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="48dp"
+                android:ems="10"
+                android:hint="@string/perfil_editar_nombre"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageEdit">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputApellidos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="24dp"
+                android:ems="10"
+                android:hint="@string/perfil_editar_apellidos"
+                android:inputType="text|textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputNombre">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="24dp"
+                android:ems="10"
+                android:hint="Correo"
+                android:inputType="text|textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputApellidos">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_email"
+                    android:inputType="text|textEmailAddress"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageEdit"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <Button
+                android:id="@+id/buttonQuitarFoto"
+                style="?attr/materialIconButtonFilledStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#222A3F"
+                app:icon="@drawable/icon_trash"
+                app:iconTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
+                app:layout_constraintStart_toStartOf="@+id/imageEdit" />
+
+            <Button
+                android:id="@+id/buttonEditarFoto"
+                style="?attr/materialIconButtonFilledStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#222A3F"
+                app:icon="@drawable/icon_pencil"
+                app:iconTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
+                app:layout_constraintEnd_toEndOf="@+id/imageEdit" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/buttonGuardarPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_alumno_perfil_guardar"
+        android:enabled="false"
+        android:text="@string/perfil_editar_guardar"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

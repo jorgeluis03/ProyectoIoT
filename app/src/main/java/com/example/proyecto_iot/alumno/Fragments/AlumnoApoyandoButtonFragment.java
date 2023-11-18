@@ -44,6 +44,8 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
 
         evento = ((AlumnoEventoActivity) getActivity()).getEvento();
 
+        cargarBotones();
+
         binding.buttonAbrirChat.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), AlumnoChatActivity.class);
             intent.putExtra("evento", evento);
@@ -141,5 +143,12 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
                 Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
             }
         });
+    }
+
+    private void cargarBotones(){
+        if (evento.getEstado().equals("inactivo")){
+            binding.buttonNotificaciones.setVisibility(View.GONE);
+            binding.buttonEventoApoyando.setVisibility(View.GONE);
+        }
     }
 }

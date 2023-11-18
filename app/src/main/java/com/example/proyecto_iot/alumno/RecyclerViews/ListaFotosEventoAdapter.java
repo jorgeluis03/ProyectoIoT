@@ -2,7 +2,10 @@ package com.example.proyecto_iot.alumno.RecyclerViews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoPerfilEditarActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -86,12 +93,33 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
             super(itemView);
 
             itemView.findViewById(R.id.buttonShare).setOnClickListener(view -> {
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
 
-                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(foto.getFotoUrl()));
-                shareIntent.setType("image/jpeg");
-                getContext().startActivity(Intent.createChooser(shareIntent, getContext().getResources().getText(R.string.send)));
+                Glide.with(getContext())
+                        .asBitmap()
+                        .load(foto.getFotoUrl())
+                        .into(new CustomTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                String path = MediaStore.Images.Media.insertImage( // bitmap en archivo temporal
+                                        getContext().getContentResolver(),
+                                        resource,
+                                        "noFotoImagen",
+                                        null
+                                );
+                                Uri fotoUri = Uri.parse(path);
+                                Intent shareIntent = new Intent();
+                                shareIntent.setAction(Intent.ACTION_SEND);
+                                shareIntent.putExtra(Intent.EXTRA_STREAM, fotoUri);
+                                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                shareIntent.setType("image/*");
+                                getContext().startActivity(Intent.createChooser(shareIntent, getContext().getResources().getText(R.string.send)));
+                            }
+
+                            @Override
+                            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                            }
+                        });
             });
         }
     }
