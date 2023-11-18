@@ -2,6 +2,7 @@ package com.example.proyecto_iot.delegadoGeneral.fragmentos;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -9,27 +10,37 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosRegistrBinding;
+import com.example.proyecto_iot.delegadoGeneral.adapter.ListaBuscarDelegadoAdapter;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosAdapter;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dg_alumnos_registrFragment extends Fragment implements SearchView.OnQueryTextListener {
+public class Dg_alumnos_registrFragment extends Fragment {
     FragmentDgAlumnosRegistrBinding binding;
+    SearchView searchView;
     private List<Alumno> listaUserRegi;
     ListenerRegistration snapshotListener;
     FirebaseFirestore db;
+    Query query;
+    ListaUsuariosAdapter adapterBuscar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding=FragmentDgAlumnosRegistrBinding.inflate(inflater,container,false);
+
+        //declaraciones
+        searchView = binding.searchUserRegis;
+
 
         db=FirebaseFirestore.getInstance();
         snapshotListener = db.collection("alumnos")
@@ -56,11 +67,39 @@ public class Dg_alumnos_registrFragment extends Fragment implements SearchView.O
 
 
 
-
-
+        //search
+        //searchMetod();
         return binding.getRoot();
     }
 
+    public void searchMetod(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //textSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //textSearch(newText);
+                return false;
+            }
+        });
+    }
+    /*
+    public void textSearch(String s){
+        query = FirebaseUtilDg.getCollAlumnos().whereEqualTo("estado","activo");
+        FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
+                .setQuery(query.orderBy("nombre").startAt(s).endAt(s+"~"), Alumno.class).build();
+
+        adapterBuscar = new ListaBuscarDelegadoAdapter(options);
+        adapterBuscar.setOnAlumnoBuscarSelectedListener(this);
+        adapterBuscar.startListening();
+        recyclerViewDelegados.setAdapter(adapterBuscar);
+    }
+    *
+ */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -69,14 +108,4 @@ public class Dg_alumnos_registrFragment extends Fragment implements SearchView.O
         }
     }
 
-
-    @Override
-    public boolean onQueryTextSubmit(String s) { // pueda ir buscando en tiempo real
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        return false;
-    }
 }
