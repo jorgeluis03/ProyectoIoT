@@ -39,10 +39,10 @@ public class AlumnoChatActivity extends AppCompatActivity {
                 .replace(R.id.fragmentHeader, AlumnoHeader3Fragment.class, bundle)
                 .commit();
         cargarInterfaz();
-        inicializarCometChatGrupo();
+        cargarEstilosCometChat();
     }
 
-    private void inicializarCometChatGrupo() {
+    private void cargarEstilosCometChat() {
         String region = AppConstants.REGION;
         String appID = AppConstants.APP_ID;
         Group group = new Group(evento.getChatID(), null, CometChatConstants.GROUP_TYPE_PRIVATE, null);
@@ -57,6 +57,9 @@ public class AlumnoChatActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String s) {
                 Log.d("msg-test", "Initialization completed successfully");
+
+                binding.groupMessages.setLoadingIconTintColor(Color.GRAY);
+
                 MessageListStyle listStyle = new MessageListStyle();
                 listStyle.setBorderWidth(0);
                 listStyle.setBackground(Color.parseColor("#a4aaba"));
