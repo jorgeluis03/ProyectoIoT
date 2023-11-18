@@ -50,28 +50,72 @@
             android:textColor="@color/letra_clara" />
 
     </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldDelegadoActividadAntiguo"
+    <androidx.cardview.widget.CardView
+        app:layout_constraintTop_toBottomOf="@+id/textFieldNombreActividadAntiguo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:hint="Delegado actividad"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:clickable="true"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldNombreActividadAntiguo">
+        android:layout_margin="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/grey">
 
-        <EditText
-            android:id="@+id/editTextNombreDelegadoAntiguo"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="false"
-            android:textColor="@color/letra_clara" />
+            android:orientation="vertical">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/tvnombreDelegado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sin delegado"
+                    android:textSize="16sp"
+                    android:textColor="@color/light_grey"
+                    android:textStyle="italic"/>
+
+            </RelativeLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divideras"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                app:dividerColor="@color/grey"/>
+
+            <RelativeLayout
+
+                android:id="@+id/rl_asig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <ImageButton
+                    android:id="@+id/img_add"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/add_user"
+                    app:tint="@color/white"
+                    android:layout_marginEnd="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/img_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Asignar delegado"
+                    android:textColor="@color/light_grey"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
