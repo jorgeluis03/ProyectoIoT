@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityRegistroBinding;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -183,17 +184,11 @@ public class RegistroActivity extends AppCompatActivity {
                     notificationObj.put("title", "Solicitud de registro");
                     notificationObj.put("body", "Un nuevo usuario solicita ser miembro de ActiviConnect");
 
-
-                    //JSONObject dataObj = new JSONObject();
-                    //dataObj.put("userId",currentUser.getUserId());   //mismo identificador que el putExtra del splashActivity
-
-
                     jsonObject.put("notification", notificationObj);
-                    //jsonObject.put("data",dataObj);
                     jsonObject.put("to", usuarioDg.getFcmToken());
 
-
-                    callApi(jsonObject);
+                    //llamar a la api
+                    FirebaseFCMUtils.callApi(jsonObject);
 
 
                 } catch (Exception e) {
@@ -206,28 +201,6 @@ public class RegistroActivity extends AppCompatActivity {
 
     }
 
-    public void callApi(JSONObject jsonObject) {
-        MediaType JSON = MediaType.get("application/json");
-        OkHttpClient client = new OkHttpClient();
-        String url = "https://fcm.googleapis.com/fcm/send";
-        RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .header("Authorization", "Bearer AAAAZ6GvChg:APA91bGcMRy5DGWg6JBjNDsXSzKHFqrcZ9nE-blBNJGw9BPHXYAlHW1pdzn0n0BSf-PrhRjg_PO7qUmZPWhL4mEGuoHO-Sk7u8Ui1UZU4pIKSKplfE7wxQO6c1wiY073Jm6fzkR2Kg0q")
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
 
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
-            }
-        });
-
-    }
 
 }

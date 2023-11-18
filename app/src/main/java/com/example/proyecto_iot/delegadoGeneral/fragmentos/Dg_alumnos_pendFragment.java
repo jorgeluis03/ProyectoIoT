@@ -1,12 +1,7 @@
 package com.example.proyecto_iot.delegadoGeneral.fragmentos;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -15,21 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
-import com.example.proyecto_iot.databinding.FragmentDgAlumnosBaneadosBinding;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosPendBinding;
-import com.example.proyecto_iot.databinding.FragmentDgAlumnosRegistrBinding;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActividadesAdapter;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosAdapter;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosBaneadosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosPendiAdapter;
-import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;

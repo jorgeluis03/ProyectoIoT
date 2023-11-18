@@ -20,6 +20,7 @@ import com.example.proyecto_iot.databinding.ActivityAlumnoPerfilBinding;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.gson.Gson;
 
@@ -61,12 +62,24 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         });
 
         binding.buttonCerrarSesion.setOnClickListener(view -> {
-            FirebaseAuth.getInstance().signOut();
-            cerrarCesionCometChat();
-            Intent intent = new Intent(AlumnoPerfilActivity.this, IngresarActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            //Logica para salir
+            //Borrar el token al cerrar sesion
+            FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+
+                    FirebaseAuth.getInstance().signOut();
+                    cerrarCesionCometChat();
+                    Intent intent = new Intent(AlumnoPerfilActivity.this, IngresarActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+
+                }
+            });
+
+
+
+
         });
     }
 

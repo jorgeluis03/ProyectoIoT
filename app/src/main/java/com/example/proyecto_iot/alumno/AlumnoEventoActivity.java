@@ -8,9 +8,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
@@ -33,6 +38,7 @@ import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -45,7 +51,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AlumnoEventoActivity extends AppCompatActivity {
@@ -79,6 +89,39 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.buttonEventoBack.setOnClickListener(view -> {
             finish();
         });
+
+        binding.buttonEventoFecha.setOnClickListener(view -> {
+            MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(AlumnoEventoActivity.this);
+            alertDialog.setTitle("Confirmación");
+            alertDialog.setMessage("¿Desea agregar el evento en el calendario?");
+            alertDialog.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    crearEventoEnCalendario();
+                }
+            });
+            alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            alertDialog.show();
+        });
+
+        binding.buttonEventoHora.setOnClickListener(view -> {
+            MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(AlumnoEventoActivity.this);
+            alertDialog.setTitle("Confirmación");
+            alertDialog.setMessage("¿Desea agregar el evento en el calendario?");
+            alertDialog.setPositiveButton("Agregar", ((dialogInterface, i) -> {
+                crearEventoEnCalendario();
+            }));
+            alertDialog.setNegativeButton("Cancelar", ((dialogInterface, i) -> {
+
+            }));
+            alertDialog.show();
+        });
+
         binding.buttonEventoLugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,19 +172,18 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .collection("eventos")
                 .document("evento" + evento.getFechaHoraCreacion().toString())
                 .addSnapshotListener(((value, error) -> {
-                    if (error != null){
+                    if (error != null) {
                         Log.d("msg-test", "Listen failed in evento activity");
                         return;
                     }
-                    if (savedInstanceState == null){
-                        if (value != null && value.exists()){ // evento en lista de eventos de alumno (evento apoyado)
+                    if (savedInstanceState == null) {
+                        if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
                             getSupportFragmentManager().beginTransaction()
                                     .setReorderingAllowed(true)
                                     .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
                                     .commit();
                             binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                        }
-                        else{ // evento no apoyado
+                        } else { // evento no apoyado
                             getSupportFragmentManager().beginTransaction()
                                     .setReorderingAllowed(true)
                                     .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
@@ -165,6 +207,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         db.collection("eventos")
                 .document("evento" + evento.getFechaHoraCreacion().toString())
                 .collection("fotos")
+                .orderBy("fechaHoraSubida", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -183,12 +226,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         adapter.setFotoList(fotoList);
 
         binding.rvFotos.setAdapter(adapter);
-        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AlumnoEventoActivity.this){
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };*/
         binding.rvFotos.setLayoutManager(new LinearLayoutManager(AlumnoEventoActivity.this));
     }
 
@@ -255,6 +292,19 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     }
 
     private void cargarInfoEvento() {
+
+        db.collection("alumnos")
+                .document(evento.getDelegado())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Alumno alumno = task.getResult().toObject(Alumno.class);
+                        binding.textDelegadoActividad.setText("Delegado: "+alumno.getNombre()+" "+alumno.getApellidos());
+                    } else {
+                        Log.d("msg-test", "error buscando delegado de evento: " + task.getException().getMessage());
+                    }
+                });
+
         binding.textEventoTitulo.setText(evento.getTitulo());
         binding.textEventoActividad.setText(evento.getActividad());
         binding.textEventoDescripcion.setText(evento.getDescripcion());
@@ -268,6 +318,35 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .load(evento.getFotoUrl())
                 .apply(requestOptions)
                 .into(binding.imageEvento);
+    }
+
+    private void crearEventoEnCalendario() {
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setData(CalendarContract.Events.CONTENT_URI);
+        intent.putExtra(CalendarContract.Events.TITLE, evento.getTitulo());
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Ubicación del evento");
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, evento.getDescripcion());
+
+        long timeMillis = obtenerMilis(evento.getFecha(), evento.getHora());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, timeMillis);
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, timeMillis + 3600000); // duracion del evento por defecto de una hora
+
+        startActivity(intent);
+    }
+
+    private long obtenerMilis(String fecha, String hora) {
+        String fechaCompleta = fecha + " " + hora;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm 'hrs'");
+
+        try {
+            Date date = dateFormat.parse(fechaCompleta);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            return calendar.getTimeInMillis();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     // funcion necesaria para chat

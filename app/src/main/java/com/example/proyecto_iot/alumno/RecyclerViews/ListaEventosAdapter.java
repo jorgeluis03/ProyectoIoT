@@ -2,6 +2,7 @@ package com.example.proyecto_iot.alumno.RecyclerViews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapter.EventoViewHolder>{
+public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapter.EventoViewHolder> {
     private List<Evento> eventoList;
     private Context context;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @NonNull
     @Override
@@ -40,6 +44,7 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         Evento evento = eventoList.get(position);
         holder.evento = evento;
 
+        TextView textDelegado = holder.itemView.findViewById(R.id.textDelegadoActividad);
         TextView textTitulo = holder.itemView.findViewById(R.id.textTitulo);
         TextView textActividad = holder.itemView.findViewById(R.id.textActividad);
         TextView textDescripcion = holder.itemView.findViewById(R.id.textDescripcion);
@@ -49,6 +54,19 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         TextView lugar = holder.itemView.findViewById(R.id.textLugar);
 
         lugar.setText(evento.getLugar());
+
+        db.collection("alumnos")
+                .document(evento.getDelegado())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Alumno alumno = task.getResult().toObject(Alumno.class);
+                        textDelegado.setText("Deleg: "+alumno.getNombre()+" "+alumno.getApellidos());
+                    } else {
+                        Log.d("msg-test", "error buscando delegado de evento: " + task.getException().getMessage());
+                    }
+                });
+
         textTitulo.setText(evento.getTitulo());
         textActividad.setText(evento.getActividad());
         textDescripcion.setText(evento.getDescripcion());
@@ -68,9 +86,10 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         return eventoList.size();
     }
 
-    public class EventoViewHolder extends RecyclerView.ViewHolder{
+    public class EventoViewHolder extends RecyclerView.ViewHolder {
 
         Evento evento;
+
         public EventoViewHolder(@NonNull View itemView) {
             super(itemView);
             ConstraintLayout constraintLayout = itemView.findViewById(R.id.evento);

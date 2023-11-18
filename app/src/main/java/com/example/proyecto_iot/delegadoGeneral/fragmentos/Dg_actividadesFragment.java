@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -16,15 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
-import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.databinding.FragmentDgActividadesBinding;
 import com.example.proyecto_iot.delegadoGeneral.CrearActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,8 +44,8 @@ public class Dg_actividadesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding=FragmentDgActividadesBinding.inflate(inflater,container,false);
-        // Cambiar el contenido del Toolbar
-        ((Dg_Activity) requireActivity()).setToolbarContent("ActiviConnect");
+
+
 
         lunchEditar = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -56,7 +54,9 @@ public class Dg_actividadesFragment extends Fragment {
                 lunchEditar(resultData);
             }
         });
-        adapter = new ListaActividadesAdapter(lunchEditar);
+
+        //
+
 
         cargarActividades();
 
@@ -64,7 +64,6 @@ public class Dg_actividadesFragment extends Fragment {
             Intent intent = new Intent(getActivity(), CrearActividadActivity.class);
             launcher.launch(intent);
         });
-
 
         return binding.getRoot();
     }
@@ -110,8 +109,7 @@ public class Dg_actividadesFragment extends Fragment {
                             listaAct.add(actividades);
                         }
 
-                        adapter.setContext(getContext());
-                        adapter.setListaActividades(listaAct);
+                        adapter = new ListaActividadesAdapter(lunchEditar,getContext(),listaAct);
                         binding.recycleViewActividadesDg.setAdapter(adapter);
                         binding.recycleViewActividadesDg.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -166,4 +164,5 @@ public class Dg_actividadesFragment extends Fragment {
         }
 
     }
+
 }

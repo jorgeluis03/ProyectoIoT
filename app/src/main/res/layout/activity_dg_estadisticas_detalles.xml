@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".delegadoGeneral.DgEstadisticasDetallesActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/azul_background"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_marginEnd="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+        <TextView
+            android:layout_toRightOf="@+id/btnBack"
+            android:id="@+id/toolbarDetallesEstad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detalles"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            />
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar_Estad"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_centerInParent="true"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/relativeToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycleViewDetalleEstad"/>
+
+
+</RelativeLayout>

@@ -1,6 +1,9 @@
 package com.example.proyecto_iot.alumno.RecyclerViews;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +17,19 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Foto;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEventoAdapter.FotoViewHolder>{
+public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEventoAdapter.FotoViewHolder> {
     private List<Foto> fotoList;
     private Context context;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @NonNull
     @Override
@@ -34,14 +43,35 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
         Foto foto = fotoList.get(position);
         holder.foto = foto;
 
-        TextView textDescripcion = holder.itemView.findViewById(R.id.textDescipcionFoto);
-        textDescripcion.setText(foto.getDescripcion());
         ImageView imagenFoto = holder.itemView.findViewById(R.id.imageFoto);
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(getContext())
                 .load(foto.getFotoUrl())
                 .apply(requestOptions)
                 .into(imagenFoto);
+
+        TextView textNombre = holder.itemView.findViewById(R.id.textAlumnoNombre);
+
+        db.collection("alumnos")
+                .document(foto.getAlumnoID())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Alumno alumno = task.getResult().toObject(Alumno.class);
+                        textNombre.setText(alumno.getNombre() + " " + alumno.getApellidos() + ":");
+                    } else {
+                        Log.d("msg-test", "error buscando alumno de foto: " + task.getException().getMessage());
+                    }
+                });
+
+        TextView textDescripcion = holder.itemView.findViewById(R.id.textDescipcionFoto);
+        textDescripcion.setText(foto.getDescripcion());
+
+        TextView textFechaPublicacion = holder.itemView.findViewById(R.id.textFechaPublicación);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM, dd");
+        String fechaFormateada = simpleDateFormat.format(foto.getFechaHoraSubida().toDate());
+        textFechaPublicacion.setText(fechaFormateada);
     }
 
     @Override
@@ -49,10 +79,20 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
         return fotoList.size();
     }
 
-    public class FotoViewHolder extends RecyclerView.ViewHolder{
+    public class FotoViewHolder extends RecyclerView.ViewHolder {
         Foto foto;
+
         public FotoViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            itemView.findViewById(R.id.buttonShare).setOnClickListener(view -> {
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+
+                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(foto.getFotoUrl()));
+                shareIntent.setType("image/jpeg");
+                getContext().startActivity(Intent.createChooser(shareIntent, getContext().getResources().getText(R.string.send)));
+            });
         }
     }
 

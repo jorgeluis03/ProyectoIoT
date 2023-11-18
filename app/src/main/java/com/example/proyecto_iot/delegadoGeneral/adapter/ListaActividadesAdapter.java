@@ -2,49 +2,31 @@ package com.example.proyecto_iot.delegadoGeneral.adapter;
 
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.delegadoGeneral.CrearActividadActivity;
+import com.example.proyecto_iot.delegadoGeneral.DgEventosPorActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.EditarActividad;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
-import com.example.proyecto_iot.delegadoGeneral.fragmentos.Dg_actividadesFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividadesAdapter.ActividesViewHolder> {
     private List<Actividades> listaActividades;
@@ -52,8 +34,10 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
     FirebaseFirestore db;
     private ActivityResultLauncher<Intent> lunchEditar;
 
-    public ListaActividadesAdapter(ActivityResultLauncher<Intent> lunchEditar) {
+    public ListaActividadesAdapter(ActivityResultLauncher<Intent> lunchEditar, Context context, List<Actividades> listaActividades) {
         this.lunchEditar = lunchEditar;
+        this.context =context;
+        this.listaActividades = listaActividades;
     }
     //override metodos
     @NonNull
@@ -70,22 +54,13 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
         holder.actividades = act;
 
         TextView tvNombreActividad = holder.itemView.findViewById(R.id.textViewNombreActividad_dg);
-        TextView tvEstado = holder.itemView.findViewById(R.id.textViewEstadoActiv_dg);
         TextView tvDelegadoAsignado = holder.itemView.findViewById(R.id.textViewDeleActiv_dg);
-        //Button buttonAsiganarDelegado = holder.itemView.findViewById(R.id.buttomAddDelegado_dg);
+
 
         tvNombreActividad.setText(act.getNombre());
-        tvEstado.setText("• "+act.getEstado());
         tvDelegadoAsignado.setText("Delegado: "+act.getDelegadoActividad().getNombre()+' '+act.getDelegadoActividad().getApellidos());
-
-            /*buttonAsiganarDelegado.setEnabled(false);
-            buttonAsiganarDelegado.setBackgroundColor(Color.LTGRAY);
-            buttonAsiganarDelegado.setVisibility(View.GONE);*/
-
-
-
-
     }
+
 
     @Override
     public int getItemCount() {
@@ -100,7 +75,15 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
             super(itemView);
 
             //editar
-            Button buttonEditar = itemView.findViewById(R.id.buttonEditarActivi);
+            ImageButton buttonEditar = itemView.findViewById(R.id.buttonEditarActivi);
+            TextView btnVerEventos = itemView.findViewById(R.id.tv_verDetalles);
+
+            btnVerEventos.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DgEventosPorActividadActivity.class);
+                intent.putExtra("idActividad",actividades.getId());
+                context.startActivity(intent);
+            });
+
             buttonEditar.setOnClickListener(view -> {
 
                 Intent intent = new Intent(context, EditarActividad.class);
@@ -110,7 +93,7 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
             });
 
             //borrar
-            Button buttonBorrar = itemView.findViewById(R.id.buttonEliminarActivi);
+            ImageButton buttonBorrar = itemView.findViewById(R.id.buttonEliminarActivi);
             buttonBorrar.setOnClickListener(view -> {
 
                 new MaterialAlertDialogBuilder(context)
