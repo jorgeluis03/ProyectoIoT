@@ -330,6 +330,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
 
                                     subirNuevoEventoFirestore();
                                     subirFoto(imageUri, eventoGuardar.getFechaHoraCreacion().toString());
+                                    eventoGuardar.setChatID(group.getGuid());
 
                                 }
 
@@ -345,6 +346,8 @@ public class DaEditEventoActivity extends AppCompatActivity {
                             Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
                         }
                     });
+                    subirNuevoEventoFirestore();
+                    subirFoto(imageUri, eventoGuardar.getFechaHoraCreacion().toString());
                 }
             }else {
                 String mensaje;

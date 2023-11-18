@@ -6,8 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/azul_background"
     tools:context=".delegadoGeneral.fragmentos.Dg_alumnos_pendFragment">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchUserPendi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarAsig"
+        app:queryHint="Buscar"
+        android:backgroundTint="@color/light_grey"
+        android:background="@drawable/curved_bg"
+        android:layout_margin="8dp"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewUserPendi"
         android:layout_width="match_parent"

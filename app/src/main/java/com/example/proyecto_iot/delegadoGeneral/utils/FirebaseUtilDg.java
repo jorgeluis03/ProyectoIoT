@@ -47,4 +47,7 @@ public class FirebaseUtilDg {
     public static StorageReference getFotoEvento(){
         return FirebaseStorage.getInstance().getReference().child("profile_pic").child("");
     }
+    public static CollectionReference getActividadesCollection(){
+        return FirebaseFirestore.getInstance().collection("actividades");
+    }
 }
