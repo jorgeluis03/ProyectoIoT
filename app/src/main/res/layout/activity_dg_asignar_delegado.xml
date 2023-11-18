@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azul_background"
     tools:context=".delegadoGeneral.DgAsignarDelegadoActivity">
 
     <RelativeLayout
@@ -34,7 +35,16 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchDeleasig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarAsig"
+        app:queryHint="Buscar"
+        android:backgroundTint="@color/light_grey"
+        android:background="@drawable/curved_bg"
+        android:layout_margin="8dp"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:background="@color/azul_background"
@@ -57,7 +67,6 @@
         android:layout_height="40dp"
         android:id="@+id/progressBar"
         android:layout_centerInParent="true"/>
-
 
 
 
