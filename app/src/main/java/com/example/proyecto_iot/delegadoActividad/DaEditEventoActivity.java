@@ -294,7 +294,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
                     guardarLugar(datoRecibido);
                     eventoGuardar.setActividad(currentActividad.getNombre());
                     eventoGuardar.setActividadId(currentActividad.getId());
-                    eventoGuardar.setChatID(""); //TODO DA: vincular con CometChat
+                    //eventoGuardar.setChatID(""); //TODO DA: vincular con CometChat
                     eventoGuardar.setDescripcion(binding.textDescripEvent.getText().toString());
                     eventoGuardar.setEstado("activo");
                     eventoGuardar.setFecha(binding.textDateEvent.getText().toString());
@@ -304,8 +304,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
                     eventoGuardar.setTitulo(binding.textTitleEvent.getText().toString());
                     eventoGuardar.setLugar(binding.textPlaceEvent.getText().toString());
                     eventoGuardar.setFotoUrl("");
-                    subirNuevoEventoFirestore();
-                    subirFoto(imageUri, eventoGuardar.getFechaHoraCreacion().toString());
+
 
                     //crear y obtener id de grupo de cometchat
                     String region = AppConstants.REGION;
@@ -331,7 +330,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
                                 public void onSuccess(Group group) {
                                     Log.d("msg-test", "Group created successfully: " + group.toString());
 
-                                    guardarLugar(datoRecibido);
+                                    /*guardarLugar(datoRecibido);
                                     eventoGuardar.setActividad(currentActividad.getNombre());
                                     eventoGuardar.setChatID(group.getGuid());
                                     eventoGuardar.setDescripcion(binding.textDescripEvent.getText().toString());
@@ -345,6 +344,8 @@ public class DaEditEventoActivity extends AppCompatActivity {
 
                                     subirNuevoEventoFirestore();
                                     subirFoto(imageUri, eventoGuardar.getFechaHoraCreacion().toString());
+                                     */
+                                    eventoGuardar.setChatID(group.getGuid());
 
                                 }
 
@@ -360,6 +361,8 @@ public class DaEditEventoActivity extends AppCompatActivity {
                             Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
                         }
                     });
+                    subirNuevoEventoFirestore();
+                    subirFoto(imageUri, eventoGuardar.getFechaHoraCreacion().toString());
                 }
             }else {
                 String mensaje;
