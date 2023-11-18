@@ -45,7 +45,8 @@ public class Dg_actividadesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding=FragmentDgActividadesBinding.inflate(inflater,container,false);
 
-
+        // Cambiar el contenido del Toolbar
+        ((Dg_Activity) requireActivity()).setToolbarContent("Actividades");
 
         lunchEditar = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override

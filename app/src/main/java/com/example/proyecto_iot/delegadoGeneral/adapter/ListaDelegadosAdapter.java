@@ -1,9 +1,11 @@
 package com.example.proyecto_iot.delegadoGeneral.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,63 +13,65 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListaDelegadosAdapter extends RecyclerView.Adapter<ListaDelegadosAdapter.UsuariosViewHolder>{
-    private List<Alumno> listaUsuarios;
+public class ListaDelegadosAdapter extends FirestoreRecyclerAdapter<Alumno,ListaDelegadosAdapter.DelegadoViewHolder> {
     private Context context;
 
-    public interface OnItemClickListener {
-        void onItemClick(Alumno alumno);
+    public interface OnAlumnoSelectedListener {
+        void onAlumnoSelected(Alumno alumnos);
+    }
+    private OnAlumnoSelectedListener onAlumnoSelectedListener;
+
+    public void setOnAlumnoSelectedListener(OnAlumnoSelectedListener listener) {
+        this.onAlumnoSelectedListener = listener;
     }
 
-    private OnItemClickListener onItemClickListener;
+    public ListaDelegadosAdapter(@NonNull FirestoreRecyclerOptions<Alumno> options, Context context) {
+        super(options);
+        this.context =context;
+    }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.onItemClickListener = listener;
+    @Override
+    protected void onBindViewHolder(@NonNull DelegadoViewHolder holder, int position, @NonNull Alumno model) {
+        holder.tv_nombre.setText(model.getNombre()+' '+model.getApellidos());
+        holder.tv_correo.setText(model.getCorreo());
     }
 
     @NonNull
     @Override
-    public UsuariosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DelegadoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.irv_dg_asignar_delegados,parent,false);
-        return new UsuariosViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull UsuariosViewHolder holder, int position) {
-        Alumno user = listaUsuarios.get(position);
-        holder.alumno = user;
-
-        holder.itemView.setOnClickListener(view -> {
-            if (onItemClickListener != null) {
-                onItemClickListener.onItemClick(user);
-            }
-        });
-
-        TextView tvNombreUser = holder.itemView.findViewById(R.id.textViewNombreDelegado);
-        TextView tvCorreoUser = holder.itemView.findViewById(R.id.textViewCorreoDelegado);
-
-        tvNombreUser.setText(user.getNombre()+' '+user.getApellidos());
-        tvCorreoUser.setText(user.getCorreo());
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return listaUsuarios.size();
+        return new DelegadoViewHolder(view);
     }
 
 
     //SubClase ViewHolder
-    public class UsuariosViewHolder extends RecyclerView.ViewHolder{
+    public class DelegadoViewHolder extends RecyclerView.ViewHolder{
+        TextView tv_nombre, tv_correo;
+        CheckBox checkBox;
         Alumno alumno;
-        public UsuariosViewHolder(@NonNull View itemView) {
+        public DelegadoViewHolder(@NonNull View itemView) {
             super(itemView);
+            tv_nombre = itemView.findViewById(R.id.tv_nombre);
+            tv_correo = itemView.findViewById(R.id.tv_correo);
+            checkBox = itemView.findViewById(R.id.checkboxDA);
 
-            itemView.setOnClickListener(view -> {
-
+            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && isChecked) {
+                    alumno = getItem(position);
+                    if (alumno != null) {
+                        if (onAlumnoSelectedListener != null) {
+                            onAlumnoSelectedListener.onAlumnoSelected(alumno);
+                        }
+                        Log.d("msg-test", "Alumno seleccionado en el adapter: " + alumno.getNombre() + ' ' + alumno.getApellidos());
+                    }
+                }
             });
         }
     }
@@ -75,13 +79,6 @@ public class ListaDelegadosAdapter extends RecyclerView.Adapter<ListaDelegadosAd
 
 
     //Encapsulamiento
-    public List<Alumno> getListaUsuarios() {
-        return listaUsuarios;
-    }
-
-    public void setListaUsuarios(List<Alumno> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
 
     public Context getContext() {
         return context;

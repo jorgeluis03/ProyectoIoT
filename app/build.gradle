@@ -57,6 +57,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation "androidx.room:room-runtime:2.2.5"
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.android.car.ui:car-ui-lib:2.5.1'
     annotationProcessor "androidx.room:room-compiler:2.2.5"
 
     //Dependencias para google maps
