@@ -19,6 +19,7 @@ import com.example.proyecto_iot.databinding.FragmentAlumnoEventosTodosBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -44,20 +45,14 @@ public class AlumnoEventosTodosFragment extends Fragment {
 
         db.collection("eventos")
                 .orderBy("fechaHoraCreacion", Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            Log.d("msg-test", "busqueda eventos todos ok: "+task.getResult().size());
-                            for (QueryDocumentSnapshot document: task.getResult()){
-                                Evento evento = document.toObject(Evento.class);
-                                eventoList.add(evento);
-                            }
-                            adapter.notifyDataSetChanged();
-                        }
-                        else{
-                            Log.d("msg-test", "error al recuperar eventos: "+task.getException().getMessage());
+                .addSnapshotListener((value, error) -> {
+                    if (error != null){
+                        Log.d("msg-test", "Listen failed in eventos todos", error);
+                        return;
+                    }
+                    if (value != null){
+                        for (QueryDocumentSnapshot doc: value){
+                            buscarEventos(doc.getId());
                         }
                     }
                 });
@@ -69,5 +64,25 @@ public class AlumnoEventosTodosFragment extends Fragment {
         binding.rvEventos.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return binding.getRoot();
+    }
+
+    private void buscarEventos(String eventoId) {
+
+        db.collection("eventos")
+                .document(eventoId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Evento evento = task.getResult().toObject(Evento.class);
+                            Log.d("msg-test", "evento encontrado: " + evento.getTitulo() + " y delegado:" + evento.getDelegado());
+                            eventoList.add(evento);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Log.d("msg-test", "AlumnoEventosApoyandoFragment error buscando evento: " + eventoId);
+                        }
+                    }
+                });
     }
 }

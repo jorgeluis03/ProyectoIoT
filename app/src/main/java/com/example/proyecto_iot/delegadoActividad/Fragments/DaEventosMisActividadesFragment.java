@@ -55,17 +55,15 @@ public class DaEventosMisActividadesFragment extends Fragment {
                 db.collection("actividades")
                         .document(actividad.getId())
                         .collection("eventos")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()){
-                                    for (QueryDocumentSnapshot document: task.getResult()){
-                                        buscarEventos(document.getId());
-                                    }
-                                }
-                                else{
-                                    Log.d("msg-test", "AlumnoEventosMisActFragment: error en busqueda de eventos apoyados");
+                        .addSnapshotListener((value, error) -> {
+                            if (error != null) {
+                                Log.d("msg-test", "Listen failed in eventos todos", error);
+                                return;
+                            }
+                            if (value != null) {
+                                //eventoList = new ArrayList<>();
+                                for (QueryDocumentSnapshot doc : value) {
+                                    buscarEventos(doc.getId());
                                 }
                             }
                         });

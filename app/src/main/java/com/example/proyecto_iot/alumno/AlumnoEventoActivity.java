@@ -71,6 +71,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     private Uri imageUri;
     private BottomSheetDialog bottomSheetDialog;
     private ArrayList<Foto> fotoList = new ArrayList<>();
+    String user;
     private ListaFotosEventoAdapter adapter = new ListaFotosEventoAdapter();
 
     @Override
@@ -80,9 +81,12 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         evento = (Evento) getIntent().getSerializableExtra("evento");
+        user = getIntent().getStringExtra("userUid");
+        Log.d("msg-test","obteniendo: "+evento.getDelegado()+" a "+user);
+
         cargarInfoEvento();
         cargarFotos();
-        insertarFragmentButtons(savedInstanceState);
+        insertarFragmentButtons(savedInstanceState, user.equals(evento.getDelegado()));
 
         binding.buttonSubirFotos.setOnClickListener(view -> {
             Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -169,7 +173,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         });
     }
 
-    private void insertarFragmentButtons(Bundle savedInstanceState) {
+    private void insertarFragmentButtons(Bundle savedInstanceState, boolean isFromDelegado) {
 
         db.collection("alumnos")
                 .document(userUid)
@@ -181,17 +185,24 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                         return;
                     }
                     if (savedInstanceState == null) { // activity recien creada
-                        if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
-                            getSupportFragmentManager().beginTransaction()
-                                    .setReorderingAllowed(true)
-                                    .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
-                                    .commit();
+                        if (!isFromDelegado){
+                            binding.fragmentApoyos.setVisibility(View.GONE);
+                            if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
+                                getSupportFragmentManager().beginTransaction()
+                                        .setReorderingAllowed(true)
+                                        .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
+                                        .commit();
+                                binding.buttonSubirFotos.setVisibility(View.VISIBLE);
+                            } else { // evento no apoyado
+                                getSupportFragmentManager().beginTransaction()
+                                        .setReorderingAllowed(true)
+                                        .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
+                                        .commit();
+                            }
+                        }else {
+                            binding.fragmentEventoButtons.setVisibility(View.GONE);
                             binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                        } else { // evento no apoyado
-                            getSupportFragmentManager().beginTransaction()
-                                    .setReorderingAllowed(true)
-                                    .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
-                                    .commit();
+                            //TODO DA: agregar botón  para ver participantes
                         }
                     }
                 }));
@@ -240,8 +251,9 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         ImageView imagenFoto = bottomSheetView.findViewById(R.id.imageFoto);
         imagenFoto.setImageURI(imageUri);
         Button botonSubirFoto = bottomSheetView.findViewById(R.id.buttonDialogSubirFoto);
+        botonSubirFoto.setEnabled(true);
         botonSubirFoto.setOnClickListener(view -> {
-
+            botonSubirFoto.setEnabled(false);
             // subir foto a firestore y storage
             EditText inputDescripcion = bottomSheetView.findViewById(R.id.inputDescripcion);
             subirFoto(inputDescripcion.getText().toString());

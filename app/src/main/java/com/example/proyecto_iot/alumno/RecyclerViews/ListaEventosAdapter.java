@@ -24,6 +24,7 @@ import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
     private List<Evento> eventoList;
     private Context context;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String userUid = FirebaseAuth.getInstance().getUid();
 
     @NonNull
     @Override
@@ -133,6 +135,8 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
             constraintLayout.setOnClickListener(view -> {
                 Intent intent = new Intent(itemView.getContext(), AlumnoEventoActivity.class);
                 intent.putExtra("evento", evento);
+                Log.d("msg-test","delegado de evento: "+evento.getDelegado());
+                intent.putExtra("userUid", userUid);
                 itemView.getContext().startActivity(intent);
             });
         }

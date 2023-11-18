@@ -53,6 +53,7 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                         return;
                     }
                     if (value != null){
+                        //eventoApoyandoList = new ArrayList<>();
                         for (QueryDocumentSnapshot doc: value){
                             buscarEventos(doc.getId());
                         }
