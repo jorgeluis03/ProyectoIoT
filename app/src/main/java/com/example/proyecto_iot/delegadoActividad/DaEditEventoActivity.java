@@ -307,7 +307,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
 
                             // creando grupo cometchat
                             String guid = UUID.randomUUID().toString();
-                            String groupName = eventoGuardar.getTitulo();
+                            String groupName = binding.textTitleEvent.getText().toString();
                             Group newGroup = new Group(guid, groupName, CometChatConstants.GROUP_TYPE_PUBLIC, null);
                             CometChat.createGroup(newGroup, new CometChat.CallbackListener<Group>() {
                                 @Override
