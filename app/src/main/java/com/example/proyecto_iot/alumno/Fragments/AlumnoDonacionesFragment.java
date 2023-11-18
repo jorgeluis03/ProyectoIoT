@@ -370,7 +370,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                                     Log.d("msg-test", "donacion guardada en firestore-donacion guarada exitosamente");
 
                                     //lanzar notificacion para el delago general
-                                    enviarNotificacion();
+                                    enviarNotificacion(donacionNueva);
 
                                     //reiniciando fragmento para cargar nueva donacion
                                     recargarFragment();
@@ -455,7 +455,7 @@ public class AlumnoDonacionesFragment extends Fragment {
         return DocumentFile.fromSingleUri(getContext(), uri).getName();
     }
 
-    public void enviarNotificacion() {
+    public void enviarNotificacion(Donacion donacionNueva) {
         //current username, message, currentUserId, otherUserToken
         FirebaseUtilDg.getCollAlumnos().whereEqualTo("codigo", "20200643").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -465,7 +465,7 @@ public class AlumnoDonacionesFragment extends Fragment {
 
                     JSONObject notificationObj = new JSONObject();
                     notificationObj.put("title", "Donación Aitel");
-                    notificationObj.put("body", "Ha llegado una nueva donación para Aitel");
+                    notificationObj.put("body", "Ha llegado una nueva donación para Aitel de S/"+donacionNueva.getMonto());
 
                     jsonObject.put("notification", notificationObj);
                     jsonObject.put("to", usuarioDg.getFcmToken());

@@ -4,13 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import java.util.List;
@@ -18,7 +22,7 @@ import java.util.List;
 public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdapter.UsuariosViewHolder>{
     private List<Alumno> listaUsuarios;
     private Context context;
-
+    FirebaseFirestore db;
     @NonNull
     @Override
     public UsuariosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,7 +54,42 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
     public class UsuariosViewHolder extends RecyclerView.ViewHolder{
         Alumno usuario;
         public UsuariosViewHolder(@NonNull View itemView) {
+
             super(itemView);
+
+            Button buttonBanear = itemView.findViewById(R.id.buttonBanearUser);
+            buttonBanear.setOnClickListener(view -> {
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle("Banear")
+                        .setMessage("¿Estás seguro que deseas banear a este usuario?")
+                        .setNeutralButton("Cancelar", (dialog, which) -> {
+
+                            // Responder a la pulsación del botón neutral
+
+                        })
+                        .setPositiveButton("Aceptar", (dialog, which) -> {
+
+                            // Responder a la pulsación del botón positivo
+                            db = FirebaseFirestore.getInstance();
+                            db.collection("alumnos").document(usuario.getId())
+                                    .update("estado","baneado")
+                                    .addOnSuccessListener(unused -> {
+                                        // Eliminar el usuario de la lista de datos
+                                        listaUsuarios.remove(usuario);
+
+                                        // Notificar al adaptador que los datos han cambiado
+                                        notifyDataSetChanged();
+                                        Toast.makeText(context,"Usuario baneado",Toast.LENGTH_SHORT).show();
+
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(context,"Algo pasó",Toast.LENGTH_SHORT).show();
+
+                                    });
+                        })
+                        .show();
+            });
+
         }
     }
 
