@@ -386,7 +386,8 @@ public class AlumnoDonacionesFragment extends Fragment {
     }
 
     private void pickImage() {
-        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         resultLauncher.launch(intent);
     }
 

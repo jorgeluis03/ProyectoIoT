@@ -85,7 +85,8 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         insertarFragmentButtons(savedInstanceState);
 
         binding.buttonSubirFotos.setOnClickListener(view -> {
-            Intent galleryIntent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+            Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            galleryIntent.setType("image/*");
             openImageLauncher.launch(galleryIntent);
         });
 

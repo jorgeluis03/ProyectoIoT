@@ -7,6 +7,7 @@ public class Evento implements Serializable {
     private String titulo;
     private String descripcion;
     private String actividad;
+    private String actividadId;
     private String fotoUrl;
     private String fecha;
     private String hora;
@@ -103,5 +104,13 @@ public class Evento implements Serializable {
 
     public void setDelegado(String delegado) {
         this.delegado = delegado;
+    }
+
+    public String getActividadId() {
+        return actividadId;
+    }
+
+    public void setActividadId(String actividadId) {
+        this.actividadId = actividadId;
     }
 }
