@@ -45,6 +45,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -84,6 +85,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
     ArrayList<Actividades> actividadesList = new ArrayList<>();
         Actividades currentActividad;
     private static final int ACTIVIDAD_MAPS_REQUEST_CODE = 2;
+    private String userUid = FirebaseAuth.getInstance().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,12 +284,14 @@ public class DaEditEventoActivity extends AppCompatActivity {
                     }
                     guardarLugar(datoRecibido);
                     eventoGuardar.setActividad(currentActividad.getNombre());
+                    eventoGuardar.setActividadId(currentActividad.getId());
                     eventoGuardar.setChatID(""); //TODO DA: vincular con CometChat
                     eventoGuardar.setDescripcion(binding.textDescripEvent.getText().toString());
                     eventoGuardar.setEstado("activo");
                     eventoGuardar.setFecha(binding.textDateEvent.getText().toString());
                     eventoGuardar.setFechaHoraCreacion(Date.from(Instant.now()));
                     eventoGuardar.setHora(binding.textHourEvent.getText().toString());
+                    eventoGuardar.setDelegado(userUid);
                     eventoGuardar.setTitulo(binding.textTitleEvent.getText().toString());
                     eventoGuardar.setLugar(binding.textPlaceEvent.getText().toString());
                     eventoGuardar.setFotoUrl("");
