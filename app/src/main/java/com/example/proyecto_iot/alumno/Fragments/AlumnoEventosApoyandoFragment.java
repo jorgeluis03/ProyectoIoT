@@ -52,8 +52,10 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                         Log.d("msg-test", "Listen failed in eventos apoyando", error);
                         return;
                     }
-                    for (QueryDocumentSnapshot doc: value){
-                        buscarEventos(doc.getId());
+                    if (value != null){
+                        for (QueryDocumentSnapshot doc: value){
+                            buscarEventos(doc.getId());
+                        }
                     }
                 });
 
