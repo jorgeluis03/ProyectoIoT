@@ -60,8 +60,10 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragmentEventoButtons"
+                    android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_alumno_apoyar_button"/>
 
                 <TextView
                     android:id="@+id/textDelegadoActividad"

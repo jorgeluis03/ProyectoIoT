@@ -45,7 +45,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
     private void cargarEstilosCometChat() {
         String region = AppConstants.REGION;
         String appID = AppConstants.APP_ID;
-        Group group = new Group(evento.getChatID(), null, CometChatConstants.GROUP_TYPE_PRIVATE, null);
+        Group group = new Group(evento.getChatID(), null, CometChatConstants.GROUP_TYPE_PUBLIC, null);
 
         AppSettings appSettings = new AppSettings.AppSettingsBuilder()
                 .subscribePresenceForAllUsers()
