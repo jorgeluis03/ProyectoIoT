@@ -180,14 +180,29 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                         Log.d("msg-test", "Listen failed in evento activity");
                         return;
                     }
-                    if (savedInstanceState == null) {
+                    if (savedInstanceState == null) { // fragment sin instanciar
                         if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
+                            getSupportFragmentManager().beginTransaction()
+                                    .setReorderingAllowed(true)
+                                    .add(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
+                                    .commit();
+                            binding.buttonSubirFotos.setVisibility(View.VISIBLE);
+                        } else { // evento no apoyado
+                            getSupportFragmentManager().beginTransaction()
+                                    .setReorderingAllowed(true)
+                                    .add(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
+                                    .commit();
+                        }
+                    }
+                    else{
+                        if(value != null && value.exists()){
                             getSupportFragmentManager().beginTransaction()
                                     .setReorderingAllowed(true)
                                     .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
                                     .commit();
                             binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                        } else { // evento no apoyado
+                        }
+                        else{
                             getSupportFragmentManager().beginTransaction()
                                     .setReorderingAllowed(true)
                                     .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
