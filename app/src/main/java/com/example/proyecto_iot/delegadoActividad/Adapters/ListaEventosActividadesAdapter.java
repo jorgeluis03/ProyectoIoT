@@ -119,23 +119,19 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         db.collection("eventos")
                 .document(name)
                 .collection("apoyos")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("msg-test", "busqueda apoyos ok: "+task.getResult().size());
-                            for (QueryDocumentSnapshot document: task.getResult()){
-                                apoyo = new ApoyoDto();
-                                apoyo.setCategoria(document.getString("categoria"));
-                                apoyo.setEventoId(name);
-                                buscarAlumno(document.getId(), apoyo);
-                            }
-                            adapter.notifyDataSetChanged();
-
-                        } else {
-                            Log.d("msg-test", "AlumnoEventoActivity: error al buscar evento");
+                .addSnapshotListener((value, error) -> {
+                    if (value!=null){
+                        apoyos = new ArrayList<>();
+                        Log.d("msg-test", "busqueda apoyos ok: "+value.size());
+                        for (QueryDocumentSnapshot document: value){
+                            apoyo = new ApoyoDto();
+                            apoyo.setCategoria(document.getString("categoria"));
+                            apoyo.setEventoId(name);
+                            buscarAlumno(document.getId(), apoyo);
                         }
+                        adapter.notifyDataSetChanged();
+                    } if (error!=null){
+                        Log.d("msg-test", "AlumnoEventoActivity: error al buscar evento");
                     }
                 });
     }
@@ -143,24 +139,46 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     private void buscarAlumno(String alumnoId, ApoyoDto apoyo){
         db.collection("alumnos")
                 .document(alumnoId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
-                            Alumno alumno = task.getResult().toObject(Alumno.class);
-                            Log.d("msg-test", "apoyO encontrado: "+alumno.getNombre());
-                            if (alumno.getEstado().equals("activo")){
-                                apoyo.setAlumno(alumno);
-                                apoyos.add(apoyo);
-                                adapter.notifyDataSetChanged();
+                .addSnapshotListener((value, error) ->{
+                    if (value!=null){
+                        Alumno alumno = value.toObject(Alumno.class);
+                        Log.d("msg-test", "apoyO encontrado: "+alumno.getNombre());
+                        if (alumno.getEstado().equals("activo")){
+                            if (!apoyosListContainsId(alumno.getId())) {
+                                Log.d("msg-test", "apoyo encontrado: " + alumno.getNombre());
                             }
-                        }
-                        else{
-                            Log.d("msg-test", "ListaApoyos error buscando apoyo: "+alumnoId);
+                            else {
+                                removerDeLista(alumno.getId());
+                            }
+                            apoyo.setAlumno(alumno);
+                            apoyos.add(apoyo);
+                            adapter.notifyDataSetChanged();
                         }
                     }
+                    else{
+                        Log.d("msg-test", "ListaApoyos error buscando apoyo: "+alumnoId);
+                    }
                 });
+    }
+
+    private void removerDeLista(String id) {
+        int posicion = -1;
+        for (int i = 0; i < apoyos.size(); i++) {
+            if (apoyos.get(i).getAlumno().getId().equals(id)) {
+                posicion = i;
+                break;
+            }
+        }
+        apoyos.remove(posicion);
+    }
+
+    private boolean apoyosListContainsId(String id) {
+        for (ApoyoDto existingApoyo : apoyos) {
+            if (id.equals(existingApoyo.getAlumno().getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Evento> getEventoAList(){return eventoAList;}

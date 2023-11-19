@@ -210,6 +210,8 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
             categoria = "barra";
         }
         db = FirebaseFirestore.getInstance();
+        Log.d("msg-test", "1: "+apoyo.getEventoId());
+        Log.d("msg-test", "2: "+apoyo.getEventoId());
         db.collection("eventos").document(apoyo.getEventoId())
                 .collection("apoyos").document(apoyo.getAlumno().getId())
                 .update("categoria",categoria)
@@ -225,6 +227,7 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
                 })
                 .addOnFailureListener(e -> {
                     notifyDataSetChanged();
+                    Log.d("msg-test","Error:" + e);
                     Snackbar.make(view, "Ocurrió un error durante la actualizacoión de "+apoyo.getAlumno().getNombre()+". Inténtelo más tarde.", Snackbar.LENGTH_SHORT).show();
                 });
     }

@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AlumnoEventosTodosFragment extends Fragment {
 
@@ -70,19 +71,47 @@ public class AlumnoEventosTodosFragment extends Fragment {
 
         db.collection("eventos")
                 .document(eventoId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Evento evento = task.getResult().toObject(Evento.class);
-                            Log.d("msg-test", "evento encontrado: " + evento.getTitulo() + " y delegado:" + evento.getDelegado());
+                .addSnapshotListener((snapshot, e) -> {
+                    if (e != null) {
+                        Log.d("msg-test", "AlumnoEventosApoyandoFragment error escuchando cambios en evento: " + eventoId, e);
+                        return;
+                    }
+                    if (snapshot != null && snapshot.exists()) {
+
+                        Evento evento = snapshot.toObject(Evento.class);
+                        if (!eventoListContainsId("evento"+evento.getFechaHoraCreacion())) {
+                            Log.d("msg-test", "evento apoyado encontrado: " + evento.getTitulo());
                             eventoList.add(evento);
                             adapter.notifyDataSetChanged();
-                        } else {
-                            Log.d("msg-test", "AlumnoEventosApoyandoFragment error buscando evento: " + eventoId);
                         }
+                        else {
+                            removerDeLista(evento.getFechaHoraCreacion());
+                            eventoList.add(evento);
+                            adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        Log.d("msg-test", "AlumnoEventosApoyandoFragment: No se encontró el evento con ID: " + eventoId);
                     }
                 });
+    }
+    private boolean eventoListContainsId(String eventId) {
+        String id;
+        for (Evento existingEvento : eventoList) {
+            id = "evento"+existingEvento.getFechaHoraCreacion();
+            if (id.equals(eventId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void removerDeLista(Date fechaHoraCreacion) {
+        int posicion = -1;
+        for (int i = 0; i < eventoList.size(); i++) {
+            if (eventoList.get(i).getFechaHoraCreacion().toString().equals(fechaHoraCreacion.toString())) {
+                posicion = i;
+                break;
+            }
+        }
+        eventoList.remove(posicion);
     }
 }

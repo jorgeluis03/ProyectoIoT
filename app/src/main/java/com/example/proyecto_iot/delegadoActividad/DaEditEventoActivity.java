@@ -318,6 +318,8 @@ public class DaEditEventoActivity extends AppCompatActivity {
 
                                     guardarLugar(datoRecibido);
                                     eventoGuardar.setActividad(currentActividad.getNombre());
+                                    eventoGuardar.setActividadId(currentActividad.getId());
+                                    eventoGuardar.setDelegado(userUid);
                                     eventoGuardar.setChatID(group.getGuid());
                                     eventoGuardar.setDescripcion(binding.textDescripEvent.getText().toString());
                                     eventoGuardar.setEstado("activo");
@@ -530,11 +532,6 @@ public class DaEditEventoActivity extends AppCompatActivity {
     private void mostrarTimePicker(MaterialTimePicker timePicker) {
         timePicker.show(getSupportFragmentManager(), "tag");
         timePicker.addOnPositiveButtonClickListener(view -> {
-            if (isExistEvent){
-                validarChangeForm(evento);
-            }else {
-                validarCompleteForm(evento);
-            }
             String minutes;
             String hour;
             if (timePicker.getMinute()<10){
@@ -548,22 +545,27 @@ public class DaEditEventoActivity extends AppCompatActivity {
                 hour = String.valueOf(timePicker.getHour());
             }
             binding.textHourEvent.setText(hour+":"+minutes+" hrs");
+            if (isExistEvent){
+                validarChangeForm(evento);
+            }else {
+                validarCompleteForm(evento);
+            }
         });
     }
 
     public void mostrarDatePicker(MaterialDatePicker datePicker){
         datePicker.show(getSupportFragmentManager(), "tag");
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            if (isExistEvent){
-                validarChangeForm(evento);
-            }else {
-                validarCompleteForm(evento);
-            }
             selection = Instant.ofEpochMilli((Long) selection)
                     .plus(6, ChronoUnit.HOURS)
                     .toEpochMilli();
             Date date = new Date((Long) selection);
             binding.textDateEvent.setText(formato.format(date));
+            if (isExistEvent){
+                validarChangeForm(evento);
+            }else {
+                validarCompleteForm(evento);
+            }
         });
     }
     private ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(

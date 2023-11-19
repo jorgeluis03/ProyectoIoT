@@ -34,6 +34,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DaEventosMisActividadesFragment extends Fragment {
     private ArrayList<Evento> eventoList = new ArrayList<>();
@@ -102,22 +103,51 @@ public class DaEventosMisActividadesFragment extends Fragment {
     private void buscarEventos(String eventoId){
         db.collection("eventos")
                 .document(eventoId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
-                            Evento evento = task.getResult().toObject(Evento.class);
-                            Log.d("msg-test", "evento apoyado encontrado: "+evento.getTitulo());
-                            if (evento.getEstado().equals("activo")){
+                .addSnapshotListener((snapshot, e) -> {
+                    if (e != null) {
+                        Log.d("msg-test", "AlumnoEventosApoyandoFragment error escuchando cambios en evento: " + eventoId, e);
+                        return;
+                    }
+                    if (snapshot != null && snapshot.exists()) {
+
+                        Evento evento = snapshot.toObject(Evento.class);
+                        if (evento.getEstado().equals("activo")){
+                            if (!eventoListContainsId("evento"+evento.getFechaHoraCreacion())) {
+                                Log.d("msg-test", "evento apoyado encontrado: " + evento.getTitulo());
+                                eventoList.add(evento);
+                                adapter.notifyDataSetChanged();
+                            }
+                            else {
+                                removerDeLista(evento.getFechaHoraCreacion());
                                 eventoList.add(evento);
                                 adapter.notifyDataSetChanged();
                             }
                         }
-                        else{
-                            Log.d("msg-test", "AlumnoEventosMisActFragment error buscando evento: "+eventoId);
-                        }
+                    } else {
+                        Log.d("msg-test", "AlumnoEventosApoyandoFragment: No se encontró el evento con ID: " + eventoId);
                     }
                 });
+    }
+
+    private void removerDeLista(Date fechaHoraCreacion) {
+        int posicion = -1;
+        for (int i = 0; i < eventoList.size(); i++) {
+            if (eventoList.get(i).getFechaHoraCreacion().toString().equals(fechaHoraCreacion.toString())) {
+                posicion = i;
+                break;
+            }
+        }
+        eventoList.remove(posicion);
+    }
+
+    private boolean eventoListContainsId(String eventId) {
+        String id;
+        for (Evento existingEvento : eventoList) {
+            id = "evento"+existingEvento.getFechaHoraCreacion();
+            if (id.equals(eventId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
