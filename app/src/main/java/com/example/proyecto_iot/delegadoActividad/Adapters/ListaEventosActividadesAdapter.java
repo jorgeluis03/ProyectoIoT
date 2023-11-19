@@ -208,42 +208,26 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         db = FirebaseFirestore.getInstance();
         //eliminando evento de 'apoyos' del alumno
         //TODO DA: eliminar correctamente el evento de apoyos del alumno
-        db.collection("alumnos").whereArrayContains("eventos","evento"+evento.getFechaHoraCreacion().toString())
+        db.collection("alumnos")
+                .whereEqualTo("eventos." + "evento"+evento.getFechaHoraCreacion().toString(), true) // Reemplaza "eventos" con el nombre de tu subcolección y "true" con el valor que estás buscando
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot document: queryDocumentSnapshots){
-                        String alumnoId = document.getId();
-                        db.collection("alumnos")
-                                .document(alumnoId)
-                                .collection("eventos")
-                                .document("evento"+evento.getFechaHoraCreacion().toString())
-                                .delete()
-                                .addOnSuccessListener(aVoid -> {})
-                                .addOnFailureListener(e -> {});
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String alumnoId = document.getId();
+                            db.collection("alumnos")
+                                    .document(alumnoId)
+                                    .collection("eventos")
+                                    .document("evento" + evento.getFechaHoraCreacion().toString())
+                                    .delete()
+                                    .addOnSuccessListener(aVoid -> {
+                                    })
+                                    .addOnFailureListener(e -> {
+                                    });
+                        }
                     }
                 });
-        //eliminando evento de actividades
-        actividadList = obtenerActividadesDesdeMemoria();
-        Log.d("msg-test","Se cargó desde memoria: " + actividadList.get(0).getId());
-        Actividades a;
-        for (Actividades actividad: actividadList){
-            a = new Actividades();
-            Log.d("msg-test","validando:"+ actividad.getId());
-            a = buscarActividad(actividad.getId());
-            actividadesList.add(a);
-            Log.d("msg-test", "Cargando: " +a.getId());
-        }
-        Log.d("msg-test","Actividades obtenidas: "+actividadesList.size());
-        Log.d("msg-test", "texto: "+actividadesList.get(0).getId());
-        currentActividad = new Actividades();
-        for (Actividades ac: actividadesList){
-            if (ac.getNombre().equals(evento.getActividad())){
-                currentActividad = ac;
-                Log.d("msg-test","Actividad actual encontrada");
-                break;
-            }
-        }
-        db.collection("actividades").document(currentActividad.getId())
+        db.collection("actividades").document(evento.getActividadId())
                 .collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
                 .delete()
                 .addOnSuccessListener(unused -> {Log.d("msg-test", "eliminado de actividades");})
