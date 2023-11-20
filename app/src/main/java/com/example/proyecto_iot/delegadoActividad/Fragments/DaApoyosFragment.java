@@ -1,6 +1,7 @@
 package com.example.proyecto_iot.delegadoActividad.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,18 +46,15 @@ public class DaApoyosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentDaApoyosBinding.inflate(inflater, container, false);
-        //binding.buttonApoyos.setText("hola");
         evento = ((AlumnoEventoActivity) getActivity()).getEvento();
-        if (evento.getEstado().equals("inactivo")){
-            binding.buttonApoyos.setEnabled(false);
-        }
-        apoyos = new ArrayList<>();
-        cargarApoyos(evento);
+        binding.buttonApoyos.setEnabled(false);
         binding.buttonChatDelegado.setOnClickListener(view -> {
             Intent intent = new Intent(binding.getRoot().getContext(), AlumnoChatActivity.class);
             intent.putExtra("evento", evento);
             startActivity(intent);
         });
+        apoyos = new ArrayList<>();
+        cargarApoyos(evento);
         binding.buttonApoyos.setOnClickListener(view -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
             View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_da_apoyos, (LinearLayout) view.findViewById(R.id.dialogListApoyos));
@@ -122,7 +120,11 @@ public class DaApoyosFragment extends Fragment {
                                     }else {
                                         apoyosStr = "Sin apoyos";
                                     }
+                                    binding.progressBar2.setVisibility(View.GONE);
                                     binding.buttonApoyos.setText(apoyosStr);
+                                    if (evento.getEstado().equals("activo")){
+                                        binding.buttonApoyos.setEnabled(true);
+                                    }
                                 });
                     } if (error != null){
                         Log.d("msg-test", "AlumnoEventoActivity: error al buscar evento");

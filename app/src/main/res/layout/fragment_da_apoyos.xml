@@ -33,13 +33,14 @@
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_round_black_box"
+        android:background="@drawable/button_alumno_evento_subir_foto"
         android:backgroundTint="@color/black"
         android:insetLeft="0dp"
         android:insetTop="0dp"
         android:insetRight="0dp"
         android:insetBottom="0dp"
         android:paddingHorizontal="12dp"
+        android:text="             "
         android:textColor="@color/white"
         android:textSize="12sp"
         app:backgroundTint="@null"
@@ -48,4 +49,14 @@
         app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonApoyos"
+        app:layout_constraintEnd_toEndOf="@+id/buttonApoyos"
+        app:layout_constraintTop_toTopOf="@+id/buttonApoyos" />
 </androidx.constraintlayout.widget.ConstraintLayout>
