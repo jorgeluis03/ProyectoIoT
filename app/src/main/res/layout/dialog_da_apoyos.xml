@@ -31,6 +31,7 @@
         android:layout_height="match_parent">
 
         <!-- AppBarLayout with SearchBar -->
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +41,27 @@
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="string/searchbar_hint" />
+                android:hint="Buscar apoyos" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="No se cuenta con apoyos actualmente."
+                android:textColor="@color/letra_clara"
+                android:textSize="15sp"
+                android:visibility="gone"/>
+
+            <ProgressBar
+                android:id="@+id/progressBarDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"/>
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- NestedScrollView for Search Results -->

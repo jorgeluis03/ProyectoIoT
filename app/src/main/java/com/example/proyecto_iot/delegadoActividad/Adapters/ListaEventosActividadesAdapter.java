@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -49,10 +51,11 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     public ArrayList<Actividades> actividadList = new ArrayList<>();
     public ArrayList<Actividades> actividadesList = new ArrayList<>();
     private Actividades currentActividad;
-
     private Context context;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListaApoyosAdapter adapter = new ListaApoyosAdapter();
+    ProgressBar progressBar;
+    TextView sinApoyo;
 
     @NonNull
     @Override
@@ -83,11 +86,15 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         public EventoAViewHolder(@NonNull View itemView) {
             super(itemView);
             Button participantes = itemView.findViewById(R.id.buttonParticipantes);
+
             participantes.setOnClickListener(view -> {
                 apoyos = new ArrayList<>();
 
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                 View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_da_apoyos, (LinearLayout) view.findViewById(R.id.dialogListApoyos));
+                progressBar = bottomSheetView.findViewById(R.id.progressBarDialog);
+                sinApoyo = bottomSheetView.findViewById(R.id.textView15);
+                progressBar.setVisibility(View.VISIBLE);
                 cargarAdapter(evento);
 
                 adapter.setContext(getContext());
@@ -116,69 +123,58 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     private void cargarAdapter(Evento evento) {
         String name = "evento"+evento.getFechaHoraCreacion().toString();
         Log.d("msg-test", evento.getFechaHoraCreacion().toString());
+        List<Task<?>> tasks = new ArrayList<>();
         db.collection("eventos")
                 .document(name)
                 .collection("apoyos")
-                .addSnapshotListener((value, error) -> {
-                    if (value!=null){
-                        apoyos = new ArrayList<>();
-                        Log.d("msg-test", "busqueda apoyos ok: "+value.size());
-                        for (QueryDocumentSnapshot document: value){
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("msg-test", "busqueda apoyos ok: "+task.getResult().size());
+                        for (QueryDocumentSnapshot document: task.getResult()){
                             apoyo = new ApoyoDto();
                             apoyo.setCategoria(document.getString("categoria"));
                             apoyo.setEventoId(name);
-                            buscarAlumno(document.getId(), apoyo);
+                            tasks.add(buscarAlumno(document.getId(), apoyo));
                         }
-                        adapter.notifyDataSetChanged();
-                    } if (error!=null){
+                        Log.d("msg-test", "busqueda apoyos ok1: "+apoyos.size());
+
+                        Tasks.whenAllComplete(tasks)
+                                .addOnCompleteListener(allTasks -> {
+                                    progressBar.setVisibility(View.GONE);
+                                    if (apoyos.isEmpty()){
+                                        sinApoyo.setVisibility(View.VISIBLE);
+                                    }else {
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
+                    } else {
                         Log.d("msg-test", "AlumnoEventoActivity: error al buscar evento");
                     }
                 });
     }
 
-    private void buscarAlumno(String alumnoId, ApoyoDto apoyo){
+    private Task<Void> buscarAlumno(String alumnoId, ApoyoDto apoyo){
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
+
         db.collection("alumnos")
                 .document(alumnoId)
-                .addSnapshotListener((value, error) ->{
-                    if (value!=null){
-                        Alumno alumno = value.toObject(Alumno.class);
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Alumno alumno = task.getResult().toObject(Alumno.class);
                         Log.d("msg-test", "apoyO encontrado: "+alumno.getNombre());
                         if (alumno.getEstado().equals("activo")){
-                            if (!apoyosListContainsId(alumno.getId())) {
-                                Log.d("msg-test", "apoyo encontrado: " + alumno.getNombre());
-                            }
-                            else {
-                                removerDeLista(alumno.getId());
-                            }
                             apoyo.setAlumno(alumno);
                             apoyos.add(apoyo);
-                            adapter.notifyDataSetChanged();
                         }
                     }
                     else{
                         Log.d("msg-test", "ListaApoyos error buscando apoyo: "+alumnoId);
                     }
+                    taskCompletionSource.setResult(null);
                 });
-    }
-
-    private void removerDeLista(String id) {
-        int posicion = -1;
-        for (int i = 0; i < apoyos.size(); i++) {
-            if (apoyos.get(i).getAlumno().getId().equals(id)) {
-                posicion = i;
-                break;
-            }
-        }
-        apoyos.remove(posicion);
-    }
-
-    private boolean apoyosListContainsId(String id) {
-        for (ApoyoDto existingApoyo : apoyos) {
-            if (id.equals(existingApoyo.getAlumno().getId())) {
-                return true;
-            }
-        }
-        return false;
+        return taskCompletionSource.getTask();
     }
 
     public List<Evento> getEventoAList(){return eventoAList;}
@@ -208,26 +204,42 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
         db = FirebaseFirestore.getInstance();
         //eliminando evento de 'apoyos' del alumno
         //TODO DA: eliminar correctamente el evento de apoyos del alumno
-        db.collection("alumnos")
-                .whereEqualTo("eventos." + "evento"+evento.getFechaHoraCreacion().toString(), true) // Reemplaza "eventos" con el nombre de tu subcolección y "true" con el valor que estás buscando
+        db.collection("alumnos").whereArrayContains("eventos","evento"+evento.getFechaHoraCreacion().toString())
                 .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String alumnoId = document.getId();
-                            db.collection("alumnos")
-                                    .document(alumnoId)
-                                    .collection("eventos")
-                                    .document("evento" + evento.getFechaHoraCreacion().toString())
-                                    .delete()
-                                    .addOnSuccessListener(aVoid -> {
-                                    })
-                                    .addOnFailureListener(e -> {
-                                    });
-                        }
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document: queryDocumentSnapshots){
+                        String alumnoId = document.getId();
+                        db.collection("alumnos")
+                                .document(alumnoId)
+                                .collection("eventos")
+                                .document("evento"+evento.getFechaHoraCreacion().toString())
+                                .delete()
+                                .addOnSuccessListener(aVoid -> {})
+                                .addOnFailureListener(e -> {});
                     }
                 });
-        db.collection("actividades").document(evento.getActividadId())
+        //eliminando evento de actividades
+        actividadList = obtenerActividadesDesdeMemoria();
+        Log.d("msg-test","Se cargó desde memoria: " + actividadList.get(0).getId());
+        Actividades a;
+        for (Actividades actividad: actividadList){
+            a = new Actividades();
+            Log.d("msg-test","validando:"+ actividad.getId());
+            a = buscarActividad(actividad.getId());
+            actividadesList.add(a);
+            Log.d("msg-test", "Cargando: " +a.getId());
+        }
+        Log.d("msg-test","Actividades obtenidas: "+actividadesList.size());
+        Log.d("msg-test", "texto: "+actividadesList.get(0).getId());
+        currentActividad = new Actividades();
+        for (Actividades ac: actividadesList){
+            if (ac.getNombre().equals(evento.getActividad())){
+                currentActividad = ac;
+                Log.d("msg-test","Actividad actual encontrada");
+                break;
+            }
+        }
+        db.collection("actividades").document(currentActividad.getId())
                 .collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
                 .delete()
                 .addOnSuccessListener(unused -> {Log.d("msg-test", "eliminado de actividades");})
