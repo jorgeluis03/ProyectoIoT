@@ -52,6 +52,7 @@ public class AlumnoEventosTodosFragment extends Fragment {
                         return;
                     }
                     if (value != null){
+                        eventoList.clear();
                         for (QueryDocumentSnapshot doc: value){
                             buscarEventos(doc.getId());
                         }

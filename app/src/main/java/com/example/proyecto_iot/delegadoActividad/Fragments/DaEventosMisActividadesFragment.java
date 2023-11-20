@@ -62,7 +62,7 @@ public class DaEventosMisActividadesFragment extends Fragment {
                                 return;
                             }
                             if (value != null) {
-                                //eventoList = new ArrayList<>();
+                                eventoList.clear();
                                 for (QueryDocumentSnapshot doc : value) {
                                     buscarEventos(doc.getId());
                                 }
@@ -111,17 +111,15 @@ public class DaEventosMisActividadesFragment extends Fragment {
                     if (snapshot != null && snapshot.exists()) {
 
                         Evento evento = snapshot.toObject(Evento.class);
-                        if (evento.getEstado().equals("activo")){
-                            if (!eventoListContainsId("evento"+evento.getFechaHoraCreacion())) {
-                                Log.d("msg-test", "evento apoyado encontrado: " + evento.getTitulo());
-                                eventoList.add(evento);
-                                adapter.notifyDataSetChanged();
-                            }
-                            else {
-                                removerDeLista(evento.getFechaHoraCreacion());
-                                eventoList.add(evento);
-                                adapter.notifyDataSetChanged();
-                            }
+                        if (!eventoListContainsId("evento"+evento.getFechaHoraCreacion())) {
+                            Log.d("msg-test", "evento apoyado encontrado: " + evento.getTitulo());
+                            eventoList.add(evento);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else {
+                            removerDeLista(evento.getFechaHoraCreacion());
+                            eventoList.add(evento);
+                            adapter.notifyDataSetChanged();
                         }
                     } else {
                         Log.d("msg-test", "AlumnoEventosApoyandoFragment: No se encontró el evento con ID: " + eventoId);

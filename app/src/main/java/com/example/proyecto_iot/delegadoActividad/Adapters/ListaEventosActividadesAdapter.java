@@ -24,6 +24,7 @@ import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
 import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
@@ -34,6 +35,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -53,6 +56,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     private Actividades currentActividad;
     private Context context;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
     private ListaApoyosAdapter adapter = new ListaApoyosAdapter();
     ProgressBar progressBar;
     TextView sinApoyo;
@@ -219,31 +223,74 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                     }
                 });
         //eliminando evento de actividades
-        actividadList = obtenerActividadesDesdeMemoria();
-        Log.d("msg-test","Se cargó desde memoria: " + actividadList.get(0).getId());
-        Actividades a;
-        for (Actividades actividad: actividadList){
-            a = new Actividades();
-            Log.d("msg-test","validando:"+ actividad.getId());
-            a = buscarActividad(actividad.getId());
-            actividadesList.add(a);
-            Log.d("msg-test", "Cargando: " +a.getId());
-        }
-        Log.d("msg-test","Actividades obtenidas: "+actividadesList.size());
-        Log.d("msg-test", "texto: "+actividadesList.get(0).getId());
-        currentActividad = new Actividades();
-        for (Actividades ac: actividadesList){
-            if (ac.getNombre().equals(evento.getActividad())){
-                currentActividad = ac;
-                Log.d("msg-test","Actividad actual encontrada");
-                break;
-            }
-        }
-        db.collection("actividades").document(currentActividad.getId())
+        db.collection("actividades").document(evento.getActividadId())
                 .collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
                 .delete()
                 .addOnSuccessListener(unused -> {Log.d("msg-test", "eliminado de actividades");})
                 .addOnFailureListener(e -> {Log.d("msg-test", "no se pudo eliminar de actividades");});
+        //eliminando fotos de eventos
+        db.collection("eventos").document("evento"+evento.getFechaHoraCreacion()).collection("fotos")
+                .get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    document.getReference().delete();
+                }
+            } else {
+                Log.d("msg-test", "Error al obtener documentos de la subcolección 'fotos': "+ task.getException());
+            }
+        });
+        db.collection("eventos").document("evento"+evento.getFechaHoraCreacion()).collection("fotos")
+                .document("dummy") // Cualquier documento ficticio
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    // La subcolección "fotos" ha sido eliminada
+                    Log.d("msg-test", "Subcolección 'fotos' eliminada con éxito.");
+                })
+                .addOnFailureListener(e -> {
+                    Log.d("msg-test", "Error al eliminar la subcolección 'fotos': "+ e);
+                });
+
+        //eliminando fotos de evento en storage
+        storage.getReference().child("evento"+evento.getFechaHoraCreacion()).listAll()
+            .addOnSuccessListener(listResult  -> {
+                for (StorageReference item : listResult.getItems()) {
+                    item.delete().addOnSuccessListener(aVoid -> {
+                        // Archivo eliminado con éxito
+                        Log.d("msg-test", "Archivo eliminado con éxito: " + item.getName());
+                    }).addOnFailureListener(exception -> {
+                        // Error al intentar eliminar el archivo
+                        Log.d("msg-test", "Error al eliminar el archivo: " + item.getName() + exception);
+                    });
+                }
+            });
+        //eliminando foto main de evento en storage
+        storage.getReference().child("eventos/evento"+evento.getFechaHoraCreacion()+".jpg")
+            .delete()
+            .addOnSuccessListener(unused -> {
+                Log.d("msg-test", "Foto eliminada con éxito: " + evento.getTitulo());
+            });
+        //eliminando apoyos de eventos
+        db.collection("eventos").document("evento"+evento.getFechaHoraCreacion()).collection("apoyos")
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            document.getReference().delete();
+                        }
+                        // Después de eliminar todos los documentos, elimina la subcolección
+                        db.collection("eventos").document("evento"+evento.getFechaHoraCreacion()).collection("apoyos")
+                                .document("dummy") // Cualquier documento ficticio
+                                .delete()
+                                .addOnSuccessListener(aVoid -> {
+                                    // La subcolección "fotos" ha sido eliminada
+                                    Log.d("msg-test", "Subcolección 'fotos' eliminada con éxito.");
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.d("msg-test", "Error al eliminar la subcolección 'fotos': "+ e);
+                                });
+                    } else {
+                        Log.d("msg-test", "Error al obtener documentos de la subcolección 'fotos': "+ task.getException());
+                    }
+                });
         //eliminando evento de eventos
         db.collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
                 .delete()

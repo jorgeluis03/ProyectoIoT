@@ -201,8 +201,12 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                             }
                         }else {
                             binding.fragmentEventoButtons.setVisibility(View.GONE);
-                            binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                            //TODO DA: agregar botón  para ver participantes
+                            binding.fragmentApoyos.setVisibility(View.VISIBLE);
+                            if (!evento.getEstado().equals("activo")){
+                                binding.buttonSubirFotos.setVisibility(View.GONE);
+                            }else {
+                                binding.buttonSubirFotos.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 }));

@@ -71,7 +71,8 @@
                     android:name="com.example.proyecto_iot.delegadoActividad.Fragments.DaApoyosFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_da_apoyos"/>
+                    tools:layout="@layout/fragment_da_apoyos"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textDelegadoActividad"

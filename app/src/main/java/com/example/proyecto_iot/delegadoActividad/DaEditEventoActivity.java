@@ -359,6 +359,26 @@ public class DaEditEventoActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(),mensaje, Snackbar.LENGTH_SHORT).show();
             }
         });
+
+        binding.buttonFinishEvent.setOnClickListener(view -> {
+            db.collection("actividades").document(evento.getActividadId()).collection("eventos")
+                .document("evento"+evento.getFechaHoraCreacion())
+                .update("estado","inactivo")
+                .addOnSuccessListener(unused -> {
+                    db.collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
+                        .update("estado", "inactivo")
+                        .addOnSuccessListener(unused1 -> {
+                            Snackbar.make(binding.getRoot(),"Se finalizó el evento exitosamente", Snackbar.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Snackbar.make(binding.getRoot(),"Ocurrió un error.", Snackbar.LENGTH_SHORT).show();
+                        });
+                })
+                .addOnFailureListener(e -> {
+                    Snackbar.make(binding.getRoot(),"Ocurrió un error.", Snackbar.LENGTH_SHORT).show();
+                });
+            finish();
+        });
     }
 
     private void guardarLugar(Map<String, Object> datoRecibido) {
