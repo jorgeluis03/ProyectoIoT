@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -34,6 +36,7 @@ import com.cometchat.chat.models.Group;
 import com.cometchat.chat.models.User;
 import com.example.proyecto_iot.AppConstants;
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Delegado_select_map_activity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
@@ -361,25 +364,73 @@ public class DaEditEventoActivity extends AppCompatActivity {
         });
 
         binding.buttonFinishEvent.setOnClickListener(view -> {
-            db.collection("actividades").document(evento.getActividadId()).collection("eventos")
-                .document("evento"+evento.getFechaHoraCreacion())
-                .update("estado","inactivo")
-                .addOnSuccessListener(unused -> {
-                    db.collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
-                        .update("estado", "inactivo")
-                        .addOnSuccessListener(unused1 -> {
-                            Snackbar.make(binding.getRoot(),"Se finalizó el evento exitosamente", Snackbar.LENGTH_SHORT).show();
+            bottomSheetDialog = new BottomSheetDialog(DaEditEventoActivity.this);
+            View bottomSheetView = LayoutInflater.from(DaEditEventoActivity.this).inflate(R.layout.dialog_da_finalizar_evento, (ConstraintLayout) findViewById(R.id.bottomSheetFinishEvent));
+            Button finishBtn = bottomSheetView.findViewById(R.id.buttonDialogFinish);
+            Button upload = bottomSheetView.findViewById(R.id.buttonSubirImagenEvento);
+            finishBtn.setOnClickListener(view1 -> {
+                db.collection("actividades").document(evento.getActividadId()).collection("eventos")
+                        .document("evento"+evento.getFechaHoraCreacion())
+                        .update("estado","inactivo")
+                        .addOnSuccessListener(unused -> {
+                            db.collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
+                                    .update("estado", "inactivo")
+                                    .addOnSuccessListener(unused1 -> {
+                                        Snackbar.make(binding.getRoot(),"Se finalizó el evento exitosamente", Snackbar.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Snackbar.make(binding.getRoot(),"Ocurrió un error.", Snackbar.LENGTH_SHORT).show();
+                                    });
                         })
                         .addOnFailureListener(e -> {
                             Snackbar.make(binding.getRoot(),"Ocurrió un error.", Snackbar.LENGTH_SHORT).show();
                         });
-                })
-                .addOnFailureListener(e -> {
-                    Snackbar.make(binding.getRoot(),"Ocurrió un error.", Snackbar.LENGTH_SHORT).show();
-                });
-            finish();
+                finish();
+            });
+            upload.setOnClickListener(view1 -> {
+                Intent finishIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                finishIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                finishIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                finishIntent.setType("image/*");
+                finishIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                openManyImageLauncher.launch(finishIntent);
+            });
+            bottomSheetDialog.setContentView(bottomSheetView);
+            bottomSheetDialog.show();
         });
     }
+    private ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    imageUri = result.getData().getData();
+                    abrirDialogSubirFoto();
+                }
+            }
+    );
+    private ActivityResultLauncher<Intent> openManyImageLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (result.getData() != null && result.getData().getData() != null) {
+                        ClipData clipData = result.getData().getClipData();
+
+                        if (clipData != null) {
+                            // Se seleccionaron varias imágenes
+                            for (int i = 0; i < Math.min(clipData.getItemCount(), 5); i++) {
+                                imageUri = clipData.getItemAt(i).getUri();
+                                // Aquí puedes hacer algo con cada URI, por ejemplo, abrir un diálogo para cada imagen.
+                                abrirDialogSubirFoto();
+                            }
+                        } else {
+                            // Solo se seleccionó una imagen
+                            imageUri = result.getData().getData();
+                            abrirDialogSubirFoto();
+                        }
+                    }
+                }
+            }
+    );
 
     private void guardarLugar(Map<String, Object> datoRecibido) {
         CollectionReference lugaresRef = FirebaseFirestore.getInstance().collection("lugares");
@@ -588,15 +639,6 @@ public class DaEditEventoActivity extends AppCompatActivity {
             }
         });
     }
-    private ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    imageUri = result.getData().getData();
-                    abrirDialogSubirFoto();
-                }
-            }
-    );
     private void abrirDialogSubirFoto() {
         bottomSheetDialog = new BottomSheetDialog(DaEditEventoActivity.this);
         View bottomSheetView = LayoutInflater.from(DaEditEventoActivity.this).inflate(R.layout.dialog_alumno_subir_foto, (ConstraintLayout) findViewById(R.id.bottomSheetSubirFoto));
