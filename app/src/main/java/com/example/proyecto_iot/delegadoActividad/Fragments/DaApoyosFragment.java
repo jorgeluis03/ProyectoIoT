@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoChatActivity;
@@ -41,6 +42,7 @@ public class DaApoyosFragment extends Fragment {
     private ArrayList<ApoyoDto> apoyos = new ArrayList<>();
     private ListaApoyosAdapter adapter = new ListaApoyosAdapter();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    TextView sinApoyos;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +63,10 @@ public class DaApoyosFragment extends Fragment {
 
             adapter.setContext(getContext());
             adapter.setApoyos(apoyos);
+            sinApoyos = bottomSheetView.findViewById(R.id.textView15);
+            if (apoyos.isEmpty()){
+                sinApoyos.setVisibility(View.VISIBLE);
+            }
 
             RecyclerView recyclerView = bottomSheetView.findViewById(R.id.rv_apoyos_list);
             recyclerView.setAdapter(adapter);
