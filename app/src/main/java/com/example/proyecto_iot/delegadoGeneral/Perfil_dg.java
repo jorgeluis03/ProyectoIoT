@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -32,14 +33,14 @@ import kotlin.jvm.functions.Function1;
 public class Perfil_dg extends AppCompatActivity {
     ActivityPerfilDgBinding binding;
     Alumno usuarioActual;
-
+    LinearLayout linearLayout;
     TextInputLayout textFielnombre;
     TextInputLayout textFielapellido;
     TextInputLayout textFielcorreo;
     TextInputLayout textFielcodigo;
     ImageView imgPerfil;
     Uri uriImgPerfilSeleccionada;
-    ProgressBar progressBar;
+    ProgressBar progressBar, progressBarInfo;
     ImageButton btnBack;
 
     @Override
@@ -55,6 +56,8 @@ public class Perfil_dg extends AppCompatActivity {
         textFielcorreo = binding.textFieldCorreoPerfil;
         imgPerfil = binding.imageViewPerfildg;
         progressBar = binding.profileProgressBar;
+        progressBarInfo = binding.progressBarCargaInfo;
+        linearLayout = binding.linearLayoutInfo;
         btnBack = binding.buttonBack;
 
         getDatosUsuario();
@@ -177,6 +180,13 @@ public class Perfil_dg extends AppCompatActivity {
 
         }else {
             progressBar.setVisibility(View.GONE);
+
+        }
+    }
+    public void inProgressInfoPerfil(boolean enProgreso){
+        if (enProgreso){
+
+        }else {
 
         }
     }

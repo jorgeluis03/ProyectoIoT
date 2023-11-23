@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:background="@color/azul_background">
+        android:background="@color/backgroud_element_dg">
         <ImageButton
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -30,6 +30,7 @@
 
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/backgroud_dg"
         android:id="@+id/recycleViewEventos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

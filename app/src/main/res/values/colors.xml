@@ -14,4 +14,14 @@
     <color name="transparent">#00000000</color>
     <color name="letra_clara">#D2D8D5</color>
     <color name="letra_gris">#797D7F</color>
+
+
+
+    <!--theme delegado general-->
+    <color name="backgroud_dg">#18191B</color>
+    <color name="backgroud_element_dg">#242527</color>
+    <color name="letter_medium_dg">#E2E3E7</color>
+    <color name="letter_short_dg">#B7B8BC</color>
+    <color name="backgroud_card_dg">#333436</color>
+    <color name="btn_backgroud_dg">#393A3C</color>
 </resources>

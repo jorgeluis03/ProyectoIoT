@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosRegistrBinding;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaBuscarDelegadoAdapter;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
@@ -30,6 +29,7 @@ public class Dg_alumnos_registrFragment extends Fragment {
     SearchView searchView;
     private List<Alumno> listaUserRegi;
     ListenerRegistration snapshotListener;
+    RecyclerView recycleViewUserRegi;
     FirebaseFirestore db;
     Query query;
     ListaUsuariosAdapter adapterBuscar;
@@ -40,11 +40,9 @@ public class Dg_alumnos_registrFragment extends Fragment {
 
         //declaraciones
         searchView = binding.searchUserRegis;
+        recycleViewUserRegi =binding.recycleViewUserRegi;
 
-
-        db=FirebaseFirestore.getInstance();
-        snapshotListener = db.collection("alumnos")
-                .whereEqualTo("estado","activo")
+        snapshotListener = FirebaseUtilDg.getCollAlumnos().whereEqualTo("estado","activo")
                 .addSnapshotListener((snapshot,error) ->{
 
                     if (error != null) {
@@ -60,8 +58,8 @@ public class Dg_alumnos_registrFragment extends Fragment {
                     ListaUsuariosAdapter adapter = new ListaUsuariosAdapter();
                     adapter.setContext(getContext());
                     adapter.setListaUsuarios(listaUserRegi);
-                    binding.recycleViewUserRegi.setAdapter(adapter);
-                    binding.recycleViewUserRegi.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recycleViewUserRegi.setAdapter(adapter);
+                    recycleViewUserRegi.setLayoutManager(new LinearLayoutManager(getContext()));
 
                 });
 
@@ -87,7 +85,7 @@ public class Dg_alumnos_registrFragment extends Fragment {
             }
         });
     }
-    /*
+/*
     public void textSearch(String s){
         query = FirebaseUtilDg.getCollAlumnos().whereEqualTo("estado","activo");
         FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
@@ -98,8 +96,8 @@ public class Dg_alumnos_registrFragment extends Fragment {
         adapterBuscar.startListening();
         recyclerViewDelegados.setAdapter(adapterBuscar);
     }
-    *
- */
+*/
+
     @Override
     public void onDestroy() {
         super.onDestroy();

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/azul_background"
+    android:background="@color/backgroud_element_dg"
     tools:context=".delegadoGeneral.DgAsignarDelegadoActivity">
 
     <RelativeLayout
         android:id="@+id/toolbarAsig"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/azul_background"
+        android:background="@color/backgroud_element_dg"
         android:padding="10dp">
 
         <ImageButton
@@ -38,7 +38,7 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchDeleasig"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_below="@id/toolbarAsig"
         app:queryHint="Buscar"
         android:backgroundTint="@color/light_grey"
@@ -47,7 +47,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/azul_background"
+        android:background="@color/backgroud_element_dg"
         android:id="@+id/recycleviewDelegados"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

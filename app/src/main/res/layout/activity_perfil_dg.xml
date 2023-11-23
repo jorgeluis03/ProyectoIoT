@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/azul_background"
+    android:background="@color/backgroud_element_dg"
     tools:context=".delegadoGeneral.Perfil_dg">
 
     <RelativeLayout
@@ -57,18 +57,14 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayoutInfo"
         android:layout_below="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top|center_horizontal"
         android:orientation="vertical"
         android:paddingTop="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/divider">
 
         <ImageView
             android:id="@+id/imageViewPerfildg"
@@ -167,11 +163,17 @@
             android:id="@+id/profile_progress_bar"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBarCargaInfo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerInParent="true"/>
 
 
 </RelativeLayout>

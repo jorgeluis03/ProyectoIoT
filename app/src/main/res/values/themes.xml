@@ -72,18 +72,16 @@
     <style name="DelegadoGeneral" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/verde_bat</item>
         <item name="colorOnSurface">@color/letra_clara</item>
-        <item name="android:statusBarColor">@color/azul_background</item>
-        <item name="android:navigationBarColor">@color/azul_background</item>
+        <item name="android:statusBarColor">@color/backgroud_element_dg</item>
+        <item name="android:navigationBarColor">@color/black</item>
         <item name="android:screenOrientation">portrait</item>
-
+        <item name="background">@color/backgroud_dg</item>
         <item name="android:toolbarStyle">@style/ToolbarStyle</item>
 
-        <item name="android:itemBackground">@color/azul_background</item>
-        <item name="android:iconTint">@color/letra_clara</item>
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
-        <item name="android:background">@color/azul_background</item>
+        <item name="android:background">@color/backgroud_element_dg</item>
         <item name="android:titleTextAppearance">@style/ToolbarTextAppearance</item>
     </style>
 
@@ -92,8 +90,7 @@
     </style>
 
     <style name="BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
-
-        <item name="android:background">@color/azul_background</item>
+        <item name="android:background">@color/backgroud_element_dg</item>
         <item name="android:itemBackground">@color/letra_clara</item>
         <item name="android:iconTint">@color/letra_clara</item>
         <item name="android:itemTextAppearance">@style/BottomNavTextAppearance</item>
@@ -102,6 +99,8 @@
     <style name="BottomNavTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/letra_clara</item>
     </style>
+    <!-- fin delegado general-->
+
 
     <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>

@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
+        app:cardBackgroundColor="@color/backgroud_card_dg"
         android:id="@+id/card"
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
@@ -38,6 +39,7 @@
                     android:layout_height="wrap_content"
                     android:text="textview"
                     android:textAllCaps="true"
+                    android:textColor="@color/letter_medium_dg"
                     android:textAppearance="?attr/textAppearanceTitleMedium"
                     />
 
@@ -48,7 +50,7 @@
                     android:layout_marginTop="8dp"
                     android:text="textView"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary"
+                    android:textColor="@color/letter_medium_dg"
                     android:textSize="16sp"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
@@ -60,7 +62,7 @@
                     android:textSize="16sp"
                     android:text="Cancha de minas"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary"
+                    android:textColor="@color/letter_short_dg"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,7 +70,7 @@
                     android:layout_marginTop="0dp"
                     android:text="18 personas participando"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary"
+                    android:textColor="@color/letter_short_dg"
                     />
 
             </LinearLayout>

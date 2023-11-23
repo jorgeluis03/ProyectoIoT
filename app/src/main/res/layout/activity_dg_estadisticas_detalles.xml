@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroud_dg"
     tools:context=".delegadoGeneral.DgEstadisticasDetallesActivity">
 
     <RelativeLayout
         android:id="@+id/relativeToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/azul_background"
+        android:background="@color/backgroud_element_dg"
         android:padding="10dp">
 
         <ImageButton
@@ -36,11 +37,13 @@
         android:id="@+id/progress_bar_Estad"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:progressBackgroundTint="@color/rojo"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/relativeToolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backgroud_dg"
         android:id="@+id/recycleViewDetalleEstad"/>
 
 
