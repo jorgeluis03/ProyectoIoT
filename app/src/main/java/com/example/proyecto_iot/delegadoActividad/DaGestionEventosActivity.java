@@ -48,8 +48,9 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                 .addSnapshotListener((value, error) -> {
                     if (value != null){
                         for (QueryDocumentSnapshot document: value){
-                            if (document.toObject(Evento.class).getEstado().equals("activo"))
-                            buscarEventos(document.getId());
+                            if (document.toObject(Evento.class).getEstado().equals("activo")) {
+                                buscarEventos(document.getId());
+                            }
                         }
                     }
                     if (error != null){
