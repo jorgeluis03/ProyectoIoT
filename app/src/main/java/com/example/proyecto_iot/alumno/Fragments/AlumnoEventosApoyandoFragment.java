@@ -91,6 +91,7 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                 .document(eventoId)
                 .addSnapshotListener((snapshot, e) -> {
                     if (e != null){
+                        taskCompletionSource.setException(e);
                         return;
                     }
                     if (snapshot != null && snapshot.exists()){
@@ -109,7 +110,9 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                     else {
                         Log.d("msg-test", "AlumnoEventosApoyandoFragment: No se encontró el evento con ID: " + eventoId);
                     }
-                    taskCompletionSource.setResult(null);
+                    if (!taskCompletionSource.getTask().isComplete()) {
+                        taskCompletionSource.setResult(null);
+                    }
                 });
         return taskCompletionSource.getTask();
     }
