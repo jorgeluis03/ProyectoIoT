@@ -7,6 +7,20 @@
     android:background="@color/azul_background"
     tools:context=".alumno.AlumnoEventoActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_edit_floating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:visibility="gone"
+        app:backgroundTint="@color/verde_bat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/icon_pencil"
+        app:tint="@color/white" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

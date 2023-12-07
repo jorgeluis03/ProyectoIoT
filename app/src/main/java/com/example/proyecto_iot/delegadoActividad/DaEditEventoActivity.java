@@ -170,7 +170,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
                 .setTitleText("Selecciona la hora del evento")
                 .build();
 
-        //TODO DA: solucionar error del inputText from DatePicker
+        //TODO DA*: solucionar error del inputText from DatePicker
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Selecciona una fecha")
                 .setTextInputFormat(formato)
@@ -822,7 +822,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
                                 Snackbar.make(DaEditEventoActivity.this.getCurrentFocus(), "Se ha creado el evento exitosamente", Snackbar.LENGTH_SHORT).show();
                             })
                             .addOnFailureListener(e -> {
-                                //TODO DA: borrar evento creado
+                                //TODO DA*: borrar evento creado
                                 Log.d("msg-test", "No se pudo actualizar en actividades");
                             });
                     finish();

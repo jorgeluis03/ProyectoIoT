@@ -38,6 +38,7 @@ import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaFotosEventoAdapter;
 import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
+import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
@@ -95,6 +96,12 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
             galleryIntent.setType("image/*");
             openImageLauncher.launch(galleryIntent);
+        });
+
+        binding.buttonEditFloating.setOnClickListener(view -> {
+            Intent intent = new Intent(AlumnoEventoActivity.this, DaEditEventoActivity.class);
+            intent.putExtra("evento", evento);
+            startActivity(intent);
         });
 
         binding.buttonEventoBack.setOnClickListener(view -> {
@@ -209,6 +216,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                                 binding.buttonSubirFotos.setVisibility(View.GONE);
                             }else {
                                 binding.buttonSubirFotos.setVisibility(View.VISIBLE);
+                                binding.buttonEditFloating.setVisibility(View.VISIBLE);
                             }
                         }
                     }

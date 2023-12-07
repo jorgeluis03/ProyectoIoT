@@ -46,12 +46,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:clickable="true"
-        app:srcCompat="@drawable/icon_plus"
-        app:tint="@color/verde_bat"
-        app:backgroundTint="@color/azul_background"
+        app:backgroundTint="@color/verde_bat"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/icon_plus"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
