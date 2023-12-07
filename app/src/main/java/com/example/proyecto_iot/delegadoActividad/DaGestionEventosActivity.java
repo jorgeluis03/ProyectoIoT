@@ -91,7 +91,7 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                             adapter.notifyDataSetChanged();
                         }
                     } else {
-                        Log.d("msg-test", "AlumnoEventosApoyandoFragment: No se encontró el evento con ID: " + eventoId);
+                        Log.d("msg-test", "DaGestionEventosActivity: No se encontró el evento con ID: " + eventoId);
                     }
                 });
     }
