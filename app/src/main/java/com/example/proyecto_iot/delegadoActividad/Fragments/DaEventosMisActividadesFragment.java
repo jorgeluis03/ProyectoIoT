@@ -49,7 +49,7 @@ public class DaEventosMisActividadesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentDaEventosMisActividadesBinding.inflate(inflater, container, false);
-
+        binding.progressBar8.setVisibility(View.VISIBLE);
         actividadList = obtenerActividadesDesdeMemoria();
         for (Actividades actividad: actividadList){
             if (actividad.getEstado().equals("abierto")){
@@ -70,6 +70,7 @@ public class DaEventosMisActividadesFragment extends Fragment {
                         });
             }
         }
+        binding.progressBar8.setVisibility(View.GONE);
         adapter.setContext(getContext());
         adapter.setEventoList(eventoList);
 
