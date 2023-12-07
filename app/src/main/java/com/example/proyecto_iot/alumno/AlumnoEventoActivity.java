@@ -40,6 +40,8 @@ import com.example.proyecto_iot.alumno.RecyclerViews.ListaFotosEventoAdapter;
 import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,6 +82,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding = ActivityAlumnoEventoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.progressBar5.setVisibility(View.VISIBLE);
         evento = (Evento) getIntent().getSerializableExtra("evento");
         user = getIntent().getStringExtra("userUid");
         Log.d("msg-test","obteniendo: "+evento.getDelegado()+" a "+user);
@@ -223,6 +226,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     );
 
     private void cargarFotos() {
+        List<Task<?>> tasks = new ArrayList<>();
         db.collection("eventos")
                 .document("evento" + evento.getFechaHoraCreacion().toString())
                 .collection("fotos")
@@ -232,10 +236,19 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Foto foto = document.toObject(Foto.class);
-                            fotoList.add(foto);
+
+                            tasks.add(agregarFotoALista(foto));
                             Log.d("msg-test", "foto: " + foto.getDescripcion());
                         }
-                        adapter.notifyDataSetChanged();
+                        Tasks.whenAllComplete(tasks)
+                                .addOnCompleteListener(allTasks -> {
+                                    binding.progressBar5.setVisibility(View.GONE);
+                                    if (fotoList.isEmpty()){
+                                        binding.textView26.setVisibility(View.VISIBLE);
+                                    }else {
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
                     } else {
                         Log.d("msg-test", "error al cargar fotos");
                     }
@@ -246,6 +259,13 @@ public class AlumnoEventoActivity extends AppCompatActivity {
 
         binding.rvFotos.setAdapter(adapter);
         binding.rvFotos.setLayoutManager(new LinearLayoutManager(AlumnoEventoActivity.this));
+    }
+
+    private Task<Void> agregarFotoALista(Foto foto) {
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
+        fotoList.add(foto);
+        taskCompletionSource.setResult(null);
+        return taskCompletionSource.getTask();
     }
 
     private void abrirDialogSubirFoto() {
@@ -261,7 +281,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             // subir foto a firestore y storage
             EditText inputDescripcion = bottomSheetView.findViewById(R.id.inputDescripcion);
             subirFoto(inputDescripcion.getText().toString());
-
         });
 
         bottomSheetDialog.setContentView(bottomSheetView);
@@ -331,6 +350,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.buttonEventoFecha.setText(evento.getFecha());
         binding.buttonEventoHora.setText(evento.getHora());
         binding.buttonEventoLugar.setText(evento.getLugar());
+        binding.textEstado2.setVisibility(evento.getEstado().equals("inactivo")?View.VISIBLE:View.GONE);
 
 
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache

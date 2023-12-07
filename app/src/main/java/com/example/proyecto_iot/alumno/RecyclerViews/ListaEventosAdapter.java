@@ -67,6 +67,10 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         TextView lugar = holder.itemView.findViewById(R.id.textLugar);
 
         lugar.setText(evento.getLugar());
+        if (evento.getEstado().equals("inactivo")) { // si está finalizado se muestra mensaje
+            Log.d("msg-test",evento.getTitulo()+" se encuentra "+evento.getEstado());
+            textEstado.setVisibility(View.VISIBLE);
+        }
 
         db.collection("alumnos")
                 .document(evento.getDelegado())
@@ -100,10 +104,6 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
                         Log.d("msg-test", "error buscando delegado de evento: " + task.getException().getMessage());
                     }
                 });
-
-        if (evento.getEstado().equals("inactivo")) { // si está finalizado se muestra mensaje
-            textEstado.setVisibility(View.VISIBLE);
-        }
 
         textTitulo.setText(evento.getTitulo());
         textActividad.setText(evento.getActividad());

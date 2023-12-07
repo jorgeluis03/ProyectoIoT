@@ -53,7 +53,7 @@
                 android:text="No se cuenta con apoyos actualmente."
                 android:textColor="@color/letra_clara"
                 android:textSize="15sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/progressBarDialog"

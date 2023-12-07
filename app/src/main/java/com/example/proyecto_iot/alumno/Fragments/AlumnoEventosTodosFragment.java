@@ -18,6 +18,8 @@ import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoEventosTodosBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -30,6 +32,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AlumnoEventosTodosFragment extends Fragment {
 
@@ -44,6 +47,9 @@ public class AlumnoEventosTodosFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAlumnoEventosTodosBinding.inflate(inflater, container, false);
 
+        binding.progressBar6.setVisibility(View.VISIBLE);
+
+        List<Task<?>> tasks = new ArrayList<>();
         db.collection("eventos")
                 .orderBy("fechaHoraCreacion", Query.Direction.DESCENDING)
                 .addSnapshotListener((value, error) -> {
@@ -54,8 +60,17 @@ public class AlumnoEventosTodosFragment extends Fragment {
                     if (value != null){
                         eventoList.clear();
                         for (QueryDocumentSnapshot doc: value){
-                            buscarEventos(doc.getId());
+                            tasks.add(buscarEventos(doc.getId()));
                         }
+                        Tasks.whenAllComplete(tasks)
+                            .addOnCompleteListener(allTasks -> {
+                                binding.progressBar6.setVisibility(View.GONE);
+                                if (eventoList.isEmpty()){
+                                    binding.textView31.setVisibility(View.VISIBLE);
+                                }else {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
                     }
                 });
 
@@ -68,7 +83,9 @@ public class AlumnoEventosTodosFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void buscarEventos(String eventoId) {
+    private Task<Void> buscarEventos(String eventoId) {
+
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
 
         db.collection("eventos")
                 .document(eventoId)
@@ -93,7 +110,9 @@ public class AlumnoEventosTodosFragment extends Fragment {
                     } else {
                         Log.d("msg-test", "AlumnoEventosApoyandoFragment: No se encontró el evento con ID: " + eventoId);
                     }
+                    taskCompletionSource.setResult(null);
                 });
+        return taskCompletionSource.getTask();
     }
     private boolean eventoListContainsId(String eventId) {
         String id;

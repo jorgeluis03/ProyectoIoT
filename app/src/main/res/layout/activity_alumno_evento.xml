@@ -31,6 +31,21 @@
                 app:srcCompat="@drawable/cancha_de_minas"
                 tools:srcCompat="@drawable/cancha_de_minas" />
 
+            <TextView
+                android:id="@+id/textEstado2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_round_box"
+                android:backgroundTint="@color/azul_background"
+                android:text="Finalizado"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayoutEventoInfo"
+                app:layout_constraintEnd_toEndOf="@+id/imageEvento" />
+
             <Button
                 android:id="@+id/buttonEventoBack"
                 style="?attr/materialIconButtonFilledStyle"
@@ -63,7 +78,7 @@
                     android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_alumno_apoyar_button"/>
+                    tools:layout="@layout/fragment_alumno_apoyar_button" />
 
 
                 <androidx.fragment.app.FragmentContainerView
@@ -71,15 +86,14 @@
                     android:name="com.example.proyecto_iot.delegadoActividad.Fragments.DaApoyosFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_da_apoyos"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    tools:layout="@layout/fragment_da_apoyos" />
 
                 <TextView
                     android:id="@+id/textDelegadoActividad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="TextView"
                     android:textColor="#B9B9B9"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -111,9 +125,11 @@
                     android:layout_marginBottom="20dp"
                     android:text="TextView"
                     android:textColor="@color/white" />
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -213,6 +229,33 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="8dp"
                     android:nestedScrollingEnabled="false" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar5"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="238dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonSubirFotos"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="124dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="124dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonSubirFotos"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="0dp"
+                    android:text="El evento no cuenta con fotos."
+                    android:textAlignment="center"
+                    android:visibility="gone" />
 
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

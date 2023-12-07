@@ -44,6 +44,7 @@ import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Delegado_select_map_activity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.example.proyecto_iot.databinding.ActivityDaEditEventoBinding;
 import com.example.proyecto_iot.delegadoActividad.Adapters.CarouselAdapter;
 import com.example.proyecto_iot.delegadoActividad.Adapters.ListaEventosActividadesAdapter;
@@ -531,12 +532,12 @@ public class DaEditEventoActivity extends AppCompatActivity {
         if (changed){
             if (!binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(true);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
+                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.white));
             }
         }else {
             if (binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(false);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_gris));
+                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
             }
         }
     }
@@ -585,12 +586,12 @@ public class DaEditEventoActivity extends AppCompatActivity {
         if (complete){
             if (!binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(true);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
+                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.white));
             }
         }else {
             if (binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(false);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_gris));
+                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
             }
         }
     }
@@ -716,7 +717,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
             finishAndUpload.setEnabled(false);
             progressBar.setVisibility(View.VISIBLE);
             for (int i = 0; i<Math.min(listaFotos.size(), 5);i++){
-                subirFoto(listaFotos.get(i).getImageUri(), evento.getFechaHoraCreacion().toString());
+                subirPicStorage(listaFotos.get(i).getImageUri(), evento.getFechaHoraCreacion().toString());
             }
             db.collection("actividades").document(evento.getActividadId()).collection("eventos")
                     .document("evento"+evento.getFechaHoraCreacion())
@@ -744,6 +745,46 @@ public class DaEditEventoActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
     }
+
+    private void subirPicStorage(Uri imageUri, String id) {
+        Foto fotoNueva = new Foto();
+        fotoNueva.setFechaHoraSubida(com.google.firebase.Timestamp.now());
+        String userUid = FirebaseAuth.getInstance().getUid();
+        fotoNueva.setAlumnoID(userUid);
+        fotoNueva.setDescripcion("Gracias por participar en "+ evento.getTitulo());
+        storage = FirebaseStorage.getInstance();
+        StorageReference reference = storage.getReference().child("evento" + id + "/" + imageUri.getLastPathSegment() + ".jpg");
+        reference.putFile(imageUri).continueWithTask(task -> {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return reference.getDownloadUrl();
+                })
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("msg-test", "foto de evento agregada en storage");
+                        fotoNueva.setFotoUrl(task.getResult().toString());
+                        subirPicFirestore(fotoNueva, id);
+                    } else {
+                        Log.d("msg-test", "error");
+                    }
+                });
+    }
+    private void subirPicFirestore(Foto fotoNueva, String id) {
+        db.collection("eventos")
+                .document("evento" + id)
+                .collection("fotos")
+                .add(fotoNueva)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "foto guardada en firestore exitosamente");
+                    finish();
+                    startActivity(getIntent());
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
+    }
+
     private void subirFoto(Uri imageUri, String id) {
         storage = FirebaseStorage.getInstance();
         StorageReference reference = storage.getReference().child("eventos/evento" + id + ".jpg");
