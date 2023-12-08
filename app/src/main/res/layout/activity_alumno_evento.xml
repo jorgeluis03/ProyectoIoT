@@ -92,6 +92,7 @@
                     android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="visible"
                     tools:layout="@layout/fragment_alumno_apoyar_button" />
 
 

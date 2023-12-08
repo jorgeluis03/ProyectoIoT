@@ -139,7 +139,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             }));
             alertDialog.show();
         });
-
         binding.buttonEventoLugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
