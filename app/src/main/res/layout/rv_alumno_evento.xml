@@ -8,7 +8,7 @@
     android:layout_gravity="center_horizontal"
     android:layout_marginHorizontal="15dp"
     android:layout_marginBottom="15dp"
-    android:background="@drawable/button_alumno_perfil"
+    android:background="@drawable/card_alumno_evento"
     android:padding="30dp">
 
     <TextView
@@ -16,6 +16,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:drawableLeft="@drawable/text_icon_delegado_evento"
+        android:drawablePadding="4dp"
+        android:paddingVertical="2dp"
         android:text="TextView"
         android:textColor="#B9B9B9"
         android:textSize="12sp"
@@ -46,7 +49,7 @@
         android:background="#222A3F"
         android:text="TextView"
         android:textColor="@color/white"
-        android:textSize="22sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +91,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textDescripcion"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars"  />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textFecha"
