@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Evento;
@@ -17,6 +18,8 @@ import com.example.proyecto_iot.delegadoActividad.Adapters.ListaEventosActividad
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -24,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DaGestionEventosActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -36,12 +40,14 @@ public class DaGestionEventosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDaGestionEventosBinding.inflate(getLayoutInflater());
+        binding.progressBar10.setVisibility(View.VISIBLE);
         setContentView(binding.getRoot());
         intent = getIntent();
         Actividades a = (Actividades) intent.getSerializableExtra("actividadCard");
         binding.textSubtitleGestion.setText(a.getNombre());
         binding.buttonEventoABack.setOnClickListener(view -> finish());
 
+        List<Task<?>> tasks = new ArrayList<>();
         db.collection("actividades")
                 .document(a.getId())
                 .collection("eventos")
@@ -49,9 +55,21 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                     if (value != null){
                         for (QueryDocumentSnapshot document: value){
                             if (document.toObject(Evento.class).getEstado().equals("activo")) {
-                                buscarEventos(document.getId());
+                                tasks.add(buscarEventos(document.getId()));
                             }
                         }
+                        Tasks.whenAllComplete(tasks)
+                                .addOnCompleteListener(allTasks -> {
+                                    binding.progressBar10.setVisibility(View.GONE);
+                                    if (eventoList.isEmpty()){
+                                        binding.imageView13.setVisibility(View.VISIBLE);
+                                        binding.textView34.setVisibility(View.VISIBLE);
+                                        binding.nameActividad.setVisibility(View.VISIBLE);
+                                        binding.nameActividad.setText(a.getNombre());
+                                    }else {
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
                     }
                     if (error != null){
                         Log.d("msg-test", "AlumnoEventosApoyandoFragment: error en busqueda de eventos apoyados");
@@ -69,12 +87,14 @@ public class DaGestionEventosActivity extends AppCompatActivity {
             startActivity(intent1);
         });
     }
-    private void buscarEventos(String eventoId){
+    private Task<Void> buscarEventos(String eventoId){
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("eventos")
                 .document(eventoId)
                 .addSnapshotListener((snapshot, e) -> {
                     if (e != null) {
                         Log.d("msg-test", "AlumnoEventosApoyandoFragment error escuchando cambios en evento: " + eventoId, e);
+                        taskCompletionSource.setException(e);
                         return;
                     }
                     if (snapshot != null && snapshot.exists()) {
@@ -93,7 +113,11 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                     } else {
                         Log.d("msg-test", "DaGestionEventosActivity: No se encontró el evento con ID: " + eventoId);
                     }
+                    if (!taskCompletionSource.getTask().isComplete()) {
+                        taskCompletionSource.setResult(null);
+                    }
                 });
+        return taskCompletionSource.getTask();
     }
 
     private void removerDeLista(Date fechaHoraCreacion) {

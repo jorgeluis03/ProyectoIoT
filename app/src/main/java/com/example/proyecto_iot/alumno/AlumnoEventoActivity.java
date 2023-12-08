@@ -253,6 +253,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                                     binding.progressBar5.setVisibility(View.GONE);
                                     if (fotoList.isEmpty()){
                                         binding.textView26.setVisibility(View.VISIBLE);
+                                        binding.imageView12.setVisibility(View.VISIBLE);
                                     }else {
                                         adapter.notifyDataSetChanged();
                                     }

@@ -215,8 +215,10 @@
                 android:paddingVertical="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutEventoInfo">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutEventoInfo"
+                app:layout_constraintVertical_bias="1.0">
 
                 <Button
                     android:id="@+id/buttonSubirFotos"
@@ -256,20 +258,34 @@
                     android:layout_marginStart="124dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="124dp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/textView26"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/buttonSubirFotos"
+                    android:layout_below="@+id/imageView12"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="0dp"
+                    android:layout_marginTop="-4dp"
                     android:layout_marginEnd="0dp"
                     android:text="El evento no cuenta con fotos."
                     android:textAlignment="center"
                     android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonSubirFotos"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="-8dp"
+                    android:layout_marginEnd="100dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/img_pics" />
 
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
