@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 
@@ -36,6 +37,7 @@ import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Donacion;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaDonacionesAdapter;
+import com.example.proyecto_iot.alumno.Utils.DecimalDigitsInputFilter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoDonacionesBinding;
 
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
@@ -231,6 +233,7 @@ public class AlumnoDonacionesFragment extends Fragment {
             });
 
             EditText inputMonto = bottomSheetView.findViewById(R.id.inputMonto);
+            inputMonto.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(10, 2)});
             inputMonto.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -239,8 +242,8 @@ public class AlumnoDonacionesFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    monto = Float.parseFloat(inputMonto.getText().toString());
-                    if (monto != 0 && fotoAgregada){
+                    if (!inputMonto.getText().toString().equals("") && fotoAgregada){
+                        monto = Float.parseFloat(inputMonto.getText().toString());
                         buttonRegistrarDonacion.setEnabled(true);
                     }
                 }
