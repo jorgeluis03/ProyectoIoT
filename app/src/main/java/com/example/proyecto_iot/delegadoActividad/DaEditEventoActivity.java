@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.sax.ElementListener;
@@ -121,7 +122,6 @@ public class DaEditEventoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDaEditEventoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         binding.buttonEventoABack.setOnClickListener(view -> mostrarConfirmacionExit());
 
         Intent intent = getIntent();
@@ -164,6 +164,10 @@ public class DaEditEventoActivity extends AppCompatActivity {
             binding.textPlaceEvent.setText(evento.getLugar());
         }
 
+        if (isExistEvent) {
+            binding.inputTituloEvent.setEnabled(false);
+            binding.textTitleEvent.setTextColor(Color.GRAY);
+        }
         long today = MaterialDatePicker.todayInUtcMilliseconds();
         CalendarConstraints.Builder constraintsBuilder =
                 new CalendarConstraints.Builder()
