@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.example.proyecto_iot.R;
@@ -16,6 +17,8 @@ import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.databinding.ActivityDaGestionEventosBinding;
 import com.example.proyecto_iot.delegadoActividad.Adapters.ListaEventosActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
+import com.example.proyecto_iot.inicioApp.ConfirmNewPasswActivity;
+import com.example.proyecto_iot.inicioApp.IngresarActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
@@ -66,8 +69,16 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                                         binding.textView34.setVisibility(View.VISIBLE);
                                         binding.nameActividad.setVisibility(View.VISIBLE);
                                         binding.nameActividad.setText(a.getNombre());
+                                    }else if (eventoList.size()==0){
+                                        binding.imageView13.setVisibility(View.VISIBLE);
+                                        binding.textView34.setVisibility(View.VISIBLE);
+                                        binding.nameActividad.setVisibility(View.VISIBLE);
+                                        binding.nameActividad.setText(a.getNombre());
                                     }else {
                                         adapter.notifyDataSetChanged();
+                                        binding.imageView13.setVisibility(View.GONE);
+                                        binding.textView34.setVisibility(View.GONE);
+                                        binding.nameActividad.setVisibility(View.GONE);
                                     }
                                 });
                     }

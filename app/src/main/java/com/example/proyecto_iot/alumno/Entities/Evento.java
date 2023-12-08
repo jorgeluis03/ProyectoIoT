@@ -113,4 +113,19 @@ public class Evento implements Serializable {
     public void setActividadId(String actividadId) {
         this.actividadId = actividadId;
     }
+
+    public int getHoraInt(){
+        String[] horaMin = this.hora.split(":");
+        return Integer.parseInt(horaMin[0]);
+    }
+    public int getMinInt(){
+        String[] horaMin = this.hora.split(":");
+        String[] minHrs = horaMin[1].split(" ");
+        return Integer.parseInt(minHrs[0]);
+    }
+    public Long getFechaLong(){
+        String[] date = this.fecha.split("/");
+        Date fechaD = new Date(Integer.parseInt(date[2])+100, Integer.parseInt(date[1])-1, Integer.parseInt(date[0]));
+        return fechaD.getTime();
+    }
 }

@@ -71,6 +71,8 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                                     binding.imageView9.setVisibility(View.VISIBLE);
                                 }else {
                                     adapter.notifyDataSetChanged();
+                                    binding.textView32.setVisibility(View.GONE);
+                                    binding.imageView9.setVisibility(View.GONE);
                                 }
                             });
                     }

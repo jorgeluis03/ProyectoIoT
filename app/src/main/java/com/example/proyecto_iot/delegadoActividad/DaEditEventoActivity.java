@@ -15,9 +15,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.sax.ElementListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -49,6 +51,8 @@ import com.example.proyecto_iot.databinding.ActivityDaEditEventoBinding;
 import com.example.proyecto_iot.delegadoActividad.Adapters.CarouselAdapter;
 import com.example.proyecto_iot.delegadoActividad.Adapters.ListaEventosActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
+import com.example.proyecto_iot.inicioApp.ConfirmNewPasswActivity;
+import com.example.proyecto_iot.inicioApp.IngresarActivity;
 import com.example.proyecto_iot.inicioApp.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -109,6 +113,8 @@ public class DaEditEventoActivity extends AppCompatActivity {
     private CarouselAdapter adapter = new CarouselAdapter();
     ArrayList<CarouselModel> listaFotos = new ArrayList<>();
     CarouselModel carrusel = new CarouselModel();
+    MaterialTimePicker timePicker;
+    MaterialDatePicker<Long> datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,17 +171,36 @@ public class DaEditEventoActivity extends AppCompatActivity {
                         .setStart(today)
                         .setValidator(DateValidatorPointForward.now());
 
-        MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H)
-                .setTitleText("Selecciona la hora del evento")
-                .build();
+        if (isExistEvent){
+            timePicker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setTitleText("Selecciona la hora del evento")
+                    .setHour(evento.getHoraInt())
+                    .setMinute(evento.getMinInt())
+                    .build();
+        }
+        else {
+            timePicker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setTitleText("Selecciona la hora del evento")
+                    .build();
+        }
 
         //TODO DA*: solucionar error del inputText from DatePicker
-        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Selecciona una fecha")
-                .setTextInputFormat(formato)
-                .setCalendarConstraints(constraintsBuilder.build())
-                .build();
+        if (isExistEvent){
+            datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Selecciona una fecha")
+                    .setTextInputFormat(formato)
+                    .setSelection(evento.getFechaLong())
+                    .setCalendarConstraints(constraintsBuilder.build())
+                    .build();
+        }else {
+            datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Selecciona una fecha")
+                    .setTextInputFormat(formato)
+                    .setCalendarConstraints(constraintsBuilder.build())
+                    .build();
+        }
 
         binding.textDateEvent.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -906,5 +931,10 @@ public class DaEditEventoActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(), "Ocurrió un error al cargar el lugar elegido, intente más tarde.", Snackbar.LENGTH_SHORT).show();
             }
         }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        mostrarConfirmacionExit();
+        return super.onKeyDown(0, event);
     }
 }
