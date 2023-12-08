@@ -201,7 +201,6 @@ public class DaEditEventoActivity extends AppCompatActivity {
                     .setCalendarConstraints(constraintsBuilder.build())
                     .build();
         }
-
         binding.textDateEvent.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 mostrarDatePicker(datePicker);
@@ -303,6 +302,8 @@ public class DaEditEventoActivity extends AppCompatActivity {
         binding.buttonSaveChangeEvent.setOnClickListener(view -> {
             if (binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(false);
+                binding.buttonSaveChangeEvent.setText("");
+                binding.progressBar11.setVisibility(View.VISIBLE);
                 if (isExistEvent){
                     Map<String, Object> eventoUpdate = new HashMap<>();
                     if (datoRecibido.get("nombre")!=null){
