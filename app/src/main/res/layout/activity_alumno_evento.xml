@@ -270,7 +270,8 @@
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="0dp"
-                    android:text="El evento no cuenta con fotos."
+                    android:layout_marginBottom="16dp"
+                    android:text="El evento aún no cuenta con fotos"
                     android:textAlignment="center"
                     android:visibility="gone" />
 
