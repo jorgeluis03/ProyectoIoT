@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
@@ -90,8 +91,9 @@ public class AlumnoDonacionesFragment extends Fragment {
     private BottomSheetDialog bottomSheetDialog;
     private Uri uriFotoDonacion;
     private String urlNuevoDonacionCaptura;
-    private float monto;
+    private Float monto;
     private boolean fotoAgregada = false;
+    private Button buttonRegistrarDonacion;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -222,8 +224,9 @@ public class AlumnoDonacionesFragment extends Fragment {
             View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_donar, (ConstraintLayout) view.findViewById(R.id.bottomSheetContainer));
 
             // conf de botones de dialog donar
-            Button buttonDonar = bottomSheetView.findViewById(R.id.buttonDialogDonar);
-            buttonDonar.setOnClickListener(viewDialog -> {
+            buttonRegistrarDonacion = bottomSheetView.findViewById(R.id.buttonDialogDonar);
+            buttonRegistrarDonacion.setOnClickListener(viewDialog -> {
+                buttonRegistrarDonacion.setEnabled(false);
                 subirDonacion();
             });
 
@@ -236,9 +239,9 @@ public class AlumnoDonacionesFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (fotoAgregada) {
-                        monto = Float.parseFloat(inputMonto.getText().toString());
-                        buttonDonar.setEnabled(true);
+                    monto = Float.parseFloat(inputMonto.getText().toString());
+                    if (monto != 0 && fotoAgregada){
+                        buttonRegistrarDonacion.setEnabled(true);
                     }
                 }
 
@@ -259,22 +262,6 @@ public class AlumnoDonacionesFragment extends Fragment {
         return binding.getRoot();
     }
 
-    /* tambien daba error xd
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                TextView textView = view.findViewById(R.id.textView19);
-                textView.setText("Donaciones");
-
-                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
-    }
-
-     */
     private void verificarYCrearKitRecojoSiEsNecesario(String codigoAlumno, double donacionesTotalesValidadas, Date lastDonationDate) {
         db.collection("KitRecojo").document(codigoAlumno).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -412,6 +399,11 @@ public class AlumnoDonacionesFragment extends Fragment {
                         uriFotoDonacion = result.getData().getData(); // data de imagen
                         buttonSubirImagen.setText(getImageName(uriFotoDonacion));
                         fotoAgregada = true;
+
+                        if (monto != null){
+                            buttonRegistrarDonacion.setEnabled(true);
+                        }
+
                     } catch (Exception e) {
                         Log.d("msg-test", e.getMessage());
                     }
