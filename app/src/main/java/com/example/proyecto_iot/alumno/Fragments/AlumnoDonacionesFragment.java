@@ -113,76 +113,83 @@ public class AlumnoDonacionesFragment extends Fragment {
                         Log.d("FirebaseData", "Consulta exitosa en la colección 'donaciones x2'"); // Agrega este mensaje de depuración
                         double donacionesTotalesValidadas = 0.0;
                         String rolUsuario = "";
-                        for (QueryDocumentSnapshot idDocument : task.getResult()) {
-                            String fecha = idDocument.getString("fecha");
-                            String hora = idDocument.getString("hora");
-                            String monto = idDocument.getString("monto");
-                            String monto_enviar = monto;
-                            String nombre = idDocument.getString("nombre");
-                            String rol = idDocument.getString("rol");
-                            String fotoQR = idDocument.getString("fotoQR");
-                            String estado = idDocument.getString("estado");
-                            if ("validado".equals(estado)) {
-                                String montoString = idDocument.getString("monto");
-                                try {
-                                    double montoValidado = Double.parseDouble(montoString);
-                                    donacionesTotalesValidadas += montoValidado;
-                                } catch (NumberFormatException e) {
-                                    Log.e("Firestore", "Error al parsear el monto a double", e);
-                                }
-                            }
-                            if (rolUsuario.isEmpty()) {
-                                rolUsuario = idDocument.getString("rol");
-                            }
-                            // Realiza operaciones con los campos obtenidos
-                            Donacion donacion = new Donacion(fecha, hora, rol, fotoQR, monto_enviar, nombre, estado);
-                            donationList.add(donacion);
-                            // Agrega mensajes de depuración para verificar los datos
-                            Log.d("FirebaseData", "Fecha: " + fecha);
-                            Log.d("FirebaseData", "Hora: " + hora);
-                            Log.d("FirebaseData", "Monto: " + monto);
-                            Log.d("FirebaseData", "Nombre: " + nombre);
-                            Log.d("FirebaseData", "Rol: " + rol);
-                            Log.d("FirebaseData", "Estado: " + rol);
-                            Log.d("FirebaseData", "------------------------ ");
 
-
+                        if(task.getResult().isEmpty()){
+                            binding.textNoDonaciones.setVisibility(View.VISIBLE);
                         }
-                        adapter.setDonacionesTotalesValidadas(donacionesTotalesValidadas);
+                        else{
+                            for (QueryDocumentSnapshot idDocument : task.getResult()) {
+                                String fecha = idDocument.getString("fecha");
+                                String hora = idDocument.getString("hora");
+                                String monto = idDocument.getString("monto");
+                                String monto_enviar = monto;
+                                String nombre = idDocument.getString("nombre");
+                                String rol = idDocument.getString("rol");
+                                String fotoQR = idDocument.getString("fotoQR");
+                                String estado = idDocument.getString("estado");
+                                if ("validado".equals(estado)) {
+                                    String montoString = idDocument.getString("monto");
+                                    try {
+                                        double montoValidado = Double.parseDouble(montoString);
+                                        donacionesTotalesValidadas += montoValidado;
+                                    } catch (NumberFormatException e) {
+                                        Log.e("Firestore", "Error al parsear el monto a double", e);
+                                    }
+                                }
+                                if (rolUsuario.isEmpty()) {
+                                    rolUsuario = idDocument.getString("rol");
+                                }
+                                // Realiza operaciones con los campos obtenidos
+                                Donacion donacion = new Donacion(fecha, hora, rol, fotoQR, monto_enviar, nombre, estado);
+                                donationList.add(donacion);
+                                // Agrega mensajes de depuración para verificar los datos
+                                Log.d("FirebaseData", "Fecha: " + fecha);
+                                Log.d("FirebaseData", "Hora: " + hora);
+                                Log.d("FirebaseData", "Monto: " + monto);
+                                Log.d("FirebaseData", "Nombre: " + nombre);
+                                Log.d("FirebaseData", "Rol: " + rol);
+                                Log.d("FirebaseData", "Estado: " + rol);
+                                Log.d("FirebaseData", "------------------------ ");
+
+
+                            }
+                            adapter.setDonacionesTotalesValidadas(donacionesTotalesValidadas);
 // Aplica la lógica de ordenamiento aquí
-                        donationList.sort(new Comparator<Donacion>() {
-                            @Override
-                            public int compare(Donacion donacion1, Donacion donacion2) {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", new Locale("es", "ES"));
-                                try {
-                                    String dateTime1 = donacion1.getFecha() + " " + donacion1.getHora();
-                                    String dateTime2 = donacion2.getFecha() + " " + donacion2.getHora();
-                                    Date date1 = dateFormat.parse(dateTime1);
-                                    Date date2 = dateFormat.parse(dateTime2);
-                                    return date2.compareTo(date1); // Ordena de más reciente a más antigua considerando fecha y hora
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                    return 0;
+                            donationList.sort(new Comparator<Donacion>() {
+                                @Override
+                                public int compare(Donacion donacion1, Donacion donacion2) {
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", new Locale("es", "ES"));
+                                    try {
+                                        String dateTime1 = donacion1.getFecha() + " " + donacion1.getHora();
+                                        String dateTime2 = donacion2.getFecha() + " " + donacion2.getHora();
+                                        Date date1 = dateFormat.parse(dateTime1);
+                                        Date date2 = dateFormat.parse(dateTime2);
+                                        return date2.compareTo(date1); // Ordena de más reciente a más antigua considerando fecha y hora
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                        return 0;
+                                    }
+                                }
+                            });
+                            // Encontrar la última fecha de donación válida
+                            Date lastValidDonationDate = null;
+                            for (Donacion donacion : donationList) {
+                                if ("validado".equals(donacion.getEstado())) {
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", new Locale("es", "ES"));
+                                    try {
+                                        lastValidDonationDate = dateFormat.parse(donacion.getFecha() + " " + donacion.getHora());
+                                        break; // Salir del bucle después de encontrar la primera donación válida
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
-                        });
-                        // Encontrar la última fecha de donación válida
-                        Date lastValidDonationDate = null;
-                        for (Donacion donacion : donationList) {
-                            if ("validado".equals(donacion.getEstado())) {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", new Locale("es", "ES"));
-                                try {
-                                    lastValidDonationDate = dateFormat.parse(donacion.getFecha() + " " + donacion.getHora());
-                                    break; // Salir del bucle después de encontrar la primera donación válida
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
+                            if ("Egresado".equals(rolUsuario)) {
+                                verificarYCrearKitRecojoSiEsNecesario(codigoAlumno, donacionesTotalesValidadas, lastValidDonationDate);
                             }
+                            adapter.notifyDataSetChanged();
                         }
-                        if ("Egresado".equals(rolUsuario)) {
-                            verificarYCrearKitRecojoSiEsNecesario(codigoAlumno, donacionesTotalesValidadas, lastValidDonationDate);
-                        }
-                        adapter.notifyDataSetChanged();
+
                     } else {
                         Log.e("FirebaseData", "Error al obtener datos de Firestore: " + task.getException());
                     }
