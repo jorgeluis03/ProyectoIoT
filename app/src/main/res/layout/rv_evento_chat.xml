@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:id="@+id/leftChatLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_round_box"
+        android:backgroundTint="@color/chat_mensaje_izquierda"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:layout_marginEnd="80dp">
+
+        <TextView
+            android:id="@+id/leftChatText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go bati? 🤑"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rightChatLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_round_box"
+        android:backgroundTint="@color/chat_mensaje_derecha"
+        android:orientation="vertical"
+        android:layout_alignParentEnd="true"
+        android:padding="8dp"
+        android:layout_marginStart="80dp">
+
+        <TextView
+            android:id="@+id/rightChatText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go bati? 🤑"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+</RelativeLayout>
