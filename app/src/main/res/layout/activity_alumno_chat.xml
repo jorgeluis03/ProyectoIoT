@@ -49,7 +49,7 @@
             android:layout_toStartOf="@id/buttonEnviarMensaje"
             android:background="@drawable/shape_round_box"
             android:backgroundTint="@color/white"
-            android:hint="Mensaje ..."
+            android:hint="Mensaje..."
             android:inputType="text"
             android:padding="8dp"
             android:textColorHint="#717171" />

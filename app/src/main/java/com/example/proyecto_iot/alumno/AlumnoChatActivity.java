@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Chat;
 import com.example.proyecto_iot.alumno.Entities.ChatMessage;
 import com.example.proyecto_iot.alumno.Entities.Evento;
@@ -60,6 +61,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
                     if (task.isSuccessful()){
                         Log.d("msg-test", "mensaje enviado: "+message);
                         binding.inputMessage.setText("");
+                        sendNotification(message);
                     }
                 });
     }
@@ -99,6 +101,15 @@ public class AlumnoChatActivity extends AppCompatActivity {
                 else{
                     Log.d("msg-test", "chat existente");
                 }
+            }
+        });
+    }
+
+    private void sendNotification(String message){
+
+        FirebaseUtilDg.getUsuarioActualDetalles().get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                Alumno alumno = task.getResult().toObject(Alumno.class);
             }
         });
     }
