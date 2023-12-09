@@ -11,6 +11,7 @@
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:background="@drawable/shape_round_black_box"
         android:insetLeft="0dp"
         android:insetTop="0dp"
@@ -23,15 +24,14 @@
         app:icon="@drawable/icon_bell_ringing"
         app:iconPadding="4dp"
         app:iconTint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonAbrirChat"
+        app:layout_constraintStart_toEndOf="@+id/buttonAbrirChat" />
 
     <Button
         android:id="@+id/buttonAbrirChat"
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:background="@drawable/shape_round_black_box"
         android:backgroundTint="@color/black"
         android:insetLeft="0dp"
@@ -46,8 +46,10 @@
         app:icon="@drawable/icon_chat"
         app:iconPadding="4dp"
         app:iconTint="@color/white"
-        app:layout_constraintBaseline_toBaselineOf="@+id/buttonNotificaciones"
-        app:layout_constraintStart_toEndOf="@+id/buttonNotificaciones" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonEventoApoyando"
@@ -58,8 +60,8 @@
         android:textColor="@color/white"
         android:textSize="12sp"
         app:iconTint="@color/white"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonAbrirChat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/white"
         app:strokeWidth=".8dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

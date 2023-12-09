@@ -87,7 +87,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.progressBar5.setVisibility(View.VISIBLE);
         evento = (Evento) getIntent().getSerializableExtra("evento");
         user = getIntent().getStringExtra("userUid");
-        Log.d("msg-test","obteniendo: "+evento.getDelegado()+" a "+user);
+        Log.d("msg-test", "obteniendo: " + evento.getDelegado() + " a " + user);
 
         cargarInfoEvento();
         cargarFotos();
@@ -140,7 +140,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             }));
             alertDialog.show();
         });
-
         binding.buttonEventoLugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,7 +257,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                         Tasks.whenAllComplete(tasks)
                                 .addOnCompleteListener(allTasks -> {
                                     binding.progressBar5.setVisibility(View.GONE);
-                                    if (fotoList.isEmpty()){
+                                    if (fotoList.isEmpty()) {
                                         binding.textView26.setVisibility(View.VISIBLE);
                                         binding.imageView12.setVisibility(View.VISIBLE);
                                     }else {
@@ -354,7 +353,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Alumno alumno = task.getResult().toObject(Alumno.class);
-                        binding.textDelegadoActividad.setText(alumno.getNombre()+" "+alumno.getApellidos());
+                        binding.textDelegadoActividad.setText(alumno.getNombre() + " " + alumno.getApellidos());
                         cargarDelegadoDialog(alumno);
                     } else {
                         Log.d("msg-test", "error buscando delegado de evento: " + task.getException().getMessage());
@@ -367,7 +366,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.buttonEventoFecha.setText(evento.getFecha());
         binding.buttonEventoHora.setText(evento.getHora());
         binding.buttonEventoLugar.setText(evento.getLugar());
-        binding.textEstado2.setVisibility(evento.getEstado().equals("inactivo")?View.VISIBLE:View.GONE);
+        binding.textEstado2.setVisibility(evento.getEstado().equals("inactivo") ? View.VISIBLE : View.GONE);
 
 
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
@@ -375,6 +374,10 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .load(evento.getFotoUrl())
                 .apply(requestOptions)
                 .into(binding.imageEvento);
+
+        if (evento.getEstado().equals("inactivo")) {
+            binding.buttonSubirFotos.setVisibility(View.GONE);
+        }
     }
 
     private void crearEventoEnCalendario() {
@@ -406,11 +409,11 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         }
     }
 
-    private void cargarDelegadoDialog(Alumno delegado){
+    private void cargarDelegadoDialog(Alumno delegado) {
         float density = getResources().getDisplayMetrics().density;
         Dialog dialog = new Dialog(AlumnoEventoActivity.this);
         dialog.setContentView(R.layout.dialog_delegado_actividad);
-        dialog.getWindow().setLayout((int) (320*density), ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout((int) (320 * density), ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(AlumnoEventoActivity.this.getDrawable(R.drawable.shape_user_dialog));
 
         TextView textNombreDelegadoDialog = dialog.findViewById(R.id.textNombreDelegadoActividad);
@@ -418,7 +421,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         TextView textCorreoDelegadoDialog = dialog.findViewById(R.id.textCorreoDelegadoActividad);
         ImageView imageDelegadoDialog = dialog.findViewById(R.id.imageDelegadoActividad);
 
-        textNombreDelegadoDialog.setText(delegado.getNombre()+" "+delegado.getApellidos());
+        textNombreDelegadoDialog.setText(delegado.getNombre() + " " + delegado.getApellidos());
         textCodigoDelegadoDialog.setText(delegado.getCodigo());
         textCorreoDelegadoDialog.setText(delegado.getCorreo());
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
