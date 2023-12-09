@@ -99,6 +99,11 @@
     <style name="BottomNavTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/letra_clara</item>
     </style>
+    <!--Button styles-->
+    <style name="ButtonStyledg" parent="Widget.AppCompat.Button">
+        <item name="backgroundTint">#3F51B5</item>
+        <item name="android:background">@drawable/btn_backgroud_round</item>
+    </style>
     <!-- fin delegado general-->
 
 
