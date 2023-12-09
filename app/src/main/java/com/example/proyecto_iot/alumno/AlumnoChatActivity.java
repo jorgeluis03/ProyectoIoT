@@ -1,6 +1,8 @@
 package com.example.proyecto_iot.alumno;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,16 +12,20 @@ import com.example.proyecto_iot.alumno.Entities.Chat;
 import com.example.proyecto_iot.alumno.Entities.ChatMessage;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader3Fragment;
+import com.example.proyecto_iot.alumno.RecyclerViews.ListaMensajesAdapter;
 import com.example.proyecto_iot.alumno.Utils.FirebaseUtilAl;
 import com.example.proyecto_iot.databinding.ActivityAlumnoChatBinding;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Query;
 
 public class AlumnoChatActivity extends AppCompatActivity {
     private ActivityAlumnoChatBinding binding;
     private Evento evento;
     private String chatID;
     private Chat chat;
+    private ListaMensajesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
 
         cargarInterfaz();
         getOrCreateChat();
+        setUpChatRecyclerView();
 
         binding.buttonEnviarMensaje.setOnClickListener(view -> {
             String message = binding.inputMessage.getText().toString().trim();
@@ -55,6 +62,30 @@ public class AlumnoChatActivity extends AppCompatActivity {
                         binding.inputMessage.setText("");
                     }
                 });
+    }
+
+    private void setUpChatRecyclerView(){
+        Query query = FirebaseUtilAl.getChatMessageReference(chatID)
+                .orderBy("timestamp", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<ChatMessage> options = new FirestoreRecyclerOptions.Builder<ChatMessage>()
+                .setQuery(query, ChatMessage.class).build();
+
+        adapter = new ListaMensajesAdapter(options, this);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setReverseLayout(true);
+        binding.rvChat.setLayoutManager(manager);
+        binding.rvChat.setAdapter(adapter);
+        adapter.startListening();
+
+        //scrolleo autom
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                binding.rvChat.smoothScrollToPosition(0);
+            }
+        });
     }
 
     private void getOrCreateChat(){

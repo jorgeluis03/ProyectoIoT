@@ -19,6 +19,7 @@
         tools:layout="@layout/fragment_alumno_header3" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/relativeInputChat"
