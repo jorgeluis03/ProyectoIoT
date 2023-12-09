@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="deploymentTargetDropDown">
-<<<<<<< HEAD
     <runningDeviceTargetSelectedWithDropDown>
       <Target>
         <type value="RUNNING_DEVICE_TARGET" />
@@ -13,13 +12,6 @@
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2023-12-09T05:16:30.834523200Z" />
-=======
-    <value>
-      <entry key="app">
-        <State />
-      </entry>
-    </value>
->>>>>>> 3095e705b32da4e48cb50d9816cb3eabc2dfec02
+    <timeTargetWasSelectedWithDropDown value="2023-12-09T15:02:22.463917900Z" />
   </component>
 </project>

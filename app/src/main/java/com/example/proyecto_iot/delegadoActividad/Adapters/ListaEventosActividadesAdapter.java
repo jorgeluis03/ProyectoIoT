@@ -23,6 +23,8 @@ import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
 import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +40,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -206,6 +210,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     }
     public void eliminarEvento(Evento evento, View itemView) {
         db = FirebaseFirestore.getInstance();
+        /*
         //eliminando evento de 'apoyos' del alumno
         db.collection("alumnos")
                 .get()
@@ -217,10 +222,12 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                                 .collection("eventos")
                                 .document("evento"+evento.getFechaHoraCreacion().toString())
                                 .delete()
-                                .addOnSuccessListener(aVoid -> {})
+                                .addOnSuccessListener(aVoid -> {
+                                })
                                 .addOnFailureListener(e -> {});
                     }
                 });
+         */
         //eliminando evento de actividades
         db.collection("actividades").document(evento.getActividadId())
                 .collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
@@ -276,6 +283,21 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            db.collection("alumnos").document(document.getId()).get()
+                                .addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()){
+                                        Alumno apoyoDelete = task1.getResult().toObject(Alumno.class);
+                                        enviarNotificacion(evento, apoyoDelete.getCodigo());
+                                        db.collection("eventos").document("evento"+evento.getFechaHoraCreacion())
+                                                .collection("apoyos").document(task1.getResult().getId()).delete()
+                                                .addOnSuccessListener(aVoid -> {
+                                                    Log.d("msg-test","Se eliminó apoyo de evento");
+                                                    db.collection("alumnos").document(task1.getResult().getId())
+                                                            .collection("eventos").document("evento"+evento.getFechaHoraCreacion()).delete();
+                                                })
+                                                .addOnFailureListener(er -> Log.d("msg-test", "No se pudo eliminar"));
+                                    }
+                                });
                             //TODO DA: notificacion de que se eliminó el evento
                             document.getReference().delete();
                         }
@@ -308,6 +330,32 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                     // TODO DA*: volver a escribir el evento en 'eventos' de la actividad
                 });
     }
+
+    public void enviarNotificacion(Evento evento, String codigo) {
+        //current username, message, currentUserId, otherUserToken
+        FirebaseUtilDg.getCollAlumnos().whereEqualTo("codigo", codigo).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Alumno usuarioDg = task.getResult().toObjects(Alumno.class).get(0);
+                try {
+                    JSONObject jsonObject = new JSONObject();
+
+                    JSONObject notificationObj = new JSONObject();
+                    notificationObj.put("title", "Evento eliminado");
+                    notificationObj.put("body", "Se ha eliminado el evento " + evento.getTitulo());
+
+                    jsonObject.put("notification", notificationObj);
+                    jsonObject.put("to", usuarioDg.getFcmToken());
+                    //llamar a la api
+                    FirebaseFCMUtils.callApi(jsonObject);
+                    Log.d("msg-test","Se envió notificación a "+codigo);
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+    }
+
     public ArrayList<Actividades> obtenerActividadesDesdeMemoria() {
         try (FileInputStream fileInputStream = getContext().openFileInput("userData");
              FileReader fileReader = new FileReader(fileInputStream.getFD());
