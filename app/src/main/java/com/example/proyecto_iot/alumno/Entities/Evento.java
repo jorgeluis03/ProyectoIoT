@@ -13,7 +13,7 @@ public class Evento implements Serializable {
     private String hora;
     private Date fechaHoraCreacion;
     private String estado;
-    private String chatID;
+    private String chatID; // mismo que id de evento ("evento"+fechaHoraCreacion)
     private String lugar;
     private String delegado;
 
