@@ -207,7 +207,6 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     public void eliminarEvento(Evento evento, View itemView) {
         db = FirebaseFirestore.getInstance();
         //eliminando evento de 'apoyos' del alumno
-        //TODO DA: eliminar correctamente el evento de apoyos del alumno
         db.collection("alumnos").whereArrayContains("eventos","evento"+evento.getFechaHoraCreacion().toString())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -230,14 +229,14 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 .addOnFailureListener(e -> {Log.d("msg-test", "no se pudo eliminar de actividades");});
         //eliminando fotos de eventos
         db.collection("eventos").document("evento"+evento.getFechaHoraCreacion()).collection("fotos")
-                .get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    document.getReference().delete();
+            .get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        document.getReference().delete();
+                    }
+                } else {
+                    Log.d("msg-test", "Error al obtener documentos de la subcolección 'fotos': "+ task.getException());
                 }
-            } else {
-                Log.d("msg-test", "Error al obtener documentos de la subcolección 'fotos': "+ task.getException());
-            }
         });
         db.collection("eventos").document("evento"+evento.getFechaHoraCreacion()).collection("fotos")
                 .document("dummy") // Cualquier documento ficticio
@@ -274,6 +273,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            //TODO DA: notificacion de que se eliminó el evento
                             document.getReference().delete();
                         }
                         // Después de eliminar todos los documentos, elimina la subcolección
@@ -301,8 +301,8 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 })
                 .addOnFailureListener(e -> {
                     Snackbar.make(itemView, "No se pudo el evento "+evento.getTitulo()+" de la actividad "+evento.getActividad()+". Intente más tarde.", Snackbar.LENGTH_SHORT).show();
-                    // TODO DA: volver a escribir el evento en 'eventos' de los alumnos
-                    // TODO DA: volver a escribir el evento en 'eventos' de la actividad
+                    // TODO DA*: volver a escribir el evento en 'eventos' de los alumnos
+                    // TODO DA*: volver a escribir el evento en 'eventos' de la actividad
                 });
     }
     public ArrayList<Actividades> obtenerActividadesDesdeMemoria() {

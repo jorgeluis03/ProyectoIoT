@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
+    app:cardBackgroundColor="@color/backgroud_card_dg"
     style="?attr/materialCardViewFilledStyle">
 
     <RelativeLayout
@@ -11,37 +12,35 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/nombreDontante"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nombre donante"
-            android:textSize="16sp"/>
-        <TextView
-            android:layout_below="@+id/nombreDontante"
-            android:id="@+id/horaDonacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hora 00 : 00 : 00"
-            android:textColor="@color/grey"/>
-        <TextView
-            android:id="@+id/montoDonacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="S/ 200.00"
-            android:layout_below="@+id/horaDonacion"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/online_green"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true">
-
+        <RelativeLayout
+            android:id="@+id/rldetalles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/nombreDontante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre donante"
+                android:textColor="@color/letter_medium_dg"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_below="@+id/nombreDontante"
+                android:id="@+id/horaDonacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hora 00 : 00 : 00"
+                android:textColor="@color/letter_short_dg"/>
+            <TextView
+                android:id="@+id/montoDonacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="S/ 200.00"
+                android:layout_below="@+id/horaDonacion"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/online_green"/>
             <ImageButton
+<<<<<<< HEAD
                 android:id="@+id/btnVerDonacion"
                 android:layout_width="40dp"
                 android:layout_height="40sp"
@@ -49,19 +48,47 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="centerCrop" />
             <ImageButton
-                android:id="@+id/btnAceptarDonacion"
-                android:layout_width="40dp"
-                android:layout_height="40sp"
-                android:src="@drawable/round_check_box_24"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
-            <ImageButton
-                android:id="@+id/btnRechazarDonacion"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_delete"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
+=======
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/detallesDonacion"
+                android:src="@drawable/ic_next"
+                app:tint="@color/letter_short_dg"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless" />
 
-        </LinearLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rldetalles">
+
+            <Button
+>>>>>>> e83fdfffcf16e6613d79e74e5ce31eea2d567386
+                android:id="@+id/btnAceptarDonacion"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:text="Aceptar"
+                style="@style/Widget.AppCompat.Button"
+                app:backgroundTint="@color/black"
+                android:background="@drawable/btn_backgroud_round"
+                />
+            <Button
+                android:id="@+id/btnRechazarDonacion"
+                android:layout_toRightOf="@+id/btnAceptarDonacion"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Rechazar"
+                android:background="@drawable/btn_backgroud_round"
+                style="@style/Widget.AppCompat.Button"
+                app:backgroundTint="@color/black"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

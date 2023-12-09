@@ -109,6 +109,7 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
             String contrasena2 = binding.inputContrasena2.getEditText().getText().toString().trim();
             String contrasena3 = binding.inputContrasena3.getEditText().getText().toString().trim();
             Log.d("msg-test", "pass1: "+contrasena1+" | pass2: "+contrasena2+" | pass3: "+contrasena3);
+            binding.buttonGuardarContrasena.setEnabled(false);
             guardarContrasena();
         });
     }

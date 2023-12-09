@@ -7,6 +7,20 @@
     android:background="@color/azul_background"
     tools:context=".alumno.AlumnoEventoActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_edit_floating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:visibility="gone"
+        app:backgroundTint="@color/verde_bat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/icon_pencil"
+        app:tint="@color/white" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,6 +45,21 @@
                 app:srcCompat="@drawable/cancha_de_minas"
                 tools:srcCompat="@drawable/cancha_de_minas" />
 
+            <TextView
+                android:id="@+id/textEstado2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_round_box"
+                android:backgroundTint="@color/azul_background"
+                android:text="Finalizado"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayoutEventoInfo"
+                app:layout_constraintEnd_toEndOf="@+id/imageEvento" />
+
             <Button
                 android:id="@+id/buttonEventoBack"
                 style="?attr/materialIconButtonFilledStyle"
@@ -50,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="-16dp"
-                android:background="@drawable/button_alumno_perfil"
+                android:background="@drawable/card_alumno_evento"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="20dp"
@@ -63,7 +92,8 @@
                     android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_alumno_apoyar_button"/>
+                    android:visibility="visible"
+                    tools:layout="@layout/fragment_alumno_apoyar_button" />
 
 
                 <androidx.fragment.app.FragmentContainerView
@@ -71,18 +101,20 @@
                     android:name="com.example.proyecto_iot.delegadoActividad.Fragments.DaApoyosFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_da_apoyos"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    tools:layout="@layout/fragment_da_apoyos" />
 
                 <TextView
                     android:id="@+id/textDelegadoActividad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="TextView"
+                    android:drawableLeft="@drawable/text_icon_delegado_evento"
+                    android:drawablePadding="4dp"
                     android:textColor="#B9B9B9"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/textEventoTitulo"
@@ -92,7 +124,7 @@
                     android:layout_marginBottom="10dp"
                     android:text="TextView"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -111,9 +143,11 @@
                     android:layout_marginBottom="20dp"
                     android:text="TextView"
                     android:textColor="@color/white" />
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -163,6 +197,7 @@
                             android:insetBottom="0dp"
                             android:paddingHorizontal="10dp"
                             android:text="Button"
+                            android:textAlignment="textStart"
                             android:textColor="#353535"
                             android:textSize="12sp"
                             app:backgroundTint="@null"
@@ -179,14 +214,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/button_alumno_perfil"
+                android:background="@drawable/card_alumno_evento"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutEventoInfo">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutEventoInfo"
+                app:layout_constraintVertical_bias="1.0">
 
                 <Button
                     android:id="@+id/buttonSubirFotos"
@@ -194,6 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/button_alumno_evento_subir_foto"
                     android:text="@string/evento_subir_foto"
                     android:textColor="@color/white"
@@ -211,8 +249,48 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="8dp"
-                    android:nestedScrollingEnabled="false" />
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar5"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="238dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonSubirFotos"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="124dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="124dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView12"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="El evento aún no cuenta con fotos"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonSubirFotos"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginEnd="100dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/img_pics" />
 
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

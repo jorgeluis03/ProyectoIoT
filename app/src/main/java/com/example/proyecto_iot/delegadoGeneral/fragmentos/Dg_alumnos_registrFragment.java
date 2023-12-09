@@ -16,6 +16,7 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosRegistrBinding;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
@@ -52,7 +53,6 @@ public class Dg_alumnos_registrFragment extends Fragment {
                     listaUserRegi = new ArrayList<>(); // Inicializa la lista
                     for(QueryDocumentSnapshot document: snapshot){
                         Alumno alumno = document.toObject(Alumno.class);
-                        Log.d("msg-test", "id: " + document.getId() + " | Nombre: " + alumno.getNombre() + " estado: " + alumno.getEstado());
                         listaUserRegi.add(alumno);
                     }
                     ListaUsuariosAdapter adapter = new ListaUsuariosAdapter();
@@ -69,6 +69,8 @@ public class Dg_alumnos_registrFragment extends Fragment {
         //searchMetod();
         return binding.getRoot();
     }
+
+
 
     public void searchMetod(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -65,7 +65,7 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Alumno alumno = task.getResult().toObject(Alumno.class);
-                        textNombre.setText(alumno.getNombre() + " " + alumno.getApellidos() + ":");
+                        textNombre.setText(alumno.getFullName() + ":");
                     } else {
                         Log.d("msg-test", "error buscando alumno de foto: " + task.getException().getMessage());
                     }

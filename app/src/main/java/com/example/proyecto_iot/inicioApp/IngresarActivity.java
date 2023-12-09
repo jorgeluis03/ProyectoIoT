@@ -55,15 +55,12 @@ public class IngresarActivity extends AppCompatActivity {
 
         binding.buttonRegistrarme.setOnClickListener(view -> {
             intent = new Intent(IngresarActivity.this, RegistroActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            finish();
         });
 
         binding.buttonIniciarSesion.setOnClickListener(view -> {
             intent = new Intent(IngresarActivity.this, LoginActivity.class);
             startActivity(intent);
-            finish();
         });
     }
 

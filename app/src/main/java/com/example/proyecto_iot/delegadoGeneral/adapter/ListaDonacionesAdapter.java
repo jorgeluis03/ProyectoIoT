@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         DonacionDto donacionDto;
         TextView nombreDonador,horaDonacion,montoDonacion,urlDonacion;
         ImageButton btnAceptar, btnRechazar, btnVerDonacion;
-
+        
         public DonacionViewHolder(@NonNull View itemView) {
             super(itemView);
 

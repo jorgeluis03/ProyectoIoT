@@ -126,4 +126,9 @@ public class Alumno implements Serializable {
         String[] last = this.apellidos.split(" ");
         return last[0]+", "+nombre[0];
     }
+    public String getFullName(){
+        String[] nombre = this.nombre.split(" ");
+        String[] last = this.apellidos.split(" ");
+        return nombre[0]+" "+last[0];
+    }
 }
