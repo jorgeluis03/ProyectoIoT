@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azul_background"
     tools:context=".alumno.AlumnoBuscarEventoActivity">
 
 
@@ -28,36 +29,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/inputBuscarEvento"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/input_alumno_donar"
-            android:fontFamily="@font/nunito_sans"
-            android:hint="Título, actividad de evento"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:textColorHint="#787878"
-            android:textSize="16sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/buttonBack"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <SearchView
-            android:id="@+id/inputBuscar"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/shape_round_box"
             android:backgroundTint="@color/white"
-            android:visibility="gone"
+            android:queryHint="Título, evento"
+            android:visibility="visible"
+            app:iconifiedByDefault="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/buttonBack"
@@ -70,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingTop="15dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
