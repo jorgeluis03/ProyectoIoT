@@ -153,7 +153,15 @@ public class RegistroActivity extends AppCompatActivity {
 
     void crearUsuarioFirestore() {
         FirebaseUser user = mAuth.getCurrentUser();
-        Alumno nuevoAlumno = new Alumno(user.getUid(), name, lastName, "Alumno", code, email, "", type, "inactivo");
+        Alumno nuevoAlumno = new Alumno(user.getUid(),
+                name,
+                lastName,
+                "Alumno",
+                code,
+                email,
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
+                type,
+                "inactivo");
         db.collection("alumnos")
                 .document(user.getUid())
                 .set(nuevoAlumno)
