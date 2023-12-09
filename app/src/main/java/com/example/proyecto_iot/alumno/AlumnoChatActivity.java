@@ -16,13 +16,23 @@ import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader3Fragment;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaMensajesAdapter;
 import com.example.proyecto_iot.alumno.Utils.FirebaseUtilAl;
 import com.example.proyecto_iot.databinding.ActivityAlumnoChatBinding;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.Query;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class AlumnoChatActivity extends AppCompatActivity {
     private ActivityAlumnoChatBinding binding;
+    private Alumno alumnoLogueado;
     private Evento evento;
     private String chatID;
     private Chat chat;
@@ -107,14 +117,52 @@ public class AlumnoChatActivity extends AppCompatActivity {
 
     private void sendNotification(String message){
 
-        FirebaseUtilDg.getUsuarioActualDetalles().get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                Alumno alumno = task.getResult().toObject(Alumno.class);
+        for (String userToken: chat.getUserIDs()){
+            if (!alumnoLogueado.getFcmToken().equals(userToken)) {
+                sendNotificationToUser(userToken, message);
             }
-        });
+        }
+
+    }
+
+    private void sendNotificationToUser(String userToken, String message){
+        try {
+            JSONObject jsonObject = new JSONObject();
+
+            JSONObject notificationObject = new JSONObject();
+            notificationObject.put("title", evento.getTitulo().substring(0, 25));
+            notificationObject.put("body", alumnoLogueado.getNombre()+": "+message);
+
+            jsonObject.put("notification", notificationObject);
+            jsonObject.put("to", userToken);
+
+            FirebaseFCMUtils.callApi(jsonObject);
+        }
+        catch (Exception e){
+            Log.d("msg-test", "error notificaciones: "+e.getMessage());
+        }
+    }
+
+    private Alumno obtenerAlumnoDeMemoria(){
+        try (FileInputStream fileInputStream = openFileInput("userData");
+             FileReader fileReader = new FileReader(fileInputStream.getFD());
+             BufferedReader bufferedReader = new BufferedReader(fileReader)){
+
+            String jsonData = bufferedReader.readLine();
+            Gson gson = new Gson();
+            Alumno alumno = gson.fromJson(jsonData, Alumno.class);
+
+            return alumno;
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void cargarInterfaz(){
+        alumnoLogueado = obtenerAlumnoDeMemoria();
+
         // seteando nombre de header
         Bundle bundle = new Bundle();
         bundle.putString("header", evento.getTitulo());
