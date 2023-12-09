@@ -42,6 +42,13 @@
             android:layout_centerVertical="true">
 
             <ImageButton
+                android:id="@+id/btnVerDonacion"
+                android:layout_width="40dp"
+                android:layout_height="40sp"
+                android:src="@drawable/ojo"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="centerCrop" />
+            <ImageButton
                 android:id="@+id/btnAceptarDonacion"
                 android:layout_width="40dp"
                 android:layout_height="40sp"
