@@ -13,8 +13,16 @@ import com.cometchat.chat.core.CometChat;
 import com.cometchat.chat.exceptions.CometChatException;
 import com.cometchat.chat.models.Group;
 import com.cometchat.chatuikit.messagecomposer.MessageComposerStyle;
+import com.cometchat.chatuikit.messageinformation.MessageInformationConfiguration;
+import com.cometchat.chatuikit.messageinformation.MessageInformationStyle;
 import com.cometchat.chatuikit.messagelist.CometChatMessageList;
+import com.cometchat.chatuikit.messagelist.MessageListConfiguration;
 import com.cometchat.chatuikit.messagelist.MessageListStyle;
+import com.cometchat.chatuikit.shared.views.CometChatAvatar.AvatarStyle;
+import com.cometchat.chatuikit.shared.views.CometChatListItem.ListItemStyle;
+import com.cometchat.chatuikit.shared.views.CometChatMessageBubble.MessageBubbleStyle;
+import com.cometchat.chatuikit.shared.views.CometChatTextBubble.CometChatTextBubble;
+import com.cometchat.chatuikit.shared.views.cometchatActionSheet.ActionSheetStyle;
 import com.example.proyecto_iot.AppConstants;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Evento;
@@ -38,11 +46,12 @@ public class AlumnoChatActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .replace(R.id.fragmentHeader, AlumnoHeader3Fragment.class, bundle)
                 .commit();
+
         cargarInterfaz();
-        cargarEstilosCometChat();
+        cargarEstilosChat();
     }
 
-    private void cargarEstilosCometChat() {
+    private void cargarEstilosChat() {
         String region = AppConstants.REGION;
         String appID = AppConstants.APP_ID;
         Group group = new Group(evento.getChatID(), null, CometChatConstants.GROUP_TYPE_PUBLIC, null);
@@ -58,20 +67,27 @@ public class AlumnoChatActivity extends AppCompatActivity {
             public void onSuccess(String s) {
                 Log.d("msg-test", "Initialization completed successfully");
 
-                binding.groupMessages.setLoadingIconTintColor(Color.GRAY);
+                // lista de mensajes
+                CometChatMessageList messageList = binding.groupMessages;
 
-                MessageListStyle listStyle = new MessageListStyle();
-                listStyle.setBorderWidth(0);
-                listStyle.setBackground(Color.parseColor("#a4aaba"));
-                listStyle.setTimeStampTextColor(Color.parseColor("#b9b9b9"));
-                listStyle.setLoadingIconTint(Color.parseColor("#ffffff"));
-                binding.groupMessages.setGroup(group);
-                binding.groupMessages.setStyle(listStyle);
+                // estilo de lista de mensajes
+                MessageListStyle listStyle = new MessageListStyle()
+                        .setBorderWidth(0)
+                        .setBackground(Color.parseColor("#222A3F"))
+                        .setNameTextColor(Color.parseColor("#B9B9B9"))
+                        .setTimeStampTextColor(Color.parseColor("#B9B9B9"))
+                        .setLoadingIconTint(Color.parseColor("#ffffff"));
 
-                MessageComposerStyle composerStyle = new MessageComposerStyle();
-                composerStyle.setBorderWidth(0);
-                composerStyle.setInputBackgroundColor(Color.parseColor("#ffffff"));
-                composerStyle.setTextColor(Color.parseColor("#292929"));
+                messageList.setGroup(group); // grupo
+                messageList.setStyle(listStyle); // estilo de lista de msj
+                messageList.setLoadingIconTintColor(Color.GRAY); // icono de carga
+                messageList.emptyStateText("Aún no hay mensajes en el chat 🧐");
+
+                // input de mensaje
+                MessageComposerStyle composerStyle = new MessageComposerStyle()
+                        .setBorderWidth(0)
+                        .setInputBackgroundColor(Color.parseColor("#FFFFFF"));
+
                 binding.groupComposer.setGroup(group);
                 binding.groupComposer.setStyle(composerStyle);
             }
@@ -85,7 +101,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
 
     private void cargarInterfaz(){
         if (evento.getEstado().equals("inactivo")){
-            binding.groupComposer.setVisibility(View.GONE);
+            //binding.groupComposer.setVisibility(View.GONE);
         }
     }
 }
