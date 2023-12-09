@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
@@ -190,35 +191,41 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .collection("eventos")
                 .document("evento" + evento.getFechaHoraCreacion().toString())
                 .addSnapshotListener(((value, error) -> {
-                    if (error != null) {
-                        Log.d("msg-test", "Listen failed in evento activity");
-                        return;
-                    }
-                    if (savedInstanceState == null) { // activity recien creada
-                        if (!isFromDelegado){
-                            binding.fragmentApoyos.setVisibility(View.GONE);
-                            if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
-                                getSupportFragmentManager().beginTransaction()
-                                        .setReorderingAllowed(true)
-                                        .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
-                                        .commit();
-                                binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                            } else { // evento no apoyado
-                                getSupportFragmentManager().beginTransaction()
-                                        .setReorderingAllowed(true)
-                                        .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
-                                        .commit();
-                            }
-                        }else {
-                            binding.fragmentEventoButtons.setVisibility(View.GONE);
-                            binding.fragmentApoyos.setVisibility(View.VISIBLE);
-                            if (!evento.getEstado().equals("activo")){
-                                binding.buttonSubirFotos.setVisibility(View.GONE);
+                    try {
+                        if (error != null) {
+                            Log.d("msg-test", "Listen failed in evento activity");
+                            return;
+                        }
+                        if (savedInstanceState == null) { // activity recien creada
+                            if (!isFromDelegado){
+                                binding.fragmentApoyos.setVisibility(View.GONE);
+                                if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
+                                    getSupportFragmentManager().beginTransaction()
+                                            .setReorderingAllowed(true)
+                                            .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
+                                            .commit();
+                                    binding.buttonSubirFotos.setVisibility(View.VISIBLE);
+                                } else { // evento no apoyado
+                                    getSupportFragmentManager().beginTransaction()
+                                            .setReorderingAllowed(true)
+                                            .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
+                                            .commit();
+                                    binding.buttonSubirFotos.setVisibility(View.GONE);
+                                }
                             }else {
-                                binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                                binding.buttonEditFloating.setVisibility(View.VISIBLE);
+                                binding.fragmentEventoButtons.setVisibility(View.GONE);
+                                binding.fragmentApoyos.setVisibility(View.VISIBLE);
+                                if (!evento.getEstado().equals("activo")){
+                                    binding.buttonSubirFotos.setVisibility(View.GONE);
+                                }else {
+                                    binding.buttonSubirFotos.setVisibility(View.VISIBLE);
+                                    binding.buttonEditFloating.setVisibility(View.VISIBLE);
+                                }
                             }
                         }
+                    }catch (IllegalStateException e){
+                        Log.d("msg-test", "Caso illegalState");
+                        finish();
                     }
                 }));
     }
@@ -290,6 +297,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             // subir foto a firestore y storage
             EditText inputDescripcion = bottomSheetView.findViewById(R.id.inputDescripcion);
             subirFoto(inputDescripcion.getText().toString());
+            bottomSheetDialog.dismiss();
         });
 
         bottomSheetDialog.setContentView(bottomSheetView);

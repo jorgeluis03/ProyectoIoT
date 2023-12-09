@@ -207,7 +207,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
     public void eliminarEvento(Evento evento, View itemView) {
         db = FirebaseFirestore.getInstance();
         //eliminando evento de 'apoyos' del alumno
-        db.collection("alumnos").whereArrayContains("eventos","evento"+evento.getFechaHoraCreacion().toString())
+        db.collection("alumnos")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document: queryDocumentSnapshots){
@@ -229,7 +229,8 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 .addOnFailureListener(e -> {Log.d("msg-test", "no se pudo eliminar de actividades");});
         //eliminando fotos de eventos
         db.collection("eventos").document("evento"+evento.getFechaHoraCreacion()).collection("fotos")
-            .get().addOnCompleteListener(task -> {
+            .get()
+                .addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         document.getReference().delete();
@@ -239,11 +240,13 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 }
         });
         db.collection("eventos").document("evento"+evento.getFechaHoraCreacion()).collection("fotos")
-                .document("dummy") // Cualquier documento ficticio
-                .delete()
-                .addOnSuccessListener(aVoid -> {
-                    // La subcolección "fotos" ha sido eliminada
-                    Log.d("msg-test", "Subcolección 'fotos' eliminada con éxito.");
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        for (QueryDocumentSnapshot document : task.getResult()){
+                            document.getReference().delete();
+                        }
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Log.d("msg-test", "Error al eliminar la subcolección 'fotos': "+ e);
