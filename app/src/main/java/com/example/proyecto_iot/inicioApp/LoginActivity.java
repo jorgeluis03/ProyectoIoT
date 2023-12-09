@@ -229,10 +229,12 @@ public class LoginActivity extends AppCompatActivity {
                     if (valido){
                         // caso delegadoActividad
                         intent = new Intent(LoginActivity.this, DaInicioActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         break;
                     }
                     // caso no actividades
                     intent = new Intent(LoginActivity.this, AlumnoInicioActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     break;
                 }
             case "Delegado General":
@@ -240,6 +242,5 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
         startActivity(intent);
-        finish();
     }
 }

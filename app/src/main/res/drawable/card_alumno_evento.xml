@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true">
-        <shape>
-            <solid android:color="#C1C1C1"/>
-            <corners android:radius="10dp"/>
-        </shape>
-    </item>
     <item>
         <shape>
-            <solid android:color="#FFFFFF"/>
+            <size android:width="320dp"/>
+            <solid android:color="#222A3F"/>
+            <padding android:top="12dp" android:bottom="12dp"/>
             <corners android:radius="10dp"/>
         </shape>
     </item>

@@ -78,7 +78,12 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Alumno alumno = task.getResult().toObject(Alumno.class);
-                        textDelegado.setText(alumno.getNombre() + " " + alumno.getApellidos());
+                        String nombreDelegado = alumno.getNombre() + " " + alumno.getApellidos();
+                        if (nombreDelegado.length() > 25){
+                            nombreDelegado = nombreDelegado.substring(0,25).trim()+" ...";
+                        }
+
+                        textDelegado.setText(nombreDelegado);
 
                         //conf de dialog
                         TextView textNombreDelegadoDialog = dialog.findViewById(R.id.textNombreDelegadoActividad);
@@ -86,7 +91,7 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
                         TextView textCorreoDelegadoDialog = dialog.findViewById(R.id.textCorreoDelegadoActividad);
                         ImageView imageDelegadoDialog = dialog.findViewById(R.id.imageDelegadoActividad);
 
-                        textNombreDelegadoDialog.setText(alumno.getNombre()+" "+alumno.getApellidos());
+                        textNombreDelegadoDialog.setText(nombreDelegado);
                         textCodigoDelegadoDialog.setText(alumno.getCodigo());
                         textCorreoDelegadoDialog.setText(alumno.getCorreo());
 

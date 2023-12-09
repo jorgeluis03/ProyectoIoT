@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="-16dp"
-                android:background="@drawable/button_alumno_perfil"
+                android:background="@drawable/card_alumno_evento"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="20dp"
@@ -92,6 +92,7 @@
                     android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="visible"
                     tools:layout="@layout/fragment_alumno_apoyar_button" />
 
 
@@ -108,9 +109,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/text_icon_delegado_evento"
+                    android:drawablePadding="4dp"
                     android:textColor="#B9B9B9"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/textEventoTitulo"
@@ -120,7 +124,7 @@
                     android:layout_marginBottom="10dp"
                     android:text="TextView"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -210,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/button_alumno_perfil"
+                android:background="@drawable/card_alumno_evento"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="20dp"
@@ -271,7 +275,8 @@
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="-4dp"
                     android:layout_marginEnd="0dp"
-                    android:text="El evento no cuenta con fotos."
+                    android:layout_marginBottom="16dp"
+                    android:text="El evento aún no cuenta con fotos"
                     android:textAlignment="center"
                     android:visibility="gone" />
 
