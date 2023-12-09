@@ -19,6 +19,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Puede subir hasta 5 fotos antes de finalizar."
+        android:textColor="@color/letra_gris"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.312"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSubirImagenEvento" />
+
     <Button
         android:id="@+id/buttonSubirImagenEvento"
         android:layout_width="match_parent"
@@ -37,7 +51,7 @@
         android:id="@+id/buttonDialogFinish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_da_finish_event"
         android:enabled="true"
         android:text="Finalizar evento"
@@ -45,7 +59,7 @@
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSubirImagenEvento" />
+        app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -59,6 +73,18 @@
         app:layout_constraintStart_toStartOf="@+id/buttonSubirImagenEvento"
         app:layout_constraintTop_toTopOf="@+id/buttonSubirImagenEvento"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ProgressBar
+        android:id="@+id/progressBar4"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginVertical="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDialogFinish"
+        app:layout_constraintEnd_toEndOf="@+id/buttonDialogFinish"
+        app:layout_constraintStart_toStartOf="@+id/buttonDialogFinish"
+        app:layout_constraintTop_toTopOf="@+id/buttonDialogFinish" />
 
     <TextView
         android:id="@+id/textView13"

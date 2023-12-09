@@ -58,7 +58,7 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
     private void mostrarConfirmacionDialog(){
         MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(getContext());
         alertDialog.setTitle("Confirmación");
-        alertDialog.setMessage("¿Está seguro que desea dejar de apoyar el evento?");
+        alertDialog.setMessage("¿Estas seguro que deseas dejar de apoyar al evento?");
         alertDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -126,8 +126,6 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
                     @Override
                     public void onSuccess(String s) {
                         Log.d("msg-test", s);
-
-                        // TODO: RECARGAR ACTIVITY PARA ACTUALIZAR BOTONES
                     }
 
                     @Override

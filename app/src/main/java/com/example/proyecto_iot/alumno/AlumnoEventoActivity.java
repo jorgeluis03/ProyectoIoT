@@ -38,8 +38,11 @@ import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaFotosEventoAdapter;
 import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
+import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,9 +83,10 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding = ActivityAlumnoEventoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.progressBar5.setVisibility(View.VISIBLE);
         evento = (Evento) getIntent().getSerializableExtra("evento");
         user = getIntent().getStringExtra("userUid");
-        Log.d("msg-test","obteniendo: "+evento.getDelegado()+" a "+user);
+        Log.d("msg-test", "obteniendo: " + evento.getDelegado() + " a " + user);
 
         cargarInfoEvento();
         cargarFotos();
@@ -92,6 +96,12 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
             galleryIntent.setType("image/*");
             openImageLauncher.launch(galleryIntent);
+        });
+
+        binding.buttonEditFloating.setOnClickListener(view -> {
+            Intent intent = new Intent(AlumnoEventoActivity.this, DaEditEventoActivity.class);
+            intent.putExtra("evento", evento);
+            startActivity(intent);
         });
 
         binding.buttonEventoBack.setOnClickListener(view -> {
@@ -129,7 +139,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             }));
             alertDialog.show();
         });
-
         binding.buttonEventoLugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,29 +193,24 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                         Log.d("msg-test", "Listen failed in evento activity");
                         return;
                     }
-                    if (savedInstanceState == null) { // activity recien creada
-                        if (!isFromDelegado){
-                            binding.fragmentApoyos.setVisibility(View.GONE);
-                            if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
-                                getSupportFragmentManager().beginTransaction()
-                                        .setReorderingAllowed(true)
-                                        .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
-                                        .commit();
-                                binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                            } else { // evento no apoyado
-                                getSupportFragmentManager().beginTransaction()
-                                        .setReorderingAllowed(true)
-                                        .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
-                                        .commit();
-                            }
-                        }else {
-                            binding.fragmentEventoButtons.setVisibility(View.GONE);
-                            binding.fragmentApoyos.setVisibility(View.VISIBLE);
-                            if (!evento.getEstado().equals("activo")){
-                                binding.buttonSubirFotos.setVisibility(View.GONE);
-                            }else {
-                                binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                            }
+                    if (!isFromDelegado) {
+                        binding.fragmentApoyos.setVisibility(View.GONE);
+                        if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
+                            getSupportFragmentManager().beginTransaction()
+                                    .setReorderingAllowed(true)
+                                    .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
+                                    .commit();
+                        } else { // evento no apoyado
+                            getSupportFragmentManager().beginTransaction()
+                                    .setReorderingAllowed(true)
+                                    .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
+                                    .commit();
+                        }
+                    } else {
+                        binding.fragmentEventoButtons.setVisibility(View.GONE);
+                        binding.fragmentApoyos.setVisibility(View.VISIBLE);
+                        if (evento.getEstado().equals("activo")) {
+                            binding.buttonEditFloating.setVisibility(View.VISIBLE);
                         }
                     }
                 }));
@@ -223,6 +227,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     );
 
     private void cargarFotos() {
+        List<Task<?>> tasks = new ArrayList<>();
         db.collection("eventos")
                 .document("evento" + evento.getFechaHoraCreacion().toString())
                 .collection("fotos")
@@ -232,10 +237,20 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Foto foto = document.toObject(Foto.class);
-                            fotoList.add(foto);
+
+                            tasks.add(agregarFotoALista(foto));
                             Log.d("msg-test", "foto: " + foto.getDescripcion());
                         }
-                        adapter.notifyDataSetChanged();
+                        Tasks.whenAllComplete(tasks)
+                                .addOnCompleteListener(allTasks -> {
+                                    binding.progressBar5.setVisibility(View.GONE);
+                                    if (fotoList.isEmpty()) {
+                                        binding.textView26.setVisibility(View.VISIBLE);
+                                        binding.imageView12.setVisibility(View.VISIBLE);
+                                    }else {
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
                     } else {
                         Log.d("msg-test", "error al cargar fotos");
                     }
@@ -246,6 +261,13 @@ public class AlumnoEventoActivity extends AppCompatActivity {
 
         binding.rvFotos.setAdapter(adapter);
         binding.rvFotos.setLayoutManager(new LinearLayoutManager(AlumnoEventoActivity.this));
+    }
+
+    private Task<Void> agregarFotoALista(Foto foto) {
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
+        fotoList.add(foto);
+        taskCompletionSource.setResult(null);
+        return taskCompletionSource.getTask();
     }
 
     private void abrirDialogSubirFoto() {
@@ -261,7 +283,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             // subir foto a firestore y storage
             EditText inputDescripcion = bottomSheetView.findViewById(R.id.inputDescripcion);
             subirFoto(inputDescripcion.getText().toString());
-
         });
 
         bottomSheetDialog.setContentView(bottomSheetView);
@@ -318,7 +339,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Alumno alumno = task.getResult().toObject(Alumno.class);
-                        binding.textDelegadoActividad.setText(alumno.getNombre()+" "+alumno.getApellidos());
+                        binding.textDelegadoActividad.setText(alumno.getNombre() + " " + alumno.getApellidos());
                         cargarDelegadoDialog(alumno);
                     } else {
                         Log.d("msg-test", "error buscando delegado de evento: " + task.getException().getMessage());
@@ -331,6 +352,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         binding.buttonEventoFecha.setText(evento.getFecha());
         binding.buttonEventoHora.setText(evento.getHora());
         binding.buttonEventoLugar.setText(evento.getLugar());
+        binding.textEstado2.setVisibility(evento.getEstado().equals("inactivo") ? View.VISIBLE : View.GONE);
 
 
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
@@ -338,6 +360,10 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .load(evento.getFotoUrl())
                 .apply(requestOptions)
                 .into(binding.imageEvento);
+
+        if (evento.getEstado().equals("inactivo")) {
+            binding.buttonSubirFotos.setVisibility(View.GONE);
+        }
     }
 
     private void crearEventoEnCalendario() {
@@ -369,11 +395,11 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         }
     }
 
-    private void cargarDelegadoDialog(Alumno delegado){
+    private void cargarDelegadoDialog(Alumno delegado) {
         float density = getResources().getDisplayMetrics().density;
         Dialog dialog = new Dialog(AlumnoEventoActivity.this);
         dialog.setContentView(R.layout.dialog_delegado_actividad);
-        dialog.getWindow().setLayout((int) (320*density), ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout((int) (320 * density), ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(AlumnoEventoActivity.this.getDrawable(R.drawable.shape_user_dialog));
 
         TextView textNombreDelegadoDialog = dialog.findViewById(R.id.textNombreDelegadoActividad);
@@ -381,7 +407,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         TextView textCorreoDelegadoDialog = dialog.findViewById(R.id.textCorreoDelegadoActividad);
         ImageView imageDelegadoDialog = dialog.findViewById(R.id.imageDelegadoActividad);
 
-        textNombreDelegadoDialog.setText(delegado.getNombre()+" "+delegado.getApellidos());
+        textNombreDelegadoDialog.setText(delegado.getNombre() + " " + delegado.getApellidos());
         textCodigoDelegadoDialog.setText(delegado.getCodigo());
         textCorreoDelegadoDialog.setText(delegado.getCorreo());
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache

@@ -63,15 +63,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/button_da_finish_event"
                 android:text="Finalizar evento"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputPlaceEvent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/buttonSaveChangeEvent"
@@ -79,17 +79,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_alumno_perfil_guardar"
                 android:enabled="false"
-                android:background="@drawable/button_alumno_evento_subir_foto"
                 android:text="Guardar cambios"
-                android:textColor="@color/letra_gris"
+                android:textColor="@color/letra_clara"
                 android:textSize="16sp"
                 app:backgroundTint="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/buttonFinishEvent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonFinishEvent" />
+                app:layout_constraintTop_toBottomOf="@+id/inputPlaceEvent" />
 
             <ImageView
                 android:id="@+id/imageView10"
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:maxLength="40"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -274,13 +274,25 @@
                     android:id="@+id/textPlaceEvent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:editable="false"
                     android:maxLength="20"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:clickable="true"
-                    android:editable="false"/>
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar11"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginVertical="10dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonSaveChangeEvent"
+                app:layout_constraintEnd_toEndOf="@+id/buttonSaveChangeEvent"
+                app:layout_constraintStart_toStartOf="@+id/buttonSaveChangeEvent"
+                app:layout_constraintTop_toTopOf="@+id/buttonSaveChangeEvent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

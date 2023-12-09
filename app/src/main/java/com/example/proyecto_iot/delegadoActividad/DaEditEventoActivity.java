@@ -6,23 +6,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.sax.ElementListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -40,8 +47,13 @@ import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Delegado_select_map_activity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.example.proyecto_iot.databinding.ActivityDaEditEventoBinding;
+import com.example.proyecto_iot.delegadoActividad.Adapters.CarouselAdapter;
+import com.example.proyecto_iot.delegadoActividad.Adapters.ListaEventosActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
+import com.example.proyecto_iot.inicioApp.ConfirmNewPasswActivity;
+import com.example.proyecto_iot.inicioApp.IngresarActivity;
 import com.example.proyecto_iot.inicioApp.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -86,6 +98,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
     boolean isExistEvent;
     boolean changedImage = false;
     private Uri imageUri = null;
+    private Uri imagesUri = null;
     Map<String, Object> datoRecibido = new HashMap<>();
     private Evento evento;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -98,13 +111,17 @@ public class DaEditEventoActivity extends AppCompatActivity {
         Actividades currentActividad;
     private static final int ACTIVIDAD_MAPS_REQUEST_CODE = 2;
     private String userUid = FirebaseAuth.getInstance().getUid();
+    private CarouselAdapter adapter = new CarouselAdapter();
+    ArrayList<CarouselModel> listaFotos = new ArrayList<>();
+    CarouselModel carrusel = new CarouselModel();
+    MaterialTimePicker timePicker;
+    MaterialDatePicker<Long> datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDaEditEventoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         binding.buttonEventoABack.setOnClickListener(view -> mostrarConfirmacionExit());
 
         Intent intent = getIntent();
@@ -147,6 +164,10 @@ public class DaEditEventoActivity extends AppCompatActivity {
             binding.textPlaceEvent.setText(evento.getLugar());
         }
 
+        if (isExistEvent) {
+            binding.inputTituloEvent.setEnabled(false);
+            binding.textTitleEvent.setTextColor(Color.GRAY);
+        }
         long today = MaterialDatePicker.todayInUtcMilliseconds();
         CalendarConstraints.Builder constraintsBuilder =
                 new CalendarConstraints.Builder()
@@ -154,18 +175,36 @@ public class DaEditEventoActivity extends AppCompatActivity {
                         .setStart(today)
                         .setValidator(DateValidatorPointForward.now());
 
-        MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H)
-                .setTitleText("Selecciona la hora del evento")
-                .build();
+        if (isExistEvent){
+            timePicker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setTitleText("Selecciona la hora del evento")
+                    .setHour(evento.getHoraInt())
+                    .setMinute(evento.getMinInt())
+                    .build();
+        }
+        else {
+            timePicker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setTitleText("Selecciona la hora del evento")
+                    .build();
+        }
 
-        //TODO DA: solucionar error del inputText from DatePicker
-        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Selecciona una fecha")
-                .setTextInputFormat(formato)
-                .setCalendarConstraints(constraintsBuilder.build())
-                .build();
-
+        //TODO DA*: solucionar error del inputText from DatePicker
+        if (isExistEvent){
+            datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Selecciona una fecha")
+                    .setTextInputFormat(formato)
+                    .setSelection(evento.getFechaLong())
+                    .setCalendarConstraints(constraintsBuilder.build())
+                    .build();
+        }else {
+            datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Selecciona una fecha")
+                    .setTextInputFormat(formato)
+                    .setCalendarConstraints(constraintsBuilder.build())
+                    .build();
+        }
         binding.textDateEvent.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 mostrarDatePicker(datePicker);
@@ -267,6 +306,8 @@ public class DaEditEventoActivity extends AppCompatActivity {
         binding.buttonSaveChangeEvent.setOnClickListener(view -> {
             if (binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(false);
+                binding.buttonSaveChangeEvent.setText("");
+                binding.progressBar11.setVisibility(View.VISIBLE);
                 if (isExistEvent){
                     Map<String, Object> eventoUpdate = new HashMap<>();
                     if (datoRecibido.get("nombre")!=null){
@@ -367,8 +408,13 @@ public class DaEditEventoActivity extends AppCompatActivity {
             bottomSheetDialog = new BottomSheetDialog(DaEditEventoActivity.this);
             View bottomSheetView = LayoutInflater.from(DaEditEventoActivity.this).inflate(R.layout.dialog_da_finalizar_evento, (ConstraintLayout) findViewById(R.id.bottomSheetFinishEvent));
             Button finishBtn = bottomSheetView.findViewById(R.id.buttonDialogFinish);
+            ProgressBar progressBar = bottomSheetView.findViewById(R.id.progressBar4);
             Button upload = bottomSheetView.findViewById(R.id.buttonSubirImagenEvento);
+            ImageButton uploadImage = bottomSheetView.findViewById(R.id.imageButton);
             finishBtn.setOnClickListener(view1 -> {
+                finishBtn.setText("");
+                finishBtn.setEnabled(false);
+                progressBar.setVisibility(View.VISIBLE);
                 db.collection("actividades").document(evento.getActividadId()).collection("eventos")
                         .document("evento"+evento.getFechaHoraCreacion())
                         .update("estado","inactivo")
@@ -388,6 +434,16 @@ public class DaEditEventoActivity extends AppCompatActivity {
                 finish();
             });
             upload.setOnClickListener(view1 -> {
+                bottomSheetDialog.dismiss();
+                Intent finishIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                finishIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                finishIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                finishIntent.setType("image/*");
+                finishIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                openManyImageLauncher.launch(finishIntent);
+            });
+            uploadImage.setOnClickListener(view1 -> {
+                bottomSheetDialog.dismiss();
                 Intent finishIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 finishIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 finishIntent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -412,22 +468,33 @@ public class DaEditEventoActivity extends AppCompatActivity {
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
-                    if (result.getData() != null && result.getData().getData() != null) {
+                    Log.d("msg-test","ok result");
+                    Log.d("msg-test","result.getData: "+ (result.getData() != null) + (result.getData().getClipData() != null));
+                    if (result.getData() != null) {
                         ClipData clipData = result.getData().getClipData();
+                        Log.d("msg-test","hay info");
+                        listaFotos = new ArrayList<>();
 
                         if (clipData != null) {
-                            // Se seleccionaron varias imágenes
-                            for (int i = 0; i < Math.min(clipData.getItemCount(), 5); i++) {
+                            Log.d("msg-test","es clipdata");
+                            for (int i = 0; i < Math.min(clipData.getItemCount(),5); i++) {
+                                carrusel = new CarouselModel();
                                 imageUri = clipData.getItemAt(i).getUri();
-                                // Aquí puedes hacer algo con cada URI, por ejemplo, abrir un diálogo para cada imagen.
-                                abrirDialogSubirFoto();
+                                carrusel.setImageUri(imageUri);
+                                listaFotos.add(carrusel);
+                                Log.d("msg-test", "caso 1:"+listaFotos.size());
+                                Log.d("msg-test", "caso 1:"+(carrusel.getImageUri()!=null));
                             }
                         } else {
                             // Solo se seleccionó una imagen
+                            Log.d("msg-test", "Una foto");
+                            carrusel = new CarouselModel();
                             imageUri = result.getData().getData();
-                            abrirDialogSubirFoto();
+                            carrusel.setImageUri(imageUri);
+                            listaFotos.add(carrusel);
                         }
                     }
+                    abrirDialogFinishFinish();
                 }
             }
     );
@@ -495,12 +562,12 @@ public class DaEditEventoActivity extends AppCompatActivity {
         if (changed){
             if (!binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(true);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
+                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.white));
             }
         }else {
             if (binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(false);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_gris));
+                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
             }
         }
     }
@@ -549,12 +616,12 @@ public class DaEditEventoActivity extends AppCompatActivity {
         if (complete){
             if (!binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(true);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
+                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.white));
             }
         }else {
             if (binding.buttonSaveChangeEvent.isEnabled()){
                 binding.buttonSaveChangeEvent.setEnabled(false);
-                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_gris));
+                binding.buttonSaveChangeEvent.setTextColor(ContextCompat.getColor(DaEditEventoActivity.this,R.color.letra_clara));
             }
         }
     }
@@ -660,6 +727,94 @@ public class DaEditEventoActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
     }
+    private void abrirDialogFinishFinish() {
+        bottomSheetDialog = new BottomSheetDialog(DaEditEventoActivity.this);
+        View bottomSheetView = LayoutInflater.from(DaEditEventoActivity.this).inflate(R.layout.dialog_da_finalizar_evento_upload_photos, findViewById(R.id.bottomSheetFinishF));
+        Button updatePhotos = bottomSheetView.findViewById(R.id.changePhotosF);
+        Button finishAndUpload = bottomSheetView.findViewById(R.id.buttonDialogFinishF);
+        ProgressBar progressBar = bottomSheetView.findViewById(R.id.progressBar3);
+        updatePhotos.setOnClickListener(view -> {
+            bottomSheetDialog.dismiss();
+            Intent finishIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            finishIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            finishIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            finishIntent.setType("image/*");
+            finishIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            openManyImageLauncher.launch(finishIntent);
+        });
+        finishAndUpload.setOnClickListener(view -> {
+            finishAndUpload.setText("");
+            finishAndUpload.setEnabled(false);
+            progressBar.setVisibility(View.VISIBLE);
+            for (int i = 0; i<Math.min(listaFotos.size(), 5);i++){
+                subirPicStorage(listaFotos.get(i).getImageUri(), evento.getFechaHoraCreacion().toString());
+            }
+            db.collection("actividades").document(evento.getActividadId()).collection("eventos")
+                    .document("evento"+evento.getFechaHoraCreacion())
+                    .update("estado","inactivo")
+                    .addOnSuccessListener(unused -> {
+                        db.collection("eventos").document("evento"+evento.getFechaHoraCreacion().toString())
+                                .update("estado", "inactivo")
+                                .addOnSuccessListener(unused1 -> {
+                                    Snackbar.make(binding.getRoot(),"Se finalizó el evento exitosamente", Snackbar.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Snackbar.make(binding.getRoot(),"Ocurrió un error.", Snackbar.LENGTH_SHORT).show();
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+                        Snackbar.make(binding.getRoot(),"Ocurrió un error.", Snackbar.LENGTH_SHORT).show();
+                    });
+            finish();
+        });
+        adapter.setContext(DaEditEventoActivity.this);
+        Log.d("msg-test","Adapter set: "+listaFotos.size());
+        adapter.setList(listaFotos);
+        RecyclerView rvCarousel = bottomSheetView.findViewById(R.id.carousel_recycler_view);
+        rvCarousel.setAdapter(adapter);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+    }
+
+    private void subirPicStorage(Uri imageUri, String id) {
+        Foto fotoNueva = new Foto();
+        fotoNueva.setFechaHoraSubida(com.google.firebase.Timestamp.now());
+        String userUid = FirebaseAuth.getInstance().getUid();
+        fotoNueva.setAlumnoID(userUid);
+        fotoNueva.setDescripcion("Gracias por participar en "+ evento.getTitulo());
+        storage = FirebaseStorage.getInstance();
+        StorageReference reference = storage.getReference().child("evento" + id + "/" + imageUri.getLastPathSegment() + ".jpg");
+        reference.putFile(imageUri).continueWithTask(task -> {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return reference.getDownloadUrl();
+                })
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("msg-test", "foto de evento agregada en storage");
+                        fotoNueva.setFotoUrl(task.getResult().toString());
+                        subirPicFirestore(fotoNueva, id);
+                    } else {
+                        Log.d("msg-test", "error");
+                    }
+                });
+    }
+    private void subirPicFirestore(Foto fotoNueva, String id) {
+        db.collection("eventos")
+                .document("evento" + id)
+                .collection("fotos")
+                .add(fotoNueva)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "foto guardada en firestore exitosamente");
+                    finish();
+                    startActivity(getIntent());
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
+    }
+
     private void subirFoto(Uri imageUri, String id) {
         storage = FirebaseStorage.getInstance();
         StorageReference reference = storage.getReference().child("eventos/evento" + id + ".jpg");
@@ -697,7 +852,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
                                 Snackbar.make(DaEditEventoActivity.this.getCurrentFocus(), "Se ha creado el evento exitosamente", Snackbar.LENGTH_SHORT).show();
                             })
                             .addOnFailureListener(e -> {
-                                //TODO DA: borrar evento creado
+                                //TODO DA*: borrar evento creado
                                 Log.d("msg-test", "No se pudo actualizar en actividades");
                             });
                     finish();
@@ -781,5 +936,10 @@ public class DaEditEventoActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(), "Ocurrió un error al cargar el lugar elegido, intente más tarde.", Snackbar.LENGTH_SHORT).show();
             }
         }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        mostrarConfirmacionExit();
+        return super.onKeyDown(0, event);
     }
 }

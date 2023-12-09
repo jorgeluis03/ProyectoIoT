@@ -19,6 +19,8 @@ import com.example.proyecto_iot.alumno.RecyclerViews.ListaEventosAdapter;
 import com.example.proyecto_iot.databinding.FragmentAlumnoEventosApoyandoBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,6 +29,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.Document;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class AlumnoEventosApoyandoFragment extends Fragment {
 
@@ -43,7 +47,9 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
         binding = FragmentAlumnoEventosApoyandoBinding.inflate(inflater, container, false);
 
         // obteniendo ids de eventos apoyados
+        binding.progressBar7.setVisibility(View.VISIBLE);
 
+        List<Task<?>> tasks = new ArrayList<>();
         db.collection("alumnos")
                 .document(userUid)
                 .collection("eventos")
@@ -53,10 +59,22 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                         return;
                     }
                     if (value != null){
-                        //eventoApoyandoList = new ArrayList<>();
+                        eventoApoyandoList.clear();
                         for (QueryDocumentSnapshot doc: value){
-                            buscarEventos(doc.getId());
+                            tasks.add(buscarEventos(doc.getId()));
                         }
+                        Tasks.whenAllComplete(tasks)
+                            .addOnCompleteListener(allTasks -> {
+                                binding.progressBar7.setVisibility(View.GONE);
+                                if (eventoApoyandoList.isEmpty()){
+                                    binding.textView32.setVisibility(View.VISIBLE);
+                                    binding.imageView9.setVisibility(View.VISIBLE);
+                                }else {
+                                    adapter.notifyDataSetChanged();
+                                    binding.textView32.setVisibility(View.GONE);
+                                    binding.imageView9.setVisibility(View.GONE);
+                                }
+                            });
                     }
                 });
 
@@ -69,23 +87,58 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void buscarEventos(String eventoId) {
+    private Task<Void> buscarEventos(String eventoId) {
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
 
         db.collection("eventos")
                 .document(eventoId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Evento evento = task.getResult().toObject(Evento.class);
+                .addSnapshotListener((snapshot, e) -> {
+                    if (e != null){
+                        taskCompletionSource.setException(e);
+                        return;
+                    }
+                    if (snapshot != null && snapshot.exists()){
+                        Evento evento = snapshot.toObject(Evento.class);
+                        if (!eventoListContainsId("evento"+evento.getFechaHoraCreacion())){
                             Log.d("msg-test", "evento apoyado encontrado: " + evento.getTitulo());
                             eventoApoyandoList.add(evento);
                             adapter.notifyDataSetChanged();
-                        } else {
-                            Log.d("msg-test", "AlumnoEventosApoyandoFragment error buscando evento: " + eventoId);
+                        }
+                        else {
+                            removerDeLista(evento.getFechaHoraCreacion());
+                            eventoApoyandoList.add(evento);
+                            adapter.notifyDataSetChanged();
                         }
                     }
+                    else {
+                        Log.d("msg-test", "AlumnoEventosApoyandoFragment: No se encontró el evento con ID: " + eventoId);
+                    }
+                    if (!taskCompletionSource.getTask().isComplete()) {
+                        taskCompletionSource.setResult(null);
+                    }
                 });
+        return taskCompletionSource.getTask();
+    }
+
+    private void removerDeLista(Date fechaHoraCreacion) {
+        int posicion = -1;
+        for (int i = 0; i < eventoApoyandoList.size(); i++) {
+            if (eventoApoyandoList.get(i).getFechaHoraCreacion().toString().equals(fechaHoraCreacion.toString())) {
+                posicion = i;
+                break;
+            }
+        }
+        eventoApoyandoList.remove(posicion);
+    }
+
+    private boolean eventoListContainsId(String eventId) {
+        String id;
+        for (Evento existingEvento : eventoApoyandoList) {
+            id = "evento"+existingEvento.getFechaHoraCreacion();
+            if (id.equals(eventId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

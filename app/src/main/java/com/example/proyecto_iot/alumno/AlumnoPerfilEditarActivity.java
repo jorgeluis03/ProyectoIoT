@@ -133,6 +133,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         });
 
         binding.buttonGuardarPerfil.setOnClickListener(view -> {
+            binding.buttonGuardarPerfil.setEnabled(false);
             guardarPerfil();
         });
     }

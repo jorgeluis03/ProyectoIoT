@@ -22,6 +22,8 @@ import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,6 +37,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DaEventosMisActividadesFragment extends Fragment {
     private ArrayList<Evento> eventoList = new ArrayList<>();
@@ -49,8 +52,9 @@ public class DaEventosMisActividadesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentDaEventosMisActividadesBinding.inflate(inflater, container, false);
-
+        binding.progressBar8.setVisibility(View.VISIBLE);
         actividadList = obtenerActividadesDesdeMemoria();
+        List<Task<?>> tasks = new ArrayList<>();
         for (Actividades actividad: actividadList){
             if (actividad.getEstado().equals("abierto")){
                 db.collection("actividades")
@@ -64,12 +68,23 @@ public class DaEventosMisActividadesFragment extends Fragment {
                             if (value != null) {
                                 eventoList.clear();
                                 for (QueryDocumentSnapshot doc : value) {
-                                    buscarEventos(doc.getId());
+                                    tasks.add(buscarEventos(doc.getId()));
                                 }
                             }
                         });
             }
         }
+        Tasks.whenAllComplete(tasks)
+                .addOnCompleteListener(allTasks -> {
+                    binding.progressBar8.setVisibility(View.GONE);
+                    if (eventoList.isEmpty()){
+                        binding.textView33.setVisibility(View.VISIBLE);
+                    }else {
+                        adapter.notifyDataSetChanged();
+                        binding.textView33.setVisibility(View.GONE);
+                    }
+                });
+        binding.progressBar8.setVisibility(View.GONE);
         adapter.setContext(getContext());
         adapter.setEventoList(eventoList);
 
@@ -100,12 +115,14 @@ public class DaEventosMisActividadesFragment extends Fragment {
         }
         return null;
     }
-    private void buscarEventos(String eventoId){
+    private Task<Void> buscarEventos(String eventoId){
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("eventos")
                 .document(eventoId)
                 .addSnapshotListener((snapshot, e) -> {
                     if (e != null) {
                         Log.d("msg-test", "AlumnoEventosApoyandoFragment error escuchando cambios en evento: " + eventoId, e);
+                        taskCompletionSource.setException(e);
                         return;
                     }
                     if (snapshot != null && snapshot.exists()) {
@@ -124,7 +141,11 @@ public class DaEventosMisActividadesFragment extends Fragment {
                     } else {
                         Log.d("msg-test", "AlumnoEventosApoyandoFragment: No se encontró el evento con ID: " + eventoId);
                     }
+                    if (!taskCompletionSource.getTask().isComplete()) {
+                        taskCompletionSource.setResult(null);
+                    }
                 });
+        return taskCompletionSource.getTask();
     }
 
     private void removerDeLista(Date fechaHoraCreacion) {

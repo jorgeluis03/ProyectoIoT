@@ -21,6 +21,8 @@ import com.example.proyecto_iot.delegadoActividad.Adapters.ListaActividadesCardA
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
@@ -30,6 +32,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DaGestionFragment extends Fragment {
 
@@ -43,11 +46,18 @@ public class DaGestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentDaGestionBinding.inflate(inflater, container, false);
+        binding.progressBar9.setVisibility(View.VISIBLE);
         actividadList = obtenerActividadesDesdeMemoria();
         Log.d("msg-test", "Número de actividades encontradas en memoria: "+actividadList.size());
+        List<Task<?>> tasks = new ArrayList<>();
         for (Actividades actividad: actividadList){
-            buscarActividad(actividad.getId());
+            tasks.add(buscarActividad(actividad.getId()));
         }
+        Tasks.whenAllComplete(tasks)
+                .addOnCompleteListener(allTasks -> {
+                    binding.progressBar9.setVisibility(View.GONE);
+                    adapter.notifyDataSetChanged();
+                });
         adapter.setContext(getContext());
         adapter.setActividadCardList(listaFinal);
 
@@ -57,7 +67,8 @@ public class DaGestionFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void buscarActividad(String id) {
+    private Task<Void> buscarActividad(String id) {
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("actividades")
                 .document(id)
                 .get()
@@ -75,8 +86,12 @@ public class DaGestionFragment extends Fragment {
                         else{
                             Log.d("msg-test", "DaGestionFragment error buscando act: "+id);
                         }
+                        if (!taskCompletionSource.getTask().isComplete()) {
+                            taskCompletionSource.setResult(null);
+                        }
                     }
                 });
+        return taskCompletionSource.getTask();
     }
 
     @Override

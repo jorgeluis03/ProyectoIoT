@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetFinishF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_donar"
+    android:paddingHorizontal="40dp">
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Últimas fotos seleccionadas"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/changePhotosF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/carousel_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="196dp"
+        android:layout_marginTop="16dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changePhotosF"
+        tools:listitem="@layout/carousel_layout" />
+
+    <Button
+        android:id="@+id/changePhotosF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_alumno_evento_info"
+        android:enabled="true"
+        android:text="Cambiar fotos"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:backgroundTint="@null"
+        app:icon="@drawable/icon_upload"
+        app:iconTint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonDialogFinishF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_da_finish_event"
+        android:enabled="true"
+        android:text="Finalizar evento"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carousel_recycler_view" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="0dp"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDialogFinishF"
+        app:layout_constraintEnd_toEndOf="@+id/buttonDialogFinishF"
+        app:layout_constraintStart_toStartOf="@+id/buttonDialogFinishF"
+        app:layout_constraintTop_toTopOf="@+id/buttonDialogFinishF" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

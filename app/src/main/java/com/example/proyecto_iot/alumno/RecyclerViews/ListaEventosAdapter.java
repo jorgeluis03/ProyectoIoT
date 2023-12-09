@@ -67,6 +67,10 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         TextView lugar = holder.itemView.findViewById(R.id.textLugar);
 
         lugar.setText(evento.getLugar());
+        if (evento.getEstado().equals("inactivo")) { // si está finalizado se muestra mensaje
+            Log.d("msg-test",evento.getTitulo()+" se encuentra "+evento.getEstado());
+            textEstado.setVisibility(View.VISIBLE);
+        }
 
         db.collection("alumnos")
                 .document(evento.getDelegado())
@@ -74,7 +78,12 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Alumno alumno = task.getResult().toObject(Alumno.class);
-                        textDelegado.setText(alumno.getNombre() + " " + alumno.getApellidos());
+                        String nombreDelegado = alumno.getNombre() + " " + alumno.getApellidos();
+                        if (nombreDelegado.length() > 25){
+                            nombreDelegado = nombreDelegado.substring(0,25).trim()+" ...";
+                        }
+
+                        textDelegado.setText(nombreDelegado);
 
                         //conf de dialog
                         TextView textNombreDelegadoDialog = dialog.findViewById(R.id.textNombreDelegadoActividad);
@@ -82,7 +91,7 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
                         TextView textCorreoDelegadoDialog = dialog.findViewById(R.id.textCorreoDelegadoActividad);
                         ImageView imageDelegadoDialog = dialog.findViewById(R.id.imageDelegadoActividad);
 
-                        textNombreDelegadoDialog.setText(alumno.getNombre()+" "+alumno.getApellidos());
+                        textNombreDelegadoDialog.setText(nombreDelegado);
                         textCodigoDelegadoDialog.setText(alumno.getCodigo());
                         textCorreoDelegadoDialog.setText(alumno.getCorreo());
 
@@ -100,10 +109,6 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
                         Log.d("msg-test", "error buscando delegado de evento: " + task.getException().getMessage());
                     }
                 });
-
-        if (evento.getEstado().equals("inactivo")) { // si está finalizado se muestra mensaje
-            textEstado.setVisibility(View.VISIBLE);
-        }
 
         textTitulo.setText(evento.getTitulo());
         textActividad.setText(evento.getActividad());
