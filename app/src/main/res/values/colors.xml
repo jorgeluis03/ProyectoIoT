@@ -16,7 +16,11 @@
     <color name="transparent">#00000000</color>
     <color name="letra_clara">#D2D8D5</color>
     <color name="letra_gris">#797D7F</color>
-    
+
+    <!-- BOTONES -->
+    <color name="boton_negro">#0C0C0C</color>
+    <color name="boton_negro_pulsado">#000</color>
+
     <!-- CHAT -->
     <color name="chat_mensaje_derecha">#0F4BD9</color>
     <color name="chat_mensaje_izquierda">#373E4E</color>
