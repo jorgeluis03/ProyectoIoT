@@ -117,9 +117,15 @@ public class AlumnoChatActivity extends AppCompatActivity {
 
     private void sendNotification(String message){
 
-        for (String userToken: chat.getUserIDs()){
-            if (!alumnoLogueado.getFcmToken().equals(userToken)) {
-                sendNotificationToUser(userToken, message);
+        for (String userID: chat.getUserIDs()){
+
+            if (!alumnoLogueado.getId().equals(userID)) {
+                FirebaseUtilDg.getCollAlumnos().document(userID).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Alumno alumnoChat = task.getResult().toObject(Alumno.class);
+                        sendNotificationToUser(alumnoChat.getFcmToken(), message);
+                    }
+                });
             }
         }
 
