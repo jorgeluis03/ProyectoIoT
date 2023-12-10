@@ -4,15 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.cometchat.chat.core.AppSettings;
-import com.cometchat.chat.core.CometChat;
-import com.cometchat.chat.exceptions.CometChatException;
-import com.example.proyecto_iot.AppConstants;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader1Fragment;
@@ -68,7 +63,6 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
 
                     FirebaseAuth.getInstance().signOut();
-                    cerrarCesionCometChat();
                     Intent intent = new Intent(AlumnoPerfilActivity.this, IngresarActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
@@ -121,39 +115,5 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
                 .load(url)
                 .apply(requestOptions)
                 .into(binding.imagePerfil);
-    }
-
-    private void cerrarCesionCometChat(){
-
-        String region = AppConstants.REGION;
-        String appID = AppConstants.APP_ID;
-
-        AppSettings appSettings = new AppSettings.AppSettingsBuilder()
-                .subscribePresenceForAllUsers()
-                .setRegion(region)
-                .autoEstablishSocketConnection(true)
-                .build();
-
-        CometChat.init(AlumnoPerfilActivity.this, appID, appSettings, new CometChat.CallbackListener<String>() {
-            @Override
-            public void onSuccess(String s) {
-                CometChat.logout(new CometChat.CallbackListener<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        Log.d("msg-test", "Logout completed successfully");
-                    }
-
-                    @Override
-                    public void onError(CometChatException e) {
-                        Log.d("msg-test", "Logout failed with exception: " + e.getMessage());
-                    }
-                });
-            }
-
-            @Override
-            public void onError(CometChatException e) {
-
-            }
-        });
     }
 }
