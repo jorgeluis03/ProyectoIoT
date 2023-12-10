@@ -14,11 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-
-import com.cometchat.chat.core.AppSettings;
-import com.cometchat.chat.core.CometChat;
-import com.cometchat.chat.exceptions.CometChatException;
-import com.cometchat.chat.models.User;
 import com.example.proyecto_iot.AppConstants;
 
 import com.example.proyecto_iot.R;
@@ -71,9 +66,7 @@ public class IngresarActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
 
-            //logueo en cometchat en caso haya caducado
             userUid = currentUser.getUid();
-            verficarLogueoCometChat();
 
             try (FileInputStream fileInputStream = openFileInput("userData");
                  FileReader fileReader = new FileReader(fileInputStream.getFD());
@@ -89,49 +82,6 @@ public class IngresarActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    private void verficarLogueoCometChat(){
-        String region = AppConstants.REGION;
-        String appID = AppConstants.APP_ID;
-        String authKey = AppConstants.AUTH_KEY;
-
-        AppSettings appSettings = new AppSettings.AppSettingsBuilder()
-                .subscribePresenceForAllUsers()
-                .setRegion(region)
-                .autoEstablishSocketConnection(true)
-                .build();
-
-        CometChat.init(IngresarActivity.this, appID, appSettings, new CometChat.CallbackListener<String>() {
-            @Override
-            public void onSuccess(String s) {
-                Log.d("msg-test", "IngresarActivity: Initialization completed successfully");
-
-                if (CometChat.getLoggedInUser() == null){
-                    loguearCometChat(authKey);
-                }
-
-            }
-
-            @Override
-            public void onError(CometChatException e) {
-                Log.d("msg-test", "IngresarActivity: Login failed with exception: " + e.getMessage());
-            }
-        });
-    }
-
-    private void loguearCometChat(String authKey){
-        CometChat.login(userUid, authKey, new CometChat.CallbackListener<User>() {
-            @Override
-            public void onSuccess(User user) {
-                Log.d("msg-test", "IngresarActivity: Login Successful : " + user.toString());
-            }
-
-            @Override
-            public void onError(CometChatException e) {
-                Log.d("msg-test", "IngresarActivity: Login failed with exception: " + e.getMessage());
-            }
-        });
     }
 
     void redirigirSegunRol(Alumno alumno) {
