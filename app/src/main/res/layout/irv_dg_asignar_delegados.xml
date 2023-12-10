@@ -9,14 +9,14 @@ android:background="@color/backgroud_element_dg"
 
     <ImageView
         android:id="@+id/imageViewIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/circle_bg"
-        android:padding="10dp"
+        android:padding="8dp"
         app:srcCompat="@drawable/icon_user" />
 
     <RelativeLayout
@@ -43,17 +43,23 @@ android:background="@color/backgroud_element_dg"
 
 
 
-
 </RelativeLayout>
 
-    <CheckBox
-        android:id="@+id/checkboxDA"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="10dp"
-        />
+        android:layout_marginEnd="10dp">
+
+        <RadioButton
+            android:id="@+id/radioButtonDA"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:clickable="true"/>
+
+
+    </RadioGroup>
 
 <com.google.android.material.divider.MaterialDivider
     android:layout_marginTop="10dp"

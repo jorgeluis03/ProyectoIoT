@@ -77,6 +77,7 @@
         <item name="android:screenOrientation">portrait</item>
         <item name="background">@color/backgroud_dg</item>
         <item name="android:toolbarStyle">@style/ToolbarStyle</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
 
     </style>
 

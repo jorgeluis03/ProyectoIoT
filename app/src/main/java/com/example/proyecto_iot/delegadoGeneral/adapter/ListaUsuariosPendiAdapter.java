@@ -14,53 +14,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuariosPendiAdapter.UsuariosViewHolder>{
-    private List<Alumno> listaUsuariosPendi;
+public class ListaUsuariosPendiAdapter extends FirestoreRecyclerAdapter<Alumno,ListaUsuariosPendiAdapter.UserPendiViewHolder> {
+
     private Context context;
-    FirebaseFirestore db;
 
-    @NonNull
-    @Override
-    public UsuariosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.irv_dg_alumnos_pedients,parent,false);
-        return new UsuariosViewHolder(view);
+    public ListaUsuariosPendiAdapter(@NonNull FirestoreRecyclerOptions<Alumno> options,Context context) {
+        super(options);
+        this.context = context;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UsuariosViewHolder holder, int position) {
-        Alumno userRegi = listaUsuariosPendi.get(position);
-        holder.alumno = userRegi;
-
-        TextView tvNombreUser = holder.itemView.findViewById(R.id.textViewNombreUserPendi_dg);
-        TextView tvCorreoUser = holder.itemView.findViewById(R.id.textViewCorreoUserPendi_dg);
-
-        tvNombreUser.setText(userRegi.getNombre()+' '+userRegi.getApellidos());
-        tvCorreoUser.setText(userRegi.getCorreo());
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return listaUsuariosPendi.size();
-    }
-
-
-    //SubClase ViewHolder
-    public class UsuariosViewHolder extends RecyclerView.ViewHolder{
-        Alumno alumno;
-        public UsuariosViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            //aceptar usuario
-            Button buttonAceptar = itemView.findViewById(R.id.buttonAceptarUser);
-            buttonAceptar.setOnClickListener(view -> {
-
-                new MaterialAlertDialogBuilder(context)
+    protected void onBindViewHolder(@NonNull UserPendiViewHolder holder, int position, @NonNull Alumno model) {
+        holder.tvNombreUser.setText(model.getNombre()+' '+model.getApellidos());
+        holder.tvCorreoUser.setText(model.getCorreo());
+        holder.buttonAceptar.setOnClickListener(view -> {
+            new MaterialAlertDialogBuilder(context)
                         .setTitle("Aceptar")
                         .setMessage("¿Estás seguro que deseas aceptar este a usuario?")
                         .setNeutralButton("Cancelar", (dialogInterface, i) -> {
@@ -68,30 +44,20 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
                         })
                         .setPositiveButton("Aceptar", (dialogInterface, i) -> {
 
-                            db = FirebaseFirestore.getInstance();
-                            db.collection("alumnos").document(alumno.getId())
+                            FirebaseUtilDg.getCollAlumnos().document(model.getId())
                                     .update("estado","activo")
                                     .addOnSuccessListener(unused -> {
-
-                                        // Eliminar el usuario de la lista de datos
-                                        listaUsuariosPendi.remove(alumno);
-                                        // Notificar al adaptador que los datos han cambiado
-                                        notifyDataSetChanged();
-
                                         Toast.makeText(context,"Usuario aceptado",Toast.LENGTH_SHORT).show();
                                     })
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(context,"algo pasó",Toast.LENGTH_SHORT).show();
-                                    });
+                                    .addOnFailureListener(e ->
+                                            Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show());
                         })
                         .show();
-            });
 
-            //Rechazar solicitud
-            Button buttonRechazar = itemView.findViewById(R.id.buttonBanearUserPendi);
-            buttonRechazar.setOnClickListener(view -> {
+        });
 
-                new MaterialAlertDialogBuilder(context)
+        holder.buttonRechazar.setOnClickListener(view -> {
+            new MaterialAlertDialogBuilder(context)
                         .setTitle("Rechazar")
                         .setMessage("¿Estás seguro que deseas rechazar la solicitud de este usuario?")
                         .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -104,19 +70,10 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Responder a la pulsación del botón positivo
-                                db = FirebaseFirestore.getInstance();
-                                db.collection("alumnos").document(alumno.getId())
+                                FirebaseUtilDg.getCollAlumnos().document(model.getId())
                                         .delete()
                                         .addOnSuccessListener(unused -> {
-
-                                            eliminarUsuarioAuthentication();
-
-                                            // Eliminar el usuario de la lista de datos
-                                            listaUsuariosPendi.remove(alumno);
-
-                                            // Notificar al adaptador que los datos han cambiado
-                                            notifyDataSetChanged();
-                                            Toast.makeText(context,"Usuario eliminado",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context,"Usuario rechazado",Toast.LENGTH_SHORT).show();
 
                                         })
                                         .addOnFailureListener(e -> {
@@ -127,35 +84,31 @@ public class ListaUsuariosPendiAdapter extends RecyclerView.Adapter<ListaUsuario
                         })
                         .show();
 
-            });
+        });
+
+    }
+
+    @NonNull
+    @Override
+    public UserPendiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.irv_dg_alumnos_pedients,parent,false);
+        return new UserPendiViewHolder(view);
+    }
+
+    public class UserPendiViewHolder extends RecyclerView.ViewHolder {
+        TextView tvNombreUser;
+        TextView tvCorreoUser;
+        Button buttonAceptar, buttonRechazar;
+        public UserPendiViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvNombreUser=itemView.findViewById(R.id.textViewNombreUserPendi_dg);
+            tvCorreoUser=itemView.findViewById(R.id.textViewCorreoUserPendi_dg);
+            buttonAceptar = itemView.findViewById(R.id.buttonAceptarUser);
+            buttonRechazar = itemView.findViewById(R.id.buttonRechazarUserPendi);
+
+
         }
     }
 
-    private void eliminarUsuarioAuthentication(){
 
-    }
-
-    /*int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    lista.remove(position);
-                    notifyItemRemoved(position);
-
-                }*/
-
-    //Encapsulamiento
-    public List<Alumno> getListaUsuarios() {
-        return listaUsuariosPendi;
-    }
-
-    public void setListaUsuarios(List<Alumno> listaUsuarios) {
-        this.listaUsuariosPendi = listaUsuarios;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
 }

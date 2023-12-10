@@ -87,6 +87,7 @@ public class DgAsignarDelegadoActivity extends AppCompatActivity implements List
         });
     }
     public void textSearch(String s){
+
         FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
                 .setQuery(query.orderBy("nombre").startAt(s).endAt(s+"~"), Alumno.class).build();
 

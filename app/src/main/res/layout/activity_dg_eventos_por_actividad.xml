@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroud_dg"
     tools:context=".delegadoGeneral.DgEventosPorActividadActivity">
 
     <RelativeLayout
@@ -35,6 +36,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"/>
+
+    <TextView
+        android:id="@+id/noHayEventosDisponibles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No hay eventos disponibles"
+        android:layout_centerInParent="true"
+        android:textColor="@color/grey"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textStyle="italic"
+        android:visibility="invisible"/>
 
 
 </RelativeLayout>
