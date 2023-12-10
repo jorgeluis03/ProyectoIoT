@@ -70,6 +70,8 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         if (evento.getEstado().equals("inactivo")) { // si está finalizado se muestra mensaje
             Log.d("msg-test",evento.getTitulo()+" se encuentra "+evento.getEstado());
             textEstado.setVisibility(View.VISIBLE);
+        }else {
+            textEstado.setVisibility(View.GONE);
         }
 
         db.collection("alumnos")
