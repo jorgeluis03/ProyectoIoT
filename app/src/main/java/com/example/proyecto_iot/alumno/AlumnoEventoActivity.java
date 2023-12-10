@@ -326,7 +326,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
             // subir foto a firestore y storage
             EditText inputDescripcion = bottomSheetView.findViewById(R.id.inputDescripcion);
             subirFoto(inputDescripcion.getText().toString());
-            bottomSheetDialog.dismiss();
         });
 
         bottomSheetDialog.setContentView(bottomSheetView);
@@ -370,6 +369,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                     Log.d("msg-test", "foto guardada en firestore exitosamente");
 
                     progressBar.setVisibility(View.GONE);
+                    bottomSheetDialog.dismiss();
                     finish();
                     startActivity(getIntent());
                 })

@@ -76,8 +76,9 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
 
         TextView textFechaPublicacion = holder.itemView.findViewById(R.id.textFechaPublicación);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM, dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM dd, yyyy");
         String fechaFormateada = simpleDateFormat.format(foto.getFechaHoraSubida().toDate());
+        fechaFormateada = fechaFormateada.substring(0,1).toUpperCase()+fechaFormateada.substring(1);
         textFechaPublicacion.setText(fechaFormateada);
     }
 

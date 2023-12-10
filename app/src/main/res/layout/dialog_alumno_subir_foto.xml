@@ -64,9 +64,12 @@
         android:id="@+id/progressBarSubirFoto"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginVertical="10dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/buttonDialogSubirFoto"
         app:layout_constraintEnd_toEndOf="@+id/buttonDialogSubirFoto"
         app:layout_constraintStart_toStartOf="@+id/buttonDialogSubirFoto"
         app:layout_constraintTop_toTopOf="@+id/buttonDialogSubirFoto" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
