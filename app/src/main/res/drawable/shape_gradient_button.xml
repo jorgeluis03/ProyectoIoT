@@ -5,8 +5,8 @@
             <gradient
                 android:type="linear"
                 android:angle="0"
-                android:startColor="@color/azul_login"
-                android:endColor="@color/morado_login"/>
+                android:startColor="@color/boton_azul_login_pulsado"
+                android:endColor="@color/boton_morado_login_pulsado"/>
             <corners
                 android:radius="30dp"/>
         </shape>
