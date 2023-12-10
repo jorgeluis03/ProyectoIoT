@@ -5,7 +5,9 @@
             <size android:width="320dp"/>
             <solid android:color="#17223E"/>
             <padding android:top="12dp" android:bottom="12dp"/>
-            <corners android:topLeftRadius="10dp" android:topRightRadius="10dp"/>
+            <corners
+                android:topLeftRadius="14dp"
+                android:topRightRadius="14dp"/>
         </shape>
     </item>
     <item>
@@ -13,7 +15,9 @@
             <size android:width="320dp"/>
             <solid android:color="#222A3F"/>
             <padding android:top="12dp" android:bottom="12dp"/>
-            <corners android:topLeftRadius="10dp" android:topRightRadius="10dp"/>
+            <corners
+                android:topLeftRadius="14dp"
+                android:topRightRadius="14dp"/>
         </shape>
     </item>
 </selector>
