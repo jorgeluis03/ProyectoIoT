@@ -1,5 +1,7 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +23,13 @@ public class AlumnoHeader3Fragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null){
             String header = bundle.getString("header", "nothing");
+            Boolean activo = bundle.getBoolean("activo", true);
+
+            if (!activo){
+                binding.textInfoChat.setText("Chat cerrado");
+                binding.imageChatEnabledState.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+            }
+
             binding.textHeader3.setText(header);
         }
 

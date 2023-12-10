@@ -9,10 +9,12 @@
 
     <TextView
         android:id="@+id/textNombre"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="54dp"
         android:layout_marginTop="24dp"
         android:text="Alumno"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -45,8 +47,9 @@
 
     <Button
         android:id="@+id/buttonEditarPerfil"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="54dp"
         android:background="@drawable/button_alumno_perfil_top"
         android:text="@string/perfil_editar"
         android:textAlignment="textStart"
@@ -66,8 +69,9 @@
 
     <Button
         android:id="@+id/buttonContrasena"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="54dp"
         android:background="@drawable/button_alumno_perfil_bottom"
         android:text="@string/perfil_contrasena"
         android:textAlignment="textStart"
@@ -84,8 +88,9 @@
 
     <Button
         android:id="@+id/buttonCerrarSesion"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="54dp"
         android:background="@drawable/button_alumno_perfil"
         android:text="@string/perfil_sesion"
         android:textAlignment="textStart"
@@ -112,5 +117,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_alumno_header1" />
+
+    <RelativeLayout
+        android:id="@+id/relativeOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBarCerrarSesion"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

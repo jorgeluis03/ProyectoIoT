@@ -26,7 +26,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/textInfoChat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -47,9 +47,19 @@
         app:iconSize="22dp"
         app:iconTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textHeader"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageChatEnabledState"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/circular_bg"
+        android:backgroundTint="@color/online_green"
+        app:layout_constraintBottom_toBottomOf="@+id/textInfoChat"
+        app:layout_constraintStart_toEndOf="@+id/textInfoChat"
+        app:layout_constraintTop_toTopOf="@+id/textInfoChat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

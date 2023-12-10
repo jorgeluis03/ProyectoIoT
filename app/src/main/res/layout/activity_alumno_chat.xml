@@ -63,6 +63,7 @@
             android:layout_centerInParent="true"
             android:layout_marginStart="4dp"
             android:background="@null"
+            android:clickable="false"
             app:srcCompat="@drawable/cc_ic_send"
             app:tint="@color/verde_bat" />
     </RelativeLayout>

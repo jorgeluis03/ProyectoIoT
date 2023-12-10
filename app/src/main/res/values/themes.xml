@@ -120,4 +120,11 @@
     <style name="Widget.AppTheme.MaterialCalendar.HeaderToggleButton" parent="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton">
         <item name="android:visibility">gone</item>
     </style>
+    
+    <!-- ALUMNO VISTAS -->
+    
+    <style name="buscarEventoActivity" parent="Alumno">
+        <item name="android:editTextColor">@color/black</item>
+        <item name="android:textColorHint">@color/buscadorHint</item>
+    </style>
 </resources>

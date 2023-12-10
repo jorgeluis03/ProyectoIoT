@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -57,22 +58,21 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         });
 
         binding.buttonCerrarSesion.setOnClickListener(view -> {
+            binding.relativeOverlay.setVisibility(View.VISIBLE);
             //Logica para salir
             //Borrar el token al cerrar sesion
             FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
                 if (task.isSuccessful()){
 
-                    FirebaseAuth.getInstance().signOut();
+                    FirebaseAuth.getInstance().signOut(); // deslogueo de firebase auth
                     Intent intent = new Intent(AlumnoPerfilActivity.this, IngresarActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    finish();
 
+                    binding.relativeOverlay.setVisibility(View.GONE);
+                    finish();
                 }
             });
-
-
-
 
         });
     }

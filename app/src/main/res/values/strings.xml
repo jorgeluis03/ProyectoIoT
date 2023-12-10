@@ -44,7 +44,7 @@
     <string name="evento_chat">Chat</string>
     <string name="evento_chat_vivo">Chat en vivo</string>
     <string name="evento_subir_foto">Subir foto</string>
-    <string name="evento_agregar_descripcion">Agrega una descripción</string>
+    <string name="evento_agregar_descripcion">Agrega una descripción (opcional)</string>
 
 
     <!-- DONACIONES -->

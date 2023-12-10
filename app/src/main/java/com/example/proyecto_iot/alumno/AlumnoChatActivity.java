@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
@@ -29,6 +30,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class AlumnoChatActivity extends AppCompatActivity {
     private ActivityAlumnoChatBinding binding;
@@ -46,8 +48,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
 
         evento = (Evento) getIntent().getSerializableExtra("evento");
         chatID = "evento"+evento.getFechaHoraCreacion().toString();
-        Log.d("msg-test", "chatID: "+chatID);
-
+        setUpChat();
         cargarInterfaz();
         setUpChatRecyclerView();
 
@@ -59,10 +60,27 @@ public class AlumnoChatActivity extends AppCompatActivity {
         });
     }
 
+    private void setUpChat(){
+        FirebaseUtilAl.getChatRoomReference(chatID).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                chat = task.getResult().toObject(Chat.class);
+                binding.buttonEnviarMensaje.setClickable(true);
+            }
+            else{
+                Log.d("msg-test", "error al recuperar chat: "+task.getException().getMessage());
+            }
+        });
+    }
+
     private void sendMessageToEvent(String message){
-        chat.setLastMessageTimestamp(Timestamp.now());
-        chat.setLastMessageSenderID(FirebaseUtilDg.getusuarioActualId());
-        FirebaseUtilAl.getChatRoomReference(chatID).set(chat); // actualizando ultima hora de mensaje del chat y ultimo emisor de un mensaje en el doc del chat
+
+        HashMap<String, Object> chatUpdate = new HashMap<>();
+        chatUpdate.put("lastMessageTimestamp", Timestamp.now());
+        chatUpdate.put("lastMessageSenderID", FirebaseUtilDg.getusuarioActualId());
+
+        //chat.setLastMessageTimestamp(Timestamp.now());
+        //chat.setLastMessageSenderID(FirebaseUtilDg.getusuarioActualId());
+        FirebaseUtilAl.getChatRoomReference(chatID).update(chatUpdate); // actualizando ultima hora de mensaje del chat y ultimo emisor de un mensaje en el doc del chat
 
         ChatMessage chatMessage = new ChatMessage(message, FirebaseUtilDg.getusuarioActualId(), Timestamp.now());
         FirebaseUtilAl.getChatMessageReference(chatID).add(chatMessage)
@@ -108,6 +126,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
                     if (task.isSuccessful()){
                         Alumno alumnoChat = task.getResult().toObject(Alumno.class);
                         sendNotificationToUser(alumnoChat.getFcmToken(), message);
+                        Log.d("msg-test", "notificacion enviada a: "+alumnoChat.getNombre());
                     }
                 });
             }
@@ -152,17 +171,19 @@ public class AlumnoChatActivity extends AppCompatActivity {
 
     private void cargarInterfaz(){
         alumnoLogueado = obtenerAlumnoDeMemoria();
-
-        // seteando nombre de header
+        // para setear nombre de header
         Bundle bundle = new Bundle();
+
+        if (evento.getEstado().equals("inactivo")){
+            binding.relativeInputChat.setVisibility(View.GONE);
+            bundle.putBoolean("activo", false);
+        }
+
         bundle.putString("header", evento.getTitulo());
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.fragmentHeaderChat, AlumnoHeader3Fragment.class, bundle)
                 .commit();
 
-        if (evento.getEstado().equals("inactivo")){
-
-        }
     }
 }
