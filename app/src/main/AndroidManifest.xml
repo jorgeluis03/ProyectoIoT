@@ -60,7 +60,7 @@
         <activity
             android:name=".alumno.AlumnoBuscarEventoActivity"
             android:exported="false"
-            android:theme="@style/Alumno" />
+            android:theme="@style/buscarEventoActivity" />
         <activity
             android:name=".alumno.AlumnoChatActivity"
             android:exported="false"
