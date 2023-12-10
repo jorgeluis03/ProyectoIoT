@@ -45,13 +45,13 @@
                 android:id="@+id/btnAceptarDonacion"
                 android:layout_width="40dp"
                 android:layout_height="40sp"
-                android:src="@drawable/round_check_box_24"
+                app:srcCompat="@drawable/round_check_box_24"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
             <ImageButton
                 android:id="@+id/btnRechazarDonacion"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_delete"
+                app:srcCompat="@drawable/ic_delete"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
         </LinearLayout>

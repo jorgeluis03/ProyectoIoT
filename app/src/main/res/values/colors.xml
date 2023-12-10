@@ -15,4 +15,8 @@
     <color name="transparent">#00000000</color>
     <color name="letra_clara">#D2D8D5</color>
     <color name="letra_gris">#797D7F</color>
+    
+    <!-- CHAT -->
+    <color name="chat_mensaje_derecha">#2B1292</color>
+    <color name="chat_mensaje_izquierda">#373E4E</color>
 </resources>

@@ -4,17 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cometchat.chat.core.AppSettings;
-import com.cometchat.chat.core.CometChat;
-import com.cometchat.chat.exceptions.CometChatException;
-import com.cometchat.chat.models.User;
-import com.example.proyecto_iot.AppConstants;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityLoginBinding;
@@ -23,7 +17,6 @@ import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -128,14 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (alumno.getEstado().equals("activo")){
 
                             guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
-
-                            // autenticar en cometchat
-                            if (!alumno.getRol().equals("Delegado General")){
-                                inicializarCometChat();
-                            }
-                            else{
-                                redirigirSegunRol(alumno);
-                            }
+                            redirigirSegunRol(alumno);
 
                         } else if (alumno.getEstado().equals("pendiente")) {
                             Log.d("msg-test", "alumno con estado pendiente");
@@ -154,45 +140,6 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     Log.d("msg-test", "error en busqueda: "+task.getException());
                 }
-            }
-        });
-    }
-
-
-    private void inicializarCometChat(){
-        String region = AppConstants.REGION;
-        String appID = AppConstants.APP_ID;
-        String authKey = AppConstants.AUTH_KEY;
-
-        AppSettings appSettings = new AppSettings.AppSettingsBuilder()
-                .subscribePresenceForAllUsers()
-                .setRegion(region)
-                .autoEstablishSocketConnection(true)
-                .build();
-
-        CometChat.init(LoginActivity.this, appID, appSettings, new CometChat.CallbackListener<String>() {
-            @Override
-            public void onSuccess(String s) {
-                Log.d("msg-test", "Initialization completed successfully");
-
-                // logueando en cometchat
-                CometChat.login(userUid, authKey, new CometChat.CallbackListener<User>() {
-                    @Override
-                    public void onSuccess(User user) {
-                        Log.d("msg-test", "Login Successful : " + user.toString());
-                        redirigirSegunRol(alumno);
-                    }
-
-                    @Override
-                    public void onError(CometChatException e) {
-                        Log.d("msg-test", "Login failed with exception: " + e.getMessage());
-                    }
-                });
-            }
-
-            @Override
-            public void onError(CometChatException e) {
-                Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
             }
         });
     }
