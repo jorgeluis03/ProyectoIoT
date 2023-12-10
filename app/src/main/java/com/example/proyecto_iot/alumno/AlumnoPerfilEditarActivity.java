@@ -11,6 +11,8 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -89,7 +91,6 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
 
             }
         });
-
         binding.inputApellidos.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -125,7 +126,6 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         });
 
         binding.buttonGuardarPerfil.setOnClickListener(view -> {
-            binding.buttonGuardarPerfil.setEnabled(false);
             guardarPerfil();
         });
     }
@@ -149,6 +149,8 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     }
 
     private void guardarPerfil() {
+        binding.buttonGuardarPerfil.setEnabled(false);
+        binding.progressBarGuardarPerfil.setVisibility(View.VISIBLE);
 
         if (nuevaFoto){
             actualizarFotoEInfo();
@@ -218,6 +220,8 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                         actualizarInternalStorage();
 
                         // regresar a perfil activity
+                        binding.progressBarGuardarPerfil.setVisibility(View.GONE);
+                        Toast.makeText(AlumnoPerfilEditarActivity.this, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
@@ -249,10 +253,8 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
 
     private void cargarFoto() {
         String url = alumno.getFotoUrl().equals("")? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png": alumno.getFotoUrl();
-        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(AlumnoPerfilEditarActivity.this)
                 .load(url)
-                .apply(requestOptions)
                 .into(binding.imageEdit);
     }
 

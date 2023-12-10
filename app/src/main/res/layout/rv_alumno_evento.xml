@@ -59,10 +59,12 @@
         android:id="@+id/textActividad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="#222A3F"
         android:text="TextView"
         android:textColor="#B9B9B9"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/textTitulo"
         app:layout_constraintStart_toStartOf="@+id/textTitulo"
         app:layout_constraintTop_toBottomOf="@+id/textTitulo" />
@@ -71,7 +73,7 @@
         android:id="@+id/textDescripcion"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:background="#222A3F"
         android:text="TextView"
         android:textColor="@color/white"
@@ -104,6 +106,7 @@
         android:text="TextView"
         android:textColor="#B9B9B9"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageEvento"
         app:layout_constraintTop_toBottomOf="@+id/imageEvento" />
@@ -118,6 +121,7 @@
         android:text="TextView"
         android:textColor="#B9B9B9"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textFecha"
         app:layout_constraintEnd_toEndOf="@+id/imageEvento" />
 
@@ -130,6 +134,7 @@
         android:text="TextView"
         android:textColor="#B9B9B9"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textFecha"
         app:layout_constraintEnd_toStartOf="@+id/textLugar"
         app:layout_constraintStart_toEndOf="@+id/textFecha" />

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
@@ -63,25 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
         binding.loginButton.setOnClickListener(view -> {
-            String codigo = binding.inputCodigo.getText().toString();
-            String contrasena = binding.inputContrasena.getText().toString();
-
-            mAuth.signInWithEmailAndPassword(codigo + "@app.com", contrasena)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                obtenerUserData();
-
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
-                                        .show();
-                                Log.d("msg-test", "credenciales incorrectas");
-                            }
-                        }
-                    });
+            loguearUsuario();
         });
     }
 
@@ -105,6 +88,31 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void loguearUsuario(){
+        binding.loginButton.setEnabled(false);
+        binding.relativeOverlay.setVisibility(View.VISIBLE);
+
+        String codigo = binding.inputCodigo.getText().toString();
+        String contrasena = binding.inputContrasena.getText().toString();
+
+        mAuth.signInWithEmailAndPassword(codigo + "@app.com", contrasena)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            obtenerUserData();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
+                                    .show();
+                            Log.d("msg-test", "credenciales incorrectas");
+                        }
+                    }
+                });
     }
 
     void obtenerUserData() {
@@ -188,6 +196,8 @@ public class LoginActivity extends AppCompatActivity {
                 intent = new Intent(LoginActivity.this, Dg_Activity.class);
                 break;
         }
+        binding.loginButton.setEnabled(true);
+        binding.relativeOverlay.setVisibility(View.GONE);
         startActivity(intent);
     }
 }

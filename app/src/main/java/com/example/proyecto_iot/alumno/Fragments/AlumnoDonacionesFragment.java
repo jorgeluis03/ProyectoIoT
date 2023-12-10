@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
@@ -96,6 +97,7 @@ public class AlumnoDonacionesFragment extends Fragment {
     private Float monto;
     private boolean fotoAgregada = false;
     private Button buttonRegistrarDonacion;
+    private ProgressBar progressBarRegistrarDonacion;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -118,10 +120,9 @@ public class AlumnoDonacionesFragment extends Fragment {
                         double donacionesTotalesValidadas = 0.0;
                         String rolUsuario = "";
 
-                        if(task.getResult().isEmpty()){
+                        if (task.getResult().isEmpty()) {
                             binding.textNoDonaciones.setVisibility(View.VISIBLE);
-                        }
-                        else{
+                        } else {
                             for (QueryDocumentSnapshot idDocument : task.getResult()) {
                                 String fecha = idDocument.getString("fecha");
                                 String hora = idDocument.getString("hora");
@@ -226,9 +227,9 @@ public class AlumnoDonacionesFragment extends Fragment {
             View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_donar, (ConstraintLayout) view.findViewById(R.id.bottomSheetContainer));
 
             // conf de botones de dialog donar
+            progressBarRegistrarDonacion = bottomSheetView.findViewById(R.id.progressBarRegistrarDonacion);
             buttonRegistrarDonacion = bottomSheetView.findViewById(R.id.buttonDialogDonar);
             buttonRegistrarDonacion.setOnClickListener(viewDialog -> {
-                buttonRegistrarDonacion.setEnabled(false);
                 subirDonacion();
             });
 
@@ -242,9 +243,11 @@ public class AlumnoDonacionesFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (!inputMonto.getText().toString().equals("") && fotoAgregada){
+                    if (!inputMonto.getText().toString().equals("") && fotoAgregada) {
                         monto = Float.parseFloat(inputMonto.getText().toString());
                         buttonRegistrarDonacion.setEnabled(true);
+                    } else if (inputMonto.getText().toString().equals("")) {
+                        buttonRegistrarDonacion.setEnabled(false);
                     }
                 }
 
@@ -303,6 +306,9 @@ public class AlumnoDonacionesFragment extends Fragment {
     }
 
     private void subirDonacion() {
+
+        buttonRegistrarDonacion.setEnabled(false);
+        progressBarRegistrarDonacion.setVisibility(View.VISIBLE);
 
         String fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
         String hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + " hrs";
@@ -392,6 +398,8 @@ public class AlumnoDonacionesFragment extends Fragment {
         NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerViewHost);
         NavController navController = NavHostFragment.findNavController(navHostFragment);
         navController.navigate(R.id.alumnoDonacionesFragment);
+
+        progressBarRegistrarDonacion.setVisibility(View.GONE);
         bottomSheetDialog.dismiss();
     }
 
@@ -403,7 +411,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                         buttonSubirImagen.setText(getImageName(uriFotoDonacion));
                         fotoAgregada = true;
 
-                        if (monto != null){
+                        if (monto != null) {
                             buttonRegistrarDonacion.setEnabled(true);
                         }
 
@@ -467,7 +475,7 @@ public class AlumnoDonacionesFragment extends Fragment {
 
                     JSONObject notificationObj = new JSONObject();
                     notificationObj.put("title", "Donación Aitel");
-                    notificationObj.put("body", "Ha llegado una nueva donación para Aitel de S/"+donacionNueva.getMonto());
+                    notificationObj.put("body", "Ha llegado una nueva donación para Aitel de S/" + donacionNueva.getMonto());
 
                     jsonObject.put("notification", notificationObj);
                     jsonObject.put("to", usuarioDg.getFcmToken());

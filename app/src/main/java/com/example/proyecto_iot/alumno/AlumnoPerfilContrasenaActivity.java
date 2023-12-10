@@ -8,6 +8,8 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
@@ -109,12 +111,14 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
             String contrasena2 = binding.inputContrasena2.getEditText().getText().toString().trim();
             String contrasena3 = binding.inputContrasena3.getEditText().getText().toString().trim();
             Log.d("msg-test", "pass1: "+contrasena1+" | pass2: "+contrasena2+" | pass3: "+contrasena3);
-            binding.buttonGuardarContrasena.setEnabled(false);
             guardarContrasena();
         });
     }
 
     void guardarContrasena() {
+        binding.buttonGuardarContrasena.setEnabled(false);
+        binding.progressBarGuardarContrasena.setVisibility(View.VISIBLE);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         String contrasena1 = binding.inputContrasena1.getEditText().getText().toString().trim();
@@ -132,6 +136,8 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Log.d("msg-test", "contraseña actualizada");
+                                        binding.progressBarGuardarContrasena.setVisibility(View.GONE);
+                                        Toast.makeText(AlumnoPerfilContrasenaActivity.this, "Contraseña actualizada correctamente", Toast.LENGTH_SHORT).show();
                                         finish();
                                     }
                                 })

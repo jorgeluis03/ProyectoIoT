@@ -7,6 +7,7 @@
     <color name="verde">#87D819</color> <!-- Cambia el código de color a tu preferencia -->
     <color name="rojo">#C70039</color>
     <color name="buscadorHint">#BCBCBC</color>
+    <color name="overlay">#80000000</color>
 
     <!-- LOGIN -->
     <color name="azul_login">#0F4BD9</color>
@@ -20,6 +21,8 @@
     <!-- BOTONES -->
     <color name="boton_negro">#0C0C0C</color>
     <color name="boton_negro_pulsado">#000</color>
+    <color name="boton_azul_login_pulsado">#0D3EB3</color>
+    <color name="boton_morado_login_pulsado">#220E73</color>
 
     <!-- CHAT -->
     <color name="chat_mensaje_derecha">#0F4BD9</color>
