@@ -1,14 +1,5 @@
 package com.example.proyecto_iot.delegadoActividad;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +17,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -382,7 +381,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
+                if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
                     imageUri = result.getData().getData();
                     abrirDialogSubirFoto();
                 }
@@ -391,7 +390,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> openManyImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
+                if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
                     Log.d("msg-test","ok result");
                     Log.d("msg-test","result.getData: "+ (result.getData() != null) + (result.getData().getClipData() != null));
                     if (result.getData() != null) {

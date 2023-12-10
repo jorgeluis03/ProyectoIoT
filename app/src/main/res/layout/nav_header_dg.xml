@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="160dp"
@@ -11,7 +12,7 @@
         android:id="@+id/imgPerfilDrawer"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:src="@drawable/icon_perfil_user"/>
+        app:srcCompat="@drawable/icon_perfil_user"/>
     <TextView
         android:id="@+id/textViewUsernameDrawer"
         android:layout_width="wrap_content"

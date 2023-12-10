@@ -36,6 +36,9 @@ android {
 
 dependencies {
 
+    //CometChat: no pude borrarlo aun porque trae componentes, no las de cometchat, que ya estan las vistas
+    implementation 'com.cometchat:chat-uikit-android:4.0.3'
+
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
