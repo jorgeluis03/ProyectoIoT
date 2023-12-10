@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -220,6 +221,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
 
                         // regresar a perfil activity
                         binding.progressBarGuardarPerfil.setVisibility(View.GONE);
+                        Toast.makeText(AlumnoPerfilEditarActivity.this, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
