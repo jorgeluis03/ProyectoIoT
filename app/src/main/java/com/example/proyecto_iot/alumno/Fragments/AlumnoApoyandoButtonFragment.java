@@ -1,30 +1,24 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.cometchat.chat.core.AppSettings;
-import com.cometchat.chat.core.CometChat;
-import com.cometchat.chat.exceptions.CometChatException;
-import com.example.proyecto_iot.AppConstants;
-import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoChatActivity;
 import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.databinding.FragmentAlumnoApoyandoButtonBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AlumnoApoyandoButtonFragment extends Fragment {
@@ -33,6 +27,7 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String userUid = FirebaseAuth.getInstance().getUid();
     private Evento evento;
+    private String eventoID;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,6 +38,7 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
         });
 
         evento = ((AlumnoEventoActivity) getActivity()).getEvento();
+        eventoID = "evento"+evento.getFechaHoraCreacion().toString();
 
         cargarBotones();
 
@@ -80,7 +76,7 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
 
     private void quitarAlumnoDeEvento(){
         db.collection("eventos")
-                .document("evento"+evento.getFechaHoraCreacion().toString())
+                .document(eventoID)
                 .collection("apoyos")
                 .document(userUid)
                 .delete()
@@ -97,7 +93,7 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
         db.collection("alumnos")
                 .document(userUid)
                 .collection("eventos")
-                .document("evento"+evento.getFechaHoraCreacion().toString())
+                .document(eventoID)
                 .delete()
                 .addOnSuccessListener(unused -> {
                     Log.d("msg-test", "evento quitado de alumno");
@@ -109,38 +105,10 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
     }
 
     private void quitarAlumnoDeChat(){
-        String region = AppConstants.REGION;
-        String appID = AppConstants.APP_ID;
+        String chatID = eventoID;
 
-        AppSettings appSettings = new AppSettings.AppSettingsBuilder()
-                .subscribePresenceForAllUsers()
-                .setRegion(region)
-                .autoEstablishSocketConnection(true)
-                .build();
-
-        CometChat.init(getContext(), appID, appSettings, new CometChat.CallbackListener<String>() {
-            @Override
-            public void onSuccess(String s) {
-
-                CometChat.leaveGroup(evento.getChatID(), new CometChat.CallbackListener<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        Log.d("msg-test", s);
-                    }
-
-                    @Override
-                    public void onError(CometChatException e) {
-                        Log.d("msg-test", "Group leaving failed with exception: " + e.getMessage());
-                    }
-                });
-
-            }
-
-            @Override
-            public void onError(CometChatException e) {
-                Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
-            }
-        });
+        DocumentReference chatReference = db.collection("chats").document(chatID);
+        chatReference.update("userIDs", FieldValue.arrayRemove(userUid));
     }
 
     private void cargarBotones(){
