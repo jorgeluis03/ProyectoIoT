@@ -49,7 +49,6 @@ public class AlumnoChatActivity extends AppCompatActivity {
         Log.d("msg-test", "chatID: "+chatID);
 
         cargarInterfaz();
-        getOrCreateChat();
         setUpChatRecyclerView();
 
         binding.buttonEnviarMensaje.setOnClickListener(view -> {
@@ -96,21 +95,6 @@ public class AlumnoChatActivity extends AppCompatActivity {
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
                 binding.rvChat.smoothScrollToPosition(0);
-            }
-        });
-    }
-
-    private void getOrCreateChat(){
-        FirebaseUtilAl.getChatRoomReference(chatID).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                chat = task.getResult().toObject(Chat.class);
-                if(chat == null){
-                    // creador por primera vez -> debe agregarse en delegado de actividad
-                    Log.d("msg-test", "chat nuevo");
-                }
-                else{
-                    Log.d("msg-test", "chat existente");
-                }
             }
         });
     }
