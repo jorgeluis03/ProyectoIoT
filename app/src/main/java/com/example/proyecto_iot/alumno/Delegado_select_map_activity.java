@@ -82,9 +82,11 @@ public class Delegado_select_map_activity extends AppCompatActivity implements O
                 .title("Telecomunicaciones")
                 .snippet("PUCP")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        // Agrega el marcador inicial
+       /* // Agrega el marcador inicial
         googleMap.addMarker(markerOptions);
-
+*/
+        Marker marker = googleMap.addMarker(markerOptions);
+        marker.showInfoWindow();
         // Mueve la cámara para centrarse en la ubicación
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(centroDelMapa));
 
