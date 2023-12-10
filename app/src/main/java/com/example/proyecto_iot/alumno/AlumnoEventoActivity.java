@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,6 +81,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     private ArrayList<Foto> fotoList = new ArrayList<>();
     String user;
     private ListaFotosEventoAdapter adapter = new ListaFotosEventoAdapter();
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -312,11 +314,15 @@ public class AlumnoEventoActivity extends AppCompatActivity {
         View bottomSheetView = LayoutInflater.from(AlumnoEventoActivity.this).inflate(R.layout.dialog_alumno_subir_foto, (ConstraintLayout) findViewById(R.id.bottomSheetSubirFoto));
 
         ImageView imagenFoto = bottomSheetView.findViewById(R.id.imageFoto);
-        imagenFoto.setImageURI(imageUri);
         Button botonSubirFoto = bottomSheetView.findViewById(R.id.buttonDialogSubirFoto);
+        progressBar = bottomSheetView.findViewById(R.id.progressBarSubirFoto);
+
+        imagenFoto.setImageURI(imageUri);
         botonSubirFoto.setEnabled(true);
         botonSubirFoto.setOnClickListener(view -> {
             botonSubirFoto.setEnabled(false);
+            progressBar.setVisibility(View.VISIBLE);
+
             // subir foto a firestore y storage
             EditText inputDescripcion = bottomSheetView.findViewById(R.id.inputDescripcion);
             subirFoto(inputDescripcion.getText().toString());
@@ -362,6 +368,8 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                 .add(fotoNueva)
                 .addOnSuccessListener(documentReference -> {
                     Log.d("msg-test", "foto guardada en firestore exitosamente");
+
+                    progressBar.setVisibility(View.GONE);
                     finish();
                     startActivity(getIntent());
                 })
