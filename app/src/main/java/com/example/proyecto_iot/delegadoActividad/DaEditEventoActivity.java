@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
@@ -27,14 +26,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.proyecto_iot.AppConstants;
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Delegado_select_map_activity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Chat;
@@ -43,9 +39,7 @@ import com.example.proyecto_iot.alumno.Entities.Foto;
 import com.example.proyecto_iot.alumno.Utils.FirebaseUtilAl;
 import com.example.proyecto_iot.databinding.ActivityDaEditEventoBinding;
 import com.example.proyecto_iot.delegadoActividad.Adapters.CarouselAdapter;
-import com.example.proyecto_iot.delegadoActividad.Adapters.ListaEventosActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
-import com.example.proyecto_iot.inicioApp.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -82,7 +76,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class DaEditEventoActivity extends AppCompatActivity {
     ActivityDaEditEventoBinding binding;

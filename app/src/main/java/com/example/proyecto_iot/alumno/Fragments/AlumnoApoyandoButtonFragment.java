@@ -1,19 +1,16 @@
 package com.example.proyecto_iot.alumno.Fragments;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.proyecto_iot.AppConstants;
-import com.example.proyecto_iot.R;
+
 import com.example.proyecto_iot.alumno.AlumnoChatActivity;
 import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Entities.Evento;

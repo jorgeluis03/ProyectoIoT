@@ -1,22 +1,9 @@
 package com.example.proyecto_iot.inicioApp;
 
-import static android.Manifest.permission.POST_NOTIFICATIONS;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.example.proyecto_iot.AppConstants;
-
-import com.example.proyecto_iot.R;
 
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
