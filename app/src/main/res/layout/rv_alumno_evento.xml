@@ -106,6 +106,7 @@
         android:text="TextView"
         android:textColor="#B9B9B9"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageEvento"
         app:layout_constraintTop_toBottomOf="@+id/imageEvento" />
@@ -120,6 +121,7 @@
         android:text="TextView"
         android:textColor="#B9B9B9"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textFecha"
         app:layout_constraintEnd_toEndOf="@+id/imageEvento" />
 
@@ -132,6 +134,7 @@
         android:text="TextView"
         android:textColor="#B9B9B9"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textFecha"
         app:layout_constraintEnd_toStartOf="@+id/textLugar"
         app:layout_constraintStart_toEndOf="@+id/textFecha" />
