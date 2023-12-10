@@ -16,6 +16,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -201,9 +204,9 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                             return;
                         }
                         if (savedInstanceState == null) { // activity recien creada
-                            if (!isFromDelegado){
+                            if (!isFromDelegado) {
                                 binding.fragmentApoyos.setVisibility(View.GONE);
-                                if (evento.getEstado().equals("activo")){
+                                if (evento.getEstado().equals("activo")) {
                                     if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
                                         getSupportFragmentManager().beginTransaction()
                                                 .setReorderingAllowed(true)
@@ -219,8 +222,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                                         binding.buttonSubirFotos.setVisibility(View.GONE);
                                         binding.textView26.setText("No tiene acceso a las fotos.");
                                     }
-                                }
-                                else {
+                                } else {
                                     if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
                                         getSupportFragmentManager().beginTransaction()
                                                 .setReorderingAllowed(true)
@@ -237,18 +239,18 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                                         binding.textView26.setText("No tiene acceso a las fotos");
                                     }
                                 }
-                            }else {
+                            } else {
                                 binding.fragmentEventoButtons.setVisibility(View.GONE);
                                 binding.fragmentApoyos.setVisibility(View.VISIBLE);
-                                if (!evento.getEstado().equals("activo")){
+                                if (!evento.getEstado().equals("activo")) {
                                     binding.buttonSubirFotos.setVisibility(View.GONE);
-                                }else {
+                                } else {
                                     binding.buttonSubirFotos.setVisibility(View.VISIBLE);
                                     binding.buttonEditFloating.setVisibility(View.VISIBLE);
                                 }
                             }
                         }
-                    }catch (IllegalStateException e){
+                    } catch (IllegalStateException e) {
                         Log.d("msg-test", "Caso illegalState");
                         finish();
                     }
@@ -286,7 +288,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                                     if (fotoList.isEmpty()) {
                                         binding.textView26.setVisibility(View.VISIBLE);
                                         binding.imageView12.setVisibility(View.VISIBLE);
-                                    }else {
+                                    } else {
                                         adapter.notifyDataSetChanged();
                                     }
                                 });
@@ -315,17 +317,17 @@ public class AlumnoEventoActivity extends AppCompatActivity {
 
         ImageView imagenFoto = bottomSheetView.findViewById(R.id.imageFoto);
         Button botonSubirFoto = bottomSheetView.findViewById(R.id.buttonDialogSubirFoto);
+        EditText inputDescripcion = bottomSheetView.findViewById(R.id.inputDescripcion);
         progressBar = bottomSheetView.findViewById(R.id.progressBarSubirFoto);
 
         imagenFoto.setImageURI(imageUri);
-        botonSubirFoto.setEnabled(true);
         botonSubirFoto.setOnClickListener(view -> {
             botonSubirFoto.setEnabled(false);
             progressBar.setVisibility(View.VISIBLE);
 
             // subir foto a firestore y storage
-            EditText inputDescripcion = bottomSheetView.findViewById(R.id.inputDescripcion);
-            subirFoto(inputDescripcion.getText().toString());
+            String descripcion = inputDescripcion.getText().toString().trim();
+            subirFoto(descripcion);
         });
 
         bottomSheetDialog.setContentView(bottomSheetView);
@@ -333,6 +335,7 @@ public class AlumnoEventoActivity extends AppCompatActivity {
     }
 
     private void subirFoto(String descripcion) {
+
         Foto fotoNueva = new Foto();
         fotoNueva.setFechaHoraSubida(com.google.firebase.Timestamp.now());
         fotoNueva.setDescripcion(descripcion);
@@ -357,7 +360,6 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                         Log.d("msg-test", "error");
                     }
                 });
-
     }
 
     private void subirFotoFirestore(Foto fotoNueva) {

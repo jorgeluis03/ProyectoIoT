@@ -245,6 +245,8 @@ public class AlumnoDonacionesFragment extends Fragment {
                     if (!inputMonto.getText().toString().equals("") && fotoAgregada){
                         monto = Float.parseFloat(inputMonto.getText().toString());
                         buttonRegistrarDonacion.setEnabled(true);
+                    } else if (inputMonto.getText().toString().equals("")) {
+                        buttonRegistrarDonacion.setEnabled(false);
                     }
                 }
 

@@ -51,13 +51,16 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
         holder.foto = foto;
 
         ImageView imagenFoto = holder.itemView.findViewById(R.id.imageFoto);
+        TextView textDescripcion = holder.itemView.findViewById(R.id.textDescipcionFoto);
+        TextView textFechaPublicacion = holder.itemView.findViewById(R.id.textFechaPublicación);
+        TextView textNombre = holder.itemView.findViewById(R.id.textAlumnoNombre);
+
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL); // Almacenamiento en cache
         Glide.with(getContext())
                 .load(foto.getFotoUrl())
                 .apply(requestOptions)
                 .into(imagenFoto);
-
-        TextView textNombre = holder.itemView.findViewById(R.id.textAlumnoNombre);
+        textDescripcion.setText(foto.getDescripcion());
 
         db.collection("alumnos")
                 .document(foto.getAlumnoID())
@@ -65,16 +68,16 @@ public class ListaFotosEventoAdapter extends RecyclerView.Adapter<ListaFotosEven
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Alumno alumno = task.getResult().toObject(Alumno.class);
-                        textNombre.setText(alumno.getFullName() + ":");
+                        if (foto.getDescripcion().equals("")){
+                            textNombre.setText(alumno.getNombre());
+                        }
+                        else{
+                            textNombre.setText(alumno.getNombre() + ":");
+                        }
                     } else {
                         Log.d("msg-test", "error buscando alumno de foto: " + task.getException().getMessage());
                     }
                 });
-
-        TextView textDescripcion = holder.itemView.findViewById(R.id.textDescipcionFoto);
-        textDescripcion.setText(foto.getDescripcion());
-
-        TextView textFechaPublicacion = holder.itemView.findViewById(R.id.textFechaPublicación);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM dd, yyyy");
         String fechaFormateada = simpleDateFormat.format(foto.getFechaHoraSubida().toDate());
