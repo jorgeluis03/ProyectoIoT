@@ -1,8 +1,12 @@
 package com.example.proyecto_iot.delegadoGeneral;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -23,6 +27,10 @@ import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -38,6 +46,7 @@ public class Perfil_dg extends AppCompatActivity {
     Uri uriImgPerfilSeleccionada;
     ProgressBar progressBar, progressBarInfo;
     ImageButton btnBack;
+    String encodedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,21 +80,12 @@ public class Perfil_dg extends AppCompatActivity {
 
         });
 
-        //cambiar de foto de perfil al hacer click en la imagen y mostrarla en el layout
-        imgPerfil.setOnClickListener(view -> {
-
-            ImagePicker.with(this)
-                    .cropSquare()
-                    .compress(512)
-                    .maxResultSize(512,512)
-                    .createIntent(new Function1<Intent, Unit>() {
-                        @Override
-                        public Unit invoke(Intent intent) {
-                            imgPerfilLauncher.launch(intent);
-                            return null;
-                        }
-                    });
+        binding.frameLayoutImage.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            pickImage.launch(intent);
         });
+
 
         btnBack.setOnClickListener(view -> {
             getOnBackPressedDispatcher().onBackPressed();
@@ -107,20 +107,10 @@ public class Perfil_dg extends AppCompatActivity {
         //actualizar el nomrbre y apelldio del usuario
         usuarioActual.setNombre(newNombre);
         usuarioActual.setApellidos(newApellido);
+        usuarioActual.setFotoUrl(encodedImage);
 
         setInProgress(true);
-
-        //antes de actualizar cualquier usuario obtenedremos el almacenamiento y agregar la Uri de imagen
-        if(uriImgPerfilSeleccionada!=null){
-            FirebaseUtilDg.getPerfilUsuarioActualPicStorageRef().putFile(uriImgPerfilSeleccionada)
-                    .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
-                            subirAlFirestore();
-                        }
-                    });
-        }else {
-            subirAlFirestore();
-        }
+        subirAlFirestore();
 
 
     }
@@ -137,15 +127,6 @@ public class Perfil_dg extends AppCompatActivity {
     public void getDatosUsuario(){
         setInProgress(true);
 
-        //obtener la foto mia de FirebaseStorage (Descargar archivos)
-        FirebaseUtilDg.getPerfilUsuarioActualPicStorageRef().getDownloadUrl()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                        Uri uri = task.getResult();
-                        //carga el uri en la ImageView
-                        AndroidUtilDg.setPerfilImg(this,uri,imgPerfil);
-                    }
-                });
 
         FirebaseUtilDg.getUsuarioActualDetalles().get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
@@ -155,6 +136,9 @@ public class Perfil_dg extends AppCompatActivity {
                 textFielapellido.getEditText().setText(usuarioActual.getApellidos());
                 textFielcorreo.getEditText().setText(usuarioActual.getCorreo());
                 textFielcodigo.getEditText().setText(usuarioActual.getCodigo());
+                byte[] bytes = Base64.decode(usuarioActual.getFotoUrl(),Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                binding.imageViewPerfildg.setImageBitmap(bitmap);//cargar la imagen
 
             }
         });
@@ -186,6 +170,36 @@ public class Perfil_dg extends AppCompatActivity {
 
         }
     }
+
+    private Bitmap getBitmapFromEncodedImage(String encodedImage){ //obtiene la imagen url y la pasa a formato Bitmap para mostrarla
+        byte[] bytes = Base64.decode(encodedImage,Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+    }
+    private String encodeImage(Bitmap bitmap){
+        int previewWidth =150;
+        int previewHeigth =bitmap.getHeight()*previewWidth/bitmap.getWidth();
+        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap,previewWidth,previewHeigth,false);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        previewBitmap.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes,Base64.DEFAULT);
+    }
+    private ActivityResultLauncher<Intent> pickImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),result ->{
+        if(result.getResultCode()==RESULT_OK){
+            if(result.getData()!=null){
+                Uri imageUri = result.getData().getData();
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    binding.imageViewPerfildg.setImageBitmap(bitmap);
+                    binding.textAgregarImagen.setVisibility(View.GONE);
+                    encodedImage = encodeImage(bitmap);//pone la imagen como url
+                }catch (FileNotFoundException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    });
 
     //Flecha para regrasar al inicio
     @Override

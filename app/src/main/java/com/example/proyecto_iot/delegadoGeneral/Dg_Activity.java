@@ -12,8 +12,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -90,21 +93,18 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
 
     }
     public void cargarDatosDrawer(){
-        //obtener la foto mia de FirebaseStorage (Descargar archivos)
-        FirebaseUtilDg.getPerfilUsuarioActualPicStorageRef().getDownloadUrl()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                        Uri uri = task.getResult();
-                        //carga el uri en la ImageView
-                        AndroidUtilDg.setPerfilImg(this,uri,imgPerfilDrawer);
-                    }
-                });
+
         FirebaseUtilDg.getUsuarioActualDetalles().get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 delegadoActual = task.getResult().toObject(Alumno.class);
                 usernamePerfilDrawer.setText(delegadoActual.getNombre()+' '+delegadoActual.getApellidos());
+                imgPerfilDrawer.setImageBitmap(getBitmapFromEncodedImage(delegadoActual.getFotoUrl()));
             }
         });
+    }
+    private Bitmap getBitmapFromEncodedImage(String encodedImage){ //obtiene la imagen url y la pasa a formato Bitmap para mostrarla
+        byte[] bytes = Base64.decode(encodedImage,Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
     }
     public void getFCMToken(){
         //recupero el token
