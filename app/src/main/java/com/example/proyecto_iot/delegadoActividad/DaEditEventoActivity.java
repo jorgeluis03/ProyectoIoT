@@ -1,15 +1,5 @@
 package com.example.proyecto_iot.delegadoActividad;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,31 +20,29 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.cometchat.chat.constants.CometChatConstants;
-import com.cometchat.chat.core.AppSettings;
-import com.cometchat.chat.core.CometChat;
-import com.cometchat.chat.exceptions.CometChatException;
-import com.cometchat.chat.models.Group;
-import com.cometchat.chat.models.User;
-import com.example.proyecto_iot.AppConstants;
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Delegado_select_map_activity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
+import com.example.proyecto_iot.alumno.Entities.Chat;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Entities.Foto;
+import com.example.proyecto_iot.alumno.Utils.FirebaseUtilAl;
 import com.example.proyecto_iot.databinding.ActivityDaEditEventoBinding;
 import com.example.proyecto_iot.delegadoActividad.Adapters.CarouselAdapter;
-import com.example.proyecto_iot.delegadoActividad.Adapters.ListaEventosActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
-import com.example.proyecto_iot.inicioApp.ConfirmNewPasswActivity;
-import com.example.proyecto_iot.inicioApp.IngresarActivity;
-import com.example.proyecto_iot.inicioApp.LoginActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -86,11 +74,11 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class DaEditEventoActivity extends AppCompatActivity {
     ActivityDaEditEventoBinding binding;
@@ -336,61 +324,25 @@ public class DaEditEventoActivity extends AppCompatActivity {
                         }
                     }
 
-                    //crear y obtener id de grupo de cometchat
-                    String region = AppConstants.REGION;
-                    String appID = AppConstants.APP_ID;
+                    String chatID = "evento"+Date.from(Instant.now());
+                    crearChat(chatID);
 
-                    AppSettings appSettings = new AppSettings.AppSettingsBuilder()
-                            .subscribePresenceForAllUsers()
-                            .setRegion(region)
-                            .autoEstablishSocketConnection(true)
-                            .build();
+                    guardarLugar(datoRecibido);
+                    eventoGuardar.setActividad(currentActividad.getNombre());
+                    eventoGuardar.setActividadId(currentActividad.getId());
+                    eventoGuardar.setDelegado(userUid);
+                    eventoGuardar.setChatID(chatID);
+                    eventoGuardar.setDescripcion(binding.textDescripEvent.getText().toString());
+                    eventoGuardar.setEstado("activo");
+                    eventoGuardar.setFecha(binding.textDateEvent.getText().toString());
+                    eventoGuardar.setFechaHoraCreacion(Date.from(Instant.now()));
+                    eventoGuardar.setHora(binding.textHourEvent.getText().toString());
+                    eventoGuardar.setTitulo(binding.textTitleEvent.getText().toString());
+                    eventoGuardar.setLugar(binding.textPlaceEvent.getText().toString());
+                    eventoGuardar.setFotoUrl("");
 
-                    CometChat.init(DaEditEventoActivity.this, appID, appSettings, new CometChat.CallbackListener<String>() {
-                        @Override
-                        public void onSuccess(String s) {
-                            Log.d("msg-test", "Initialization completed successfully");
-
-                            // creando grupo cometchat
-                            String guid = UUID.randomUUID().toString();
-                            String groupName = binding.textTitleEvent.getText().toString();
-                            Group newGroup = new Group(guid, groupName, CometChatConstants.GROUP_TYPE_PUBLIC, null);
-                            CometChat.createGroup(newGroup, new CometChat.CallbackListener<Group>() {
-                                @Override
-                                public void onSuccess(Group group) {
-                                    Log.d("msg-test", "Group created successfully: " + group.toString());
-
-                                    guardarLugar(datoRecibido);
-                                    eventoGuardar.setActividad(currentActividad.getNombre());
-                                    eventoGuardar.setActividadId(currentActividad.getId());
-                                    eventoGuardar.setDelegado(userUid);
-                                    eventoGuardar.setChatID(group.getGuid());
-                                    eventoGuardar.setDescripcion(binding.textDescripEvent.getText().toString());
-                                    eventoGuardar.setEstado("activo");
-                                    eventoGuardar.setFecha(binding.textDateEvent.getText().toString());
-                                    eventoGuardar.setFechaHoraCreacion(Date.from(Instant.now()));
-                                    eventoGuardar.setHora(binding.textHourEvent.getText().toString());
-                                    eventoGuardar.setTitulo(binding.textTitleEvent.getText().toString());
-                                    eventoGuardar.setLugar(binding.textPlaceEvent.getText().toString());
-                                    eventoGuardar.setFotoUrl("");
-
-                                    subirNuevoEventoFirestore();
-                                    subirFoto(imageUri, eventoGuardar.getFechaHoraCreacion().toString());
-
-                                }
-
-                                @Override
-                                public void onError(CometChatException e) {
-                                    Log.d("msg-test", "Group creation failed with exception: " + e.getMessage());
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onError(CometChatException e) {
-                            Log.d("msg-test", "Initialization failed with exception: " + e.getMessage());
-                        }
-                    });
+                    subirNuevoEventoFirestore();
+                    subirFoto(imageUri, eventoGuardar.getFechaHoraCreacion().toString());
                 }
             }else {
                 String mensaje;
@@ -458,7 +410,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
+                if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
                     imageUri = result.getData().getData();
                     abrirDialogSubirFoto();
                 }
@@ -467,7 +419,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> openManyImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
+                if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
                     Log.d("msg-test","ok result");
                     Log.d("msg-test","result.getData: "+ (result.getData() != null) + (result.getData().getClipData() != null));
                     if (result.getData() != null) {
@@ -937,9 +889,17 @@ public class DaEditEventoActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         mostrarConfirmacionExit();
         return super.onKeyDown(0, event);
+    }
+
+    private void crearChat(String chatID){
+        // creando chat
+        Chat chat = new Chat(chatID, Arrays.asList(userUid), Timestamp.now(), ""); // agregando a delegado de activ como usuario por defecto de chat
+        FirebaseUtilAl.getChatRoomReference(chatID).set(chat);
+
     }
 }

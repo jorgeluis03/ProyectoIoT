@@ -15,7 +15,7 @@
         android:layout_height="50dp"
         android:padding="2dp"
         android:layout_margin="10dp"
-        android:src="@drawable/img_bat"
+        app:srcCompat="@drawable/img_bat"
         android:background="@drawable/circle_bg"/>
 
     <RelativeLayout
@@ -50,7 +50,7 @@
                 android:id="@+id/buttonEditarActivi"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_edit"
+                app:srcCompat="@drawable/ic_edit"
                 android:layout_marginEnd="10dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 app:tint="@color/grey" />
@@ -59,7 +59,7 @@
                 android:layout_toRightOf="@+id/buttonEditarActivi"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_delete"
+                app:srcCompat="@drawable/ic_delete"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 app:tint="@color/grey" />
 

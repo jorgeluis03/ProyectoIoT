@@ -30,7 +30,7 @@
         android:id="@+id/textEstado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_round_box"
+        android:background="@drawable/shape_round_box_padding"
         android:backgroundTint="@color/azul_background"
         android:text="Finalizado"
         android:textColor="@color/white"

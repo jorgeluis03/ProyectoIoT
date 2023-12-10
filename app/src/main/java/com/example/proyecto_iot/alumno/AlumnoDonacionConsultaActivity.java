@@ -188,15 +188,15 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
 
 
         /////////////////////
-        Button Comollegar = findViewById(R.id.Comollegar);
-        Comollegar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AlumnoDonacionConsultaActivity.this, Delegado_select_map_activity.class);
-                Log.d("MiApp", "Iniciando MapaDelegadoActividad"); // Agregar este log
-                startActivity(intent); // Iniciar la nueva actividad
-            }
-        });
+//        Button Comollegar = findViewById(R.id.Comollegar);
+//        Comollegar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(AlumnoDonacionConsultaActivity.this, Delegado_select_map_activity.class);
+//                Log.d("MiApp", "Iniciando MapaDelegadoActividad"); // Agregar este log
+//                startActivity(intent); // Iniciar la nueva actividad
+//            }
+//        });
         //// trae nombre del lugar del mapa
 
 

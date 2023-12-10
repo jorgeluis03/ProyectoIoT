@@ -25,4 +25,10 @@
     <color name="letter_short_dg">#B7B8BC</color>
     <color name="backgroud_card_dg">#333436</color>
     <color name="btn_backgroud_dg">#393A3C</color>
+
+    
+    <!-- CHAT -->
+    <color name="chat_mensaje_derecha">#2B1292</color>
+    <color name="chat_mensaje_izquierda">#373E4E</color>
+
 </resources>

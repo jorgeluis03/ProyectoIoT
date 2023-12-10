@@ -1,25 +1,21 @@
 package com.example.proyecto_iot.delegadoGeneral;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.proyecto_iot.R;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityPerfilDgBinding;
 import com.example.proyecto_iot.delegadoGeneral.utils.AndroidUtilDg;
@@ -165,7 +161,7 @@ public class Perfil_dg extends AppCompatActivity {
     }
 
     ActivityResultLauncher<Intent> imgPerfilLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),result -> {
-       if(result.getResultCode()== Activity.RESULT_OK){
+       if(result.getResultCode()== AppCompatActivity.RESULT_OK){
             Intent data = result.getData();
             if(data!=null && data.getData()!=null){
                 uriImgPerfilSeleccionada = data.getData();

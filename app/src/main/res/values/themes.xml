@@ -4,7 +4,7 @@
 
 
         <item name="colorPrimary">@color/verde_bat</item>
-        <item name="android:toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
+        <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
 
     </style>
     <style name="ShapeAppearanceOverlay.FloatingActionButton" parent="">
@@ -17,18 +17,18 @@
         <item name="colorPrimary">@color/verde_bat</item>
         <item name="colorOnSurface">@color/letra_clara</item>
         <item name="android:statusBarColor">@color/azul_background</item>
-        <item name="android:toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
+        <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
         <item name="android:screenOrientation">portrait</item>
     </style>
 
     <style name="Alumno" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:fontFamily">@font/nunito_sans</item>
+        <item name="fontFamily">@font/nunito_sans</item>
         <item name="colorPrimaryDark">@color/azul_background</item>
         <item name="android:screenOrientation">portrait</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
     </style>
     <style name="Da" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:fontFamily">@font/nunito_sans</item>
+        <item name="fontFamily">@font/nunito_sans</item>
         <item name="colorPrimaryDark">@color/azul_background</item>
         <item name="colorPrimary">@color/verde_bat</item>
         <item name="android:screenOrientation">portrait</item>
@@ -36,7 +36,7 @@
     </style>
 
     <style name="AlumnoNotificacionRV" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:fontFamily">@font/nunito_sans</item>
+        <item name="fontFamily">@font/nunito_sans</item>
         <item name="colorPrimary">#0A0E19</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:screenOrientation">portrait</item>
@@ -75,6 +75,7 @@
         <item name="android:statusBarColor">@color/backgroud_element_dg</item>
         <item name="android:navigationBarColor">@color/black</item>
         <item name="android:screenOrientation">portrait</item>
+<<<<<<< HEAD
         <item name="background">@color/backgroud_dg</item>
         <item name="android:toolbarStyle">@style/ToolbarStyle</item>
 
@@ -83,6 +84,18 @@
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/backgroud_element_dg</item>
         <item name="android:titleTextAppearance">@style/ToolbarTextAppearance</item>
+=======
+
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
+
+        <item name="android:itemBackground">@color/azul_background</item>
+        <item name="iconTint">@color/letra_clara</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="background">@color/azul_background</item>
+        <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
+>>>>>>> develop
     </style>
 
     <style name="ToolbarTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
@@ -90,9 +103,14 @@
     </style>
 
     <style name="BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+<<<<<<< HEAD
         <item name="android:background">@color/backgroud_element_dg</item>
+=======
+
+        <item name="background">@color/azul_background</item>
+>>>>>>> develop
         <item name="android:itemBackground">@color/letra_clara</item>
-        <item name="android:iconTint">@color/letra_clara</item>
+        <item name="iconTint">@color/letra_clara</item>
         <item name="android:itemTextAppearance">@style/BottomNavTextAppearance</item>
     </style>
 
@@ -112,9 +130,9 @@
     </style>
 
     <style name="ThemeOverlay.App.Switch" parent="">
-        <item name="android:colorControlNormal">#00FFB3</item>
-        <item name="android:colorControlActivated">#22755C</item>
-        <item name="android:colorControlHighlight">#22755C</item>
+        <item name="colorControlNormal">#00FFB3</item>
+        <item name="colorControlActivated">#22755C</item>
+        <item name="colorControlHighlight">#22755C</item>
     </style>
 
     <style name="Widget.AppTheme.MaterialDatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
