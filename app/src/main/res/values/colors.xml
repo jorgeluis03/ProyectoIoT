@@ -7,6 +7,7 @@
     <color name="verde">#87D819</color> <!-- Cambia el código de color a tu preferencia -->
     <color name="rojo">#C70039</color>
     <color name="buscadorHint">#BCBCBC</color>
+    <color name="overlay">#80000000</color>
 
     <!-- LOGIN -->
     <color name="azul_login">#0F4BD9</color>
