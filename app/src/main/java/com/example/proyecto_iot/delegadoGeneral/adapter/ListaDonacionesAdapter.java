@@ -71,7 +71,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
             montoDonacion = itemView.findViewById(R.id.montoDonacion);
             btnAceptar = itemView.findViewById(R.id.btnAceptarDonacion);
             btnRechazar = itemView.findViewById(R.id.btnRechazarDonacion);
-            btnVerDonacion = itemView.findViewById(R.id.btnVerDonacion);
+            //btnVerDonacion = itemView.findViewById(R.id.btnVerDonacion);
 
             btnAceptar.setOnClickListener(view -> {
                 new MaterialAlertDialogBuilder(context)
