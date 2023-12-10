@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
@@ -162,7 +163,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
                 .commit();
 
         if (evento.getEstado().equals("inactivo")){
-
+            binding.relativeInputChat.setVisibility(View.GONE);
         }
     }
 }

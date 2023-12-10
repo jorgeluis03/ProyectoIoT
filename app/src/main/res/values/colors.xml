@@ -17,6 +17,6 @@
     <color name="letra_gris">#797D7F</color>
     
     <!-- CHAT -->
-    <color name="chat_mensaje_derecha">#2B1292</color>
+    <color name="chat_mensaje_derecha">#0F4BD9</color>
     <color name="chat_mensaje_izquierda">#373E4E</color>
 </resources>
