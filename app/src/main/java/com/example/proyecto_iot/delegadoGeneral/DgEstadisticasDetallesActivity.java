@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
@@ -18,6 +19,7 @@ import com.example.proyecto_iot.databinding.ActivityDgEstadisticasDetallesBindin
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaDonacionesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.dto.DonacionDto;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -32,6 +34,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
     ProgressBar progressBar;
     ListenerRegistration listenerRegistration;
     List<DonacionDto>  listaDonaciones;
+    ListaDonacionesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,61 +61,15 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
 
         FirebaseUtilDg.getDonaciones().get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
-
+                Log.d("msg-test","ok");
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                    String codigoDonante = documentSnapshot.getId();
+                    String codigoDonante = documentSnapshot.getId();//codigo donante
 
-                    Log.d("msg-don", documentSnapshot.getId());
-
-                    listenerRegistration = FirebaseUtilDg.getColeccionIdDonantes(codigoDonante)
-                            .whereEqualTo("estado","por validar")
-                            .addSnapshotListener((value, error) -> {
-                                if (error != null) {
-                                    Log.w("msg-don", "Listen failed.", error);
-                                    return;
-                                }
-                                listaDonaciones = new ArrayList<>();
-
-                                for (QueryDocumentSnapshot snapshot : value) {
-                                    String idDocDonacion = snapshot.getId();
-                                    FirebaseUtilDg.getDonante(codigoDonante)
-                                            .get().addOnCompleteListener(task1 -> {
-                                                if (task1.isSuccessful()){
-
-
-
-                                                    DocumentSnapshot document = task1.getResult().getDocuments().get(0);
-                                                    String nombreDonante = document.getString("nombre")+ ' '+ document.getString("apellidos");
-                                                    Donacion dona = snapshot.toObject(Donacion.class);
-                                                    DonacionDto donacionDto = new DonacionDto(idDocDonacion,codigoDonante,dona.getFecha()+' '+ dona.getHora(),dona.getMonto(),nombreDonante,dona.getFotoQR());
-
-                                                    listaDonaciones.add(donacionDto);
-
-                                                    // aca va el adapter
-                                                    ListaDonacionesAdapter adapter = new ListaDonacionesAdapter();
-                                                    adapter.setLista(listaDonaciones);
-                                                    adapter.setContext(this);
-
-                                                    recyclerView.setAdapter(adapter);
-                                                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-                                                    setInProgress(false);
-                                                }
-
-                                            });
-
-
-                                }
-                                if(listaDonaciones.isEmpty()){
-                                    setInProgress(false);
-                                }
-
-
-
-                            });
 
 
                 }
+
+
 
 
 
@@ -120,6 +77,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
 
 
         });
+
 
     }
     public void setInProgress(boolean inProgress){

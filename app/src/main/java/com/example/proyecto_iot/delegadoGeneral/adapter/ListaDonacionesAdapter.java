@@ -73,6 +73,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
             btnRechazar = itemView.findViewById(R.id.btnRechazarDonacion);
             //btnVerDonacion = itemView.findViewById(R.id.btnVerDonacion);
 
+            /*
             btnAceptar.setOnClickListener(view -> {
                 new MaterialAlertDialogBuilder(context)
                         .setTitle("Validar")
@@ -118,6 +119,9 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                         })
                         .show();
             });
+
+             */
+            /*
             btnVerDonacion.setOnClickListener(view -> {
                 Log.d("Debug", "Botón Ver Donación presionado");
                 Log.d("Debug", "URL de la imagen: " + donacionDto.getFotoDonante());
@@ -146,7 +150,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
 
                 dialog.show();
             });
-
+*/
 
 
         }
