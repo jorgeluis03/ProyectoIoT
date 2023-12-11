@@ -87,9 +87,17 @@ public class Dg_actividadesFragment extends Fragment {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
+                                ArrayList<Actividades> actividadesArrayList;
                                 FirebaseUtilDg.getActividadesCollection().document(documentReference.getId())
                                                 .update("id",documentReference.getId());
-                                FirebaseUtilDg.getCollAlumnos().document(usuarioDelegado.getId()).update("actividadesId",usuarioDelegado.getActividadesId().add(new Actividades(documentReference.getId(), actividad.getNombre(), actividad.getEstado())));
+                                actividadesArrayList = usuarioDelegado.getActividadesId();
+                                if(actividadesArrayList==null){
+                                    actividadesArrayList = new ArrayList<>();
+                                }
+                                actividadesArrayList.add(new Actividades(documentReference.getId(), actividad.getNombre(), actividad.getEstado()));
+
+
+                                FirebaseUtilDg.getCollAlumnos().document(usuarioDelegado.getId()).update("actividadesId",actividadesArrayList);
                                 listaAct.add(actividad);
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(getContext(), "Actividad agregada", Toast.LENGTH_SHORT).show();

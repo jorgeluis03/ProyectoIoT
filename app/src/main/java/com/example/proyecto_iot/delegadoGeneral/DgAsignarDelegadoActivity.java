@@ -111,7 +111,6 @@ public class DgAsignarDelegadoActivity extends AppCompatActivity implements List
         adapter = new ListaDelegadosAdapter(options,this);
         recyclerViewDelegados.setAdapter(adapter);
         adapter.setOnAlumnoSelectedListener(this);
-        Log.d("msg-fire","hassta aca");
         recyclerViewDelegados.setLayoutManager(new LinearLayoutManager(this));
         adapter.startListening();
 
