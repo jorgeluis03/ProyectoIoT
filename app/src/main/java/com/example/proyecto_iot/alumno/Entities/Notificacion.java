@@ -7,10 +7,10 @@ import java.util.concurrent.TimeUnit;
 public class Notificacion {
     private String texto;
     private Date hora;
-
-    public Notificacion(String texto, String hora){
-        this.texto = texto;
-    }
+    private String tipo; //deleteEvento, updateEvento, donateAccept
+    private Evento evento;
+    private Donacion donacion;
+    private String codigoAlumno;
 
     public String getTexto() {
         return texto;
@@ -42,5 +42,37 @@ public class Notificacion {
             fromNow = "hace "+ (int)TimeUnit.MILLISECONDS.toDays(diff)%30 + " meses";
         }
         return fromNow;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
+
+    public Donacion getDonacion() {
+        return donacion;
+    }
+
+    public void setDonacion(Donacion donacion) {
+        this.donacion = donacion;
+    }
+
+    public String getCodigoAlumno() {
+        return codigoAlumno;
+    }
+
+    public void setCodigoAlumno(String codigoAlumno) {
+        this.codigoAlumno = codigoAlumno;
     }
 }
