@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Entities.Notificacion;
 import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
 import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
@@ -47,7 +48,9 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEventosActividadesAdapter.EventoAViewHolder> {
@@ -295,7 +298,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                                                     Log.d("msg-test","Se eliminó apoyo de evento");
                                                     db.collection("alumnos").document(task1.getResult().getId())
                                                             .collection("eventos").document("evento"+evento.getFechaHoraCreacion()).delete();
-                                                    //notifyFirebase(apoyoDelete.getId(), "deleteEvento");
+                                                    notifyFirebase(apoyoDelete.getId(), "deleteEvento", evento.getTitulo());
                                                 })
                                                 .addOnFailureListener(er -> Log.d("msg-test", "No se pudo eliminar"));
                                     }
@@ -333,13 +336,22 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 });
     }
 
-    /*private void notifyFirebase(String userId, String categoria) {
-
+    //delete Evento
+    private void notifyFirebase(String userId, String categoria, String eventoTitulo) {
+        Notificacion notificacion = new Notificacion();
+        notificacion.setTipo(categoria);
+        notificacion.setHora(Date.from(Instant.now()));
+        notificacion.setTexto("Se eliminó el evento "+eventoTitulo);
         db.collection("alumnos").document(userId)
                 .collection("notificaciones")
-                .add()
+                .add(notificacion)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "notificacion de evento eliminado");
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
     }
-     */
 
     public void enviarNotificacion(Evento evento, String codigo) {
         //current username, message, currentUserId, otherUserToken
