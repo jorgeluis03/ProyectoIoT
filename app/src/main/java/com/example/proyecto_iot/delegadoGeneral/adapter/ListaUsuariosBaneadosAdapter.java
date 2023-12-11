@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
+import com.example.proyecto_iot.delegadoGeneral.utils.AndroidUtilDg;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -50,6 +51,8 @@ public class ListaUsuariosBaneadosAdapter extends FirestoreRecyclerAdapter<Alumn
                                 })
                                 .addOnFailureListener(e ->
                                         Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show());
+
+                        AndroidUtilDg.enviarCorreo(model,"desbaneado");
 
                     })
                     .show();

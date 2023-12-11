@@ -22,7 +22,9 @@ import com.example.proyecto_iot.databinding.FragmentDgActividadesBinding;
 import com.example.proyecto_iot.delegadoGeneral.CrearActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActividadesAdapter;
+import com.example.proyecto_iot.delegadoGeneral.dto.ActividadesDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -86,6 +88,17 @@ public class Dg_actividadesFragment extends Fragment {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
+                                ArrayList<Actividades> actividadesArrayList;
+                                FirebaseUtilDg.getActividadesCollection().document(documentReference.getId())
+                                                .update("id",documentReference.getId());
+                                actividadesArrayList = usuarioDelegado.getActividadesId();
+                                if(actividadesArrayList==null){
+                                    actividadesArrayList = new ArrayList<>();
+                                }
+                                actividadesArrayList.add(new Actividades(documentReference.getId(), actividad.getNombre(), actividad.getEstado()));
+
+
+                                FirebaseUtilDg.getCollAlumnos().document(usuarioDelegado.getId()).update("actividadesId",actividadesArrayList);
                                 actividad.setId(documentReference.getId());
                                 listaAct.add(actividad);
                                 adapter.notifyDataSetChanged();
@@ -106,7 +119,6 @@ public class Dg_actividadesFragment extends Fragment {
                         listaAct=new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Actividades actividades = document.toObject(Actividades.class);
-                            actividades.setId(document.getId());
                             listaAct.add(actividades);
                         }
 
@@ -147,7 +159,15 @@ public class Dg_actividadesFragment extends Fragment {
                             listaAct.set(position, actividad);
                             adapter.notifyItemChanged(position);
                         }
+                        ArrayList<Actividades> editarActi;
 
+                        editarActi = usuarioDelegado.getActividadesId();
+                        if(editarActi==null){
+                            editarActi = new ArrayList<>();
+                        }
+                        editarActi.add(new Actividades(actividad.getId(), actividad.getNombre(), actividad.getEstado()));
+
+                        FirebaseUtilDg.getCollAlumnos().document(usuarioDelegado.getId()).update("actividadesId",editarActi);
                         Toast.makeText(getContext(),"Actividad actualizada",Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {

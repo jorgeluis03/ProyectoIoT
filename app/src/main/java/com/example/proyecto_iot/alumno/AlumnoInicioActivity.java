@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityAlumnoInicioBinding;
+import com.example.proyecto_iot.delegadoGeneral.dto.ActividadesDto;
+import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -60,7 +62,18 @@ public class AlumnoInicioActivity extends AppCompatActivity {
             if (task.isSuccessful()){
                 alumnoAutenticado = task.getResult().toObject(Alumno.class);
                 if (alumnoAutenticado.getEstado().equals("baneado")){
-                    cerrarSesion();
+                    cerrarSesion("Su cuenta ha sido baneada");
+                }
+                else if (alumnoAutenticado.getActividadesId()!=null) {
+                    boolean valido = false;
+                    for (Actividades a : alumnoAutenticado.getActividadesId()) {
+                        if (a.getEstado().equals("abierto")) {
+                            valido = true;
+                        }
+                    }
+                    if (valido) {
+                        cerrarSesion("Usted cuenta con nuevas actividades. Inicie sesión nuevamente para verlas.");
+                    }
                 }
             }
             else{
@@ -69,7 +82,7 @@ public class AlumnoInicioActivity extends AppCompatActivity {
         });
     }
 
-    private void cerrarSesion(){
+    private void cerrarSesion(String mensaje){
         FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
 
@@ -78,7 +91,7 @@ public class AlumnoInicioActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
-                Toast.makeText(this, "Su cuenta ha sido baneada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

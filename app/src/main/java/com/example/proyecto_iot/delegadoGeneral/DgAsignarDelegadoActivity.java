@@ -108,7 +108,6 @@ public class DgAsignarDelegadoActivity extends AppCompatActivity implements List
 
         FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
                 .setQuery(query, Alumno.class).build();
-
         adapter = new ListaDelegadosAdapter(options,this);
         recyclerViewDelegados.setAdapter(adapter);
         adapter.setOnAlumnoSelectedListener(this);

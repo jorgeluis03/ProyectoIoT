@@ -8,9 +8,9 @@ public class Notificacion {
     private String texto;
     private Date hora;
     private String tipo; //deleteEvento, updateEvento, donateAccept
-    private Evento evento;
-    private Donacion donacion;
-    private String codigoAlumno;
+    private Evento evento; // updateEvento
+    private Donacion donacion; //donateAccept
+    private String codigoAlumno; //donateAccept
 
     public String getTexto() {
         return texto;
@@ -28,7 +28,7 @@ public class Notificacion {
         this.hora = hora;
     }
 
-    public String getHoraFromNow(){
+    public String horaFromNow(){
         String fromNow;
         Date now = Date.from(Instant.now());
         long diff = now.getTime() - this.hora.getTime();

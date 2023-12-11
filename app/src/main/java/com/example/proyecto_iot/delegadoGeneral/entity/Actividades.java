@@ -17,6 +17,16 @@ public class Actividades implements Serializable {
 
     private Alumno delegadoActividad;
 
+
+    public Actividades() {
+    }
+
+    public Actividades(String id, String nombre, String estado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.estado = estado;
+    }
+
     public Alumno getDelegadoActividad() {
         return delegadoActividad;
     }
@@ -24,6 +34,7 @@ public class Actividades implements Serializable {
     public void setDelegadoActividad(Alumno delegadoActividad) {
         this.delegadoActividad = delegadoActividad;
     }
+
 
     public String getId() {
         return id;

@@ -174,7 +174,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-black"
                         android:text=""
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/online_green"
                         android:textSize="32sp"
                         android:textStyle="bold" />
 

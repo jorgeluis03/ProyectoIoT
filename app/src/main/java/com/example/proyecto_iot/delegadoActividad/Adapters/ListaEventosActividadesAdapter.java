@@ -23,6 +23,7 @@ import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Entities.Notificacion;
 import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
 import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
+import com.example.proyecto_iot.delegadoGeneral.dto.ActividadesDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;

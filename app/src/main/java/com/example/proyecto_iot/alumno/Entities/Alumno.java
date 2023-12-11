@@ -1,5 +1,6 @@
 package com.example.proyecto_iot.alumno.Entities;
 
+import com.example.proyecto_iot.delegadoGeneral.dto.ActividadesDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 
 import java.io.Serializable;
@@ -121,12 +122,12 @@ public class Alumno implements Serializable {
     public void setActividadesId(ArrayList<Actividades> actividadesId) {
         this.actividadesId = actividadesId;
     }
-    public String getFullNameFormal(){
+    public String fullNameFormal(){
         String[] nombre = this.nombre.split(" ");
         String[] last = this.apellidos.split(" ");
         return last[0]+", "+nombre[0];
     }
-    public String getFullName(){
+    public String fullName(){
         String[] nombre = this.nombre.split(" ");
         String[] last = this.apellidos.split(" ");
         return nombre[0]+" "+last[0];

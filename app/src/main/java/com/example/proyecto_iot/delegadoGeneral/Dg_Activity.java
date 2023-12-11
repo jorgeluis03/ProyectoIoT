@@ -45,7 +45,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.ktx.Firebase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -60,6 +63,7 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
     TextView usernamePerfilDrawer;
     View headerView;
     Alumno delegadoActual;
+    ListenerRegistration listenerRegistration;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,9 +106,11 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
     }
     public void cargarDatosDrawer(){
 
-        FirebaseUtilDg.getUsuarioActualDetalles().get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                delegadoActual = task.getResult().toObject(Alumno.class);
+
+        listenerRegistration = FirebaseUtilDg.getUsuarioActualDetalles().addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                delegadoActual = value.toObject(Alumno.class);
                 usernamePerfilDrawer.setText(delegadoActual.getNombre()+' '+delegadoActual.getApellidos());
                 /*
                 Glide.with(this)
