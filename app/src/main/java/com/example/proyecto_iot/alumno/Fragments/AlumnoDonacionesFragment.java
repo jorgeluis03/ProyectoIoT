@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
@@ -99,7 +100,7 @@ public class AlumnoDonacionesFragment extends Fragment {
     private Button buttonRegistrarDonacion;
     private final double OBJETIVO_KIT_TELECO = 100.0;
 
-
+    private ProgressBar progressBarRegistrarDonacion;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -122,7 +123,6 @@ public class AlumnoDonacionesFragment extends Fragment {
                         String rolUsuario = obtenerTipoAlumnoDesdeMemoria();
                         if(task.getResult().isEmpty()){
                             binding.textNoDonaciones.setVisibility(View.VISIBLE);
-                            actualizarTotalDonaciones(donacionesTotalesValidadas, rolUsuario);
                         }
                         else{
                             for (QueryDocumentSnapshot idDocument : task.getResult()) {
@@ -159,8 +159,6 @@ public class AlumnoDonacionesFragment extends Fragment {
                                 Log.d("FirebaseData", "------------------------ ");
                             }
                             adapter.setDonacionesTotalesValidadas(donacionesTotalesValidadas);
-                            actualizarTotalDonaciones(donacionesTotalesValidadas, rolUsuario);
-
 // Aplica la lógica de ordenamiento aquí
                             donationList.sort(new Comparator<Donacion>() {
                                 @Override
@@ -196,7 +194,6 @@ public class AlumnoDonacionesFragment extends Fragment {
                             }
                             adapter.notifyDataSetChanged();
                         }
-
                     } else {
                         Log.e("FirebaseData", "Error al obtener datos de Firestore: " + task.getException());
                     }
@@ -229,9 +226,9 @@ public class AlumnoDonacionesFragment extends Fragment {
             View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_donar, (ConstraintLayout) view.findViewById(R.id.bottomSheetContainer));
 
             // conf de botones de dialog donar
+            progressBarRegistrarDonacion = bottomSheetView.findViewById(R.id.progressBarRegistrarDonacion);
             buttonRegistrarDonacion = bottomSheetView.findViewById(R.id.buttonDialogDonar);
             buttonRegistrarDonacion.setOnClickListener(viewDialog -> {
-                buttonRegistrarDonacion.setEnabled(false);
                 subirDonacion();
             });
 
@@ -245,9 +242,11 @@ public class AlumnoDonacionesFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (!inputMonto.getText().toString().equals("") && fotoAgregada){
+                    if (!inputMonto.getText().toString().equals("") && fotoAgregada) {
                         monto = Float.parseFloat(inputMonto.getText().toString());
                         buttonRegistrarDonacion.setEnabled(true);
+                    } else if (inputMonto.getText().toString().equals("")) {
+                        buttonRegistrarDonacion.setEnabled(false);
                     }
                 }
 
@@ -306,6 +305,9 @@ public class AlumnoDonacionesFragment extends Fragment {
     }
 
     private void subirDonacion() {
+
+        buttonRegistrarDonacion.setEnabled(false);
+        progressBarRegistrarDonacion.setVisibility(View.VISIBLE);
 
         String fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
         String hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + " hrs";
@@ -395,6 +397,8 @@ public class AlumnoDonacionesFragment extends Fragment {
         NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerViewHost);
         NavController navController = NavHostFragment.findNavController(navHostFragment);
         navController.navigate(R.id.alumnoDonacionesFragment);
+
+        progressBarRegistrarDonacion.setVisibility(View.GONE);
         bottomSheetDialog.dismiss();
     }
 
@@ -406,7 +410,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                         buttonSubirImagen.setText(getImageName(uriFotoDonacion));
                         fotoAgregada = true;
 
-                        if (monto != null){
+                        if (monto != null) {
                             buttonRegistrarDonacion.setEnabled(true);
                         }
 
@@ -470,7 +474,7 @@ public class AlumnoDonacionesFragment extends Fragment {
 
                     JSONObject notificationObj = new JSONObject();
                     notificationObj.put("title", "Donación Aitel");
-                    notificationObj.put("body", "Ha llegado una nueva donación para Aitel de S/"+donacionNueva.getMonto());
+                    notificationObj.put("body", "Ha llegado una nueva donación para Aitel de S/" + donacionNueva.getMonto());
 
                     jsonObject.put("notification", notificationObj);
                     jsonObject.put("to", usuarioDg.getFcmToken());
@@ -488,30 +492,7 @@ public class AlumnoDonacionesFragment extends Fragment {
 
 
     }
-    private void actualizarTotalDonaciones(double donacionesTotalesValidadas, String rolUsuario) {
-        binding.textTotalDonado.setText("Total donado: S/." + donacionesTotalesValidadas);
 
-        LinearLayout linearLayoutEgresado = binding.linearLayout10; // Asegúrate de que el ID sea correcto
-        TextView textView120 = binding.textView120; // Asegúrate de que el ID sea correcto
-
-
-        if ("Egresado".equals(rolUsuario)) {
-            double faltanteParaObjetivo = OBJETIVO_KIT_TELECO - donacionesTotalesValidadas;
-            if (faltanteParaObjetivo >= 0) {
-                binding.textKitTeleco.setText("Estás a S/." + faltanteParaObjetivo + " para completar el Kit Teleco");
-            } else {
-                binding.textKitTeleco.setText("¡Has completado el Kit Teleco!");
-            }
-            linearLayoutEgresado.setVisibility(View.VISIBLE); // Hacer visible para egresados
-            textView120.setVisibility(View.VISIBLE); // Hacer visible el textView120 para egresados
-
-        } else {
-            linearLayoutEgresado.setVisibility(View.GONE); // Ocultar para los demás roles
-            textView120.setVisibility(View.GONE); // Hacer que textView120 no ocupe espacio para los demás roles
-
-
-        }
-    }
 
 
 

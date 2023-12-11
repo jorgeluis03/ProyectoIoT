@@ -102,9 +102,11 @@
         android:text="Donaciones Totales"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
     <LinearLayout
         android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
@@ -114,28 +116,13 @@
         android:background="@drawable/card_alumno_evento"
         android:orientation="vertical"
         android:padding="10dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView120">
 
-        <TextView
-            android:id="@+id/textTotalDonado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Total donado: "
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/textKitTeleco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-
+    <!-- Contenidos del LinearLayout aquí -->
+</LinearLayout>
     <TextView
         android:id="@+id/textView18"
         android:layout_width="match_parent"
