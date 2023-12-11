@@ -169,7 +169,7 @@ public class RegistroActivity extends AppCompatActivity {
                     Log.d("msg-test", "usuario guardado en firestore");
                     //enviar la notificacion al delegado general
 
-                    enviarNotificacion();
+                    enviarNotificacion(code);
                     setInPogressBar(false);
 
                     Intent intent = new Intent(RegistroActivity.this, ConfirmarregistroActivity.class);
@@ -180,9 +180,9 @@ public class RegistroActivity extends AppCompatActivity {
                 });
     }
 
-    public void enviarNotificacion() {
+    public void enviarNotificacion(String code) {
         //current username, message, currentUserId, otherUserToken
-        FirebaseUtilDg.getCollAlumnos().whereEqualTo("codigo", "20200643").get().addOnCompleteListener(task -> {
+        FirebaseUtilDg.getCollAlumnos().whereEqualTo("codigo", code).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Alumno usuarioDg = task.getResult().toObjects(Alumno.class).get(0);
                 try {

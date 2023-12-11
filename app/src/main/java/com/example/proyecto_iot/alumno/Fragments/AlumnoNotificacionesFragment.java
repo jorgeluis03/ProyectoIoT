@@ -32,11 +32,13 @@ public class AlumnoNotificacionesFragment extends Fragment {
                 .replace(R.id.fragmentNotificacionesHeader, AlumnoHeader2Fragment.class, bundle)
                 .commit();
 
+        /*
         notificacionList.add(new Notificacion("Evento de Semana de Ingeniería - Cristiano Donaldo ha enviado un nuevo mensaje al chat", "hace 2h"));
         notificacionList.add(new Notificacion("Otro evento de Semana de Ingeiería - Kike Ramos ha añadido una nueva foto al evento", "hace 8h"));
         notificacionList.add(new Notificacion("Donaciones - Su registro de donación ha sido aceptado", "hace 2d"));
         notificacionList.add(new Notificacion("Donaciones - Su registro de donación ha sido aceptado", "hace 1d"));
 
+         */
         ListaNotificacionesAdapter adapter = new ListaNotificacionesAdapter();
         adapter.setContext(getContext());
         adapter.setNotificacionList(notificacionList);
