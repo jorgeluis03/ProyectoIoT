@@ -133,12 +133,18 @@ public class LoginActivity extends AppCompatActivity {
 
                         } else if (alumno.getEstado().equals("pendiente")) {
                             Log.d("msg-test", "alumno con estado pendiente");
+                            FirebaseAuth.getInstance().signOut();
+                            binding.relativeOverlay.setVisibility(View.GONE);
                         }
                         else if (alumno.getEstado().equals("inactivo")) {
                             Toast.makeText(LoginActivity.this, "El usuario aún no ha sido aceptado por el administrador de la aplicación.", Toast.LENGTH_SHORT).show();
+                            FirebaseAuth.getInstance().signOut();
+                            binding.relativeOverlay.setVisibility(View.GONE);
                         }
                         else if (alumno.getEstado().equals("baneado")) {
                             Toast.makeText(LoginActivity.this, "El usuario ha sido baneado por el administrador de la aplicacion.", Toast.LENGTH_SHORT).show();
+                            FirebaseAuth.getInstance().signOut();
+                            binding.relativeOverlay.setVisibility(View.GONE);
                         }
 
                     } else {
