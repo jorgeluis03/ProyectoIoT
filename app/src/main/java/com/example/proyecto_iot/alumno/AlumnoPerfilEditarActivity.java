@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -55,6 +56,7 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
     private FirebaseStorage storage; // storage
     private String nombreNuevo;
     private String apellidosNuevos;
+    private String correoNuevo;
     private String urlNuevo;
     private Uri imageUri; // data de imagen nueva seleccionada
     private boolean nuevaFoto = false;
@@ -231,10 +233,14 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         String userUid = mAuth.getCurrentUser().getUid();
         nombreNuevo = binding.inputNombre.getEditText().getText().toString().trim();
         apellidosNuevos = binding.inputApellidos.getEditText().getText().toString().trim();
+        correoNuevo = binding.inputCorreo.getEditText().getText().toString().trim();
 
         HashMap<String, Object> infoActualizada = new HashMap<>();
         infoActualizada.put("apellidos", apellidosNuevos);
         infoActualizada.put("nombre", nombreNuevo);
+        infoActualizada.put("correo", correoNuevo);
+        infoActualizada.put("fullNameFormal", apellidosNuevos+", "+nombreNuevo);
+
         if (nuevaFoto){
             infoActualizada.put("fotoUrl", urlNuevo);
         }
@@ -254,6 +260,8 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                         if (nuevaFoto){
                             alumno.setFotoUrl(urlNuevo);
                         }
+
+                        actualizarCorreoFirebase();
                         actualizarInternalStorage();
 
                         // regresar a perfil activity
@@ -266,6 +274,16 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d("msg-test", "Error updating document: " + e);
+                    }
+                });
+    }
+
+    private void actualizarCorreoFirebase(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user.updateEmail(correoNuevo)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("msg-test", "User email address updated.");
                     }
                 });
     }
