@@ -87,6 +87,9 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(nombre)){
                     binding.inputNombre.setError("Ingrese un nombre");
                 }
+                else{
+                    binding.inputNombre.setError(null);
+                }
 
                 binding.buttonGuardarPerfil.setEnabled(inputsValidos());
             }
@@ -107,6 +110,9 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(apellidos)){
                     binding.inputApellidos.setError("Ingrese un apellido");
                 }
+                else{
+                    binding.inputApellidos.setError(null);
+                }
                 binding.buttonGuardarPerfil.setEnabled(inputsValidos());
             }
 
@@ -126,6 +132,9 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
                 String correo = binding.inputCorreo.getEditText().getText().toString();
                 if (TextUtils.isEmpty(correo)){
                     binding.inputCorreo.setError("Ingrese un correo");
+                }
+                else{
+                    binding.inputCorreo.setError(null);
                 }
             }
 
