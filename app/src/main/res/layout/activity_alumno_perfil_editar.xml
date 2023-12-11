@@ -22,7 +22,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentHeader">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,6 +40,11 @@
                 android:layout_marginTop="48dp"
                 android:ems="10"
                 android:hint="@string/perfil_editar_nombre"
+                android:inputType="text|textPersonName"
+                app:boxStrokeErrorColor="@color/error"
+                app:errorIconTint="@color/error"
+                app:errorTextColor="@color/error"
+                app:hintTextColor="@color/verde_bat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageEdit">
@@ -58,6 +66,10 @@
                 android:ems="10"
                 android:hint="@string/perfil_editar_apellidos"
                 android:inputType="text|textPersonName"
+                app:boxStrokeErrorColor="@color/error"
+                app:errorIconTint="@color/error"
+                app:errorTextColor="@color/error"
+                app:hintTextColor="@color/verde_bat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputNombre">
@@ -77,8 +89,12 @@
                 android:layout_marginHorizontal="40dp"
                 android:layout_marginTop="24dp"
                 android:ems="10"
-                android:hint="Correo"
+                android:hint="@string/hint_email"
                 android:inputType="text|textEmailAddress"
+                app:boxStrokeErrorColor="@color/error"
+                app:errorIconTint="@color/error"
+                app:errorTextColor="@color/error"
+                app:hintTextColor="@color/verde_bat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputApellidos">
@@ -126,36 +142,36 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageEdit"
                 app:layout_constraintEnd_toEndOf="@+id/imageEdit" />
 
+            <Button
+                android:id="@+id/buttonGuardarPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/button_alumno_perfil_guardar"
+                android:enabled="false"
+                android:text="@string/perfil_editar_guardar"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progressBarGuardarPerfil"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginVertical="10dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonGuardarPerfil"
+                app:layout_constraintEnd_toEndOf="@+id/buttonGuardarPerfil"
+                app:layout_constraintStart_toStartOf="@+id/buttonGuardarPerfil"
+                app:layout_constraintTop_toTopOf="@+id/buttonGuardarPerfil" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/buttonGuardarPerfil"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/button_alumno_perfil_guardar"
-        android:enabled="false"
-        android:text="@string/perfil_editar_guardar"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progressBarGuardarPerfil"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginVertical="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonGuardarPerfil"
-        app:layout_constraintEnd_toEndOf="@+id/buttonGuardarPerfil"
-        app:layout_constraintStart_toStartOf="@+id/buttonGuardarPerfil"
-        app:layout_constraintTop_toTopOf="@+id/buttonGuardarPerfil" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
