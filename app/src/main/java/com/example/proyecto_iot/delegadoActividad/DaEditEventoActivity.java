@@ -38,11 +38,13 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Chat;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Entities.Foto;
+import com.example.proyecto_iot.alumno.Entities.Notificacion;
 import com.example.proyecto_iot.alumno.Utils.FirebaseUtilAl;
 import com.example.proyecto_iot.databinding.ActivityDaEditEventoBinding;
 import com.example.proyecto_iot.delegadoActividad.Adapters.CarouselAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,9 +64,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -312,6 +317,7 @@ public class DaEditEventoActivity extends AppCompatActivity {
                         eventoUpdate.put("hora", binding.textHourEvent.getText().toString());
                     }
                     subirUpdateEventoFirestore(eventoUpdate);
+                    buscarApoyosYNotificar();
                     if (imageUri!=null){
                         subirFoto(imageUri, evento.getFechaHoraCreacion().toString());
                     }
@@ -407,6 +413,67 @@ public class DaEditEventoActivity extends AppCompatActivity {
             bottomSheetDialog.show();
         });
     }
+
+    private void buscarApoyosYNotificar() {
+        db.collection("eventos").document("evento"+evento.getFechaHoraCreacion())
+                .collection("apoyos")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            db.collection("alumnos").document(document.getId()).collection("eventos").document("evento"+evento.getFechaHoraCreacion())
+                                    .get()
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()){
+                                            DocumentSnapshot documentSnapshot = task1.getResult();
+                                            boolean activo = documentSnapshot.getData().get("notificaciones").toString().equals("si");
+                                            if (activo){
+                                                Alumno alumnoEvento = document.toObject(Alumno.class);
+                                                notifyFirebase(document.getId(), "updateEvento", evento);
+                                                sendNotificationToUser(alumnoEvento.getFcmToken());
+                                            }
+                                        }
+                                    });
+                            //TODO DA: notificacion de que se eliminó el evento
+                            document.getReference().delete();
+                        }
+                    }
+                });
+    }
+
+    private void notifyFirebase(String id, String categoria, Evento evento) {
+        Notificacion notificacion = new Notificacion();
+        notificacion.setTipo(categoria);
+        notificacion.setHora(Date.from(Instant.now()));
+        notificacion.setTexto("Se actualizó el evento "+evento.getTitulo());
+        notificacion.setEvento(evento);
+        db.collection("alumnos").document(id)
+                .collection("notificaciones")
+                .add(notificacion)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "notificacion de nuevo mensaje");
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
+    }
+    private void sendNotificationToUser(String userToken){
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject notificationObject = new JSONObject();
+            notificationObject.put("title", evento.getTitulo().substring(0, 25));
+            notificationObject.put("body", "Se han actualizado los datos.");
+
+            jsonObject.put("notification", notificationObject);
+            jsonObject.put("to", userToken);
+
+            FirebaseFCMUtils.callApi(jsonObject);
+        }
+        catch (Exception e){
+            Log.d("msg-test", "error notificaciones: "+e.getMessage());
+        }
+    }
+
     private ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
