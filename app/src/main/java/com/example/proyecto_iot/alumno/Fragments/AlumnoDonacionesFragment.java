@@ -99,6 +99,7 @@ public class AlumnoDonacionesFragment extends Fragment {
     private boolean fotoAgregada = false;
     private Button buttonRegistrarDonacion;
     private final double OBJETIVO_KIT_TELECO = 100.0;
+    private String rolUsuario;
 
     private ProgressBar progressBarRegistrarDonacion;
     @Override
@@ -120,7 +121,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                     if (task.isSuccessful()) {
                         Log.d("FirebaseData", "Consulta exitosa en la colección 'donaciones x2'"); // Agrega este mensaje de depuración
                         double donacionesTotalesValidadas = 0.0;
-                        String rolUsuario = obtenerTipoAlumnoDesdeMemoria();
+                        rolUsuario = obtenerTipoAlumnoDesdeMemoria();
                         if(task.getResult().isEmpty()){
                             binding.textNoDonaciones.setVisibility(View.VISIBLE);
                         }
@@ -242,10 +243,22 @@ public class AlumnoDonacionesFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (!inputMonto.getText().toString().equals("") && fotoAgregada) {
-                        monto = Float.parseFloat(inputMonto.getText().toString());
-                        buttonRegistrarDonacion.setEnabled(true);
-                    } else if (inputMonto.getText().toString().equals("")) {
+                    try {
+                        float montoIngresado = Float.parseFloat(inputMonto.getText().toString());
+                        if ("Egresado".equals(rolUsuario) && montoIngresado >= 100) {
+                            // Si el usuario es Egresado y el monto ingresado es mayor o igual a 100
+                            buttonRegistrarDonacion.setEnabled(true);
+                            monto = montoIngresado; // Guardar el monto
+                        } else if (!"Egresado".equals(rolUsuario)) {
+                            // Si el usuario no es Egresado
+                            buttonRegistrarDonacion.setEnabled(true);
+                            monto = montoIngresado; // Guardar el monto
+                        } else {
+                            // Si el usuario es Egresado pero el monto es menor a 100
+                            buttonRegistrarDonacion.setEnabled(false);
+                        }
+                    } catch (NumberFormatException e) {
+                        // Si el monto ingresado no es un número válido
                         buttonRegistrarDonacion.setEnabled(false);
                     }
                 }
