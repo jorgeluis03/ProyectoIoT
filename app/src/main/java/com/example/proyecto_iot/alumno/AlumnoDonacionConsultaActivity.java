@@ -110,7 +110,14 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
 
         if (rolAlumnoFromDonacion != null && rolAlumnoFromDonacion.equalsIgnoreCase("egresado")) {
             Log.d("FirebaseData", "Condición: Rol es 'egresado'");
-            if(Double.parseDouble(donacionesTotales) > 100.00) {
+            double montoDonacionDouble = 0.0;
+            try {
+                montoDonacionDouble = Double.parseDouble(montoDonacion);
+            } catch (NumberFormatException e) {
+                Log.e("ParseError", "Error al parsear montoDonacion", e);
+            }
+
+            if(montoDonacionDouble >=100.00) {
                 Log.d("FirebaseData", "Condición: Donaciones totales > 100.00");
                 // Cambiar la información de la fecha
                 CollectionReference donacionesRef = db.collection("KitRecojo");
@@ -155,10 +162,6 @@ public class AlumnoDonacionConsultaActivity extends AppCompatActivity {
                                 Log.d("FirebaseData", "Error al obtener el documento: " + task.getException());
                             }
                         });
-            }else if(Double.parseDouble(donacionesTotales) <= 100.00){
-                Log.d("FirebaseData", "Condición: Donaciones totales <= 100.00");
-                recojoKitButton.setText("Aún no aplica");
-                kitRecojoLayout.setVisibility(View.INVISIBLE);
             }
         }else {
             Log.d("FirebaseData", "Condición: Rol no es 'egresado'");
