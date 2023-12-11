@@ -83,7 +83,8 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                                 .document(donacionDto.getIdDocumento())
                                         .update("estado","validado")
                                                 .addOnSuccessListener(unused -> {
-                                                    lista.remove(donacionDto);
+                                                    int position =getAbsoluteAdapterPosition();
+                                                    lista.remove(position);
 
                                                     notifyDataSetChanged();
 

@@ -21,17 +21,23 @@ import com.example.proyecto_iot.databinding.FragmentDgEstadisticasBinding;
 import com.example.proyecto_iot.delegadoGeneral.DgEstadisticasDetallesActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActiEstadisiticasAdapter;
+import com.example.proyecto_iot.delegadoGeneral.dto.ApoyosActivdadDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dg_estadisticasFragment extends Fragment {
     FragmentDgEstadisticasBinding binding;
@@ -40,8 +46,9 @@ public class Dg_estadisticasFragment extends Fragment {
     ListenerRegistration listenerRegistration;
     ListaActiEstadisiticasAdapter adapter;
     RecyclerView recyclerView;
-    double suma;
+    double suma = 0.0;
     int coutEstu, countEgre;
+    List<ApoyosActivdadDto> lista;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,9 +62,6 @@ public class Dg_estadisticasFragment extends Fragment {
         cantEgresados = binding.cantEgresados;
         recyclerView= binding.rvActividades;
 
-        cargarCantidadUsuarios();
-        cargarSaldoDonacion();
-
         cardView.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), DgEstadisticasDetallesActivity.class);
             startActivity(intent);
@@ -68,23 +72,26 @@ public class Dg_estadisticasFragment extends Fragment {
 
         return binding.getRoot();
     }
-    public void mostrarActividades(){
-        Query query = FirebaseUtilDg.getActividadesCollection();
 
-        FirestoreRecyclerOptions<Actividades> options = new FirestoreRecyclerOptions.Builder<Actividades>()
-                .setQuery(query, Actividades.class).build();
-
-        adapter = new ListaActiEstadisiticasAdapter(options,getContext());
-        adapter.startListening();
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
 
     @Override
     public void onStart() {
         super.onStart();
-        //cargarSaldoDonacion();
-        //cargarCantidadUsuarios();
+        cargarSaldoDonacion();
+        cargarCantidadUsuarios();
+        mostrarActividades();
+    }
+    public void mostrarActividades(){
+
+        Query queryBase = FirebaseUtilDg.getActividadesCollection();
+
+        FirestoreRecyclerOptions<Actividades> options = new FirestoreRecyclerOptions.Builder<Actividades>()
+                .setQuery(queryBase, Actividades.class).build();
+
+        adapter = new ListaActiEstadisiticasAdapter(options,getContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter.startListening();
     }
 
     @Override
@@ -104,22 +111,20 @@ public class Dg_estadisticasFragment extends Fragment {
 
                     FirebaseUtilDg.getColeccionIdDonantes(codigoDonante)
                         .whereEqualTo("estado","validado")
-                        .addSnapshotListener((value, error)->{
-                            if (error != null) {
-                                Log.w("msg-don", "Listen failed.", error);
-                                return;
-                            }
-                            suma =0.0;
-                            for (QueryDocumentSnapshot snapshot : value) {
-                                String monto = snapshot.getString("monto");
-                                suma += Double.parseDouble(monto);
-                                saldoDonacion.setText("S/"+String.valueOf(suma));
+                        .get().addOnCompleteListener(task1 -> {
+                            if(task.isSuccessful()){
+
+                                for (QueryDocumentSnapshot snapshot : task1.getResult()) {
+                                    String monto = snapshot.getString("monto");
+                                    suma += Double.parseDouble(monto);
+
+                                }
 
                             }
-
-
+                            saldoDonacion.setText("S/"+String.valueOf(suma));
                         });
                 }
+
             }
         });
 
