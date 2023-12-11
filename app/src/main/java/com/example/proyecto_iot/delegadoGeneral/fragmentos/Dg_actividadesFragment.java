@@ -23,6 +23,7 @@ import com.example.proyecto_iot.delegadoGeneral.CrearActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaActividadesAdapter;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -86,7 +87,9 @@ public class Dg_actividadesFragment extends Fragment {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                actividad.setId(documentReference.getId());
+                                FirebaseUtilDg.getActividadesCollection().document(documentReference.getId())
+                                                .update("id",documentReference.getId());
+                                FirebaseUtilDg.getCollAlumnos().document(usuarioDelegado.getId()).update("actividadesId",documentReference.getId());
                                 listaAct.add(actividad);
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(getContext(), "Actividad agregada", Toast.LENGTH_SHORT).show();
@@ -106,7 +109,6 @@ public class Dg_actividadesFragment extends Fragment {
                         listaAct=new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Actividades actividades = document.toObject(Actividades.class);
-                            actividades.setId(document.getId());
                             listaAct.add(actividades);
                         }
 

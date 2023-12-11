@@ -7,12 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
-import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Donacion;
 import com.example.proyecto_iot.databinding.ActivityDgEstadisticasDetallesBinding;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaDonacionesAdapter;
@@ -31,7 +28,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progressBar;
     ListenerRegistration listenerRegistration;
-    List<DonacionDto>  listaDonaciones;
+    List<DonacionDto> listaDonaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +40,39 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
         progressBar = binding.progressBarEstad;
         btnBack = binding.btnBack;
 
-
-        setInProgress(true);
-
-        obtenerDonacionesSinValidar();
-
-
         btnBack.setOnClickListener(view -> {
             getOnBackPressedDispatcher().onBackPressed();
         });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        obtenerDonacionesSinValidar();
+    }
+
+
+    public void setInProgress(boolean inProgress) {
+        if (inProgress) {
+            progressBar.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (listenerRegistration != null) {
+            listenerRegistration.remove();
+        }
     }
 
     public void obtenerDonacionesSinValidar(){
-
+        setInProgress(true);
         FirebaseUtilDg.getDonaciones().get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
 
@@ -96,46 +113,22 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
                                                     recyclerView.setAdapter(adapter);
                                                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-                                                    setInProgress(false);
                                                 }
 
                                             });
 
-
                                 }
                                 if(listaDonaciones.isEmpty()){
-                                    setInProgress(false);
+                                   // setInProgress(false);
                                 }
 
-
-
                             });
-
-
                 }
 
-
-
             }
-
-
+            setInProgress(false);
         });
 
     }
-    public void setInProgress(boolean inProgress){
-        if(inProgress){
-            progressBar.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        }else {
-            progressBar.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(listenerRegistration!=null){
-            listenerRegistration.remove();
-        }
-    }
+
 }
