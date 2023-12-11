@@ -46,14 +46,23 @@ public class Dg_alumnos_registrFragment extends Fragment {
     public void cargarListaUsuariosRegis(){
 
         query = FirebaseUtilDg.getCollAlumnos().whereEqualTo("estado","activo");
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                if(task.getResult().getDocuments().size()>0){
 
-        FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
-                .setQuery(query, Alumno.class).build();
+                    FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
+                            .setQuery(query, Alumno.class).build();
 
-        adapter = new ListaUsuariosRegisAdpter(options,getContext());
-        recycleViewUserRegi.setAdapter(adapter);
-        recycleViewUserRegi.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter.startListening();
+                    adapter = new ListaUsuariosRegisAdpter(options,getContext());
+                    recycleViewUserRegi.setAdapter(adapter);
+                    recycleViewUserRegi.setLayoutManager(new LinearLayoutManager(getContext()));
+                    adapter.startListening();
+                }else {
+                    setVisible(true);
+                }
+            }
+        });
+
 
 
     }
@@ -89,6 +98,14 @@ public class Dg_alumnos_registrFragment extends Fragment {
 
     }
 
-
+    public void setVisible(boolean noHaySolicitudes){
+        if(noHaySolicitudes){
+            binding.textNoHay.setVisibility(View.VISIBLE);
+            recycleViewUserRegi.setVisibility(View.INVISIBLE);
+        }else {
+            binding.textNoHay.setVisibility(View.INVISIBLE);
+            recycleViewUserRegi.setVisibility(View.VISIBLE);
+        }
+    }
 
 }

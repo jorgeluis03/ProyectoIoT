@@ -64,14 +64,6 @@
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="@color/letter_short_dg"
                     />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:text="18 personas participando"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="@color/letter_short_dg"
-                    />
 
             </LinearLayout>
 

@@ -106,7 +106,7 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
                 query.get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult().getDocuments().size() > 0) {
-                            new MaterialAlertDialogBuilder(context)
+                            new MaterialAlertDialogBuilder(context,R.style.DarkAlertDialog)
                                     .setTitle("¡Eliminar evento!")
                                     .setMessage("No es posible eliminar esta actividad ya que los eventos asociados " +
                                             "aun no finalizan.")
@@ -114,7 +114,7 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
                                     })
                                     .show();
                         } else {
-                            new MaterialAlertDialogBuilder(context)
+                            new MaterialAlertDialogBuilder(context,R.style.DarkAlertDialog)
                                     .setTitle("¡Advertencia!")
                                     .setMessage("Se eliminarán todos los eventos que se encuentren en la actividad " +
                                             "incluyendo aquellos que aun no finalizan.")

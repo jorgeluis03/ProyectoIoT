@@ -123,11 +123,6 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.config_dg){
-            Intent intent = new Intent(this, Dg_configuracion.class);
-            startActivity(intent);
-
-        }
         if(id==R.id.salir_dg){
             //Logica para salir
             //Borrar el token al cerrar sesion

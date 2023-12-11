@@ -41,24 +41,31 @@ public class Dg_alumnos_pendFragment extends Fragment {
         //declaraciones
         searchView = binding.searchUserPendi;
         recycleViewUserPendi =binding.recycleViewUserPendi;
-
         cargarListaUsuariosPendi();
 
         searchMetod();
         return binding.getRoot();
     }
 
+
     public void cargarListaUsuariosPendi(){
         query = FirebaseUtilDg.getCollAlumnos().whereEqualTo("estado","inactivo");
 
-        FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
-                .setQuery(query, Alumno.class).build();
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                if (task.getResult().getDocuments().size()>0){
+                    FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
+                            .setQuery(query, Alumno.class).build();
 
-        adapter = new ListaUsuariosPendiAdapter(options,getContext());
-        recycleViewUserPendi.setAdapter(adapter);
-        recycleViewUserPendi.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter.startListening();
-
+                    adapter = new ListaUsuariosPendiAdapter(options,getContext());
+                    recycleViewUserPendi.setAdapter(adapter);
+                    recycleViewUserPendi.setLayoutManager(new LinearLayoutManager(getContext()));
+                    adapter.startListening();
+                }else {
+                    setVisible(true);
+                }
+            }
+        });
 
     }
     public void searchMetod(){
@@ -88,6 +95,16 @@ public class Dg_alumnos_pendFragment extends Fragment {
         recycleViewUserPendi.setLayoutManager(new LinearLayoutManager(getContext()));
         adapterBuscar.startListening();
 
+    }
+
+    public void setVisible(boolean noHaySolicitudes){
+        if(noHaySolicitudes){
+            binding.textNoHay.setVisibility(View.VISIBLE);
+            recycleViewUserPendi.setVisibility(View.INVISIBLE);
+        }else {
+            binding.textNoHay.setVisibility(View.INVISIBLE);
+            recycleViewUserPendi.setVisibility(View.VISIBLE);
+        }
     }
 
 

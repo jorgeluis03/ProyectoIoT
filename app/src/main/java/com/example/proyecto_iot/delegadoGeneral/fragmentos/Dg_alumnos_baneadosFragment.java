@@ -52,13 +52,22 @@ public class Dg_alumnos_baneadosFragment extends Fragment {
     public void cargarListaUsuariosBan(){
         query = FirebaseUtilDg.getCollAlumnos().whereEqualTo("estado","baneado");
 
-        FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
-                .setQuery(query, Alumno.class).build();
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                if (task.getResult().getDocuments().size()>0){
+                    FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
+                            .setQuery(query, Alumno.class).build();
 
-        adapter = new ListaUsuariosBaneadosAdapter(options,getContext());
-        recycleViewUserBan.setAdapter(adapter);
-        recycleViewUserBan.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter.startListening();
+                    adapter = new ListaUsuariosBaneadosAdapter(options,getContext());
+                    recycleViewUserBan.setAdapter(adapter);
+                    recycleViewUserBan.setLayoutManager(new LinearLayoutManager(getContext()));
+                    adapter.startListening();
+                }else {
+                    setVisible(true);
+                }
+            }
+        });
+
 
 
     }
@@ -89,5 +98,14 @@ public class Dg_alumnos_baneadosFragment extends Fragment {
         recycleViewUserBan.setLayoutManager(new LinearLayoutManager(getContext()));
         adapterBuscar.startListening();
 
+    }
+    public void setVisible(boolean noHaySolicitudes){
+        if(noHaySolicitudes){
+            binding.textNoHay.setVisibility(View.VISIBLE);
+            recycleViewUserBan.setVisibility(View.INVISIBLE);
+        }else {
+            binding.textNoHay.setVisibility(View.INVISIBLE);
+            recycleViewUserBan.setVisibility(View.VISIBLE);
+        }
     }
 }

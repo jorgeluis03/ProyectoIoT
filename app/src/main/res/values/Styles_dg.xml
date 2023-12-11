@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DarkAlertDialog" parent="Theme.Material3.Dark.Dialog.Alert">
+        <item name="colorPrimary">@color/dark_blue</item>
+        <item name="colorPrimaryDark">@color/backgroud_element_dg</item>
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="corner_radius">10dp</item>
+    </style>
+
+</resources>
