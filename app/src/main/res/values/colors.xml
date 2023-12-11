@@ -9,6 +9,9 @@
     <color name="buscadorHint">#BCBCBC</color>
     <color name="overlay">#80000000</color>
 
+    <!-- VALIDACIONES -->
+    <color name="error">#FF4E4E</color>
+
     <!-- LOGIN -->
     <color name="azul_login">#0F4BD9</color>
     <color name="morado_login">#2B1292</color>

@@ -58,22 +58,7 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
         });
 
         binding.buttonCerrarSesion.setOnClickListener(view -> {
-            binding.relativeOverlay.setVisibility(View.VISIBLE);
-            //Logica para salir
-            //Borrar el token al cerrar sesion
-            FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
-
-                    FirebaseAuth.getInstance().signOut(); // deslogueo de firebase auth
-                    Intent intent = new Intent(AlumnoPerfilActivity.this, IngresarActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-
-                    binding.relativeOverlay.setVisibility(View.GONE);
-                    finish();
-                }
-            });
-
+            cerrarSesion();
         });
     }
 
@@ -115,5 +100,23 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
                 .load(url)
                 .apply(requestOptions)
                 .into(binding.imagePerfil);
+    }
+
+    private void cerrarSesion(){
+        binding.relativeOverlay.setVisibility(View.VISIBLE);
+        //Logica para salir
+        //Borrar el token al cerrar sesion
+        FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+
+                FirebaseAuth.getInstance().signOut(); // deslogueo de firebase auth
+                Intent intent = new Intent(AlumnoPerfilActivity.this, IngresarActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+                binding.relativeOverlay.setVisibility(View.GONE);
+                finish();
+            }
+        });
     }
 }
