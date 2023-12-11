@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
+import com.example.proyecto_iot.alumno.AlumnoPerfilActivity;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityIngresarBinding;
 import com.example.proyecto_iot.delegadoActividad.DaInicioActivity;
@@ -13,6 +16,7 @@ import com.example.proyecto_iot.delegadoGeneral.Dg_Activity;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -63,7 +67,14 @@ public class IngresarActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 Alumno alumnoAutenticado = gson.fromJson(jsonData, Alumno.class);
 
-                redirigirSegunRol(alumnoAutenticado);
+                if (alumnoAutenticado.getEstado().equals("baneado")){
+                    Toast.makeText(this, "Su cuenta ha sido baneada, revise su correo ("+alumnoAutenticado.getCorreo()+") para más información", Toast.LENGTH_SHORT).show();
+                    cerrarSesion();
+                }
+                else{
+                    redirigirSegunRol(alumnoAutenticado);
+                }
+
             }
             catch (IOException e){
                 e.printStackTrace();
@@ -106,6 +117,18 @@ public class IngresarActivity extends AppCompatActivity {
         finish();
     }
 
+    private void cerrarSesion(){
+        FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
 
+                FirebaseAuth.getInstance().signOut(); // deslogueo de firebase auth
+                Intent intent = new Intent(IngresarActivity.this, IngresarActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+                finish();
+            }
+        });
+    }
 
 }
