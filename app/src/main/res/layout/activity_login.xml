@@ -74,18 +74,18 @@
         android:layout_height="55dp"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="16dp"
-        android:hint="@string/hint_code"
+        android:hint="@string/hint_email_or_code"
         android:textColorHint="@color/letra_clara"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginLabel">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_codigo"
+            android:id="@+id/input_correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_gradient_portatexto"
-            android:inputType="number" />
+            android:inputType="text|textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
