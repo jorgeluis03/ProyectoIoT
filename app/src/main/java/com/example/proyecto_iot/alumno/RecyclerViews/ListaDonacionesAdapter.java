@@ -116,7 +116,6 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                     intent.putExtra("fechaDonacion",donacion.getFecha());
                     intent.putExtra("rolDonacion", donacion.getRol());
                     intent.putExtra("codigoAlumno", codigoAlumno);
-                    intent.putExtra("donacionesTotales", String.valueOf(donacionesTotalesValidadas));
                     context.startActivity(intent);
                 }
             });

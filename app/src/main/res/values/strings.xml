@@ -68,6 +68,7 @@
     <string name="hint_lastname">Apellidos</string>
     <string name="hint_code">Código PUCP</string>
     <string name="hint_email">Correo</string>
+    <string name="hint_email_or_code">Correo o Código PUCP</string>
     <string name="hint_passw">Contraseña</string>
     <string name="hint_user_type">Tipo de usuario</string>
 
@@ -87,7 +88,8 @@
     <!-- VERIFICATION CODE -->
     <string name="fg_verification_label">Correo enviado</string>
     <string name="fg_verification_instruction">Ingresa el código aquí:</string>
-    <string name="fg_verification_context">Se ha enviado un código de verificación al correo que indicaste, en caso de que exista una cuenta vinculada.</string>
+    <!--<string name="fg_verification_context">Se ha enviado un código de verificación al correo que indicaste, en caso de que exista una cuenta vinculada.</string>-->
+    <string name="fg_verification_context">Se ha enviado un correo para que reestablezca su contraseña, recuerda que este tiene un tiempo límite hasta caducar.</string>
 
     <!-- CHANGE PASSW -->
     <string name="ch_passw_label">Cambio de contraseña</string>
