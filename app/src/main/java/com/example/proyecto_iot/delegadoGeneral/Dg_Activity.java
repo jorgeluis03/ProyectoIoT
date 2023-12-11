@@ -106,7 +106,7 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
             if(task.isSuccessful()){
                 delegadoActual = task.getResult().toObject(Alumno.class);
                 usernamePerfilDrawer.setText(delegadoActual.getNombre()+' '+delegadoActual.getApellidos());
-                Toast.makeText(this,delegadoActual.getNombre(),Toast.LENGTH_SHORT).show();
+                /*
                 Glide.with(this)
                         .load(delegadoActual.getFotoUrl())
                         .override(Target.SIZE_ORIGINAL)
@@ -124,8 +124,8 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
                             }
                         })
                         .into(imgPerfilDrawer);
-
-                //imgPerfilDrawer.setImageBitmap(getBitmapFromEncodedImage(delegadoActual.getFotoUrl()));
+                */
+                imgPerfilDrawer.setImageBitmap(getBitmapFromEncodedImage(delegadoActual.getFotoUrl()));
 
 
             }

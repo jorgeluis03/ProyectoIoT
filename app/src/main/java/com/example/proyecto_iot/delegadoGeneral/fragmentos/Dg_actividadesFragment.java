@@ -165,5 +165,14 @@ public class Dg_actividadesFragment extends Fragment {
         }
 
     }
+    public void setVisible(boolean noHaySolicitudes){
+        if(noHaySolicitudes){
+            binding.noHayActividades.setVisibility(View.VISIBLE);
+            binding.recycleViewActividadesDg.setVisibility(View.INVISIBLE);
+        }else {
+            binding.noHayActividades.setVisibility(View.INVISIBLE);
+            binding.recycleViewActividadesDg.setVisibility(View.VISIBLE);
+        }
+    }
 
 }

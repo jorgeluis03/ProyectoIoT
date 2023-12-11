@@ -20,6 +20,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/noHayActividades"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No hay actividades disponibles"
+        android:textStyle="italic"
+        android:textSize="18sp"
+        android:textColor="@color/grey"
+        android:textAlignment="center"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingButtonCrearActividad_dg"
         android:layout_width="wrap_content"
