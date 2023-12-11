@@ -31,6 +31,7 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.delegadoGeneral.dto.DonacionDto;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONObject;
@@ -175,14 +176,14 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
     }
 
     public void showDialog(String fotoUrl) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        bottomSheetDialog.setContentView(R.layout.buttomsheetlayout_dg);
 
-        Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.buttomsheetlayout_dg);
+        ImageView imageView = bottomSheetDialog.findViewById(R.id.imageView);
 
         Glide.with(context)
                 .load(fotoUrl)
-                .override(Target.SIZE_ORIGINAL) // Cargar imagen en su tamaño original
+                .override(Target.SIZE_ORIGINAL)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -198,13 +199,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                 })
                 .into(imageView);
 
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-
-
+        bottomSheetDialog.show();
     }
 
 

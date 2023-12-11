@@ -19,14 +19,33 @@
         android:background="@drawable/curved_bg"
         android:layout_margin="8dp"
         />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewUserPendi"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/backgroud_element_dg"/>
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewUserPendi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/backgroud_element_dg"/>
+
+        <TextView
+            android:id="@+id/textNoHay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No hay solicitudes pendientes"
+            android:textColor="@color/letra_gris"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:textAlignment="center"
+            android:layout_centerVertical="true"
+            android:visibility="invisible"/>
+
+
+    </RelativeLayout>
+
 
 </LinearLayout>
