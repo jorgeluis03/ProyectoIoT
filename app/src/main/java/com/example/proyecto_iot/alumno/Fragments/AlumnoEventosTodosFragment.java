@@ -72,7 +72,7 @@ public class AlumnoEventosTodosFragment extends Fragment {
                                 }else {
                                     adapter.notifyDataSetChanged();
                                     binding.textView31.setVisibility(View.GONE);
-                                    binding.imageNoEventos.setVisibility(View.VISIBLE);
+                                    binding.imageNoEventos.setVisibility(View.GONE);
                                 }
                             });
                     }
