@@ -28,7 +28,7 @@ public class Notificacion {
         this.hora = hora;
     }
 
-    public String getHoraFromNow(){
+    public String horaFromNow(){
         String fromNow;
         Date now = Date.from(Instant.now());
         long diff = now.getTime() - this.hora.getTime();
