@@ -33,7 +33,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_round_black_box"
-        android:backgroundTint="@color/black"
         android:insetLeft="0dp"
         android:insetTop="0dp"
         android:insetRight="0dp"

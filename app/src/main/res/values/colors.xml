@@ -22,7 +22,7 @@
     <color name="letra_gris">#797D7F</color>
 
     <!-- BOTONES -->
-    <color name="boton_negro">#0C0C0C</color>
+    <color name="boton_negro">#0E0E0E</color>
     <color name="boton_negro_pulsado">#000</color>
     <color name="boton_azul_login_pulsado">#0D3EB3</color>
     <color name="boton_morado_login_pulsado">#220E73</color>

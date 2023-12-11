@@ -132,4 +132,8 @@
         <item name="colorPrimary">@color/verde_bat</item>
     </style>
 
+    <style name="alumnoEventoActivity" parent="Alumno">
+        <item name="colorPrimary">@color/azul_login</item>
+    </style>
+
 </resources>
