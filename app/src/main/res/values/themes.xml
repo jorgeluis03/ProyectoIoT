@@ -128,7 +128,7 @@
         <item name="android:textColorHint">@color/buscadorHint</item>
     </style>
 
-    <style name="perfilContrasenaActivity" parent="Alumno">
+    <style name="alumnoPerfilActivity" parent="Alumno">
         <item name="colorPrimary">@color/verde_bat</item>
     </style>
 

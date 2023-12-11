@@ -83,6 +83,11 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String nombre = binding.inputNombre.getEditText().getText().toString();
+                if (TextUtils.isEmpty(nombre)){
+                    binding.inputNombre.setError("Ingrese un nombre");
+                }
+
                 binding.buttonGuardarPerfil.setEnabled(inputsValidos());
             }
 
@@ -98,7 +103,30 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String apellidos = binding.inputApellidos.getEditText().getText().toString();
+                if (TextUtils.isEmpty(apellidos)){
+                    binding.inputApellidos.setError("Ingrese un apellido");
+                }
                 binding.buttonGuardarPerfil.setEnabled(inputsValidos());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        binding.inputCorreo.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String correo = binding.inputCorreo.getEditText().getText().toString();
+                if (TextUtils.isEmpty(correo)){
+                    binding.inputCorreo.setError("Ingrese un correo");
+                }
             }
 
             @Override
