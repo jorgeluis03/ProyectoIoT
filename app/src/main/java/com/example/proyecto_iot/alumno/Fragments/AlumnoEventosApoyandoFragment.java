@@ -67,6 +67,7 @@ public class AlumnoEventosApoyandoFragment extends Fragment {
                             .addOnCompleteListener(allTasks -> {
                                 binding.progressBar7.setVisibility(View.GONE);
                                 if (eventoApoyandoList.isEmpty()){
+                                    adapter.notifyDataSetChanged();
                                     binding.textView32.setVisibility(View.VISIBLE);
                                     binding.imageView9.setVisibility(View.VISIBLE);
                                 }else {
