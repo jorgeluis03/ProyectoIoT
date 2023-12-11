@@ -43,7 +43,7 @@ public class ListaNotificacionesAdapter extends RecyclerView.Adapter<ListaNotifi
         TextView textNotificacion = holder.itemView.findViewById(R.id.textNotificacion);
         TextView textHora = holder.itemView.findViewById(R.id.textHora);
         textNotificacion.setText(notificacion.getTexto());
-        textHora.setText(notificacion.getHoraFromNow());
+        textHora.setText(notificacion.horaFromNow());
     }
 
     @Override

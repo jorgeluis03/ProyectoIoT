@@ -165,7 +165,6 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("msg-test", "busqueda ok");
                         alumno = document.toObject(Alumno.class);
                         if (alumno.getEstado().equals("activo")){
-
                             guardarDataEnMemoria(); // guardando data de usuario en internal storage para un manejo más rapido
                             redirigirSegunRol(alumno);
 
