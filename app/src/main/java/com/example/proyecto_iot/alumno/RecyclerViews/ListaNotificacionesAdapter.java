@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.AlumnoChatActivity;
 import com.example.proyecto_iot.alumno.AlumnoDonacionConsultaActivity;
 import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
@@ -79,6 +80,10 @@ public class ListaNotificacionesAdapter extends RecyclerView.Adapter<ListaNotifi
                         intent.putExtra("fechaDonacion",notificacion.getDonacion().getFecha());
                         intent.putExtra("rolDonacion", notificacion.getDonacion().getRol());
                         intent.putExtra("codigoAlumno", notificacion.getCodigoAlumno());
+                        break;
+                    case "newChat":
+                        intent = new Intent(context, AlumnoChatActivity.class);
+                        intent.putExtra("evento", notificacion.getEvento());
                         break;
                 }
                 context.startActivity(intent);
