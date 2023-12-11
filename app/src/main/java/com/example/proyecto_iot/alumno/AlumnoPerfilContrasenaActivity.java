@@ -75,7 +75,6 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
                 String contrasena2 = binding.inputContrasena2.getEditText().getText().toString();
                 if (contrasena2.length() < 6 ){
                     binding.inputContrasena2.setError("La contraseña debe tener mínimo 6 caracteres");
-                    Log.d("msg-test", "invalida");
                 }
                 else{
                     binding.inputContrasena2.setError(null);
@@ -102,7 +101,7 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
                 String contrasena3 = binding.inputContrasena3.getEditText().getText().toString();
 
                 if (!contrasena2.equals(contrasena3)){
-                    binding.inputContrasena2.setError("Las contraseñas deben ser las mismas");
+                    binding.inputContrasena3.setError("Las contraseñas deben ser las mismas");
                 }
                 else{
                     binding.inputContrasena3.setError(null);
@@ -173,6 +172,6 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
         String contrasena2 = binding.inputContrasena2.getEditText().getText().toString().trim();
         String contrasena3 = binding.inputContrasena3.getEditText().getText().toString().trim();
 
-        return !TextUtils.isEmpty(contrasena1) && !TextUtils.isEmpty(contrasena2) && !TextUtils.isEmpty(contrasena3);
+        return !TextUtils.isEmpty(contrasena1) && !TextUtils.isEmpty(contrasena2) && !TextUtils.isEmpty(contrasena3) && contrasena2.length() > 6;
     }
 }

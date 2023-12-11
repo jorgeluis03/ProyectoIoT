@@ -111,7 +111,7 @@
             android:name=".alumno.AlumnoPerfilContrasenaActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno" />
+            android:theme="@style/perfilContrasenaActivity" />
         <activity
             android:name=".delegadoGeneral.CrearActividadActivity"
             android:exported="false"
