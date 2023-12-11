@@ -90,7 +90,7 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     private void crearUsuarioAuthentication() {
-        mAuth.createUserWithEmailAndPassword(code + "@app.com", pass)
+        mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -100,7 +100,7 @@ public class RegistroActivity extends AppCompatActivity {
                         } else {
                             String msg = task.getException().getMessage();
                             if (msg.equals("The email address is already in use by another account.")){
-                                Toast.makeText(RegistroActivity.this, "El código ingresado ya se encuentra registrado", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistroActivity.this, "El correo ingresado ya se encuentra registrado", Toast.LENGTH_SHORT).show();
                             }
                             setInPogressBar(false);
                         }
@@ -205,10 +205,5 @@ public class RegistroActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
-
-
-
 }

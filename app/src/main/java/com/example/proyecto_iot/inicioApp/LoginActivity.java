@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.alumno.AlumnoInicioActivity;
@@ -25,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
@@ -90,21 +93,28 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void loguearUsuario(){
+    private void loguearUsuario() {
         binding.loginButton.setEnabled(false);
         binding.relativeOverlay.setVisibility(View.VISIBLE);
 
-        String codigo = binding.inputCodigo.getText().toString();
+        String correoOCodigo = binding.inputCorreo.getText().toString();
         String contrasena = binding.inputContrasena.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(codigo + "@app.com", contrasena)
+        if (esCorreo(correoOCodigo)) {
+            loguearConCorreo(correoOCodigo, contrasena);
+        } else { // se esta ingresando con codigo
+            loguearConCodigo(correoOCodigo, contrasena);
+        }
+    }
+
+    private void loguearConCorreo(String correo, String contrasena){
+        mAuth.signInWithEmailAndPassword(correo, contrasena)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             obtenerUserData();
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
@@ -112,6 +122,30 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d("msg-test", "credenciales incorrectas");
                         }
                     }
+                });
+    }
+
+    private void loguearConCodigo(String codigo, String contrasena){
+        db.collection("alumnos")
+                .whereEqualTo("codigo", codigo)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        if (task.getResult().size() > 0){ // se encontro al alumno con el codigo ingresado
+                            for (QueryDocumentSnapshot doc: task.getResult()){
+                                Log.d("msg-test", "doc: "+doc);
+                                Alumno alumno = doc.toObject(Alumno.class);
+                                loguearConCorreo(alumno.getCorreo(), contrasena);
+                            }
+                        }
+                        else{
+                            // el codigo ingresado es incorreco
+                        }
+                    }
+                    else{
+                        Log.d("msg-test", "Error al recuperar alumno mediante codigo: "+task.getException().getMessage());
+                    }
+
                 });
     }
 
@@ -205,5 +239,9 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginButton.setEnabled(true);
         binding.relativeOverlay.setVisibility(View.GONE);
         startActivity(intent);
+    }
+
+    private boolean esCorreo(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }
