@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityAlumnoInicioBinding;
+import com.example.proyecto_iot.delegadoGeneral.dto.ActividadesDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.example.proyecto_iot.inicioApp.IngresarActivity;

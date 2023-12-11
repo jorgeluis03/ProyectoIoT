@@ -14,6 +14,7 @@ import com.example.proyecto_iot.alumno.AlumnoInicioViewPagerAdapter;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentAlumnoInicioBinding;
 import com.example.proyecto_iot.delegadoActividad.DaInicioViewPagerAdapter;
+import com.example.proyecto_iot.delegadoGeneral.dto.ActividadesDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;

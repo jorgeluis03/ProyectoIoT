@@ -47,7 +47,6 @@ public class ListaDelegadosAdapter extends FirestoreRecyclerAdapter<Alumno,Lista
     @Override
     public DelegadoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.irv_dg_asignar_delegados,parent,false);
-        Log.d("msg-fire","hassta aca");
         return new DelegadoViewHolder(view);
     }
 

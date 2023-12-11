@@ -23,14 +23,19 @@ import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.delegadoGeneral.DgEventosPorActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.EditarActividad;
+import com.example.proyecto_iot.delegadoGeneral.dto.ActividadesDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -94,6 +99,14 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
 
                 Intent intent = new Intent(context, EditarActividad.class);
                 intent.putExtra("actividadActual",actividades);
+                HashMap<String,Object> data = new HashMap<>();
+                data.put("delegadoActividad",null);
+                data.put("estado",actividades.getEstado());
+                data.put("id",actividades.getId());
+                data.put("nombre",actividades.getNombre());
+                FirebaseUtilDg.getCollAlumnos().document(actividades.getDelegadoActividad().getId())
+                        .update("actividadesId", FieldValue.arrayRemove(data));
+
                 lunchEditar.launch(intent);
 
             });
@@ -129,13 +142,18 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
                                         public void onClick(DialogInterface dialog, int which) {
 
                                             // Responder a la pulsación del botón positivo
-                                            db = FirebaseFirestore.getInstance();
-                                            db.collection("actividades").document(actividades.getId())
+                                            FirebaseUtilDg.getActividadesCollection().document(actividades.getId())
                                                     .delete()
                                                     .addOnSuccessListener(unused -> {
                                                         // Eliminar el usuario de la lista de datos
                                                         listaActividades.remove(actividades);
-
+                                                        HashMap<String,Object> data = new HashMap<>();
+                                                        data.put("delegadoActividad",null);
+                                                        data.put("estado",actividades.getEstado());
+                                                        data.put("id",actividades.getId());
+                                                        data.put("nombre",actividades.getNombre());
+                                                        FirebaseUtilDg.getCollAlumnos().document(actividades.getDelegadoActividad().getId())
+                                                                .update("actividadesId", FieldValue.arrayRemove(data));
                                                         // Notificar al adaptador que los datos han cambiado
                                                         notifyDataSetChanged();
                                                         Toast.makeText(context,"Eliminado",Toast.LENGTH_SHORT).show();
@@ -145,7 +163,6 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
                                                         Toast.makeText(context,"Algo pasó",Toast.LENGTH_SHORT).show();
 
                                                     });
-
 
                                         }
                                     })

@@ -1,5 +1,6 @@
 package com.example.proyecto_iot.alumno.Entities;
 
+import com.example.proyecto_iot.delegadoGeneral.dto.ActividadesDto;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 
 import java.io.Serializable;
