@@ -8,9 +8,9 @@ public class Notificacion {
     private String texto;
     private Date hora;
     private String tipo; //deleteEvento, updateEvento, donateAccept
-    private Evento evento;
-    private Donacion donacion;
-    private String codigoAlumno;
+    private Evento evento; // updateEvento
+    private Donacion donacion; //donateAccept
+    private String codigoAlumno; //donateAccept
 
     public String getTexto() {
         return texto;

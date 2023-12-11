@@ -63,7 +63,7 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
         ImageButton buttonB = holder.itemView.findViewById(R.id.buttonBarra);
         ImageButton buttonJ = holder.itemView.findViewById(R.id.buttonJugador);
 
-        nombre.setText(apoyo.getAlumno().getFullNameFormal());
+        nombre.setText(apoyo.getAlumno().fullNameFormal());
         tipo.setText(apoyo.getAlumno().getCodigo()+" | "+apoyo.getAlumno().getTipo());
         if (apoyo.getCategoria().equals("barra")){
             materialSwitch.setChecked(false);
