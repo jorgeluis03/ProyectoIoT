@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rvDonacion"
-    android:layout_width="320dp"
-    android:layout_height="115dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
+    android:layout_marginHorizontal="15dp"
     android:layout_marginBottom="15dp"
     android:background="@drawable/button_alumno_perfil"
     android:foregroundGravity="center_horizontal"
@@ -14,8 +15,8 @@
     <TextView
         android:id="@+id/textNombreDonacion"
         android:layout_width="216dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:background="#222A3F"
         android:text="TextView"
         android:textColor="@color/white"
@@ -26,11 +27,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintVertical_bias="0.0" />
+
 
     <TextView
         android:id="@+id/textHora"
-        android:layout_width="240dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#222A3F"
@@ -42,32 +44,53 @@
         app:layout_constraintTop_toBottomOf="@+id/textNombreDonacion"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/button6"
-        style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/icon_forward"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textDonacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="20sp"
+        android:text="S/2000.00"
+        android:textColor="#56E846"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textHora"
         app:layout_constraintEnd_toStartOf="@+id/button6"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textHora" />
+
+    <Button
+        android:id="@+id/button6"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        app:icon="@drawable/icon_forward"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout9"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="#222A3F"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button6"
+        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/imageViewEstado"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+             />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

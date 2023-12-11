@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetFinishEvent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_donar"
+    android:paddingHorizontal="40dp">
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="¿Desea subir más fotos?"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Puede subir hasta 5 fotos antes de finalizar."
+        android:textColor="@color/letra_gris"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.312"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSubirImagenEvento" />
+
+    <Button
+        android:id="@+id/buttonSubirImagenEvento"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/input_alumno_donar"
+        android:textAlignment="textStart"
+        android:textColor="#A0A0A0"
+        app:backgroundTint="@null"
+        app:iconTint="#A0A0A0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <Button
+        android:id="@+id/buttonDialogFinish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_da_finish_event"
+        android:enabled="true"
+        android:text="Finalizar evento"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/icon_upload"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonSubirImagenEvento"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSubirImagenEvento"
+        app:layout_constraintStart_toStartOf="@+id/buttonSubirImagenEvento"
+        app:layout_constraintTop_toTopOf="@+id/buttonSubirImagenEvento"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ProgressBar
+        android:id="@+id/progressBar4"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginVertical="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDialogFinish"
+        app:layout_constraintEnd_toEndOf="@+id/buttonDialogFinish"
+        app:layout_constraintStart_toStartOf="@+id/buttonDialogFinish"
+        app:layout_constraintTop_toTopOf="@+id/buttonDialogFinish" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Subir fotos"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonSubirImagenEvento"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSubirImagenEvento"
+        app:layout_constraintStart_toStartOf="@+id/buttonSubirImagenEvento"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

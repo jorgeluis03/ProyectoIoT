@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout5"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="60dp"
     android:background="@color/azul_background"
     tools:context=".alumno.Fragments.AlumnoHeader2Fragment">
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/textHeader2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -19,8 +20,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/buttonPerfil"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="12dp"
+        android:src="@drawable/img_default_user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <!--
     <Button
         android:id="@+id/buttonPerfil"
         style="?attr/materialIconButtonStyle"
@@ -32,4 +46,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+        -->
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textHeader2"
+        app:layout_constraintStart_toStartOf="@+id/textHeader2"
+        app:layout_constraintTop_toBottomOf="@+id/textHeader2"
+        app:layout_constraintVertical_bias="0.25" />
 </androidx.constraintlayout.widget.ConstraintLayout>

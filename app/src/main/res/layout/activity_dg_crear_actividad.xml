@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".delegadoGeneral.CrearActividadActivity"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:background="@color/backgroud_element_dg">
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_Nuevaactividades_dg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/azul_background"
+        android:background="@color/backgroud_element_dg"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,34 +22,108 @@
         app:title="Crear nueva actividad"
         ></androidx.appcompat.widget.Toolbar>
 
-    <EditText
-        android:id="@+id/editTextNombreActividad_dg"
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:inputType="text"
-        android:textColorLink="#00FADD"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:text="Nombre de la actividad"
-        android:textColor="#797D7F"
-        android:textSize="16dp"
+        android:layout_height="0.1dp"
+        app:dividerColor="#3D3D3D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_Nuevaactividades_dg" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldNombreActividad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView8">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/letra_clara" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.cardview.widget.CardView
+        app:layout_constraintTop_toBottomOf="@+id/textFieldNombreActividad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/grey">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/tvnombreDelegado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sin delegado"
+                    android:textSize="16sp"
+                    android:textColor="@color/light_grey"
+                    android:textStyle="italic"/>
+
+            </RelativeLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divideras"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                app:dividerColor="@color/grey"/>
+
+            <RelativeLayout
+
+                android:id="@+id/rl_asig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <ImageButton
+                    android:id="@+id/img_add"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:srcCompat="@drawable/add_user"
+                    app:tint="@color/white"
+                    android:layout_marginEnd="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/img_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Asignar delegado"
+                    android:textColor="@color/light_grey"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        app:dividerColor="#3D3D3D"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCrearAct_dg"
+        android:layout_marginBottom="10dp"/>
     <Button
         android:id="@+id/buttonCrearAct_dg"
         android:layout_width="match_parent"
@@ -67,8 +142,10 @@
         android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_Nuevaactividades_dg"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         app:srcCompat="@drawable/img_bat" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

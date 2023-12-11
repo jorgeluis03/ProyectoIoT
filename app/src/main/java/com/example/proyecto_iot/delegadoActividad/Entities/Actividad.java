@@ -1,6 +1,6 @@
 package com.example.proyecto_iot.delegadoActividad.Entities;
 
-import com.example.proyecto_iot.alumno.Objetos.Evento;
+import com.example.proyecto_iot.alumno.Entities.Evento;
 
 import java.util.List;
 
@@ -15,7 +15,8 @@ public class Actividad {
 
     public Actividad(String nombre, String fecha, String hora){
         this.nombre = nombre;
-        this.delegado = delegado;
+        this.fecha = fecha;
+        this.hora = hora;
     }
 
     public String getNombre() {

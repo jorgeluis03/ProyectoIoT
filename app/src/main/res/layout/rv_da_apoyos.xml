@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/apoyos"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginBottom="15dp"
+    android:background="@drawable/button_alumno_perfil"
+    android:foregroundGravity="center_vertical"
+    app:layout_anchorGravity="center_horizontal">
+
+    <Button
+        android:id="@+id/buttonDelete2"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/icon_trash"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/buttonJugador"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/icon_running_outline"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDelete2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDelete2"
+        app:layout_constraintTop_toTopOf="@+id/buttonDelete2" />
+
+    <ImageButton
+        android:id="@+id/buttonBarra"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/icon_barra_outline"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/materialSwitch"
+        app:layout_constraintEnd_toStartOf="@+id/materialSwitch"
+        app:layout_constraintTop_toTopOf="@+id/materialSwitch"
+         />
+
+    <TextView
+        android:id="@+id/textTipoAlumno"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="#222A3F"
+        android:text="TextView"
+        android:textColor="#B9B9B9"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonBarra"
+        app:layout_constraintStart_toStartOf="@+id/nombreApoyo"
+        app:layout_constraintTop_toBottomOf="@+id/nombreApoyo"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/nombreApoyo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#222A3F"
+        android:text="TextView"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonBarra"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/materialSwitch"
+        style="@style/Widget.App.Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDelete2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonJugador"
+        app:layout_constraintTop_toTopOf="@+id/buttonDelete2"
+        app:layout_constraintVertical_bias="0.0"
+        app:thumbTint="@color/verde_bat"
+        app:trackDecorationTint="#939393"
+        app:trackTint="#838383" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

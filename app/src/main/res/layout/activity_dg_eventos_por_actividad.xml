@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_dg"
+    tools:context=".delegadoGeneral.DgEventosPorActividadActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/backgroud_element_dg">
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:id="@+id/btn_back"
+            app:srcCompat="@drawable/ic_arrow_back"
+            android:layout_marginEnd="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+        <TextView
+            android:layout_toRightOf="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eventos"
+            android:textSize="22sp"
+            android:textColor="@color/light_grey"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/backgroud_dg"
+        android:id="@+id/recycleViewEventos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"/>
+
+    <TextView
+        android:id="@+id/noHayEventosDisponibles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No hay eventos disponibles"
+        android:layout_centerInParent="true"
+        android:textColor="@color/grey"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textStyle="italic"
+        android:visibility="invisible"/>
+
+
+</RelativeLayout>

@@ -35,15 +35,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
-    <ImageView
-        android:id="@+id/imageDonacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonSubirImagen" />
-
     <TextView
         android:id="@+id/textView21"
         android:layout_width="match_parent"
@@ -54,7 +45,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageDonacion" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSubirImagen" />
 
     <Button
         android:id="@+id/buttonDialogDonar"
@@ -62,25 +53,50 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/button_alumno_perfil_guardar"
+        android:enabled="false"
         android:text="@string/donaciones_dialog_button"
+        android:textColor="@color/white"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/inputMonto" />
 
     <EditText
-        android:id="@+id/editTextText2"
-        android:layout_width="match_parent"
+        android:id="@+id/inputMonto"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/input_alumno_donar"
         android:ems="10"
-        android:hint="S/. 0.00"
+        android:hint="0.00"
         android:inputType="numberDecimal"
         android:textColor="#353535"
         android:textColorHint="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView34"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="S/."
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/inputMonto"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBarRegistrarDonacion"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginVertical="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDialogDonar"
+        app:layout_constraintEnd_toEndOf="@+id/buttonDialogDonar"
+        app:layout_constraintStart_toStartOf="@+id/buttonDialogDonar"
+        app:layout_constraintTop_toTopOf="@+id/buttonDialogDonar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

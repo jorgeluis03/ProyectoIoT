@@ -4,28 +4,41 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
-    android:padding="8dp">
+    android:gravity="center_vertical|top"
+    android:background="@color/backgroud_element_dg">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:srcCompat="@drawable/img_default_user"/>
+                    android:id="@+id/imageViewIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/circle_bg"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/icon_user" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="top"
                 android:layout_weight="1">
@@ -34,26 +47,29 @@
                     android:id="@+id/textViewNombreUserPendi_dg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nombre actividad"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
+                    android:text="Nombre actividadadadadsasdasdasd"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    android:fontFamily="@font/nunito_sans" />
                 <TextView
                     android:id="@+id/textViewCorreoUserPendi_dg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="sin delegado"
+                    android:text="sin delegadoadadasdasdasdasdadadadasdadasadsasd"
                     android:textColor="#797D7F"
                     android:textSize="14dp"
                     />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_weight="0"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_gravity="bottom">
+
                 <Button
                     android:id="@+id/buttonAceptarUser"
                     style="?attr/materialIconButtonStyle"
@@ -64,15 +80,14 @@
                     android:paddingTop="0dp"
                     android:paddingRight="0dp"
                     android:paddingBottom="0dp"
-                    app:icon="@drawable/icon_check"
+                    app:icon="@drawable/ic_baseline_check_circle_24"
                     app:iconSize="30dp"
                     app:iconTint="@color/verde"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:clickable="false"/>
+                    app:layout_constraintTop_toTopOf="parent" />
                 <Button
-                    android:id="@+id/buttonBanearUser"
+                    android:id="@+id/buttonRechazarUserPendi"
                     style="?attr/materialIconButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,21 +98,22 @@
                     android:paddingBottom="0dp"
                     app:icon="@drawable/round_delete"
                     app:iconSize="30dp"
-                    app:iconTint="@color/rojo"
+                    app:iconTint="#ED2746"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:clickable="false"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
 
             </LinearLayout>
         </LinearLayout>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:dividerInsetStart="64dp"
-            app:dividerInsetEnd="16dp"/>
+    </LinearLayout>
+
+
+
+
+
 
 
 

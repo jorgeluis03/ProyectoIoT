@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_element_dg"
+    tools:context=".delegadoGeneral.DgAsignarDelegadoActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbarAsig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroud_element_dg"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:srcCompat="@drawable/ic_arrow_back"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginEnd="10dp"
+            app:tint="@color/white"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Asiganar delegado"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/nunito_sans"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchDeleasig"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/toolbarAsig"
+        app:queryHint="Buscar"
+        android:backgroundTint="@color/light_grey"
+        android:background="@drawable/curved_bg"
+        android:layout_margin="8dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/backgroud_element_dg"
+        android:id="@+id/recycleviewDelegados"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchDeleasig"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fb_checkDelegado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_check"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"/>
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/progressBar"
+        android:layout_centerInParent="true"/>
+
+
+
+</RelativeLayout>

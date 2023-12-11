@@ -6,28 +6,41 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.proyecto_iot.alumno.Entities.Alumno;
+
 import java.io.Serializable;
 
-@Entity(tableName = "actividades")
 public class Actividades implements Serializable {
-    @PrimaryKey(autoGenerate = true)
-
-    private Integer id;
+    private String id;
     private String nombre;
     private String estado;
 
+    private Alumno delegadoActividad;
 
-    public Actividades(int id,String nombre, String estado) {
+
+    public Actividades() {
+    }
+
+    public Actividades(String id, String nombre, String estado) {
         this.id = id;
         this.nombre = nombre;
         this.estado = estado;
-
     }
-    public Integer getId() {
+
+    public Alumno getDelegadoActividad() {
+        return delegadoActividad;
+    }
+
+    public void setDelegadoActividad(Alumno delegadoActividad) {
+        this.delegadoActividad = delegadoActividad;
+    }
+
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getNombre() {

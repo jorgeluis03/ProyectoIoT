@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Place Picker -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,44 +20,106 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".delegadoActividad.DaGestionActivity"
+            android:name=".delegadoGeneral.DgAsignarDelegadoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".delegadoGeneral.DgEventosPorActividadActivity"
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral" />
+        <activity
+            android:name=".delegadoGeneral.DgEstadisticasDetallesActivity"
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral" />
+        <activity
+            android:name=".delegadoActividad.DaEditEventoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno"/>
+            android:theme="@style/Da" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/img_bat" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/azul_background" />
+
+        <activity
+            android:name=".alumno.MapaEventoActivityAlumno"
+            android:exported="false"
+            android:parentActivityName=".delegadoActividad.DaEditEventoActivity" />
+        <activity
+            android:name=".alumno.Delegado_select_map_activity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Alumno" />
+        <activity
+            android:name=".delegadoActividad.DaGestionEventosActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Alumno" />
+        <activity
+            android:name=".alumno.AlumnoBuscarEventoActivity"
+            android:exported="false"
+            android:theme="@style/buscarEventoActivity" />
+        <activity
+            android:name=".alumno.AlumnoChatActivity"
+            android:exported="false"
+            android:theme="@style/Alumno" />
+        <activity
+            android:name=".alumno.MapaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".delegadoGeneral.Dg_configuracion"
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral" />
+        <activity
+            android:name=".delegadoGeneral.EditarActividad"
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral" />
+        <activity
+            android:name=".delegadoGeneral.Eventos_actividad_dg"
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral" />
+        <activity
+            android:name=".delegadoGeneral.Perfil_dg"
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral" />
+        <activity
+            android:name=".alumno.AlumnoDonacionConsultaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".alumno.AlumnoInicioActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Alumno" />
         <activity
             android:name=".delegadoActividad.DaInicioActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Alumno" />
         <activity
-            android:name=".alumno.AlumnoInicioActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Alumno"></activity>
-        <activity
             android:name=".alumno.AlumnoEventoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno" />
+            android:theme="@style/alumnoEventoActivity" />
         <activity
             android:name=".alumno.AlumnoPerfilEditarActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno" />
+            android:theme="@style/alumnoPerfilActivity" />
         <activity
             android:name=".alumno.AlumnoPerfilContrasenaActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno" />
-            <activity
+            android:theme="@style/alumnoPerfilActivity" />
+        <activity
             android:name=".delegadoGeneral.CrearActividadActivity"
             android:exported="false"
-            android:theme="@style/Login"/>
-
+            android:theme="@style/DelegadoGeneral" />
         <activity
             android:name=".delegadoGeneral.Dg_Activity"
-            android:exported="false" />
-
+            android:exported="false"
+            android:theme="@style/DelegadoGeneral" />
         <activity
             android:name=".alumno.AlumnoPerfilActivity"
             android:exported="false"
@@ -81,15 +147,9 @@
             android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.LoginActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.ConfirmarregistroActivity"
             android:exported="false"
@@ -102,13 +162,30 @@
             android:theme="@style/Login" />
         <activity
             android:name=".inicioApp.IngresarActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Login" />
+            android:theme="@style/Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAfL_QEGRZ8k5faL21rRYl3egNWOe5aTys" />
+
+        <service
+            android:name=".delegadoGeneral.FCMNotificationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

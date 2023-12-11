@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backgroud_card_dg">
+    <RelativeLayout
+        android:id="@+id/relativeLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/tvNombreActividad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre Actividad"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_below="@+id/tvNombreActividad"
+            android:id="@+id/tv_apoyos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delgado actividad"
+            android:textColor="#CACACA"
+            android:textStyle="italic"
+            android:fontFamily="@font/nunito_sans" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

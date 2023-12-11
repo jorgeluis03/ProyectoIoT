@@ -17,6 +17,7 @@
     <!-- SIGNIN -->
     <string name="signin_instruction">Completa tus datos para continuar:</string>
     <string name="send">Enviar</string>
+
     <string-array name="tipo_usuario">
         <item name="estudiante" type="string">Estudiante</item>
         <item name="egresado" type="string">Egresado</item>
@@ -37,9 +38,24 @@
 
     <!-- EVENTO -->
     <string name="evento_apoyar">Apoyar</string>
+    <string name="evento_crear">Crear evento</string>
+    <string name="evento_apoyando">Apoyando</string>
+    <string name="evento_notificaciones">Notificaciones</string>
+    <string name="evento_chat">Chat</string>
+    <string name="evento_chat_vivo">Chat en vivo</string>
+    <string name="evento_subir_foto">Subir foto</string>
+    <string name="evento_agregar_descripcion">Agrega una descripción (opcional)</string>
+
 
     <!-- DONACIONES -->
-    <string name="donaciones_cuentas">Cuentas disponibles</string>
+    <string name="donaciones_cuenta">Cuenta disponible</string>
+    <string name="donaciones_cuenta_aitel">Cuenta AITEL</string>
+
+    <string name="donaciones_cuenta_dialog_titulo">Números de cuenta disponible</string>
+    <string name="donaciones_cuenta_dialog_cuenta1_nombre">Número de yape</string>
+    <string name="donaciones_cuenta_dialog_cuenta1_texto">965790551</string>
+    <string name="donaciones_cuenta_dialog_qr">Código QR</string>
+
     <string name="donaciones_ultimas">Últimas donaciones</string>
     <string name="donaciones_donar">Donar</string>
     <string name="donaciones_dialog_guardar_captura">Captura de pantalla del pago</string>
@@ -52,6 +68,7 @@
     <string name="hint_lastname">Apellidos</string>
     <string name="hint_code">Código PUCP</string>
     <string name="hint_email">Correo</string>
+    <string name="hint_email_or_code">Correo o Código PUCP</string>
     <string name="hint_passw">Contraseña</string>
     <string name="hint_user_type">Tipo de usuario</string>
 
@@ -71,7 +88,8 @@
     <!-- VERIFICATION CODE -->
     <string name="fg_verification_label">Correo enviado</string>
     <string name="fg_verification_instruction">Ingresa el código aquí:</string>
-    <string name="fg_verification_context">Se ha enviado un código de verificación al correo que indicaste, en caso de que exista una cuenta vinculada.</string>
+    <!--<string name="fg_verification_context">Se ha enviado un código de verificación al correo que indicaste, en caso de que exista una cuenta vinculada.</string>-->
+    <string name="fg_verification_context">Se ha enviado un correo para que reestablezca su contraseña, recuerda que este tiene un tiempo límite hasta caducar.</string>
 
     <!-- CHANGE PASSW -->
     <string name="ch_passw_label">Cambio de contraseña</string>

@@ -7,116 +7,293 @@
     android:background="@color/azul_background"
     tools:context=".alumno.AlumnoEventoActivity">
 
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:scaleType="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cancha_de_minas"
-        tools:srcCompat="@drawable/cancha_de_minas" />
-
-    <Button
-        android:id="@+id/buttonEventoBack"
-        style="?attr/materialIconButtonFilledStyle"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_edit_floating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#990A0E19"
-        app:icon="@drawable/icon_back1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:visibility="gone"
+        app:backgroundTint="@color/verde_bat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/icon_pencil"
+        app:tint="@color/white" />
 
-    <LinearLayout
-        android:id="@+id/linearLayoutEventoInfo"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="-16dp"
-        android:background="@drawable/button_alumno_perfil"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="20dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView10">
+        app:layout_constraintTop_toTopOf="parent" >
 
-        <TextView
-            android:id="@+id/textView22"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="TextView"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:paddingBottom="16dp">
 
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="TextView"
-            android:textColor="@color/white" />
+            <ImageView
+                android:id="@+id/imageEvento"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/cancha_de_minas"
+                tools:srcCompat="@drawable/cancha_de_minas" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textEstado2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_round_box_padding"
+                android:backgroundTint="@color/azul_background"
+                android:text="Finalizado"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayoutEventoInfo"
+                app:layout_constraintEnd_toEndOf="@+id/imageEvento" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/buttonEventoBack"
+                style="?attr/materialIconButtonFilledStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/button_alumno_evento_info"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:paddingHorizontal="10dp"
-                android:text="Button"
-                android:textColor="#353535"
-                android:textSize="12sp"
-                app:backgroundTint="@null"
-                app:icon="@drawable/icon_calendar_filled"
-                app:iconPadding="2dp"
-                app:iconTint="#353535" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#990A0E19"
+                app:icon="@drawable/icon_back1"
+                app:iconTint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/button_alumno_evento_info"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:paddingHorizontal="10dp"
-                android:text="Button"
-                android:textColor="#353535"
-                android:textSize="12sp"
-                app:backgroundTint="@null"
-                app:icon="@drawable/icon_clock_filled"
-                app:iconPadding="2dp"
-                app:iconTint="#353535" />
+            <LinearLayout
+                android:id="@+id/linearLayoutEventoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="-16dp"
+                android:background="@drawable/card_alumno_evento"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageEvento">
 
-            <Button
-                android:id="@+id/button8"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/button_alumno_evento_info"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:paddingHorizontal="10dp"
-                android:text="Button"
-                android:textColor="#353535"
-                android:textSize="12sp"
-                app:backgroundTint="@null"
-                app:icon="@drawable/icon_marker_map_filled"
-                app:iconPadding="2dp"
-                app:iconTint="#353535" />
-        </LinearLayout>
-    </LinearLayout>
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragmentEventoButtons"
+                    android:name="com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    tools:layout="@layout/fragment_alumno_apoyar_button" />
+
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragmentApoyos"
+                    android:name="com.example.proyecto_iot.delegadoActividad.Fragments.DaApoyosFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:layout="@layout/fragment_da_apoyos" />
+
+                <TextView
+                    android:id="@+id/textDelegadoActividad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/text_icon_delegado_evento"
+                    android:drawablePadding="4dp"
+                    android:textColor="#B9B9B9"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textEventoTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textEventoActividad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="TextView"
+                    android:textColor="#B9B9B9"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textEventoDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="TextView"
+                    android:textColor="@color/white" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/buttonEventoFecha"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/button_alumno_evento_info"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingHorizontal="10dp"
+                            android:text="Button"
+                            android:textColor="#353535"
+                            android:textSize="12sp"
+                            app:backgroundTint="@null"
+                            app:icon="@drawable/icon_calendar_filled"
+                            app:iconPadding="4dp"
+                            app:iconTint="#353535" />
+
+                        <Button
+                            android:id="@+id/buttonEventoHora"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/button_alumno_evento_info"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingHorizontal="10dp"
+                            android:text="Button"
+                            android:textColor="#353535"
+                            android:textSize="12sp"
+                            app:backgroundTint="@null"
+                            app:icon="@drawable/icon_clock_filled"
+                            app:iconPadding="4dp"
+                            app:iconTint="#353535" />
+
+                        <Button
+                            android:id="@+id/buttonEventoLugar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/button_alumno_evento_info"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingHorizontal="10dp"
+                            android:text="Button"
+                            android:textAlignment="textStart"
+                            android:textColor="#353535"
+                            android:textSize="12sp"
+                            app:backgroundTint="@null"
+                            app:icon="@drawable/icon_marker_map_filled"
+                            app:iconPadding="4dp"
+                            app:iconTint="#353535" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/card_alumno_evento"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutEventoInfo"
+                app:layout_constraintVertical_bias="1.0">
+
+                <Button
+                    android:id="@+id/buttonSubirFotos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/button_alumno_evento_subir_foto"
+                    android:text="@string/evento_subir_foto"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:backgroundTint="@null"
+                    app:icon="@drawable/icon_plus"
+                    app:iconTint="@color/white" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvFotos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonSubirFotos"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar5"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="238dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonSubirFotos"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="124dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="124dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView12"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="El evento aún no cuenta con fotos"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonSubirFotos"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginEnd="100dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/img_pics" />
+
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".delegadoGeneral.fragmentos.Dg_estadisticasFragment"
-    android:background="#EEEE"
-    android:padding="10dp"
-    android:orientation="vertical"
+    android:background="@color/backgroud_dg"
     >
-    <LinearLayout
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="275dp"
+        android:src="@drawable/pabellonv"
+        />
+
+
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <com.google.android.material.card.MaterialCardView
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:cardBackgroundColor="#579DEF"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="5dp"
-            app:contentPadding="10dp"
-            style="?attr/materialCardViewFilledStyle">
-                <LinearLayout
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/backgroud_card_dg"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="150dp"
+                app:contentPadding="10dp"
+                style="?attr/materialCardViewFilledStyle">
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="208dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvusuarios"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-black"
@@ -41,31 +53,33 @@
                         android:textStyle="bold" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="120dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/icon_users_solid"
                         app:tint="#FFFFFF" />
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_below="@+id/tvusuarios"
+                        android:id="@+id/layoutestud"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="200dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:text="Estudiantes"
                             android:textColor="#EEEE"
                             android:textSize="14sp"
+                            android:layout_marginEnd="10dp"
                             android:textStyle="bold" />
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/cantEstudiantes"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:fontFamily="sans-serif-black"
-                            android:text="354"
-                            android:textAlignment="textEnd"
+                            android:text=""
                             android:textColor="#FFFFFF"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -73,27 +87,26 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_below="@+id/layoutestud"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="200dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:text="Egresados"
                             android:textColor="#EEEE"
                             android:textSize="14sp"
+                            android:layout_marginEnd="10dp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/cantEgresados"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:fontFamily="sans-serif-black"
-                            android:text="189"
-                            android:textAlignment="textEnd"
+                            android:text=""
                             android:textColor="#FFFFFF"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -101,315 +114,116 @@
                     </LinearLayout>
 
 
-                </LinearLayout>
+                </RelativeLayout>
 
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:cardBackgroundColor="#9DEF57"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="5dp"
-            app:contentPadding="10dp"
-            style="?attr/materialCardViewFilledStyle">
-            <LinearLayout
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDonaciones"
+                android:clickable="true"
+                android:focusable="true"
+                android:checkable="true"
                 android:layout_width="match_parent"
-                android:layout_height="208dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
-                    android:letterSpacing="0.1"
-                    android:text="Donaciones"
-                    android:textAllCaps="true"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:src="@drawable/baseline_monetization_on_24"
-                    app:tint="#FFFFFF" />
-
-                <TextView
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/backgroud_card_dg"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:contentPadding="10dp"
+                style="?attr/materialCardViewFilledStyle">
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Monto Recaudado"
-                    android:textColor="#EEEE"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-black"
-                    android:text="S/ 1354.67"
-                    android:textColor="#FFFFFF"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/donacionescard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:letterSpacing="0.1"
+                        android:text="Donaciones"
+                        android:textAllCaps="true"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/baseline_monetization_on_24"
+                        app:tint="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/tv_monto"
+                        android:layout_below="@+id/donacionescard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Monto Recaudado"
+                        android:textColor="#EEEE"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/montoDonacion"
+                        android:layout_below="@+id/tv_monto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text=""
+                        android:textColor="@color/online_green"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
 
 
-            </LinearLayout>
+                </RelativeLayout>
 
 
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-
-
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        app:cardBackgroundColor="#FFFF"
-        app:contentPadding="10dp"
-        style="?attr/materialCardViewFilledStyle">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingEnd="16dp"
-                android:paddingStart="8dp">
+                android:layout_height="300dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:contentPadding="10dp"
+                app:cardBackgroundColor="@color/backgroud_card_dg"
+                style="?attr/materialCardViewFilledStyle">
 
                 <LinearLayout
+                    android:layout_below="@+id/layouttop"
+                    android:id="@+id/rl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="NOMBRE ACTIVIDAD"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
-                            android:textAlignment="textEnd"
-                            android:text="APOYOS"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Fustal varones"
-                        android:textAllCaps="true"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp" />
-                    <TextView
+                        android:text="NOMBRE ACTIVIDAD"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:letterSpacing="0.1"
+                        android:textStyle="bold" />
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:text="124"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Basquet mujeres"
-                        android:textAllCaps="true"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:text="59"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Sabado refrescante"
-                        android:textAllCaps="true"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:text="32"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Voley mixto"
-                        android:textAllCaps="true"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:text="24"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Fustal varones"
-                        android:textAllCaps="true"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:text="124"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Basquet mujeres"
-                        android:textAllCaps="true"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:text="59"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Sabado refrescante"
-                        android:textAllCaps="true"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:text="32"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Voley mixto"
-                        android:textAllCaps="true"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:text="24"
-                        android:textColor="#797D7F"
-                        android:textSize="16dp"
-                        />
-
+                        android:layout_height="match_parent"
+                        android:id="@+id/rv_actividades"
+                        android:layout_below="@+id/rl"/>
                 </LinearLayout>
 
 
-            </LinearLayout>
-        </ScrollView>
+
+            </com.google.android.material.card.MaterialCardView>
 
 
-    </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
-</LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

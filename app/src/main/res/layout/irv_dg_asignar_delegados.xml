@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/linearLayout2"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/backgroud_element_dg"
+    >
+
+    <ImageView
+        android:id="@+id/imageViewIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/circle_bg"
+        android:padding="8dp"
+        app:srcCompat="@drawable/icon_user" />
+
+    <RelativeLayout
+    android:id="@+id/relativeLay"
+    android:layout_toRightOf="@id/imageViewIcon"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    <TextView
+        android:id="@+id/tv_nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre usuario"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_below="@+id/tv_nombre"
+        android:id="@+id/tv_correo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="correo"
+        android:textColor="#CACACA"
+        android:fontFamily="@font/nunito_sans" />
+
+
+
+</RelativeLayout>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10dp">
+
+        <RadioButton
+            android:id="@+id/radioButtonDA"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:clickable="true"/>
+
+
+    </RadioGroup>
+
+<com.google.android.material.divider.MaterialDivider
+    android:layout_marginTop="10dp"
+    android:layout_width="wrap_content"
+    android:layout_height="0.1dp"
+    app:dividerColor="@color/grey"
+    android:layout_below="@+id/relativeLay"/>
+</RelativeLayout>

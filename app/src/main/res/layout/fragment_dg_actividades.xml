@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CACACA"
     tools:context=".delegadoGeneral.fragmentos.Dg_actividadesFragment"
     >
 
 
     <androidx.recyclerview.widget.RecyclerView
+
         android:id="@+id/recycleViewActividadesDg"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#EEEE"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroud_dg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +27,12 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/verde_bat"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="30dp"
+        app:tint="@color/white"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Tooltip"
-        app:srcCompat="@drawable/round_add" />
+        app:srcCompat="@drawable/round_add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

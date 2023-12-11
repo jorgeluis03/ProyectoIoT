@@ -2,58 +2,110 @@ package com.example.proyecto_iot.delegadoGeneral.fragmentos;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.FragmentDgAlumnosRegistrBinding;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosAdapter;
-import com.example.proyecto_iot.delegadoGeneral.entity.Usuario;
+import com.example.proyecto_iot.delegadoGeneral.adapter.ListaUsuariosRegisAdpter;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dg_alumnos_registrFragment extends Fragment {
     FragmentDgAlumnosRegistrBinding binding;
-    private List<Usuario> listaUser = llenarListUsuarios();
+    SearchView searchView;
+    RecyclerView recycleViewUserRegi;
+    Query query;
+    ListaUsuariosRegisAdpter adapter,adapterBuscar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding=FragmentDgAlumnosRegistrBinding.inflate(inflater,container,false);
 
+        //declaraciones
+        searchView = binding.searchUserRegis;
+        recycleViewUserRegi =binding.recycleViewUserRegi;
+
+        cargarListaUsuariosRegis();
+
+        searchMetod();
+
         return binding.getRoot();
     }
+    public void cargarListaUsuariosRegis(){
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        cargarListaUser();
+        query = FirebaseUtilDg.getCollAlumnos().whereEqualTo("estado","activo");
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                if(task.getResult().getDocuments().size()>0){
+
+                    FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
+                            .setQuery(query, Alumno.class).build();
+
+                    adapter = new ListaUsuariosRegisAdpter(options,getContext());
+                    recycleViewUserRegi.setAdapter(adapter);
+                    recycleViewUserRegi.setLayoutManager(new LinearLayoutManager(getContext()));
+                    adapter.startListening();
+                }else {
+                    setVisible(true);
+                }
+            }
+        });
+
+
+
     }
-    public void cargarListaUser(){
-        ListaUsuariosAdapter adapter = new ListaUsuariosAdapter();
-        adapter.setContext(getContext());
-        adapter.setListaUsuarios(listaUser);
 
-        binding.recycleViewUserRegi.setAdapter(adapter);
-        binding.recycleViewUserRegi.setLayoutManager(new LinearLayoutManager(getContext()));
+
+    public void searchMetod(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                textSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                textSearch(newText);
+                return false;
+            }
+        });
     }
 
-    public List<Usuario> llenarListUsuarios(){
-        List<Usuario> lista = new ArrayList<>();
-        lista.add(new Usuario("Jorge Luis","Dominguez","a20200643@pucp.edu.pe"));
-        lista.add(new Usuario("Noe","Gutierrez","a20204578@pucp.edu.pe"));
-        lista.add(new Usuario("Valentino","De las casas","a20208963@pucp.edu.pe"));
-        lista.add(new Usuario("Alexandra","Maldini","a20187458@pucp.edu.pe"));
-        lista.add(new Usuario("Conor","McGregor Poirier","a20169852@pucp.edu.pe"));
-        lista.add(new Usuario("Charles","Oliveira","a20193256@pucp.edu.pe"));
-        lista.add(new Usuario("Dustin","Chandler","a20200521@pucp.edu.pe"));
-        lista.add(new Usuario("Nate","Diaz","a20168547@pucp.edu.pe"));
-        lista.add(new Usuario("Khabib","Makhashev","a20159632@pucp.edu.pe"));
+    public void textSearch(String s){
 
-        return lista;
+
+        query = FirebaseUtilDg.getCollAlumnos().whereEqualTo("estado","activo");
+        FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
+                .setQuery(query.orderBy("nombre").startAt(s).endAt(s+"~"), Alumno.class).build();
+
+        adapterBuscar = new ListaUsuariosRegisAdpter(options,getContext());
+        recycleViewUserRegi.setAdapter(adapterBuscar);
+        recycleViewUserRegi.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapterBuscar.startListening();
+
     }
+
+    public void setVisible(boolean noHaySolicitudes){
+        if(noHaySolicitudes){
+            binding.textNoHay.setVisibility(View.VISIBLE);
+            recycleViewUserRegi.setVisibility(View.INVISIBLE);
+        }else {
+            binding.textNoHay.setVisibility(View.INVISIBLE);
+            recycleViewUserRegi.setVisibility(View.VISIBLE);
+        }
+    }
+
 }
