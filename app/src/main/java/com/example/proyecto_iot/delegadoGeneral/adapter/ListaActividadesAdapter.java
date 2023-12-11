@@ -5,6 +5,7 @@ import static androidx.activity.result.ActivityResultCallerKt.registerForActivit
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,19 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
+import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.delegadoGeneral.DgEventosPorActividadActivity;
 import com.example.proyecto_iot.delegadoGeneral.EditarActividad;
 import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,42 +101,62 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
             //borrar
             ImageButton buttonBorrar = itemView.findViewById(R.id.buttonEliminarActivi);
             buttonBorrar.setOnClickListener(view -> {
+                Query query = FirebaseUtilDg.getColeccionEventos().whereEqualTo("actividadId",actividades.getId());
 
-                new MaterialAlertDialogBuilder(context)
-                        .setTitle("¡Advertencia!")
-                        .setMessage("Se eliminarán todos los eventos que se encuentren en la actividad " +
-                                "incluyendo aquellos que aun no finalizan.")
-                        .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Responder a la pulsación del botón neutral
-                            }
-                        })
-                        .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Responder a la pulsación del botón positivo
-                                db = FirebaseFirestore.getInstance();
-                                db.collection("actividades").document(actividades.getId())
-                                        .delete()
-                                        .addOnSuccessListener(unused -> {
-                                            // Eliminar el usuario de la lista de datos
-                                            listaActividades.remove(actividades);
+                query.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().getDocuments().size() > 0) {
+                            new MaterialAlertDialogBuilder(context)
+                                    .setTitle("¡Eliminar evento!")
+                                    .setMessage("No es posible eliminar esta actividad ya que los eventos asociados " +
+                                            "aun no finalizan.")
+                                    .setPositiveButton("Aceptar", (dialog, which) -> {
+                                    })
+                                    .show();
+                        } else {
+                            new MaterialAlertDialogBuilder(context)
+                                    .setTitle("¡Advertencia!")
+                                    .setMessage("Se eliminarán todos los eventos que se encuentren en la actividad " +
+                                            "incluyendo aquellos que aun no finalizan.")
+                                    .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Responder a la pulsación del botón neutral
+                                        }
+                                    })
+                                    .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
 
-                                            // Notificar al adaptador que los datos han cambiado
-                                            notifyDataSetChanged();
-                                            Toast.makeText(context,"Eliminado",Toast.LENGTH_SHORT).show();
+                                            // Responder a la pulsación del botón positivo
+                                            db = FirebaseFirestore.getInstance();
+                                            db.collection("actividades").document(actividades.getId())
+                                                    .delete()
+                                                    .addOnSuccessListener(unused -> {
+                                                        // Eliminar el usuario de la lista de datos
+                                                        listaActividades.remove(actividades);
 
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(context,"Algo pasó",Toast.LENGTH_SHORT).show();
+                                                        // Notificar al adaptador que los datos han cambiado
+                                                        notifyDataSetChanged();
+                                                        Toast.makeText(context,"Eliminado",Toast.LENGTH_SHORT).show();
 
-                                        });
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Toast.makeText(context,"Algo pasó",Toast.LENGTH_SHORT).show();
+
+                                                    });
 
 
-                            }
-                        })
-                        .show();
+                                        }
+                                    })
+                                    .show();
+                        }
+                    } else {
+                        Log.e("msg-test", "Error al obtener eventos", task.getException());
+                    }
+                });
+
+
 
             });
 

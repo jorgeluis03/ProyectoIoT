@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,15 +54,16 @@ public class ListaDelegadosAdapter extends FirestoreRecyclerAdapter<Alumno,Lista
     //SubClase ViewHolder
     public class DelegadoViewHolder extends RecyclerView.ViewHolder{
         TextView tv_nombre, tv_correo;
-        CheckBox checkBox;
+        RadioButton radioButton;
         Alumno alumno;
         public DelegadoViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_nombre = itemView.findViewById(R.id.tv_nombre);
             tv_correo = itemView.findViewById(R.id.tv_correo);
-            checkBox = itemView.findViewById(R.id.checkboxDA);
+            radioButton = itemView.findViewById(R.id.radioButtonDA);
 
-            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
                 int position = getBindingAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && isChecked) {
                     alumno = getItem(position);

@@ -1,17 +1,27 @@
 package com.example.proyecto_iot.delegadoGeneral.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.delegadoGeneral.dto.DonacionDto;
@@ -38,13 +48,10 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
     public void onBindViewHolder(@NonNull DonacionViewHolder holder, int position) {
         DonacionDto donacion = lista.get(position);
         holder.donacionDto = donacion;
-
         holder.nombreDonador.setText(donacion.getNombreDonante());
         holder.horaDonacion.setText(donacion.getHorahoraFecha());
         holder.montoDonacion.setText("S/"+donacion.getMonto());
-
     }
-
     @Override
     public int getItemCount() {
         return lista.size();
@@ -53,8 +60,8 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
 
     class DonacionViewHolder extends RecyclerView.ViewHolder{
         DonacionDto donacionDto;
-        TextView nombreDonador,horaDonacion,montoDonacion;
-        ImageButton btnAceptar, btnRechazar;
+        TextView nombreDonador,horaDonacion,montoDonacion,urlDonacion;
+        Button btnAceptar, btnRechazar;
 
         public DonacionViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +71,8 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
             montoDonacion = itemView.findViewById(R.id.montoDonacion);
             btnAceptar = itemView.findViewById(R.id.btnAceptarDonacion);
             btnRechazar = itemView.findViewById(R.id.btnRechazarDonacion);
+            //btnVerDonacion = itemView.findViewById(R.id.btnVerDonacion);
+
 
             btnAceptar.setOnClickListener(view -> {
                 new MaterialAlertDialogBuilder(context)
@@ -110,6 +119,39 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                         })
                         .show();
             });
+
+
+            /*
+            btnVerDonacion.setOnClickListener(view -> {
+                Log.d("Debug", "Botón Ver Donación presionado");
+                Log.d("Debug", "URL de la imagen: " + donacionDto.getFotoDonante());
+
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_image_viewer);
+                ImageView imageView = dialog.findViewById(R.id.imageViewDialog);
+
+                Glide.with(context)
+                        .load(donacionDto.getFotoDonante())
+                        .override(Target.SIZE_ORIGINAL) // Cargar imagen en su tamaño original
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                Log.e("GlideError", "Error al cargar la imagen", e);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                Log.d("Glide", "Imagen cargada con éxito");
+                                return false;
+                            }
+                        })
+                        .into(imageView);
+
+                dialog.show();
+            });
+            */
+
 
         }
 
