@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.databinding.ActivityForgotPasswBinding;
@@ -25,14 +26,26 @@ public class ForgotPasswActivity extends AppCompatActivity {
         });
 
         binding.forgPasswNext.setOnClickListener(view -> {
-            String correo = binding.editEmailForgPassw.getEditText().getText().toString();
-            auth.sendPasswordResetEmail(correo)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()){
-                            Intent intent = new Intent(ForgotPasswActivity.this, FPVerificationActivity.class);
-                            startActivity(intent);
-                        }
-                    });
+            enviarCorreoRecuperarContrasena();
         });
+    }
+
+    private void enviarCorreoRecuperarContrasena(){
+        binding.relativeOverlay.setVisibility(View.VISIBLE);
+        binding.forgPasswNext.setEnabled(false);
+
+        String correo = binding.editEmailForgPassw.getEditText().getText().toString();
+        auth.sendPasswordResetEmail(correo)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Intent intent = new Intent(ForgotPasswActivity.this, FPVerificationActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        binding.relativeOverlay.setVisibility(View.GONE);
+                        binding.forgPasswNext.setEnabled(true);
+
+                        startActivity(intent);
+                    }
+                });
     }
 }
