@@ -5,6 +5,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,15 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class DaInicioActivity extends AppCompatActivity {
 
@@ -75,6 +85,8 @@ public class DaInicioActivity extends AppCompatActivity {
                     }
                     if (!valido) {
                         cerrarSesion("Ha dejado de ser delegado de actividad.");
+                    } else if (alumnoAutenticado.getActividadesId()!=obtenerActividadesDesdeMemoria()) {
+                        guardarDataEnMemoria(alumnoAutenticado);
                     }
                 }
             }
@@ -83,6 +95,18 @@ public class DaInicioActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void guardarDataEnMemoria(Alumno alumno) {
+        Gson gson = new Gson();
+        String alumnoJson = gson.toJson(alumno);
+        try (FileOutputStream fileOutputStream = openFileOutput("userData", Context.MODE_PRIVATE);
+             FileWriter fileWriter = new FileWriter(fileOutputStream.getFD())) {
+            fileWriter.write(alumnoJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void cerrarSesion(String mensaje){
         FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
@@ -96,5 +120,20 @@ public class DaInicioActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    private ArrayList<Actividades> obtenerActividadesDesdeMemoria() {
+        try (FileInputStream fileInputStream = openFileInput("userData");
+             FileReader fileReader = new FileReader(fileInputStream.getFD());
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+
+            String jsonData = bufferedReader.readLine();
+            Gson gson = new Gson();
+            Alumno alumno = gson.fromJson(jsonData, Alumno.class);
+            return alumno.getActividadesId();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
