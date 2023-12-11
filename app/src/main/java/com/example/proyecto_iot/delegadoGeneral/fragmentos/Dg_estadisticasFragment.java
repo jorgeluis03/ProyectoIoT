@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Donacion;
@@ -54,7 +55,8 @@ public class Dg_estadisticasFragment extends Fragment {
         cantEgresados = binding.cantEgresados;
         recyclerView= binding.rvActividades;
 
-        mostrarActividades();
+        cargarCantidadUsuarios();
+        cargarSaldoDonacion();
 
         cardView.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), DgEstadisticasDetallesActivity.class);
@@ -81,8 +83,8 @@ public class Dg_estadisticasFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        cargarSaldoDonacion();
-        cargarCantidadUsuarios();
+        //cargarSaldoDonacion();
+        //cargarCantidadUsuarios();
     }
 
     @Override
@@ -100,24 +102,23 @@ public class Dg_estadisticasFragment extends Fragment {
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                     String codigoDonante = documentSnapshot.getId();
 
-                    listenerRegistration = FirebaseUtilDg.getColeccionIdDonantes(codigoDonante)
-                            .whereEqualTo("estado","validado")
-                            .addSnapshotListener((value, error)->{
-                                if (error != null) {
-                                    Log.w("msg-don", "Listen failed.", error);
-                                    return;
-                                }
+                    FirebaseUtilDg.getColeccionIdDonantes(codigoDonante)
+                        .whereEqualTo("estado","validado")
+                        .addSnapshotListener((value, error)->{
+                            if (error != null) {
+                                Log.w("msg-don", "Listen failed.", error);
+                                return;
+                            }
+                            suma =0.0;
+                            for (QueryDocumentSnapshot snapshot : value) {
+                                String monto = snapshot.getString("monto");
+                                suma += Double.parseDouble(monto);
+                                saldoDonacion.setText("S/"+String.valueOf(suma));
 
-                                suma =0.0;
-                                for (QueryDocumentSnapshot snapshot : value) {
-                                    String monto = snapshot.getString("monto");
-                                    suma += Double.parseDouble(monto);
-                                    saldoDonacion.setText("S/"+String.valueOf(suma));
-
-                                }
+                            }
 
 
-                            });
+                        });
                 }
             }
         });

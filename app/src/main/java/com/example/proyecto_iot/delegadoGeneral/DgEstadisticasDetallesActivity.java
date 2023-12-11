@@ -84,7 +84,7 @@ public class DgEstadisticasDetallesActivity extends AppCompatActivity {
                                                     DocumentSnapshot document = task1.getResult().getDocuments().get(0);
                                                     String nombreDonante = document.getString("nombre")+ ' '+ document.getString("apellidos");
                                                     Donacion dona = snapshot.toObject(Donacion.class);
-                                                    DonacionDto donacionDto = new DonacionDto(idDocDonacion,codigoDonante,dona.getFecha()+' '+ dona.getHora(),dona.getMonto(),nombreDonante);
+                                                    DonacionDto donacionDto = new DonacionDto(idDocDonacion,codigoDonante,dona.getFecha()+' '+ dona.getHora(),dona.getMonto(),nombreDonante,dona.getFotoQR());
 
                                                     listaDonaciones.add(donacionDto);
 

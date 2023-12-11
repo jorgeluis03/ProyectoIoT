@@ -24,7 +24,20 @@
     <color name="boton_azul_login_pulsado">#0D3EB3</color>
     <color name="boton_morado_login_pulsado">#220E73</color>
 
+
+
+    <!--theme delegado general-->
+    <color name="backgroud_dg">#18191B</color>
+    <color name="backgroud_element_dg">#242527</color>
+    <color name="letter_medium_dg">#E2E3E7</color>
+    <color name="letter_short_dg">#B7B8BC</color>
+    <color name="backgroud_card_dg">#333436</color>
+    <color name="btn_backgroud_dg">#393A3C</color>
+
+    
+
     <!-- CHAT -->
     <color name="chat_mensaje_derecha">#0F4BD9</color>
     <color name="chat_mensaje_izquierda">#373E4E</color>
+
 </resources>

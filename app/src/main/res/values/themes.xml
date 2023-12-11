@@ -72,9 +72,18 @@
     <style name="DelegadoGeneral" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/verde_bat</item>
         <item name="colorOnSurface">@color/letra_clara</item>
-        <item name="android:statusBarColor">@color/azul_background</item>
-        <item name="android:navigationBarColor">@color/azul_background</item>
+        <item name="android:statusBarColor">@color/backgroud_element_dg</item>
+        <item name="android:navigationBarColor">@color/black</item>
         <item name="android:screenOrientation">portrait</item>
+        <item name="background">@color/backgroud_dg</item>
+        <item name="android:toolbarStyle">@style/ToolbarStyle</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/backgroud_element_dg</item>
+        <item name="android:titleTextAppearance">@style/ToolbarTextAppearance</item>
 
         <item name="toolbarStyle">@style/ToolbarStyle</item>
 
@@ -82,17 +91,13 @@
         <item name="iconTint">@color/letra_clara</item>
     </style>
 
-    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
-        <item name="background">@color/azul_background</item>
-        <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
-    </style>
 
     <style name="ToolbarTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textColor">@color/letra_clara</item>
     </style>
 
     <style name="BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
-
+        <item name="android:background">@color/backgroud_element_dg</item>
         <item name="background">@color/azul_background</item>
         <item name="android:itemBackground">@color/letra_clara</item>
         <item name="iconTint">@color/letra_clara</item>
@@ -102,6 +107,13 @@
     <style name="BottomNavTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/letra_clara</item>
     </style>
+    <!--Button styles-->
+    <style name="ButtonStyledg" parent="Widget.AppCompat.Button">
+        <item name="backgroundTint">#3F51B5</item>
+        <item name="android:background">@drawable/btn_backgroud_round</item>
+    </style>
+    <!-- fin delegado general-->
+
 
     <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>

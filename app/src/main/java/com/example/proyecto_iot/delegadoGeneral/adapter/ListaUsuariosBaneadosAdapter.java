@@ -13,99 +13,72 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class ListaUsuariosBaneadosAdapter extends RecyclerView.Adapter<ListaUsuariosBaneadosAdapter.UsuariosBanViewHolder> {
-    private List<Alumno> lista;
-    private Context context;
-    FirebaseFirestore db;
+public class ListaUsuariosBaneadosAdapter extends FirestoreRecyclerAdapter<Alumno,ListaUsuariosBaneadosAdapter.UserBanViewHolder> {
+    Context context;
+
+    public ListaUsuariosBaneadosAdapter(@NonNull FirestoreRecyclerOptions<Alumno> options, Context context) {
+        super(options);
+        this.context =context;
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull UserBanViewHolder holder, int position, @NonNull Alumno model) {
+        holder.tvNombreUser.setText(model.getNombre()+' '+model.getApellidos());
+        holder.tvCorreoUser.setText(model.getCorreo());
+
+        holder.buttonDesban.setOnClickListener(view -> {
+            new MaterialAlertDialogBuilder(context)
+                    .setTitle("Desbanear")
+                    .setMessage("¿Estás seguro que deseas desbanear este a usuario?")
+                    .setNeutralButton("Cancelar", (dialogInterface, i) -> {
+                        //Hacer algo
+                    })
+                    .setPositiveButton("Aceptar", (dialogInterface, i) -> {
+
+                        FirebaseUtilDg.getCollAlumnos().document(model.getId())
+                                .update("estado","activo")
+                                .addOnSuccessListener(unused -> {
+                                    Toast.makeText(context,"Usuario desbaneado",Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show());
+
+                    })
+                    .show();
+        });
+    }
 
     @NonNull
     @Override
-    public UsuariosBanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //se infla el irv
+    public UserBanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.irv_dg_alumnos_baneados,parent,false);
-        return new UsuariosBanViewHolder(view);
+        return new UserBanViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull UsuariosBanViewHolder holder, int position) {
-        //Como se llenara cada viweHolder cuando se tenga la info
-        Alumno userBan = lista.get(position);
-        holder.alumno = userBan;
-
-        TextView tvNombreUser = holder.itemView.findViewById(R.id.textViewNombreUserBan_dg);
-        TextView tvCorreoUser = holder.itemView.findViewById(R.id.textViewCorreoUserBan_dg);
-
-        tvNombreUser.setText(userBan.getNombre()+' '+userBan.getApellidos());
-        tvCorreoUser.setText(userBan.getCorreo());
-    }
-
-    @Override
-    public int getItemCount() {
-        return lista.size();
-    }
-
-
-    //Clase view Holder
-    public class UsuariosBanViewHolder extends RecyclerView.ViewHolder{
-        Alumno alumno;
-        public UsuariosBanViewHolder(@NonNull View itemView) {
+    public class UserBanViewHolder extends RecyclerView.ViewHolder {
+        TextView tvNombreUser;
+        TextView tvCorreoUser;
+        Button buttonDesban;
+        public UserBanViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            Button buttonDesbanear = itemView.findViewById(R.id.buttonDesbanearUser);
-            buttonDesbanear.setOnClickListener(view -> {
-
-                new MaterialAlertDialogBuilder(context)
-                        .setTitle("Desbanear")
-                        .setMessage("¿Estás seguro que deseas desbanear este a usuario?")
-                        .setNeutralButton("Cancelar", (dialogInterface, i) -> {
-                            //Hacer algo
-                        })
-                        .setPositiveButton("Aceptar", (dialogInterface, i) -> {
-
-                            db = FirebaseFirestore.getInstance();
-                            db.collection("alumnos")
-                                    .document(alumno.getId())
-                                    .update("estado","activo")
-                                    .addOnSuccessListener(unused -> {
-
-                                        lista.remove(alumno);
-                                        // Notificar al adaptador que los datos han cambiado
-                                        notifyDataSetChanged();
-                                        Toast.makeText(context,"Usuario desbaneado",Toast.LENGTH_SHORT).show();
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(context,"algo pasó",Toast.LENGTH_SHORT).show();
-                                    });
-
-                        })
-                        .show();
-
-
-            });
+            tvNombreUser = itemView.findViewById(R.id.textViewNombreUserBan_dg);
+            tvCorreoUser = itemView.findViewById(R.id.textViewCorreoUserBan_dg);
+            buttonDesban = itemView.findViewById(R.id.buttonDesbanearUser);
 
         }
     }
-
-
-    //encapsulamiento
-    public List<Alumno> getLista() {
-        return lista;
-    }
-
-    public void setLista(List<Alumno> lista) {
-        this.lista = lista;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
 }
+
+
+
+
+
+
