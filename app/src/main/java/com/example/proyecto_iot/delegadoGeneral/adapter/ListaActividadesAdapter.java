@@ -129,8 +129,7 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
                         } else {
                             new MaterialAlertDialogBuilder(context,R.style.DarkAlertDialog)
                                     .setTitle("¡Advertencia!")
-                                    .setMessage("Se eliminarán todos los eventos que se encuentren en la actividad " +
-                                            "incluyendo aquellos que aun no finalizan.")
+                                    .setMessage("¿Desea eliminar este evento?")
                                     .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
