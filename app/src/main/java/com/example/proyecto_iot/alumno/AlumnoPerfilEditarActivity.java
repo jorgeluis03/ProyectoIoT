@@ -239,7 +239,6 @@ public class AlumnoPerfilEditarActivity extends AppCompatActivity {
         infoActualizada.put("apellidos", apellidosNuevos);
         infoActualizada.put("nombre", nombreNuevo);
         infoActualizada.put("correo", correoNuevo);
-        infoActualizada.put("fullNameFormal", apellidosNuevos+", "+nombreNuevo);
 
         if (nuevaFoto){
             infoActualizada.put("fotoUrl", urlNuevo);
