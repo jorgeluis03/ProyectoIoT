@@ -101,17 +101,17 @@
             android:name=".alumno.AlumnoEventoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno" />
+            android:theme="@style/alumnoEventoActivity" />
         <activity
             android:name=".alumno.AlumnoPerfilEditarActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Alumno" />
+            android:theme="@style/alumnoPerfilActivity" />
         <activity
             android:name=".alumno.AlumnoPerfilContrasenaActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/perfilContrasenaActivity" />
+            android:theme="@style/alumnoPerfilActivity" />
         <activity
             android:name=".delegadoGeneral.CrearActividadActivity"
             android:exported="false"

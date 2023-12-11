@@ -10,16 +10,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 
+import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.AlumnoChatActivity;
 import com.example.proyecto_iot.alumno.AlumnoEventoActivity;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.databinding.FragmentAlumnoApoyandoButtonBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AlumnoApoyandoButtonFragment extends Fragment {
 
@@ -28,6 +37,9 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
     private String userUid = FirebaseAuth.getInstance().getUid();
     private Evento evento;
     private String eventoID;
+    private BottomSheetDialog bottomSheetDialog;
+    private CheckBox checkBoxGeneral;
+    private CheckBox checkBoxChat;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,7 +60,76 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
             startActivity(intent);
         });
 
+        binding.buttonNotificaciones.setOnClickListener(view -> {
+            abrirOpcionesNotificaciones();
+        });
+
         return binding.getRoot();
+    }
+
+    private void abrirOpcionesNotificaciones(){
+        bottomSheetDialog = new BottomSheetDialog(getContext());
+        View dialogEventoNotificaciones = LayoutInflater.from(getContext()).inflate(R.layout.dialog_alumno_evento_notificaciones, getActivity().findViewById(R.id.dialogEventoNotificaciones));
+
+        checkBoxGeneral = dialogEventoNotificaciones.findViewById(R.id.checkBoxGeneral);
+        checkBoxChat = dialogEventoNotificaciones.findViewById(R.id.checkBoxChat);
+
+        cargarOpcionesNotificaciones();
+
+        checkBoxGeneral.setOnCheckedChangeListener(((compoundButton, b) -> {
+            if (b){
+                agregarAlumnoANotificacionesGeneral();
+            }
+            else{
+                quitarAlumnoDeNotificacionesGeneral();
+            }
+        }));
+
+        checkBoxChat.setOnCheckedChangeListener(((compoundButton, b) -> {
+            if (b){
+                agregarAlumnoANotificacionesChat();
+            }
+            else{
+                quitarAlumnoDeNotificacionesChat();
+            }
+        }));
+
+        bottomSheetDialog.setContentView(dialogEventoNotificaciones);
+        bottomSheetDialog.show();
+    }
+
+    private void cargarOpcionesNotificaciones(){
+        cargarNotificacionesChat();
+        cargarNotificacionesGeneral();
+    }
+
+    private void cargarNotificacionesChat(){
+        String chatID = eventoID;
+        DocumentReference chatReference = db.collection("chats").document(chatID);
+        chatReference.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                List<Object> userIDs = (List<Object>) task.getResult().getData().get("userIDs");
+                boolean activo = userIDs.contains(userUid);
+                checkBoxChat.setChecked(activo);
+            }
+            else{
+                Log.d("msg-test", "error al recuperar conf de chat (chat)");
+            }
+        });
+    }
+
+    private void cargarNotificacionesGeneral(){
+        DocumentReference eventoEnAlumno = db.collection("alumnos").document(userUid).collection("eventos").document(eventoID);
+        eventoEnAlumno.get().addOnCompleteListener(task -> {
+           if (task.isSuccessful()){
+               DocumentSnapshot documentSnapshot = task.getResult();
+               boolean activo = documentSnapshot.getData().get("notificaciones").toString().equals("si");
+               checkBoxGeneral.setChecked(activo);
+           }
+           else{
+               Log.d("msg-test", "error al recuperar conf de chat (general)");
+           }
+        });
     }
 
     private void mostrarConfirmacionDialog(){
@@ -116,5 +197,29 @@ public class AlumnoApoyandoButtonFragment extends Fragment {
             binding.buttonNotificaciones.setVisibility(View.GONE);
             binding.buttonEventoApoyando.setVisibility(View.GONE);
         }
+    }
+
+    private void agregarAlumnoANotificacionesChat(){
+        String chatID = eventoID;
+
+        DocumentReference chatReference = db.collection("chats").document(chatID);
+        chatReference.update("userIDs", FieldValue.arrayUnion(userUid));
+    }
+
+    private void quitarAlumnoDeNotificacionesChat(){
+        String chatID = eventoID;
+
+        DocumentReference chatReference = db.collection("chats").document(chatID);
+        chatReference.update("userIDs", FieldValue.arrayRemove(userUid));
+    }
+
+    private void agregarAlumnoANotificacionesGeneral(){
+        DocumentReference eventoEnAlumno = db.collection("alumnos").document(userUid).collection("eventos").document(eventoID);
+        eventoEnAlumno.update("notificaciones", "si");
+    }
+
+    private void quitarAlumnoDeNotificacionesGeneral(){
+        DocumentReference eventoEnAlumno = db.collection("alumnos").document(userUid).collection("eventos").document(eventoID);
+        eventoEnAlumno.update("notificaciones", "no");
     }
 }
