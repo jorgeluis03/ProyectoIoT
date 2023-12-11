@@ -66,6 +66,7 @@ public class AlumnoEventosTodosFragment extends Fragment {
                             .addOnCompleteListener(allTasks -> {
                                 binding.progressBar6.setVisibility(View.GONE);
                                 if (eventoList.isEmpty()){
+                                    adapter.notifyDataSetChanged();
                                     binding.textView31.setVisibility(View.VISIBLE);
                                 }else {
                                     adapter.notifyDataSetChanged();

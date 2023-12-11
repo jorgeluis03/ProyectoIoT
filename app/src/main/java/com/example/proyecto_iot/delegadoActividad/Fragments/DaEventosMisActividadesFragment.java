@@ -78,6 +78,7 @@ public class DaEventosMisActividadesFragment extends Fragment {
                 .addOnCompleteListener(allTasks -> {
                     binding.progressBar8.setVisibility(View.GONE);
                     if (eventoList.isEmpty()){
+                        adapter.notifyDataSetChanged();
                         binding.textView33.setVisibility(View.VISIBLE);
                     }else {
                         adapter.notifyDataSetChanged();
