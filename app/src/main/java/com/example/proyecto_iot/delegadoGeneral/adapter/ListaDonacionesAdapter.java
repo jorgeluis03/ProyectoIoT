@@ -61,8 +61,8 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
     class DonacionViewHolder extends RecyclerView.ViewHolder{
         DonacionDto donacionDto;
         TextView nombreDonador,horaDonacion,montoDonacion,urlDonacion;
-        ImageButton btnAceptar, btnRechazar, btnVerDonacion;
-        
+        Button btnAceptar, btnRechazar;
+
         public DonacionViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -118,7 +118,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                         })
                         .show();
             });
-            btnVerDonacion.setOnClickListener(view -> {
+            /*btnVerDonacion.setOnClickListener(view -> {
                 Log.d("Debug", "Botón Ver Donación presionado");
                 Log.d("Debug", "URL de la imagen: " + donacionDto.getFotoDonante());
 
@@ -146,7 +146,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
 
                 dialog.show();
             });
-
+*/
 
 
         }
