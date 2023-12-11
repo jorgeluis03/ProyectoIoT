@@ -36,6 +36,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Dg_estadisticasFragment extends Fragment {
     ListenerRegistration listenerRegistration;
     ListaActiEstadisiticasAdapter adapter;
     RecyclerView recyclerView;
-    double suma = 0.0;
+    double suma;
     int coutEstu, countEgre;
     List<ApoyosActivdadDto> lista;
     @Override
@@ -102,32 +103,30 @@ public class Dg_estadisticasFragment extends Fragment {
         }
     }
 
-    public void cargarSaldoDonacion(){
+    public void cargarSaldoDonacion() {
+        suma = 0.0; // Reiniciar suma a 0
         FirebaseUtilDg.getDonaciones().get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-
+            if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                     String codigoDonante = documentSnapshot.getId();
 
                     FirebaseUtilDg.getColeccionIdDonantes(codigoDonante)
-                        .whereEqualTo("estado","validado")
-                        .get().addOnCompleteListener(task1 -> {
-                            if(task.isSuccessful()){
-
-                                for (QueryDocumentSnapshot snapshot : task1.getResult()) {
-                                    String monto = snapshot.getString("monto");
-                                    suma += Double.parseDouble(monto);
-
+                            .whereEqualTo("estado", "validado")
+                            .get().addOnCompleteListener(task1 -> {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot snapshot : task1.getResult()) {
+                                        String monto = snapshot.getString("monto");
+                                        suma += Double.parseDouble(monto);
+                                    }
+                                    // Truncar a dos decimales
+                                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                                    String sumaFormateada = decimalFormat.format(suma);
+                                    saldoDonacion.setText("S/" + sumaFormateada);
                                 }
-
-                            }
-                            saldoDonacion.setText("S/"+String.valueOf(suma));
-                        });
+                            });
                 }
-
             }
         });
-
     }
 
     public void cargarCantidadUsuarios(){
