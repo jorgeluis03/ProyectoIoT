@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center_vertical|top"
-    android:background="@color/azul_background">
+    android:background="@color/backgroud_element_dg">
 
 
     <LinearLayout
@@ -24,14 +24,14 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/imageViewIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/circle_bg"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     app:srcCompat="@drawable/icon_user" />
 
             </LinearLayout>
@@ -80,15 +80,14 @@
                     android:paddingTop="0dp"
                     android:paddingRight="0dp"
                     android:paddingBottom="0dp"
-                    android:textColorLink="#4E0D0D"
-                    app:icon="@drawable/round_check_box_24"
+                    app:icon="@drawable/ic_baseline_check_circle_24"
                     app:iconSize="30dp"
                     app:iconTint="@color/verde"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <Button
-                    android:id="@+id/buttonBanearUserPendi"
+                    android:id="@+id/buttonRechazarUserPendi"
                     style="?attr/materialIconButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -97,10 +96,9 @@
                     android:paddingTop="0dp"
                     android:paddingRight="0dp"
                     android:paddingBottom="0dp"
-                    android:textColorLink="#4E0D0D"
                     app:icon="@drawable/round_delete"
                     app:iconSize="30dp"
-                    app:iconTint="@color/rojo"
+                    app:iconTint="#ED2746"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

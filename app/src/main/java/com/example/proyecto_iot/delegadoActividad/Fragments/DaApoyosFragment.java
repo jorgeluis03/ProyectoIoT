@@ -84,14 +84,14 @@ public class DaApoyosFragment extends Fragment {
                 .collection("apoyos")
                 .addSnapshotListener((value, error) -> {
                     if (value!=null){
-                        apoyos = new ArrayList<>();
+                        apoyos.clear();
                         ArrayList<Task<Void>> tasks = new ArrayList<>();
                         for (QueryDocumentSnapshot document: value){
-                            apoyo = new ApoyoDto();
                             Task<Void> apoyoTask = db.collection("alumnos")
                                     .document(document.getId())
                                     .get()
                                     .continueWith(task1 -> {
+                                        apoyo = new ApoyoDto();
                                         if (task1.isSuccessful()){
                                             Alumno alumno = task1.getResult().toObject(Alumno.class);
                                             if (alumno.getEstado().equals("activo")){
@@ -100,6 +100,7 @@ public class DaApoyosFragment extends Fragment {
                                                 Log.d("msg-test", "seteado alumno "+apoyo.getAlumno().getNombre());
                                                 apoyo.setCategoria(document.getString("categoria"));
                                                 apoyo.setEventoId("evento"+evento.getFechaHoraCreacion().toString());
+                                                apoyo.setEventoName(evento.getTitulo());
                                                 apoyos.add(apoyo);
                                                 Log.d("msg-test", "tamaño: " + apoyos.size());
                                             }

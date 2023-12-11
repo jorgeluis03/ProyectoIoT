@@ -143,6 +143,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                             apoyo = new ApoyoDto();
                             apoyo.setCategoria(document.getString("categoria"));
                             apoyo.setEventoId(name);
+                            apoyo.setEventoName(evento.getTitulo());
                             tasks.add(buscarAlumno(document.getId(), apoyo));
                         }
                         Log.d("msg-test", "busqueda apoyos ok1: "+apoyos.size());
@@ -294,6 +295,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                                                     Log.d("msg-test","Se eliminó apoyo de evento");
                                                     db.collection("alumnos").document(task1.getResult().getId())
                                                             .collection("eventos").document("evento"+evento.getFechaHoraCreacion()).delete();
+                                                    //notifyFirebase(apoyoDelete.getId(), "deleteEvento");
                                                 })
                                                 .addOnFailureListener(er -> Log.d("msg-test", "No se pudo eliminar"));
                                     }
@@ -331,6 +333,14 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                 });
     }
 
+    /*private void notifyFirebase(String userId, String categoria) {
+
+        db.collection("alumnos").document(userId)
+                .collection("notificaciones")
+                .add()
+    }
+     */
+
     public void enviarNotificacion(Evento evento, String codigo) {
         //current username, message, currentUserId, otherUserToken
         FirebaseUtilDg.getCollAlumnos().whereEqualTo("codigo", codigo).get().addOnCompleteListener(task -> {
@@ -348,6 +358,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                     //llamar a la api
                     FirebaseFCMUtils.callApi(jsonObject);
                     Log.d("msg-test","Se envió notificación a "+codigo);
+
                 } catch (Exception e) {
 
                 }

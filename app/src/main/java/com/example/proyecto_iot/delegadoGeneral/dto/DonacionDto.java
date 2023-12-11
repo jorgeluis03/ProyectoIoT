@@ -6,15 +6,24 @@ public class DonacionDto {
     private String nombreDonante;
     private String idDocumento;
     private String codigoDonante;
+    private String fotoDonante;
 
 
-
-    public DonacionDto(String idDocumento,String codigoDonante,String hora, String monto, String nombreDonante) {
+    public DonacionDto(String idDocumento,String codigoDonante,String hora, String monto, String nombreDonante, String fotoDonante) {
         this.idDocumento=idDocumento;
         this.codigoDonante = codigoDonante;
         this.horaFecha = hora;
         this.monto = monto;
         this.nombreDonante = nombreDonante;
+        this.fotoDonante = fotoDonante;
+    }
+
+    public String getFotoDonante() {
+        return fotoDonante;
+    }
+
+    public void setFotoDonante(String fotoDonante) {
+        this.fotoDonante = fotoDonante;
     }
 
     public String getCodigoDonante() {

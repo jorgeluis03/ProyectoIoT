@@ -3,29 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="180dp"
     android:gravity="bottom"
     android:padding="16dp"
-    android:background="@color/azul_background">
+    android:background="@color/backgroud_element_dg">
     
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imgPerfilDrawer"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        app:srcCompat="@drawable/icon_perfil_user"/>
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
+        app:riv_oval="true"
+        android:background="@drawable/circle_bg"/>
+
+
     <TextView
         android:id="@+id/textViewUsernameDrawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jorge Luis Dominguez Chavez"
         android:textColor="@color/white"
-        android:textStyle="bold"
+        android:fontFamily="@font/nunito_sans"
         android:textSize="16dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delegado General"
-        android:textColor="@color/white"
+        android:textColor="@color/letra_gris"
         android:textSize="14dp"
         />
 

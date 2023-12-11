@@ -14,17 +14,15 @@ import android.widget.ProgressBar;
 
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityDgAsignarDelegadoBinding;
-import com.example.proyecto_iot.delegadoGeneral.adapter.ListaBuscarDelegadoAdapter;
 import com.example.proyecto_iot.delegadoGeneral.adapter.ListaDelegadosAdapter;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.Query;
 
-public class DgAsignarDelegadoActivity extends AppCompatActivity implements ListaDelegadosAdapter.OnAlumnoSelectedListener, ListaBuscarDelegadoAdapter.OnAlumnoBuscarSelectedListener{
+public class DgAsignarDelegadoActivity extends AppCompatActivity implements ListaDelegadosAdapter.OnAlumnoSelectedListener{
     ActivityDgAsignarDelegadoBinding binding;
-    ListaDelegadosAdapter adapter;
-    ListaBuscarDelegadoAdapter adapterBuscar;
+    ListaDelegadosAdapter adapter,adapterBuscar;
     RecyclerView recyclerViewDelegados;
     FloatingActionButton fbSelec;
     ImageButton btnBack;
@@ -49,7 +47,7 @@ public class DgAsignarDelegadoActivity extends AppCompatActivity implements List
         cargarListaDelegado();
         enProgreso(false);
 
-        adapter.setOnAlumnoSelectedListener(this);
+
 
 
 
@@ -89,11 +87,12 @@ public class DgAsignarDelegadoActivity extends AppCompatActivity implements List
         });
     }
     public void textSearch(String s){
+
         FirestoreRecyclerOptions<Alumno> options = new FirestoreRecyclerOptions.Builder<Alumno>()
                 .setQuery(query.orderBy("nombre").startAt(s).endAt(s+"~"), Alumno.class).build();
 
-        adapterBuscar = new ListaBuscarDelegadoAdapter(options, this);
-        adapterBuscar.setOnAlumnoBuscarSelectedListener(this);
+        adapterBuscar = new ListaDelegadosAdapter(options, this);
+        adapterBuscar.setOnAlumnoSelectedListener(this);
         adapterBuscar.startListening();
         recyclerViewDelegados.setAdapter(adapterBuscar);
     }
@@ -112,6 +111,7 @@ public class DgAsignarDelegadoActivity extends AppCompatActivity implements List
 
         adapter = new ListaDelegadosAdapter(options,this);
         recyclerViewDelegados.setAdapter(adapter);
+        adapter.setOnAlumnoSelectedListener(this);
         recyclerViewDelegados.setLayoutManager(new LinearLayoutManager(this));
         adapter.startListening();
 
@@ -135,9 +135,4 @@ public class DgAsignarDelegadoActivity extends AppCompatActivity implements List
         delegado = alumno;
     }
 
-    @Override
-    public void onAlumnoBuscarSelected(Alumno alumnos) {
-        delegado = alumnos;
-        Log.d("msg-test","alumno activida asignar por buscar"+delegado.getNombre());
-    }
 }

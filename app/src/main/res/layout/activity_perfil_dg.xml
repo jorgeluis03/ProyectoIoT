@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/azul_background"
-    tools:context=".delegadoGeneral.Perfil_dg">
+    android:background="@color/backgroud_element_dg"
+    tools:context=".delegadoGeneral.Perfil_dg"
+    android:animateLayoutChanges="true">
 
     <RelativeLayout
         android:id="@+id/toolbarPerfil"
@@ -57,28 +58,40 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayoutInfo"
         android:layout_below="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top|center_horizontal"
         android:orientation="vertical"
         android:paddingTop="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/divider">
 
-        <ImageView
-            android:id="@+id/imageViewPerfildg"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginBottom="40dp"
-            android:background="@drawable/circular_bg"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/icon_perfil_user" />
 
+        <FrameLayout
+            android:id="@+id/frameLayoutImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imageViewPerfildg"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/circle_bg"
+                android:scaleType="centerCrop"
+                app:riv_oval="true"/>
+            <TextView
+                android:id="@+id/textAgregarImagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agregar"
+                android:textColor="@color/grey"
+                android:textSize="10sp"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+
+        </FrameLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textFieldNombrePerfil"
             android:layout_width="match_parent"
@@ -167,11 +180,18 @@
             android:id="@+id/profile_progress_bar"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBarCargaInfo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
 
 
 </RelativeLayout>

@@ -51,11 +51,10 @@ public class ListaMensajesAdapter extends FirestoreRecyclerAdapter<ChatMessage, 
             FirebaseUtilDg.getCollAlumnos().document(model.getSenderID()).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()){
                     Alumno alumno = task.getResult().toObject(Alumno.class);
-                    String nombreMensaje = alumno.getNombre()+" "+alumno.getApellidos().charAt(0)+".";
+                    String nombreMensaje = alumno.getFullName();
                     holder.leftChatUser.setText(nombreMensaje);
                 }
             });
-
         }
     }
 

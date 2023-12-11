@@ -12,11 +12,15 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,16 +43,15 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class Dg_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private DrawerLayout drawerLayout;
+    DrawerLayout drawerLayout;
     ActivityDgBinding binding;
     BottomNavigationView buttomnavigationDg;
     NavController navController;
-    FirebaseAuth auth = FirebaseAuth.getInstance(); // autenticacion
-    FirebaseFirestore db;
-
+    NavigationView navigationView;
     ImageView imgPerfilDrawer;
     TextView usernamePerfilDrawer;
-    Alumno usuarioActual;
+    View headerView;
+    Alumno delegadoActual;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,16 +63,21 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         //================================
 
         drawerLayout = binding.drawerLayoutDg;
-        imgPerfilDrawer = drawerLayout.findViewById(R.id.imgPerfilDrawer);
-        usernamePerfilDrawer = drawerLayout.findViewById(R.id.textViewUsernameDrawer);
+        navigationView= binding.navView;
+        headerView= navigationView.getHeaderView(0);
+        imgPerfilDrawer = headerView.findViewById(R.id.imgPerfilDrawer);
+        usernamePerfilDrawer = headerView.findViewById(R.id.textViewUsernameDrawer);
 
-        NavigationView navigationView = binding.navView;
+        cargarDatosDrawer();
+
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+
 
         buttomnavigationDg = binding.buttomnavigationDg;
         //Cargar el navigationComponent (navHost) en el bottomnavigation
@@ -83,6 +91,20 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
         y aqui se va a generar el token para las notificaciones*/
         getFCMToken();
 
+    }
+    public void cargarDatosDrawer(){
+
+        FirebaseUtilDg.getUsuarioActualDetalles().get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                delegadoActual = task.getResult().toObject(Alumno.class);
+                usernamePerfilDrawer.setText(delegadoActual.getNombre()+' '+delegadoActual.getApellidos());
+                imgPerfilDrawer.setImageBitmap(getBitmapFromEncodedImage(delegadoActual.getFotoUrl()));
+            }
+        });
+    }
+    private Bitmap getBitmapFromEncodedImage(String encodedImage){ //obtiene la imagen url y la pasa a formato Bitmap para mostrarla
+        byte[] bytes = Base64.decode(encodedImage,Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
     }
     public void getFCMToken(){
         //recupero el token
