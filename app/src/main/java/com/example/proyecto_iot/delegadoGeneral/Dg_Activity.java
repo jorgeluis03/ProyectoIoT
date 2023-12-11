@@ -1,6 +1,7 @@
 package com.example.proyecto_iot.delegadoGeneral;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -14,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
@@ -23,7 +25,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.databinding.ActivityDgBinding;
@@ -98,7 +106,28 @@ public class Dg_Activity extends AppCompatActivity implements NavigationView.OnN
             if(task.isSuccessful()){
                 delegadoActual = task.getResult().toObject(Alumno.class);
                 usernamePerfilDrawer.setText(delegadoActual.getNombre()+' '+delegadoActual.getApellidos());
-                imgPerfilDrawer.setImageBitmap(getBitmapFromEncodedImage(delegadoActual.getFotoUrl()));
+                Toast.makeText(this,delegadoActual.getNombre(),Toast.LENGTH_SHORT).show();
+                Glide.with(this)
+                        .load(delegadoActual.getFotoUrl())
+                        .override(Target.SIZE_ORIGINAL)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                Log.e("GlideError", "Error al cargar la imagen", e);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                Log.d("Glide", "Imagen cargada con éxito");
+                                return false;
+                            }
+                        })
+                        .into(imgPerfilDrawer);
+
+                //imgPerfilDrawer.setImageBitmap(getBitmapFromEncodedImage(delegadoActual.getFotoUrl()));
+
+
             }
         });
     }
