@@ -117,8 +117,10 @@ public class LoginActivity extends AppCompatActivity {
                             obtenerUserData();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Snackbar.make(binding.getRoot(), "Las credenciales son incorrectas.", Snackbar.LENGTH_SHORT)
-                                    .show();
+                            Toast.makeText(LoginActivity.this, "Las credenciales son incorrectas", Toast.LENGTH_SHORT).show();
+
+                            habilitarLogueo();
+
                             Log.d("msg-test", "credenciales incorrectas");
                         }
                     }
@@ -139,11 +141,13 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                         else{
-                            // el codigo ingresado es incorreco
+                            Toast.makeText(this, "El código ingresado no es válido", Toast.LENGTH_SHORT).show();
+                            habilitarLogueo();
                         }
                     }
                     else{
                         Log.d("msg-test", "Error al recuperar alumno mediante codigo: "+task.getException().getMessage());
+                        habilitarLogueo();
                     }
 
                 });
@@ -167,26 +171,27 @@ public class LoginActivity extends AppCompatActivity {
 
                         } else if (alumno.getEstado().equals("pendiente")) {
                             Log.d("msg-test", "alumno con estado pendiente");
-                            FirebaseAuth.getInstance().signOut();
-                            binding.relativeOverlay.setVisibility(View.GONE);
+                            habilitarLogueo();
                         }
                         else if (alumno.getEstado().equals("inactivo")) {
                             Toast.makeText(LoginActivity.this, "El usuario aún no ha sido aceptado por el administrador de la aplicación.", Toast.LENGTH_SHORT).show();
-                            FirebaseAuth.getInstance().signOut();
-                            binding.relativeOverlay.setVisibility(View.GONE);
+                            habilitarLogueo();
                         }
                         else if (alumno.getEstado().equals("baneado")) {
                             Toast.makeText(LoginActivity.this, "El usuario ha sido baneado por el administrador de la aplicacion.", Toast.LENGTH_SHORT).show();
-                            FirebaseAuth.getInstance().signOut();
-                            binding.relativeOverlay.setVisibility(View.GONE);
+                            habilitarLogueo();
                         }
 
                     } else {
                         Log.d("msg-test", "error: usuario no encontrado");
+                        Toast.makeText(LoginActivity.this, "Ocurrió un error al encontrar su usuario", Toast.LENGTH_SHORT).show();
+                        habilitarLogueo();
                     }
                 }
                 else{
                     Log.d("msg-test", "error en busqueda: "+task.getException());
+                    Toast.makeText(LoginActivity.this, "Ocurrió un error", Toast.LENGTH_SHORT).show();
+                    habilitarLogueo();
                 }
             }
         });
@@ -243,5 +248,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean esCorreo(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
+    private void habilitarLogueo(){
+        FirebaseAuth.getInstance().signOut();
+        binding.relativeOverlay.setVisibility(View.GONE);
+        binding.loginButton.setEnabled(true);
     }
 }
