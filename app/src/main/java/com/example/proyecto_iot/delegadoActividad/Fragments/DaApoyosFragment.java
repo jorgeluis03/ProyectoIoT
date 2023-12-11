@@ -100,6 +100,7 @@ public class DaApoyosFragment extends Fragment {
                                                 Log.d("msg-test", "seteado alumno "+apoyo.getAlumno().getNombre());
                                                 apoyo.setCategoria(document.getString("categoria"));
                                                 apoyo.setEventoId("evento"+evento.getFechaHoraCreacion().toString());
+                                                apoyo.setEventoName(evento.getTitulo());
                                                 apoyos.add(apoyo);
                                                 Log.d("msg-test", "tamaño: " + apoyos.size());
                                             }

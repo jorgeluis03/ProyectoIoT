@@ -143,6 +143,7 @@ public class ListaEventosActividadesAdapter extends RecyclerView.Adapter<ListaEv
                             apoyo = new ApoyoDto();
                             apoyo.setCategoria(document.getString("categoria"));
                             apoyo.setEventoId(name);
+                            apoyo.setEventoName(evento.getTitulo());
                             tasks.add(buscarAlumno(document.getId(), apoyo));
                         }
                         Log.d("msg-test", "busqueda apoyos ok1: "+apoyos.size());

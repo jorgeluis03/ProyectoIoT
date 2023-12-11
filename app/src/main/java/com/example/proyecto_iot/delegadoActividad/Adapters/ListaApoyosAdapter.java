@@ -1,21 +1,15 @@
 package com.example.proyecto_iot.delegadoActividad.Adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -24,17 +18,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proyecto_iot.R;
-import com.example.proyecto_iot.alumno.Entities.Alumno;
-import com.example.proyecto_iot.delegadoActividad.DaGestionEventosActivity;
 import com.example.proyecto_iot.delegadoActividad.Entities.ApoyoDto;
-import com.example.proyecto_iot.delegadoGeneral.entity.Actividades;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.ApoyoViewHolder>{
     private List<ApoyoDto> apoyos;
@@ -219,6 +220,7 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
                     for (int i = 0; i< apoyos.size(); i++){
                         if (apoyos.get(i).getAlumno().getId().equals(apoyo.getAlumno().getId())){
                             apoyos.get(i).setCategoria(categoria);
+                            enviarCorreo(apoyos.get(i), categoria);
                             break;
                         }
                     }
@@ -230,5 +232,48 @@ public class ListaApoyosAdapter extends RecyclerView.Adapter<ListaApoyosAdapter.
                     Log.d("msg-test","Error:" + e);
                     Snackbar.make(view, "Ocurrió un error durante la actualizacoión de "+apoyo.getAlumno().getNombre()+". Inténtelo más tarde.", Snackbar.LENGTH_SHORT).show();
                 });
+    }
+
+    private void enviarCorreo(ApoyoDto apoyo, String categoria) {
+        try {
+            String emailFrom = "activiconnect@gmail.com";
+            String passwFrom = "tbxq bxhk cydd vwnv";
+            String correoAlumno = apoyo.getAlumno().getCorreo();
+
+            String host = "smtp.gmail.com";
+
+            Properties properties = System.getProperties();
+            properties.put("mail.smtp.host",host);
+            properties.put("mail.smtp.port","465");
+            properties.put("mail.smtp.ssl.enable", "true");
+            properties.put("mail.smtp.auth","true");
+
+            javax.mail.Session session = Session.getInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(emailFrom, passwFrom);
+                }
+            });
+
+            MimeMessage mimeMessage = new MimeMessage(session);
+            mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(correoAlumno));
+            mimeMessage.setSubject("Actualización: Evento "+ apoyo.getEventoName());
+            mimeMessage.setText("Se ha actualizado su categoría en el evento "+apoyo.getEventoName()+".\n\nAhora participa como parte de su "+ categoria+". Para más información, contáctese con el delegado del evento.\n\n¡Que tus días de Semana sean los más entretenidos! :D\nActiviConnect");
+
+            Thread thead = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Transport.send(mimeMessage);
+                        Log.d("msg-test","se envió correo a "+correoAlumno);
+                    } catch (MessagingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            thead.start();
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

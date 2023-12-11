@@ -213,14 +213,12 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                                                 .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
                                                 .commit();
                                         binding.buttonSubirFotos.setVisibility(View.VISIBLE);
-                                        binding.textView26.setText("El evento aún no cuenta con fotos");
                                     } else { // evento no apoyado
                                         getSupportFragmentManager().beginTransaction()
                                                 .setReorderingAllowed(true)
                                                 .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
                                                 .commit();
                                         binding.buttonSubirFotos.setVisibility(View.GONE);
-                                        binding.textView26.setText("No tiene acceso a las fotos.");
                                     }
                                 } else {
                                     if (value != null && value.exists()) { // evento en lista de eventos de alumno (evento apoyado)
@@ -229,14 +227,12 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                                                 .replace(R.id.fragmentEventoButtons, AlumnoApoyandoButtonFragment.class, null)
                                                 .commit();
                                         binding.buttonSubirFotos.setVisibility(View.GONE);
-                                        binding.textView26.setText("El evento aún no cuenta con fotos");
                                     } else { // evento no apoyado
                                         getSupportFragmentManager().beginTransaction()
                                                 .setReorderingAllowed(true)
                                                 .replace(R.id.fragmentEventoButtons, AlumnoApoyarButtonFragment.class, null)
                                                 .commit();
                                         binding.buttonSubirFotos.setVisibility(View.GONE);
-                                        binding.textView26.setText("No tiene acceso a las fotos");
                                     }
                                 }
                             } else {

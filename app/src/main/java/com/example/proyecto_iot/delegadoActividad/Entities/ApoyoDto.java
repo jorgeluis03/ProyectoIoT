@@ -8,6 +8,7 @@ public class ApoyoDto implements Serializable {
     private Alumno alumno;
     private String categoria;
     private String eventoId;
+    private String eventoName;
 
     public Alumno getAlumno() {
         return alumno;
@@ -31,5 +32,13 @@ public class ApoyoDto implements Serializable {
 
     public void setEventoId(String eventoId) {
         this.eventoId = eventoId;
+    }
+
+    public String getEventoName() {
+        return eventoName;
+    }
+
+    public void setEventoName(String eventoName) {
+        this.eventoName = eventoName;
     }
 }
