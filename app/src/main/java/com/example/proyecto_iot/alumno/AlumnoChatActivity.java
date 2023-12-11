@@ -13,6 +13,7 @@ import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Chat;
 import com.example.proyecto_iot.alumno.Entities.ChatMessage;
 import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Entities.Notificacion;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoHeader3Fragment;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaMensajesAdapter;
 import com.example.proyecto_iot.alumno.Utils.FirebaseUtilAl;
@@ -21,6 +22,7 @@ import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.gson.Gson;
 
@@ -30,6 +32,8 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 
 public class AlumnoChatActivity extends AppCompatActivity {
@@ -39,7 +43,7 @@ public class AlumnoChatActivity extends AppCompatActivity {
     private String chatID;
     private Chat chat;
     private ListaMensajesAdapter adapter;
-
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,20 +122,36 @@ public class AlumnoChatActivity extends AppCompatActivity {
     }
 
     private void sendNotification(String message){
-
         for (String userID: chat.getUserIDs()){
-
             if (!alumnoLogueado.getId().equals(userID)) {
                 FirebaseUtilDg.getCollAlumnos().document(userID).get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         Alumno alumnoChat = task.getResult().toObject(Alumno.class);
                         sendNotificationToUser(alumnoChat.getFcmToken(), message);
+                        notifyFirebase(alumnoChat.getId(), "newChat", evento, message);
                         Log.d("msg-test", "notificacion enviada a: "+alumnoChat.getNombre());
                     }
                 });
             }
         }
 
+    }
+
+    private void notifyFirebase(String userId, String categoria, Evento evento, String message) {
+        Notificacion notificacion = new Notificacion();
+        notificacion.setTipo(categoria);
+        notificacion.setHora(Date.from(Instant.now()));
+        notificacion.setTexto("Nuevo mensaje\n"+evento.getTitulo()+": "+message);
+        notificacion.setEvento(evento);
+        db.collection("alumnos").document(userId)
+                .collection("notificaciones")
+                .add(notificacion)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "notificacion de nuevo mensaje");
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
     }
 
     private void sendNotificationToUser(String userToken, String message){
