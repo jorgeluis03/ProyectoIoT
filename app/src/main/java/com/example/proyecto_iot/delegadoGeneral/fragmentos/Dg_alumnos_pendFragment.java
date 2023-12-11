@@ -41,17 +41,12 @@ public class Dg_alumnos_pendFragment extends Fragment {
         //declaraciones
         searchView = binding.searchUserPendi;
         recycleViewUserPendi =binding.recycleViewUserPendi;
-
+        cargarListaUsuariosPendi();
 
         searchMetod();
         return binding.getRoot();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        cargarListaUsuariosPendi();
-    }
 
     public void cargarListaUsuariosPendi(){
         query = FirebaseUtilDg.getCollAlumnos().whereEqualTo("estado","inactivo");
@@ -66,9 +61,9 @@ public class Dg_alumnos_pendFragment extends Fragment {
                     recycleViewUserPendi.setAdapter(adapter);
                     recycleViewUserPendi.setLayoutManager(new LinearLayoutManager(getContext()));
                     adapter.startListening();
+                }else {
+                    setVisible(true);
                 }
-            }else {
-                setVisible(true);
             }
         });
 
