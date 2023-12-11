@@ -72,11 +72,16 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (inputsValidos()) {
-                    binding.buttonGuardarContrasena.setEnabled(true);
-                } else {
-                    binding.buttonGuardarContrasena.setEnabled(false);
+                String contrasena2 = binding.inputContrasena2.getEditText().getText().toString();
+                if (contrasena2.length() < 6 ){
+                    binding.inputContrasena2.setError("La contraseña debe tener mínimo 6 caracteres");
+                    Log.d("msg-test", "invalida");
                 }
+                else{
+                    binding.inputContrasena2.setError(null);
+                }
+
+                binding.buttonGuardarContrasena.setEnabled(inputsValidos());
             }
 
             @Override
@@ -93,11 +98,17 @@ public class AlumnoPerfilContrasenaActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (inputsValidos()) {
-                    binding.buttonGuardarContrasena.setEnabled(true);
-                } else {
-                    binding.buttonGuardarContrasena.setEnabled(false);
+                String contrasena2 = binding.inputContrasena2.getEditText().getText().toString();
+                String contrasena3 = binding.inputContrasena3.getEditText().getText().toString();
+
+                if (!contrasena2.equals(contrasena3)){
+                    binding.inputContrasena2.setError("Las contraseñas deben ser las mismas");
                 }
+                else{
+                    binding.inputContrasena3.setError(null);
+                }
+
+                binding.buttonGuardarContrasena.setEnabled(inputsValidos());
             }
 
             @Override
