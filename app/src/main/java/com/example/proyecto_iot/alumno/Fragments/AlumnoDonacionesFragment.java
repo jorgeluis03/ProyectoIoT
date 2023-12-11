@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyecto_iot.R;
@@ -96,6 +97,8 @@ public class AlumnoDonacionesFragment extends Fragment {
     private Float monto;
     private boolean fotoAgregada = false;
     private Button buttonRegistrarDonacion;
+    private final double OBJETIVO_KIT_TELECO = 100.0;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,10 +119,10 @@ public class AlumnoDonacionesFragment extends Fragment {
                     if (task.isSuccessful()) {
                         Log.d("FirebaseData", "Consulta exitosa en la colección 'donaciones x2'"); // Agrega este mensaje de depuración
                         double donacionesTotalesValidadas = 0.0;
-                        String rolUsuario = "";
-
+                        String rolUsuario = obtenerTipoAlumnoDesdeMemoria();
                         if(task.getResult().isEmpty()){
                             binding.textNoDonaciones.setVisibility(View.VISIBLE);
+                            actualizarTotalDonaciones(donacionesTotalesValidadas, rolUsuario);
                         }
                         else{
                             for (QueryDocumentSnapshot idDocument : task.getResult()) {
@@ -154,10 +157,10 @@ public class AlumnoDonacionesFragment extends Fragment {
                                 Log.d("FirebaseData", "Rol: " + rol);
                                 Log.d("FirebaseData", "Estado: " + rol);
                                 Log.d("FirebaseData", "------------------------ ");
-
-
                             }
                             adapter.setDonacionesTotalesValidadas(donacionesTotalesValidadas);
+                            actualizarTotalDonaciones(donacionesTotalesValidadas, rolUsuario);
+
 // Aplica la lógica de ordenamiento aquí
                             donationList.sort(new Comparator<Donacion>() {
                                 @Override
@@ -485,6 +488,31 @@ public class AlumnoDonacionesFragment extends Fragment {
 
 
     }
+    private void actualizarTotalDonaciones(double donacionesTotalesValidadas, String rolUsuario) {
+        binding.textTotalDonado.setText("Total donado: S/." + donacionesTotalesValidadas);
+
+        LinearLayout linearLayoutEgresado = binding.linearLayout10; // Asegúrate de que el ID sea correcto
+        TextView textView120 = binding.textView120; // Asegúrate de que el ID sea correcto
+
+
+        if ("Egresado".equals(rolUsuario)) {
+            double faltanteParaObjetivo = OBJETIVO_KIT_TELECO - donacionesTotalesValidadas;
+            if (faltanteParaObjetivo >= 0) {
+                binding.textKitTeleco.setText("Estás a S/." + faltanteParaObjetivo + " para completar el Kit Teleco");
+            } else {
+                binding.textKitTeleco.setText("¡Has completado el Kit Teleco!");
+            }
+            linearLayoutEgresado.setVisibility(View.VISIBLE); // Hacer visible para egresados
+            textView120.setVisibility(View.VISIBLE); // Hacer visible el textView120 para egresados
+
+        } else {
+            linearLayoutEgresado.setVisibility(View.GONE); // Ocultar para los demás roles
+            textView120.setVisibility(View.GONE); // Hacer que textView120 no ocupe espacio para los demás roles
+
+
+        }
+    }
+
 
 
 }
