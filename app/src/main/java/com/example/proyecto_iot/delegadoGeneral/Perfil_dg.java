@@ -45,7 +45,7 @@ public class Perfil_dg extends AppCompatActivity {
     ImageView imgPerfil;
     Uri uriImgPerfilSeleccionada;
     ProgressBar progressBar, progressBarInfo;
-    ImageButton btnBack;
+    ImageButton btnBack,buttonAddPerfil;
     String encodedImage;
 
     @Override
@@ -80,7 +80,7 @@ public class Perfil_dg extends AppCompatActivity {
 
         });
 
-        binding.frameLayoutImage.setOnClickListener(v -> {
+        binding.buttonAddPerfil.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             pickImage.launch(intent);
@@ -192,7 +192,6 @@ public class Perfil_dg extends AppCompatActivity {
                     InputStream inputStream = getContentResolver().openInputStream(imageUri);
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     binding.imageViewPerfildg.setImageBitmap(bitmap);
-                    binding.textAgregarImagen.setVisibility(View.GONE);
                     encodedImage = encodeImage(bitmap);//pone la imagen como url
                 }catch (FileNotFoundException e){
                     e.printStackTrace();

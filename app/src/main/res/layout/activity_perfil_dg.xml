@@ -68,30 +68,33 @@
         app:layout_constraintTop_toBottomOf="@+id/divider">
 
 
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/frameLayoutImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/circle_bg"
+            android:padding="3dp">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageViewPerfildg"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/circle_bg"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:scaleType="centerCrop"
                 app:riv_oval="true"/>
-            <TextView
-                android:id="@+id/textAgregarImagen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Agregar"
-                android:textColor="@color/grey"
-                android:textSize="10sp"
-                android:layout_gravity="center"
-                android:visibility="invisible"/>
+            <ImageButton
+                android:id="@+id/buttonAddPerfil"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icon_camera"
+                android:layout_alignParentEnd="true"
+                android:scaleType="fitCenter"
+                android:layout_alignParentBottom="true"
+                app:tint="@color/azul_background"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
 
-        </FrameLayout>
+
+        </RelativeLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textFieldNombrePerfil"
             android:layout_width="match_parent"
