@@ -37,24 +37,30 @@ public class ListaActiEstadisiticasAdapter extends FirestoreRecyclerAdapter<Acti
     @Override
     protected void onBindViewHolder(@NonNull ActiViewHolder holder, int position, @NonNull Actividades model) {
         holder.nombreActividad.setText(model.getNombre());
-        FirebaseUtilDg.getColeccionEventos().whereEqualTo("actividadId",model.getId())
-                        .get().addOnCompleteListener(task -> {
-                            if(task.isSuccessful()){
-                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                    FirebaseUtilDg.getColeccionEventos().document(documentSnapshot.getId()).collection("apoyos")
-                                            .get().addOnCompleteListener(task1 -> {
-                                                if(task1.isSuccessful()){
-                                                    apoyos =task1.getResult().getDocuments().size();
 
-                                                }
-                                            });
-                                }
-                                suma+=apoyos;
-
+        FirebaseUtilDg.getColeccionEventos().whereEqualTo("actividadId", model.getId())
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().isEmpty()) {
+                            // Si no hay eventos vinculados a la actividad
+                            holder.cantApoyo.setText("0 participantes");
+                        } else {
+                            apoyos = 0; // Reiniciar el contador de apoyos
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                FirebaseUtilDg.getColeccionEventos().document(documentSnapshot.getId()).collection("apoyos")
+                                        .get().addOnCompleteListener(task1 -> {
+                                            if (task1.isSuccessful()) {
+                                                apoyos += task1.getResult().getDocuments().size();
+                                                holder.cantApoyo.setText(String.valueOf(apoyos) + " participantes");
+                                            }
+                                        });
                             }
-                });
-
-        holder.cantApoyo.setText(String.valueOf(suma)+" participantes");
+                        }
+                    } else {
+                        // Manejar el caso de error en la consulta
+                        Log.w("Firestore", "Error al obtener los eventos", task.getException());
+                    }
+        });
     }
 
     @NonNull

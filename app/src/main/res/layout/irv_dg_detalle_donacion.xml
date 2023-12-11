@@ -41,14 +41,14 @@
                 android:textColor="@color/online_green"/>
 
             <ImageButton
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:id="@+id/detallesDonacion"
-            android:src="@drawable/ic_next"
-            app:tint="@color/letter_short_dg"
+            android:src="@drawable/icon_eyes"
+            app:tint="@color/white"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackgroundBorderless" />
+            android:background="?attr/selectableItemBackgroundBorderless"/>
 
         </RelativeLayout>
 

@@ -3,11 +3,15 @@ package com.example.proyecto_iot.delegadoGeneral.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -62,6 +66,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         DonacionDto donacionDto;
         TextView nombreDonador,horaDonacion,montoDonacion,urlDonacion;
         Button btnAceptar, btnRechazar;
+        ImageButton detallesDonacion;
 
         public DonacionViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,7 +76,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
             montoDonacion = itemView.findViewById(R.id.montoDonacion);
             btnAceptar = itemView.findViewById(R.id.btnAceptarDonacion);
             btnRechazar = itemView.findViewById(R.id.btnRechazarDonacion);
-            //btnVerDonacion = itemView.findViewById(R.id.btnVerDonacion);
+            detallesDonacion = itemView.findViewById(R.id.detallesDonacion);
 
 
             btnAceptar.setOnClickListener(view -> {
@@ -109,7 +114,8 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                                     .document(donacionDto.getIdDocumento())
                                     .update("estado","denegado")
                                     .addOnSuccessListener(unused -> {
-                                        lista.remove(donacionDto);
+                                        int position =getAbsoluteAdapterPosition();
+                                        lista.remove(position);
                                         notifyDataSetChanged();
                                     });
                             Log.d("msg-don","codigo donante "+donacionDto.getCodigoDonante());
@@ -122,36 +128,15 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
             });
 
 
-            /*
-            btnVerDonacion.setOnClickListener(view -> {
+
+            detallesDonacion.setOnClickListener(view -> {
                 Log.d("Debug", "Botón Ver Donación presionado");
                 Log.d("Debug", "URL de la imagen: " + donacionDto.getFotoDonante());
 
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_image_viewer);
-                ImageView imageView = dialog.findViewById(R.id.imageViewDialog);
+                showDialog(donacionDto.getFotoDonante());
 
-                Glide.with(context)
-                        .load(donacionDto.getFotoDonante())
-                        .override(Target.SIZE_ORIGINAL) // Cargar imagen en su tamaño original
-                        .listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                Log.e("GlideError", "Error al cargar la imagen", e);
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                Log.d("Glide", "Imagen cargada con éxito");
-                                return false;
-                            }
-                        })
-                        .into(imageView);
-
-                dialog.show();
             });
-            */
+
 
 
         }
@@ -188,6 +173,40 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
 
 
     }
+
+    public void showDialog(String fotoUrl) {
+
+        Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.buttomsheetlayout_dg);
+
+        Glide.with(context)
+                .load(fotoUrl)
+                .override(Target.SIZE_ORIGINAL) // Cargar imagen en su tamaño original
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        Log.e("GlideError", "Error al cargar la imagen", e);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        Log.d("Glide", "Imagen cargada con éxito");
+                        return false;
+                    }
+                })
+                .into(imageView);
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+
+    }
+
 
 
     //encapsulamiento
