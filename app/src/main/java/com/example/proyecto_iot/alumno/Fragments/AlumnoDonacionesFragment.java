@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -97,8 +98,9 @@ public class AlumnoDonacionesFragment extends Fragment {
     private Float monto;
     private boolean fotoAgregada = false;
     private Button buttonRegistrarDonacion;
-    private ProgressBar progressBarRegistrarDonacion;
+    private final double OBJETIVO_KIT_TELECO = 100.0;
 
+    private ProgressBar progressBarRegistrarDonacion;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,11 +120,11 @@ public class AlumnoDonacionesFragment extends Fragment {
                     if (task.isSuccessful()) {
                         Log.d("FirebaseData", "Consulta exitosa en la colección 'donaciones x2'"); // Agrega este mensaje de depuración
                         double donacionesTotalesValidadas = 0.0;
-                        String rolUsuario = "";
-
-                        if (task.getResult().isEmpty()) {
+                        String rolUsuario = obtenerTipoAlumnoDesdeMemoria();
+                        if(task.getResult().isEmpty()){
                             binding.textNoDonaciones.setVisibility(View.VISIBLE);
-                        } else {
+                        }
+                        else{
                             for (QueryDocumentSnapshot idDocument : task.getResult()) {
                                 String fecha = idDocument.getString("fecha");
                                 String hora = idDocument.getString("hora");
@@ -155,8 +157,6 @@ public class AlumnoDonacionesFragment extends Fragment {
                                 Log.d("FirebaseData", "Rol: " + rol);
                                 Log.d("FirebaseData", "Estado: " + rol);
                                 Log.d("FirebaseData", "------------------------ ");
-
-
                             }
                             adapter.setDonacionesTotalesValidadas(donacionesTotalesValidadas);
 // Aplica la lógica de ordenamiento aquí
@@ -194,7 +194,6 @@ public class AlumnoDonacionesFragment extends Fragment {
                             }
                             adapter.notifyDataSetChanged();
                         }
-
                     } else {
                         Log.e("FirebaseData", "Error al obtener datos de Firestore: " + task.getException());
                     }
@@ -493,6 +492,8 @@ public class AlumnoDonacionesFragment extends Fragment {
 
 
     }
+
+
 
 
 }
