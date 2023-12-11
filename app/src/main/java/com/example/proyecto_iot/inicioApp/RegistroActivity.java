@@ -141,6 +141,9 @@ public class RegistroActivity extends AppCompatActivity {
             if (pass.length() < 6){
                 binding.editPasswSign.setError("la contraseña debe ser de mínimo 6 caracteres");
             }
+            else{
+                binding.editPasswSign.setError(null);
+            }
 
             if (type.isEmpty()) {
                 binding.userTypeSpinner.setError("campo vacio");
