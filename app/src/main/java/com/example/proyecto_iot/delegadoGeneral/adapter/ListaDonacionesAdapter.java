@@ -28,19 +28,26 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
+import com.example.proyecto_iot.alumno.Entities.Donacion;
+import com.example.proyecto_iot.alumno.Entities.Evento;
+import com.example.proyecto_iot.alumno.Entities.Notificacion;
 import com.example.proyecto_iot.delegadoGeneral.dto.DonacionDto;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
 import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseUtilDg;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONObject;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonacionesAdapter.DonacionViewHolder> {
     private List<DonacionDto> lista;
     private Context context;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @NonNull
     @Override
@@ -128,8 +135,6 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                         .show();
             });
 
-
-
             detallesDonacion.setOnClickListener(view -> {
                 Log.d("Debug", "Botón Ver Donación presionado");
                 Log.d("Debug", "URL de la imagen: " + donacionDto.getFotoDonante());
@@ -164,6 +169,7 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
                     //llamar a la api
                     FirebaseFCMUtils.callApi(jsonObject);
 
+                   // notifyFirebase(usuarioDg, "donateAccept", donacion, "");
 
                 } catch (Exception e) {
 
@@ -173,6 +179,24 @@ public class ListaDonacionesAdapter extends RecyclerView.Adapter<ListaDonaciones
         });
 
 
+    }
+
+    private void notifyFirebase(Alumno alumnoNotificacion, String categoria, Donacion donacion, String message) {
+        Notificacion notificacion = new Notificacion();
+        notificacion.setTipo(categoria);
+        notificacion.setHora(Date.from(Instant.now()));
+        notificacion.setTexto("Donación aprobada");
+        notificacion.setDonacion(donacion);
+        notificacion.setCodigoAlumno(alumnoNotificacion.getCodigo());
+        db.collection("alumnos").document(alumnoNotificacion.getId())
+                .collection("notificaciones")
+                .add(notificacion)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "notificacion de nuevo mensaje");
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
     }
 
     public void showDialog(String fotoUrl) {
