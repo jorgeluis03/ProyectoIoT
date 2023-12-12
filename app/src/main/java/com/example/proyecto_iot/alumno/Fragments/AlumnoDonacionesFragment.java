@@ -53,6 +53,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -111,8 +112,9 @@ public class AlumnoDonacionesFragment extends Fragment {
         // Accede al código de alumno desde el JSON en la memoria interna
         codigoAlumno = obtenerCodigoAlumnoDesdeMemoria();
 
+
         CollectionReference donacionesRef = db.collection("donaciones");
-        donacionesRef.document(codigoAlumno).collection("id")
+        donacionesRef.document(codigoAlumno).collection("id").orderBy("timestamp", Query.Direction.DESCENDING)
                         .addSnapshotListener(((value, error) -> {
                             if (error != null){
                                 Log.d("msg-test", "Listen failed in donaciones fragment", error);
@@ -132,6 +134,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                                     String rol = doc.getString("rol");
                                     String fotoQR = doc.getString("fotoQR");
                                     String estado = doc.getString("estado");
+                                    Log.d("msg-test", "timestamp: "+doc.get("timestamp"));
 
                                     if ("validado".equals(estado)) {
                                         String montoString = doc.getString("monto");
@@ -151,6 +154,8 @@ public class AlumnoDonacionesFragment extends Fragment {
                                 }
 
                                 adapter.setDonacionesTotalesValidadas(donacionesTotalesValidadas);
+
+                                /*
                                 // Aplica la lógica de ordenamiento aquí
                                 donationList.sort(new Comparator<Donacion>() {
                                     @Override
@@ -168,6 +173,8 @@ public class AlumnoDonacionesFragment extends Fragment {
                                         }
                                     }
                                 });
+                                */
+
                                 // Encontrar la última fecha de donación válida
                                 Date lastValidDonationDate = null;
                                 for (Donacion donacion : donationList) {
@@ -181,6 +188,7 @@ public class AlumnoDonacionesFragment extends Fragment {
                                         }
                                     }
                                 }
+
                                 if ("Egresado".equals(rolUsuario)) {
                                     verificarYCrearKitRecojoSiEsNecesario(codigoAlumno, donacionesTotalesValidadas, lastValidDonationDate);
                                 }
@@ -191,85 +199,6 @@ public class AlumnoDonacionesFragment extends Fragment {
                                 binding.textNoDonaciones.setVisibility(View.VISIBLE);
                             }
                         }));
-
-        /*
-        donacionesRef.document(codigoAlumno).collection("id")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d("FirebaseData", "Consulta exitosa en la colección 'donaciones x2'"); // Agrega este mensaje de depuración
-                        double donacionesTotalesValidadas = 0.0;
-                        rolUsuario = obtenerTipoAlumnoDesdeMemoria();
-                        if(task.getResult().isEmpty()){
-                            binding.textNoDonaciones.setVisibility(View.VISIBLE);
-                        }
-                        else{
-                            for (QueryDocumentSnapshot idDocument : task.getResult()) {
-                                String fecha = idDocument.getString("fecha");
-                                String hora = idDocument.getString("hora");
-                                String monto = idDocument.getString("monto");
-                                String monto_enviar = monto;
-                                String nombre = idDocument.getString("nombre");
-                                String rol = idDocument.getString("rol");
-                                String fotoQR = idDocument.getString("fotoQR");
-                                String estado = idDocument.getString("estado");
-                                if ("validado".equals(estado)) {
-                                    String montoString = idDocument.getString("monto");
-                                    try {
-                                        double montoValidado = Double.parseDouble(montoString);
-                                        donacionesTotalesValidadas += montoValidado;
-                                    } catch (NumberFormatException e) {
-                                        Log.e("Firestore", "Error al parsear el monto a double", e);
-                                    }
-                                }
-                                if (rolUsuario.isEmpty()) {
-                                    rolUsuario = idDocument.getString("rol");
-                                }
-                                // Realiza operaciones con los campos obtenidos
-                                Donacion donacion = new Donacion(fecha, hora, rol, fotoQR, monto_enviar, nombre, estado);
-                                donationList.add(donacion);
-                            }
-
-                            adapter.setDonacionesTotalesValidadas(donacionesTotalesValidadas);
-                            // Aplica la lógica de ordenamiento aquí
-                            donationList.sort(new Comparator<Donacion>() {
-                                @Override
-                                public int compare(Donacion donacion1, Donacion donacion2) {
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", new Locale("es", "ES"));
-                                    try {
-                                        String dateTime1 = donacion1.getFecha() + " " + donacion1.getHora();
-                                        String dateTime2 = donacion2.getFecha() + " " + donacion2.getHora();
-                                        Date date1 = dateFormat.parse(dateTime1);
-                                        Date date2 = dateFormat.parse(dateTime2);
-                                        return date2.compareTo(date1); // Ordena de más reciente a más antigua considerando fecha y hora
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                        return 0;
-                                    }
-                                }
-                            });
-                            // Encontrar la última fecha de donación válida
-                            Date lastValidDonationDate = null;
-                            for (Donacion donacion : donationList) {
-                                if ("validado".equals(donacion.getEstado())) {
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", new Locale("es", "ES"));
-                                    try {
-                                        lastValidDonationDate = dateFormat.parse(donacion.getFecha() + " " + donacion.getHora());
-                                        break; // Salir del bucle después de encontrar la primera donación válida
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                            if ("Egresado".equals(rolUsuario)) {
-                                verificarYCrearKitRecojoSiEsNecesario(codigoAlumno, donacionesTotalesValidadas, lastValidDonationDate);
-                            }
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-
-        */
 
         // Configura el adaptador
         adapter = new ListaDonacionesAdapter(getContext(), donationList, codigoAlumno, donacion -> {
@@ -405,6 +334,7 @@ public class AlumnoDonacionesFragment extends Fragment {
         donacionNueva.setRol(rol);
         donacionNueva.setMonto(String.valueOf(monto));
         donacionNueva.setEstado("por validar");
+        donacionNueva.setTimestamp(Timestamp.now());
 
         // guardar imagen en starge para obtener url
         UUID uuidDonacionCaptura = UUID.randomUUID();
