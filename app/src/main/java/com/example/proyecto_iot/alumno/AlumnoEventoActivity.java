@@ -44,11 +44,13 @@ import com.example.proyecto_iot.R;
 import com.example.proyecto_iot.alumno.Entities.Alumno;
 import com.example.proyecto_iot.alumno.Entities.Evento;
 import com.example.proyecto_iot.alumno.Entities.Foto;
+import com.example.proyecto_iot.alumno.Entities.Notificacion;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyandoButtonFragment;
 import com.example.proyecto_iot.alumno.Fragments.AlumnoApoyarButtonFragment;
 import com.example.proyecto_iot.alumno.RecyclerViews.ListaFotosEventoAdapter;
 import com.example.proyecto_iot.databinding.ActivityAlumnoEventoBinding;
 import com.example.proyecto_iot.delegadoActividad.DaEditEventoActivity;
+import com.example.proyecto_iot.delegadoGeneral.utils.FirebaseFCMUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
@@ -57,6 +59,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
@@ -65,8 +68,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -352,9 +358,71 @@ public class AlumnoEventoActivity extends AppCompatActivity {
                         Log.d("msg-test", "foto de evento agregada en storage");
                         fotoNueva.setFotoUrl(task.getResult().toString());
                         subirFotoFirestore(fotoNueva);
+                        buscarApoyosYNotificar();
                     } else {
                         Log.d("msg-test", "error");
                     }
+                });
+    }
+
+    private void buscarApoyosYNotificar() {
+        db.collection("eventos").document("evento"+evento.getFechaHoraCreacion())
+                .collection("apoyos")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (!document.getId().equals(userUid)){
+                                db.collection("alumnos").document(document.getId()).collection("eventos").document("evento"+evento.getFechaHoraCreacion())
+                                        .get()
+                                        .addOnCompleteListener(task1 -> {
+                                            if (task1.isSuccessful()){
+                                                DocumentSnapshot documentSnapshot = task1.getResult();
+                                                boolean activo = documentSnapshot.getData().get("notificaciones").toString().equals("si");
+                                                if (activo){
+                                                    Alumno alumnoEvento = document.toObject(Alumno.class);
+                                                    notifyFirebase(document.getId(), "updateEvento", evento);
+                                                    sendNotificationToUser(alumnoEvento.getFcmToken());
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void sendNotificationToUser(String userToken) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject notificationObject = new JSONObject();
+            notificationObject.put("title", evento.getTitulo().substring(0, 25));
+            notificationObject.put("body", "Nueva foto disponible.");
+
+            jsonObject.put("notification", notificationObject);
+            jsonObject.put("to", userToken);
+
+            FirebaseFCMUtils.callApi(jsonObject);
+        }
+        catch (Exception e){
+            Log.d("msg-test", "error notificaciones: "+e.getMessage());
+        }
+    }
+
+    private void notifyFirebase(String id, String categoria, Evento evento) {
+        Notificacion notificacion = new Notificacion();
+        notificacion.setTipo(categoria);
+        notificacion.setHora(Date.from(Instant.now()));
+        notificacion.setTexto("Nueva foto en el evento "+evento.getTitulo());
+        notificacion.setEvento(evento);
+        db.collection("alumnos").document(id)
+                .collection("notificaciones")
+                .add(notificacion)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("msg-test", "notificacion de nuevo mensaje");
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
                 });
     }
 

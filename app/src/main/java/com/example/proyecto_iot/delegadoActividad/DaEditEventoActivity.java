@@ -434,8 +434,6 @@ public class DaEditEventoActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-                            //TODO DA: notificacion de que se eliminó el evento
-                            document.getReference().delete();
                         }
                     }
                 });
@@ -826,8 +824,6 @@ public class DaEditEventoActivity extends AppCompatActivity {
                 .add(fotoNueva)
                 .addOnSuccessListener(documentReference -> {
                     Log.d("msg-test", "foto guardada en firestore exitosamente");
-                    finish();
-                    startActivity(getIntent());
                 })
                 .addOnFailureListener(e -> {
                     e.printStackTrace();

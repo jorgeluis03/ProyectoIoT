@@ -56,6 +56,7 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                 .collection("eventos")
                 .addSnapshotListener((value, error) -> {
                     if (value != null){
+                        eventoList.clear();
                         for (QueryDocumentSnapshot document: value){
                             if (document.toObject(Evento.class).getEstado().equals("activo")) {
                                 tasks.add(buscarEventos(document.getId()));
@@ -70,6 +71,8 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                                         binding.nameActividad.setVisibility(View.VISIBLE);
                                         binding.nameActividad.setText(a.getNombre());
                                     }else if (eventoList.size()==0){
+                                        eventoList.clear();
+                                        adapter.notifyDataSetChanged();
                                         binding.imageView13.setVisibility(View.VISIBLE);
                                         binding.textView34.setVisibility(View.VISIBLE);
                                         binding.nameActividad.setVisibility(View.VISIBLE);
@@ -109,16 +112,21 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                         return;
                     }
                     if (snapshot != null && snapshot.exists()) {
-                        
                         Evento evento = snapshot.toObject(Evento.class);
-                        if (!eventoListContainsId("evento"+evento.getFechaHoraCreacion())) {
-                            Log.d("msg-test", "evento apoyado encontrado: " + evento.getTitulo());
-                            eventoList.add(evento);
-                            adapter.notifyDataSetChanged();
+                        if (evento.getEstado().equals("activo")){
+                            if (!eventoListContainsId("evento"+evento.getFechaHoraCreacion())) {
+                                Log.d("msg-test", "evento apoyado encontrado: " + evento.getTitulo());
+                                eventoList.add(evento);
+                                adapter.notifyDataSetChanged();
+                            }
+                            else {
+                                removerDeLista(evento.getFechaHoraCreacion());
+                                eventoList.add(evento);
+                                adapter.notifyDataSetChanged();
+                            }
                         }
                         else {
                             removerDeLista(evento.getFechaHoraCreacion());
-                            eventoList.add(evento);
                             adapter.notifyDataSetChanged();
                         }
                     } else {
@@ -139,7 +147,9 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                 break;
             }
         }
-        eventoList.remove(posicion);
+        if (posicion != -1){
+            eventoList.remove(posicion);
+        }
     }
 
     private boolean eventoListContainsId(String eventId) {

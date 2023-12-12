@@ -1,5 +1,7 @@
 package com.example.proyecto_iot.alumno.Entities;
 
+import com.google.firebase.Timestamp;
+
 import java.io.Serializable;
 
 public class Donacion implements Serializable {
@@ -10,6 +12,7 @@ public class Donacion implements Serializable {
     private String monto;
     private String nombre;
     private String estado;
+    private Timestamp timestamp;
 
     public Donacion(String fecha,String hora, String rol, String fotoQR, String monto, String nombre, String estado){
         this.hora = hora;
@@ -79,5 +82,13 @@ public class Donacion implements Serializable {
 
     public void setFotoQR(String fotoQR) {
         this.fotoQR = fotoQR;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 }
