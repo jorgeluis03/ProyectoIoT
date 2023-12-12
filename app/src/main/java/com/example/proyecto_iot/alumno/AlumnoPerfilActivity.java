@@ -82,7 +82,7 @@ public class AlumnoPerfilActivity extends AppCompatActivity {
             alumno = gson.fromJson(jsonData, Alumno.class);
 
             binding.textNombre.setText(alumno.getNombre()+" "+alumno.getApellidos());
-            binding.textRol.setText(alumno.getRol());
+            binding.textRol.setText(alumno.getTipo());
 
             cargarFoto(alumno);
 
