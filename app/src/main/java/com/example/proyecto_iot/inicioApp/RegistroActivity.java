@@ -31,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -134,6 +135,12 @@ public class RegistroActivity extends AppCompatActivity {
                 binding.editEmailSign.setError("campo vacio");
 
             }
+            if (!validarCorreoPUCP(email)){
+                binding.editEmailSign.setError("Ingrese un correo PUCP válido");
+            }
+            else{
+                binding.editEmailSign.setError(null);
+            }
             if (pass.isEmpty()) {
                 binding.editPasswSign.setError("campo vacio");
 
@@ -212,5 +219,10 @@ public class RegistroActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean validarCorreoPUCP(String correo){
+        Pattern pattern = Pattern.compile("^([a-z0-9_\\.-]+)@pucp.edu.pe$");
+        return pattern.matcher(correo).matches();
     }
 }
