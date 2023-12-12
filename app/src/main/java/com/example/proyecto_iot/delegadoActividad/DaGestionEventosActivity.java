@@ -56,6 +56,7 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                 .collection("eventos")
                 .addSnapshotListener((value, error) -> {
                     if (value != null){
+                        eventoList.clear();
                         for (QueryDocumentSnapshot document: value){
                             if (document.toObject(Evento.class).getEstado().equals("activo")) {
                                 tasks.add(buscarEventos(document.getId()));
@@ -70,6 +71,7 @@ public class DaGestionEventosActivity extends AppCompatActivity {
                                         binding.nameActividad.setVisibility(View.VISIBLE);
                                         binding.nameActividad.setText(a.getNombre());
                                     }else if (eventoList.size()==0){
+                                        adapter.notifyDataSetChanged();
                                         binding.imageView13.setVisibility(View.VISIBLE);
                                         binding.textView34.setVisibility(View.VISIBLE);
                                         binding.nameActividad.setVisibility(View.VISIBLE);
