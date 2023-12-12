@@ -434,8 +434,6 @@ public class DaEditEventoActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-                            //TODO DA: notificacion de que se eliminó el evento
-                            document.getReference().delete();
                         }
                     }
                 });
