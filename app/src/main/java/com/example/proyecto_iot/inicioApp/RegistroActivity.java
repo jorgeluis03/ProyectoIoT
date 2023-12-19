@@ -73,7 +73,7 @@ public class RegistroActivity extends AppCompatActivity {
         sendButton.setOnClickListener(view -> {
             setInPogressBar(true);
             if (validFields()) {
-                crearUsuarioAuthentication();
+                validarCodigoRepetido();
             }
         });
     }
@@ -88,6 +88,17 @@ public class RegistroActivity extends AppCompatActivity {
             sendButton.setVisibility(View.VISIBLE);
             return;
         }
+    }
+
+    private void validarCodigoRepetido(){
+        db.collection("alumnos").whereEqualTo("codigo", code).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null){ // existe en db
+                binding.editCodeSign.setError("El código ya se encuentra registrado");
+                Toast.makeText(this, "El código PUCP ingresado ya se encuentra registrado", Toast.LENGTH_SHORT).show();
+            } else if (task.isSuccessful() && task.getResult() == null) {
+                crearUsuarioAuthentication();
+            }
+        });
     }
 
     private void crearUsuarioAuthentication() {
@@ -117,44 +128,41 @@ public class RegistroActivity extends AppCompatActivity {
         pass = binding.editPasswSign.getEditText().getText().toString(); // validar que contraseña tenga al menos 6 caracteres
         type = binding.userTypeSpinner.getEditText().getText().toString();
 
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(code) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(type)) {
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(lastName) &&
+                !TextUtils.isEmpty(code) && !TextUtils.isEmpty(email) &&
+                !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(type) &&
+                correoPUCPvalido(email) && pass.length() >= 6){
+            binding.editNameSign.setError(null);
+            binding.editLastnameSign.setError(null);
+            binding.editCodeSign.setError(null);
+            binding.editEmailSign.setError(null);
+            binding.editPasswSign.setError(null);
+            binding.userTypeSpinner.setError(null);
             return true;
         } else {
             if (name.isEmpty()) {
                 binding.editNameSign.setError("campo vacio");
             }
-
             if (lastName.isEmpty()) {
                 binding.editLastnameSign.setError("campo vacio");
             }
             if (code.isEmpty()) {
                 binding.editCodeSign.setError("campo vacio");
-
             }
             if (email.isEmpty()) {
                 binding.editEmailSign.setError("campo vacio");
-
             }
-            if (!validarCorreoPUCP(email)){
+            if (!correoPUCPvalido(email)){
                 binding.editEmailSign.setError("Ingrese un correo PUCP válido");
-            }
-            else{
-                binding.editEmailSign.setError(null);
             }
             if (pass.isEmpty()) {
                 binding.editPasswSign.setError("campo vacio");
-
             }
             if (pass.length() < 6){
                 binding.editPasswSign.setError("la contraseña debe ser de mínimo 6 caracteres");
             }
-            else{
-                binding.editPasswSign.setError(null);
-            }
-
             if (type.isEmpty()) {
                 binding.userTypeSpinner.setError("campo vacio");
-
             }
 
             setInPogressBar(false);
@@ -164,6 +172,7 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
     }
+
 
     void crearUsuarioFirestore() {
         FirebaseUser user = mAuth.getCurrentUser();
@@ -221,7 +230,7 @@ public class RegistroActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validarCorreoPUCP(String correo){
+    private boolean correoPUCPvalido(String correo){
         Pattern pattern = Pattern.compile("^([a-z0-9_\\.-]+)@pucp.edu.pe$");
         return pattern.matcher(correo).matches();
     }
